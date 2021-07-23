@@ -1,0 +1,217 @@
+.float-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+.float-top-center{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.centered{
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+.single-page{
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(26, 59, 92);
+}
+.text-normal{
+  font-size: 15px;
+}
+.class1{
+  left: 50%;
+  border-radius: 50%;
+  border: 10px solid red;
+  transform: translateX(-50%);
+  box-shadow: 4px 4px 10px black;
+}
+.class2{
+  
+}
+.class3{
+  
+}
+.lapstime{
+  display: inline-block;
+  min-width: 150px;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 50px;
+  color: white;
+  user-select: none;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px black;
+  background-color: purple;
+}
+.btn{
+  padding: 5px;
+  min-width: 50px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px black;
+}
+.btn:active{
+  box-shadow: 1px 1px 2px black;
+}
+.time-btn{
+  margin: 15px;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
+}
+.btn-success{
+  color: white;
+  background-color: rgb(6, 87, 6);
+}
+.btn-warning{
+  color: white;
+  background-color: rgb(136, 7, 7);
+}
+.nav-btn-container{
+  width: 200px;
+  background-color: rgb(5, 150, 150);
+  overflow: hidden;
+  box-shadow: 2px 2px 5px orange;
+  border-right: 1px solid orange;
+}
+.nav-btn-header{
+  text-align: center;
+  padding: 20px;
+  color: white;
+  user-select: none;
+  font-weight: bold;
+}
+.nav-btn{
+  padding: 10px;
+  margin-top: 5px;
+  user-select: none;
+  color: white;
+  box-shadow: 2px 2px 5px rgb(138, 92, 7);
+  background-color: teal;
+  border: 1px solid rgb(94, 136, 136);
+}
+.nav-btn:hover{
+  background-color: rgb(94, 136, 136);
+}
+.nav-btn:active{
+  background-color: rgb(5, 150, 150);
+  box-shadow: 1px 1px 3px black;
+}
+.input{
+  padding: 8px;
+  font-size: inherit;
+  outline: none;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid gray;
+}
+.signin-container{
+  width: 300px;
+  padding: 50px;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px black;
+  background-color: teal;
+}
+.admin-page-outter-container{
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 50px;
+  color: white;
+  background-color: teal;
+  user-select: none;
+  box-shadow: 4px 4px 10px orange;
+}
+.admin-page-container{
+  height: 70vh;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: inherit;
+  user-select: none;
+}
+.admin-page-sub-container{
+  position: relative;
+  margin: 10px;
+  margin-left: 30px;
+  padding: 10px;
+  padding-left: 40px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  box-shadow: 4px 4px 10px orange;
+  border: 1px solid gray;
+}
+.user-page-outter-container{
+  margin-top: 40px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: teal;
+}
+.user-page-container{
+  overflow-y: auto;
+  padding: 50px;
+  height: 75vh;
+  border-radius: 10px;
+  background-color: inherit;
+}
+.user-page-sub-container{
+  position: relative;
+  color: white;
+  font-weight: bold;
+  background-color: teal;
+  padding: 10px;
+  padding-left: 40px;
+  user-select: none;
+  cursor: pointer;
+  margin: 10px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  box-shadow: 4px 4px 10px orange;
+  border: 1px solid gray;
+}
+.log-icon{
+  left: 0;
+  font-size: 50px;
+  border-radius: 50%;
+  z-index: 99999999999999;
+  background-color: orange;
+  box-shadow: 1px 1px 2px black;
+}
+.flex{
+  display: flex;
+}
+.h-seperator{
+  border-bottom: 1px solid orange;
+}
+.admin-user-name{
+  position: relative;
+  width: 100px;
+  margin-right: 20px;
+  white-space: nowrap;
+}
+.admin-user-input{
+  width: 250px;
+  margin-left: 20px;
+}
+.scrollbar::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(to right, rgb(144, 209, 209) 0%, teal 100%);
+}
+.scrollbar::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background: linear-gradient(to right, rgb(5, 233, 233) 0%, rgb(0, 71, 71) 100%);
+}
+.scrollbar::-webkit-scrollbar-button{
+  color: black;
+  height: 10px;
+  border-radius: 50%;
+  background: linear-gradient(to right, rgb(1, 163, 163) 0%, rgb(1, 41, 41) 100%);
+}
