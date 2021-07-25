@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { getLogsById } from '../../database/dbActions';
-import { FcOvertime } from 'react-icons/fc';
-import { useAuth } from '../../auth/Authentication';
 import { AdminPageWrapper } from '../../container/AdminPageWrapper';
+import { TimeLog } from '../../container/TimeLog';
 
 export const Logs = ({isOpen, members}) =>{
     const [logs, setLogs] = useState([]);
@@ -23,20 +22,7 @@ export const Logs = ({isOpen, members}) =>{
                 ))}
             </select>
             <div className="scrollbar" style={{height:"60vh",overflowY:"auto"}}>
-                {
-                    logs.length?
-                    logs.map((log, key)=>(                            
-                        <div className="admin-page-sub-container flex" key={key}>
-                            <FcOvertime className="float-center log-icon" />
-                            <div>
-                                <div>Date: {log?.info?.start?.date}</div>
-                                <div>Start: {log?.info?.start?.time}</div>
-                                <div>End: {log?.info?.end?.time}</div>
-                            </div>
-                        </div>
-                    )):
-                    <div>No Logs</div>
-                } 
+                <TimeLog logs={logs} />
             </div>
         </AdminPageWrapper>
     )

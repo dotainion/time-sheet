@@ -10,6 +10,16 @@
   left: 50%;
   transform: translateX(-50%);
 }
+.float-left{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+.float-bottom{
+  position: absolute;
+  bottom: 0;
+}
 .centered{
   margin-left: 50%;
   transform: translateX(-50%);
@@ -21,6 +31,12 @@
 }
 .text-normal{
   font-size: 15px;
+}
+.inline{
+  display: inline;
+}
+.relative{
+  position: relative;
 }
 .class1{
   left: 50%;
@@ -75,12 +91,13 @@
 }
 .nav-btn-container{
   width: 200px;
-  background-color: rgb(5, 150, 150);
   overflow: hidden;
   box-shadow: 2px 2px 5px orange;
   border-right: 1px solid orange;
+  background: linear-gradient(to bottom, teal 0%, rgb(0, 10, 10) 100%);
 }
 .nav-btn-header{
+  position: relative;
   text-align: center;
   padding: 20px;
   color: white;
@@ -93,15 +110,19 @@
   user-select: none;
   color: white;
   box-shadow: 2px 2px 5px rgb(138, 92, 7);
-  background-color: teal;
+  background: linear-gradient(to bottom, teal 0%, rgb(1, 46, 46) 100%);
   border: 1px solid rgb(94, 136, 136);
 }
 .nav-btn:hover{
-  background-color: rgb(94, 136, 136);
+  color: orange;
+  background: linear-gradient(to bottom, rgb(1, 190, 190) 0%, rgb(1, 46, 46) 100%);
 }
 .nav-btn:active{
   background-color: rgb(5, 150, 150);
   box-shadow: 1px 1px 3px black;
+}
+.nav-btn-is-active{
+  fill: orange;
 }
 .input{
   padding: 8px;
@@ -119,61 +140,34 @@
   box-shadow: 4px 4px 10px black;
   background-color: teal;
 }
-.admin-page-outter-container{
+.page-wrapper-outter-container{
   padding: 20px;
   border-radius: 10px;
   margin-top: 50px;
   color: white;
-  background-color: teal;
   user-select: none;
-  box-shadow: 4px 4px 10px orange;
+  box-shadow: 2px 2px 5px orange;
+  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
 }
-.admin-page-container{
+.page-wrapper-container{
   height: 70vh;
   overflow-y: auto;
   padding: 20px;
-  border-radius: 10px;
   color: white;
   background-color: inherit;
   user-select: none;
 }
-.admin-page-sub-container{
+.content-container{
   position: relative;
   margin: 10px;
   margin-left: 30px;
   padding: 10px;
-  padding-left: 40px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  box-shadow: 4px 4px 10px orange;
-  border: 1px solid gray;
-}
-.user-page-outter-container{
-  margin-top: 40px;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: teal;
-}
-.user-page-container{
-  overflow-y: auto;
-  padding: 50px;
-  height: 75vh;
-  border-radius: 10px;
-  background-color: inherit;
-}
-.user-page-sub-container{
-  position: relative;
-  color: white;
-  font-weight: bold;
-  background-color: teal;
-  padding: 10px;
+  cursor: pointer;
   padding-left: 40px;
   user-select: none;
-  cursor: pointer;
-  margin: 10px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
-  box-shadow: 4px 4px 10px orange;
+  box-shadow: 2px 2px 5px orange;
   border: 1px solid gray;
 }
 .log-icon{
@@ -203,15 +197,31 @@
 .scrollbar::-webkit-scrollbar{
   width: 10px;
   height: 10px;
-  background: linear-gradient(to right, rgb(144, 209, 209) 0%, teal 100%);
+  background: linear-gradient(to right, rgb(2, 247, 247) 0%, rgb(0, 10, 10) 100%);
 }
 .scrollbar::-webkit-scrollbar-thumb{
   border-radius: 10px;
-  background: linear-gradient(to right, rgb(5, 233, 233) 0%, rgb(0, 71, 71) 100%);
+  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
 }
 .scrollbar::-webkit-scrollbar-button{
   color: black;
   height: 10px;
   border-radius: 50%;
-  background: linear-gradient(to right, rgb(1, 163, 163) 0%, rgb(1, 41, 41) 100%);
+  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+}
+.toolbar{
+  position: relative;
+  color: white;
+  height: 55px;
+  user-select: none;
+  box-shadow: 2px 2px 5px orange;
+  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+}
+.HamburgerMenu{
+  display: none;
+  font-size: 30px;
+  left: 10px;
+}
+.max-width{
+  width: 100%;
 }

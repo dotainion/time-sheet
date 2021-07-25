@@ -7,6 +7,8 @@ import { token } from '../token/Tokenize';
 import { addEndLog, addStartLog } from '../database/dbActions';
 import { useAuth } from '../auth/Authentication';
 import { getData } from '../database/dbObjectRef';
+import { UserNavBar } from '../container/UserNavBar';
+import { tools } from '../tools/Tools';
 
 
 const {
@@ -31,36 +33,23 @@ export const Clocked = () =>{
     const startRef = useRef();
     const endRef = useRef();
 
-    const getDate = () =>{
-        const date = new Date().toDateString();
-        const time = new Date().toLocaleTimeString();
-        return {date, time};
-    }
-
     const addStartTimeLog = async() =>{
         await addStartLog({
             id: user?.id,
             email: user?.email,
-            start: {
-                date: getDate().date,
-                time: getDate().time
-            },
+            start: tools.time.digits(),
+            date: tools.time.date(),
             end: "none"
         });
     }
 
     const addEndTimeLog = async() =>{
-        await addEndLog({
-            end: {
-                date: getDate().date,
-                time: getDate().time
-            },
-        }, user?.id);
+        await addEndLog({end: tools.time.digits(),}, user?.id);
     }
 
     const onStart = async() =>{
         if (!isActive()){
-            startRef.current.innerText = getDate().time;
+            startRef.current.innerText = tools.time.time();
             startTimer();
             token.set(user?.email);
             await addStartTimeLog();
@@ -72,7 +61,7 @@ export const Clocked = () =>{
 
     const onEnd = async() =>{
         if (isActive()){
-            endRef.current.innerText = getDate().time;
+            endRef.current.innerText = tools.time.time();
             stopTimer();
             token.clear();
             await addEndTimeLog();
@@ -94,7 +83,7 @@ export const Clocked = () =>{
         return () => {clearInterval(interval);}
     }, []);
     return(
-        <NavigationBar>
+        <UserNavBar>
             <div style={{textAlign:"center"}}>
                 <p>Current time</p>
                 <Clock value={value} className="class1 class2 class3" size={300} />                
@@ -112,6 +101,6 @@ export const Clocked = () =>{
                     </button>
                 </div>
             </div>
-        </NavigationBar>
+        </UserNavBar>
     )
 }

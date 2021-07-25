@@ -1,5 +1,7 @@
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import './theme/general.css';
+import './theme/index.css';
+import './theme/responsive.css';
 import { Logs } from './pages/Logs';
 import { Clocked } from './pages/Clocked';
 import { AuthContext } from './auth/Authentication';

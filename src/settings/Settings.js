@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavigationBar } from '../container/NavigationBar';
+import { UserNavBar } from '../container/UserNavBar';
 
 export const Settings = () =>{
     return(
-        <NavigationBar>
+        <UserNavBar>
             <div>
                 settigns
             </div>
-        </NavigationBar>
+        </UserNavBar>
     )
 }

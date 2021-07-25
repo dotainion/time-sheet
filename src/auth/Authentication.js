@@ -1,11 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { auth } from '../config/AuthConfig';
 import { addUser, getUser } from '../database/dbActions';
+import { routes } from '../routes/Routes';
 
 const AuthContextProvider = createContext();
 export const useAuth = () => useContext(AuthContextProvider);
 
 export const AuthContext = ({children}) =>{
+    const history = useHistory();
+
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState();
@@ -21,6 +25,7 @@ export const AuthContext = ({children}) =>{
 
     const signOut = async() =>{
         await auth.signOut();
+        history.push(routes.signIn);
     }
 
     const createUser = async(nUser) =>{

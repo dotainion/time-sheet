@@ -1,57 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../auth/Authentication';
-import { routes } from '../routes/Routes';
+import { Toolbar } from '../widgets/Toolbar';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { GoPrimitiveDot } from 'react-icons/go';
 
-export const NavigationBar = ({children}) =>{
-    const { user } = useAuth();
-
+export const NavigationBar = ({menues, onClick, onDatePicker, returnValue, router, children}) =>{
     const history = useHistory();
 
-    const { signOut } = useAuth();
+    const { user, signOut } = useAuth();
 
-    const navigations = [
-        {
-            title: "CLOCK IN/OUT",
-            route: routes.clocked
-        },{
-            title: "VIEW LOGS",
-            route: routes.logs
-        },{
-            title: "SETTINGS",
-            route: routes.settings
-        },
-    ];
+    const [navToggle, setNavToggle] = useState(true);
+    const [selected, setSelected] = useState("");
 
-    const isActive = (route) =>{
-        if (route === history.location.pathname){
-            return "orange";
+    const command = (value) =>{
+        setSelected(value?.title);
+        toggleNav();
+        if (router){
+            history.push(value?.route);
+        }
+        if (returnValue){
+            onClick?.(value?.title);
+        }
+    }
+
+    const isActive = (nav) =>{
+        if (history.location.pathname === nav?.route || nav?.title === selected){
+            return "nav-btn-is-active";
         }
         return "";
     }
 
-    const command = (route) =>{
-        if (route) history.push(route);
+    const toggleNav = () =>{
+        setNavToggle(!navToggle);
     }
+
     return(
         <div style={{display:"flex",height:"100vh"}}>
-            <div className="nav-btn-container">
+            <div onClick={toggleNav} className={`nav-backdrop-on-mobile ${navToggle && "hide-on-mobile"}`}/>
+            <div className={`nav-btn-container mobile-nav ${navToggle && "hide-on-mobile"}`}>
                 <div className="nav-btn-header">
+                    <GiHamburgerMenu onClick={toggleNav} className="float-left HamburgerMenu" />
                     <span>Time Sheet</span>
                     <div>{user?.firstName}</div>
                 </div>
-                {navigations.map((nav, key)=>(
+                {menues?.map((nav, key)=>(
                     <div
-                        onClick={()=>command(nav.route)}
-                        className="nav-btn"
-                        style={{backgroundColor:isActive(nav.route)}}
+                        onClick={()=>command(nav)}
+                        className={`nav-btn ${isActive(nav) && "nav-btn-is-active"}`}
                         key={key}>
-                        <span>{nav.title}</span>
+                        <span>{nav?.title}</span>
+                        <GoPrimitiveDot
+                            className="nav-btn-is-active"
+                            style={{float:"right",display:!isActive(nav) && "none"}}
+                        />
                     </div>
                 ))}
                 <div onClick={signOut}className="nav-btn" style={{color:"orangered"}}>SIGN OUT</div>
             </div>
             <div style={{width:"100%"}}>
+                <Toolbar
+                    onMenuClick={toggleNav} 
+                    onDatePicker={onDatePicker} 
+                />
                 {children}
             </div>
         </div>
