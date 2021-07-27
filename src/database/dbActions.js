@@ -1,13 +1,33 @@
-import { addData, getData, getDataByField, getDataById, updateDataByField } from "./dbObjectRef"
+import { tools } from "../tools/Tools";
+import { addData, getData, getDataByField, getDataById, getRangeFromTo, updateDataByField } from "./dbObjectRef"
 
 const collection = {
     user: "user",
     logs: "logs"
 }
 
-export const getLogs = async(id) =>{
+export const getLogs = async(id, limit=false) =>{
+    try{
+        return await getDataByField(collection.logs, "id", id, limit);
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
+
+export const getLogsById = async(id) =>{
     try{
         return await getDataByField(collection.logs, "id", id);
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
+
+export const getLogsRange = async(from, to, id) =>{
+    try{
+        let results = await getDataByField(collection.logs, "id", id);// await getRangeFromTo(collection.logs, "start", from, "id", id);
+        return results.filter((result)=>tools.time.includes(from, to, result?.info?.start));
     }catch(error){
         console.log(error);
         return [];
@@ -58,14 +78,5 @@ export const addEndLog = async(data, id) =>{
     }catch(error){
         console.log(error);
         return false;
-    }
-}
-
-export const getLogsById = async(id) =>{
-    try{
-        return await getDataByField(collection.logs, "id", id);
-    }catch(error){
-        console.log(error);
-        return [];
     }
 }

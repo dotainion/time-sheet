@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AddUser } from './pages/AddUser';
 import { Logs } from './pages/Logs';
-import { Settings } from './pages/Settings';
+import { Settings } from '../settings/admin/Settings';
 import { Users } from './pages/Users';
 import { Welcome } from './pages/Welcome';
 import { getUsers } from '../database/dbActions';
@@ -16,7 +16,7 @@ export const Administrator = () =>{
     const [showSettings, setShowSettings] = useState(false);
     const [showWelcome, setShowWelcome] = useState(true);
 
-    
+    const logSearchRef = useRef();
 
     const set = (state) =>{
         setShowAddUser(state);
@@ -38,14 +38,18 @@ export const Administrator = () =>{
         setUsers(await getUsers());
     }
 
+    const triggerLogSearch = () =>{
+        logSearchRef.current.click();
+    }
+
     useEffect(()=>{
         initUsers();
     },[]);
     return(
-        <AdminNavBar onClick={pageAction}>
+        <AdminNavBar onClick={pageAction} datePicker={showLogs} onDatePicker={triggerLogSearch}>
             <AddUser isOpen={showAddUser} />
             <Users isOpen={showUsers} members={users} />
-            <Logs isOpen={showLogs} members={users} />
+            <Logs isOpen={showLogs} members={users} searchRef={logSearchRef} />
             <Settings isOpen={showSettings} />
             <Welcome isOpen={showWelcome} />
         </AdminNavBar>

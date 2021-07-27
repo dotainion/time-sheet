@@ -10,10 +10,21 @@
   left: 50%;
   transform: translateX(-50%);
 }
+.float-top-right{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .float-left{
   position: absolute;
   top: 50%;
   left: 0;
+  transform: translateY(-50%);
+}
+.float-right{
+  position: absolute;
+  top: 50%;
+  right: 0;
   transform: translateY(-50%);
 }
 .float-bottom{
@@ -69,6 +80,7 @@
   outline: none;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
   box-shadow: 2px 2px 5px black;
 }
 .btn:active{
@@ -94,7 +106,7 @@
   overflow: hidden;
   box-shadow: 2px 2px 5px orange;
   border-right: 1px solid orange;
-  background: linear-gradient(to bottom, teal 0%, rgb(0, 10, 10) 100%);
+  background: var(--bg-fade-vertical);
 }
 .nav-btn-header{
   position: relative;
@@ -110,12 +122,12 @@
   user-select: none;
   color: white;
   box-shadow: 2px 2px 5px rgb(138, 92, 7);
-  background: linear-gradient(to bottom, teal 0%, rgb(1, 46, 46) 100%);
+  background: var(--bg-fade-vertical-light);
   border: 1px solid rgb(94, 136, 136);
 }
 .nav-btn:hover{
   color: orange;
-  background: linear-gradient(to bottom, rgb(1, 190, 190) 0%, rgb(1, 46, 46) 100%);
+  background: var(--bg-fade-vertical-light-hover);
 }
 .nav-btn:active{
   background-color: rgb(5, 150, 150);
@@ -125,7 +137,7 @@
   fill: orange;
 }
 .input{
-  padding: 8px;
+  padding: 5px;
   font-size: inherit;
   outline: none;
   margin-top: 15px;
@@ -147,7 +159,7 @@
   color: white;
   user-select: none;
   box-shadow: 2px 2px 5px orange;
-  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+  background: var(--bg-fade-horizontal);
 }
 .page-wrapper-container{
   height: 70vh;
@@ -162,7 +174,6 @@
   margin: 10px;
   margin-left: 30px;
   padding: 10px;
-  cursor: pointer;
   padding-left: 40px;
   user-select: none;
   border-top-right-radius: 50px;
@@ -177,6 +188,11 @@
   z-index: 99999999999999;
   background-color: orange;
   box-shadow: 1px 1px 2px black;
+}
+.time-icon{
+  font-size: 25px;
+  right: 20px;
+  cursor: pointer;
 }
 .flex{
   display: flex;
@@ -197,17 +213,17 @@
 .scrollbar::-webkit-scrollbar{
   width: 10px;
   height: 10px;
-  background: linear-gradient(to right, rgb(2, 247, 247) 0%, rgb(0, 10, 10) 100%);
+  background: var(--scrollbar);
 }
 .scrollbar::-webkit-scrollbar-thumb{
   border-radius: 10px;
-  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+  background: var(--bg-fade-horizontal);
 }
 .scrollbar::-webkit-scrollbar-button{
   color: black;
   height: 10px;
   border-radius: 50%;
-  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+  background: var(--bg-fade-horizontal);
 }
 .toolbar{
   position: relative;
@@ -215,13 +231,137 @@
   height: 55px;
   user-select: none;
   box-shadow: 2px 2px 5px orange;
-  background: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+  background: var(--bg-fade-horizontal);
 }
 .HamburgerMenu{
   display: none;
   font-size: 30px;
   left: 10px;
+  z-index: 9;
 }
 .max-width{
   width: 100%;
+}
+.max-size{
+  width: 100%;
+  height: 100%;
+}
+.no-select{
+  user-select: none;
+}
+.pad{
+  padding: 10px;
+}
+.admin-welcome{
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  font-family: 'Qahiri', sans-serif;
+  font-style: italic;
+}
+.modal{
+  width: 80%;
+  height: 60vh;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px orange;
+  background: var(--bg-fade-horizontal);
+}
+.calender-event{
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--bg-fade-horizontal);
+}
+.calender-event-week{
+  display: flex;
+}
+.calender-event-week-header{
+  width: 100%;
+  padding: 10px;
+  overflow: hidden;
+  color: orange;
+  user-select: none;
+  background-color: var(--bg-tertiary);
+  border-left: 1px solid orange;
+  border-right: 1px solid orange;
+}
+.calender-event-date-container{
+  position: relative;
+  width: 100%;
+  height: 100px;
+  border: 1px solid orange;
+}
+.calender-event-floating-btn{
+  border-radius: 10px;
+  padding: 10px;
+  background: var(--bg-secondary);
+  box-shadow: 4px 4px 5px black;
+}
+.calender-event-floating-btn button{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.calendar-number{
+  margin: 5px;
+  user-select: none;
+  color: white;
+}
+.calendar-contents{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  max-width: 80%;
+  transform: translate3d(-50%,-50%,0);
+  color: lightgray;
+  white-space: nowrap;
+  overflow: hidden;
+  border-radius: 10px;
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 1px 1px 5px black;
+}
+.calendar-contents:hover{
+  width: auto;
+  max-width: none;
+  min-width: 200px;
+  overflow: visible;
+  z-index: 99;
+  color: teal;
+  white-space: normal;
+  background-color: white;
+}
+.not-in-month{
+  background-color: var(--bg-secondary);
+}
+.span-wrapper{
+  border-radius: 5px;
+  background: var(--bg-fade-horizontal);
+}
+.add-task{
+  width: 300px;
+  padding: 10px;
+  color: white;
+  z-index: 999999;
+  box-shadow: 4px 4px 10px black;
+}
+select{
+  cursor: pointer;
+}
+.event-side-menu{
+  width: 100%;
+  height: 100%;
+  color: white;
+  background: var(--bg-secondary);
+}
+.event-side-menu-btn{
+  position: relative;
+  margin: 10px;
+  padding: 5px;
+  width: 70px;
+  height: 50px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 2px 2px 5px orange;
 }

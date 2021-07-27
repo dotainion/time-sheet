@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Calendar } from './Calendar';
 import { MdDateRange } from 'react-icons/md';
 import { tools } from '../tools/Tools';
+import { useStateMangement } from '../stateManagement/stateManagement';
 
-export const Toolbar = ({onMenuClick, onDatePicker}) =>{
+export const Toolbar = ({onMenuClick, datePicker, onDatePicker}) =>{
+    const { dateObject, setDateObject } = useStateMangement();
     const [showCalendar, setShowCalendar] = useState();
     const [dateType, setDateType] = useState("");
-    const [fromDate, setFromDate] = useState(tools.time.date());
-    const [toDate, setToDate] = useState(tools.time.date());
 
     const onOpenCalendar = (cmd) =>{
         setDateType(cmd);
@@ -16,36 +16,41 @@ export const Toolbar = ({onMenuClick, onDatePicker}) =>{
     }
 
     const onDateSelect = (date) =>{
-        date = tools.time.date(date);
-        if (dateType.includes("to")) setToDate(date);
-        if (dateType.includes("from")) setFromDate(date);
+        date = tools.time.digits(date);
+        if (dateType.includes("from")){
+            setDateObject({from:date, to:dateObject.to});
+        }
+        if (dateType.includes("to")){
+            setDateObject({from: dateObject.from, to:date});
+        }
         setShowCalendar(false);
     }
 
     const triggerDatePicker = () =>{
-        onDatePicker?.({from: fromDate, to: toDate});
+        onDatePicker?.(dateObject);
     }
+
     return(
         <>
             <div className="toolbar">
-                <div hidden={!onDatePicker} className="float-left">
+                <GiHamburgerMenu onClick={onMenuClick} className="HamburgerMenu float-left" />
+                <div hidden={!datePicker} className="float-left">
                     {/* hidden is not working with className flex, it was sperated in standalone div */}
-                    <div className="flex">
-                        <GiHamburgerMenu onClick={onMenuClick} className="HamburgerMenu" />
-                        <div style={{marginLeft:"50px"}}>
+                    <div className="flex" style={{marginLeft:"50px"}}>
+                        <div>
                             <label>From</label>
-                            <div style={{fontSize:"10px"}}>{fromDate}</div>
+                            <div style={{fontSize:"10px"}}>{tools.time.date(dateObject.from)}</div>
                         </div>
-                        <MdDateRange onClick={()=>onOpenCalendar("from")} style={{fontSize:"35px"}} />
+                        <MdDateRange onClick={()=>onOpenCalendar("from")} style={{fontSize:"35px",cursor:"pointer"}} />
                         <div style={{marginLeft:"20px"}}>
                             <label>To</label>
-                            <div style={{fontSize:"10px"}}>{toDate}</div>
+                            <div style={{fontSize:"10px"}}>{tools.time.date(dateObject.to)}</div>
                         </div>
-                        <MdDateRange onClick={()=>onOpenCalendar("to")} style={{fontSize:"35px"}} />
+                        <MdDateRange onClick={()=>onOpenCalendar("to")} style={{fontSize:"35px",cursor:"pointer"}} />
                         <div className="relative" style={{marginLeft:"10px",fontWeight:"bold"}}>
                             <button
                                 className="btn float-left"
-                                style={{boxShadow:"none"}}
+                                style={{boxShadow:"none",cursor:"pointer"}}
                                 onClick={triggerDatePicker}
                             >Go</button>
                         </div>

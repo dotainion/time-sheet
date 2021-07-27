@@ -5,7 +5,7 @@ import { Toolbar } from '../widgets/Toolbar';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoPrimitiveDot } from 'react-icons/go';
 
-export const NavigationBar = ({menues, onClick, onDatePicker, returnValue, router, children}) =>{
+export const NavigationBar = ({menues, onClick, datePicker, onDatePicker, returnValue, router, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
@@ -58,8 +58,9 @@ export const NavigationBar = ({menues, onClick, onDatePicker, returnValue, route
                 ))}
                 <div onClick={signOut}className="nav-btn" style={{color:"orangered"}}>SIGN OUT</div>
             </div>
-            <div style={{width:"100%"}}>
+            <div className="relative" style={{width:"100%"}}>
                 <Toolbar
+                    datePicker={datePicker}
                     onMenuClick={toggleNav} 
                     onDatePicker={onDatePicker} 
                 />

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useAuth } from '../../auth/Authentication';
-import { AdminPageWrapper } from '../../container/AdminPageWrapper';
+import { ContentsWrapper } from '../../container/ContentsWrapper';
 
 
 const roleDefault = "No Role";
@@ -37,7 +37,7 @@ export const AddUser = ({isOpen}) =>{
         setLoading(false);
     }
     return (
-        <AdminPageWrapper isOpen={isOpen} noScroll>
+        <ContentsWrapper isOpen={isOpen} noScroll>
             <div className="flex h-seperator">
                 <div className="admin-user-name">
                     <div className="float-center">Email</div>
@@ -94,6 +94,6 @@ export const AddUser = ({isOpen}) =>{
             <div style={{textAlign:"right",paddingTop:"40px"}}>
                 <button onClick={onAddUser} disabled={loading} className="btn">Add user</button>
             </div>          
-        </AdminPageWrapper>
+        </ContentsWrapper>
     )
 }

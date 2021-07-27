@@ -5,4 +5,5 @@ export const routes = {
     logs: "/logs",
     admin: "/administrator",
     settings: "/settings",
+    timeSheet: "/time-sheet"
 }

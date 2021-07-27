@@ -1,0 +1,1 @@
+export const adminWelcome = "Time sheet management application.";

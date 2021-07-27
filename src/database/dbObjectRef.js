@@ -67,3 +67,14 @@ export const updateDataByField = async(collection, data, queryKey, queryValue, q
     };
     return true;
 }
+
+export const getRangeFromTo = async(collection, fromRef, from, idRef, id) =>{
+    const resRef = db.collection(collection)
+    .where(fromRef,">=",from).where(idRef,"==",id);
+    let data = await resRef.get();
+    let ranges = [];
+    data.forEach((record) => {
+        ranges.push({ id: record.id, info: record.data() });
+    });
+    return ranges;
+}

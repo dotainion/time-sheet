@@ -20,7 +20,35 @@ export const userNavs = [
         title: "VIEW LOGS",
         route: routes.logs
     },{
+        title: "TIME SHEET",
+        route: routes.timeSheet
+    },{
         title: "SETTINGS",
         route: routes.settings
     }
 ];
+
+export const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
+
+export const week = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]

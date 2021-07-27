@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavigationBar } from '../container/NavigationBar';
 import Clock from 'react-clock';
 import StopClock from 'react-stop-clock';
 import 'react-clock/dist/Clock.css';
 import { token } from '../token/Tokenize';
 import { addEndLog, addStartLog } from '../database/dbActions';
 import { useAuth } from '../auth/Authentication';
-import { getData } from '../database/dbObjectRef';
 import { UserNavBar } from '../container/UserNavBar';
 import { tools } from '../tools/Tools';
 
@@ -38,7 +36,6 @@ export const Clocked = () =>{
             id: user?.id,
             email: user?.email,
             start: tools.time.digits(),
-            date: tools.time.date(),
             end: "none"
         });
     }

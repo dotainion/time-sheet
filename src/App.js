@@ -9,21 +9,26 @@ import { Authenticate } from './Authenticate';
 import { routes } from './routes/Routes';
 import { SignIn } from './signIn/SignIn';
 import { Administrator } from "./admin/Administrator";
-import { Settings } from "./settings/Settings";
+import { Settings } from "./settings/user/Settings";
+import { StateMangement } from "./stateManagement/stateManagement";
+import { TimeSheet } from "./pages/TimeSheet";
 
 
 function App() {
   return (
     <BrowserRouter>
       <AuthContext>
-        <Switch>
-          <Route exact path={routes.default} render={()=><Redirect to={routes.clocked}/>}/>
-          <Route exact path={routes.clocked} render={()=><Authenticate Component={Clocked}/>}/>
-          <Route exact path={routes.admin} render={()=><Authenticate Component={Administrator}/>}/>
-          <Route exact path={routes.settings} render={()=><Authenticate Component={Settings}/>}/>
-          <Route exact path={routes.logs} render={()=><Logs/>}/>
-          <Route exact path={routes.signIn} render={()=><SignIn/>}/>
-        </Switch>
+        <StateMangement>
+          <Switch>
+            <Route exact path={routes.default} render={()=><Redirect to={routes.clocked}/>}/>
+            <Route exact path={routes.clocked} render={()=><Authenticate Component={Clocked}/>}/>
+            <Route exact path={routes.admin} render={()=><Authenticate Component={Administrator}/>}/>
+            <Route exact path={routes.settings} render={()=><Authenticate Component={Settings}/>}/>
+            <Route exact path={routes.timeSheet} render={()=><Authenticate Component={TimeSheet}/>}/>
+            <Route exact path={routes.logs} render={()=><Logs/>}/>
+            <Route exact path={routes.signIn} render={()=><SignIn/>}/>
+          </Switch>
+        </StateMangement>
       </AuthContext>
     </BrowserRouter>
   );
