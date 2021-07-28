@@ -3,10 +3,13 @@ import { EventCalendar } from '../../calendarEvent/EventCalendar';
 import { Modal } from '../../container/Modal';
 
 
-export const AsignTimeSheet = ({isOpen, members, memberSelected, onClose}) =>{
+export const AsignTimeSheet = ({isOpen, members, usersSelected, onClose}) =>{
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
-            <EventCalendar isOpen memberSelected={memberSelected} members={members} />
+            <EventCalendar
+                usersSelected={usersSelected} 
+                members={members} 
+            />
         </Modal>
     )
 }

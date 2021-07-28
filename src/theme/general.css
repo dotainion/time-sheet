@@ -1,3 +1,11 @@
+.backdrop{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--backdrop);
+}
 .float-center{
   position: absolute;
   top: 50%;
@@ -14,6 +22,11 @@
   position: absolute;
   top: 0;
   right: 0;
+}
+.float-top-left{
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 .float-left{
   position: absolute;
@@ -81,10 +94,14 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  user-select: none;
   box-shadow: 2px 2px 5px black;
 }
 .btn:active{
   box-shadow: 1px 1px 2px black;
+}
+.btn-hover:hover{
+  transform: scale(1.05);
 }
 .time-btn{
   margin: 15px;
@@ -145,6 +162,9 @@
   border-radius: 8px;
   border: 1px solid gray;
 }
+.input-hover:hover{
+  transform: scale(1.05);
+}
 .signin-container{
   width: 300px;
   padding: 50px;
@@ -153,6 +173,7 @@
   background-color: teal;
 }
 .page-wrapper-outter-container{
+  width: 70%;
   padding: 20px;
   border-radius: 10px;
   margin-top: 50px;
@@ -181,6 +202,11 @@
   box-shadow: 2px 2px 5px orange;
   border: 1px solid gray;
 }
+.content-inner-container{
+  width: 90%;
+  overflow: hidden;
+  white-space: nowrap;
+}
 .log-icon{
   left: 0;
   font-size: 50px;
@@ -189,13 +215,27 @@
   background-color: orange;
   box-shadow: 1px 1px 2px black;
 }
+.time-icon-container{
+  width: 50px;
+  height: 10px;
+  z-index: 9999999999;
+}
 .time-icon{
   font-size: 25px;
   right: 20px;
   cursor: pointer;
 }
+.time-icon:hover{
+  color: orange;
+}
 .flex{
   display: flex;
+}
+.de-flex-on-mobile{
+  display: block;
+}
+.block{
+  display: block;
 }
 .h-seperator{
   border-bottom: 1px solid orange;
@@ -252,6 +292,9 @@
 .pad{
   padding: 10px;
 }
+.hide-on-desktop{
+  display: none;
+}
 .admin-welcome{
   font-size: 40px;
   font-weight: bold;
@@ -266,16 +309,16 @@
   box-shadow: 2px 2px 5px orange;
   background: var(--bg-fade-horizontal);
 }
-.calender-event{
+.calendar-event{
   width: 100%;
   height: 100%;
   border-radius: 5px;
   background: var(--bg-fade-horizontal);
 }
-.calender-event-week{
+.calendar-event-week{
   display: flex;
 }
-.calender-event-week-header{
+.calendar-event-week-header{
   width: 100%;
   padding: 10px;
   overflow: hidden;
@@ -285,23 +328,28 @@
   border-left: 1px solid orange;
   border-right: 1px solid orange;
 }
-.calender-event-date-container{
+.calendar-event-date-container{
   position: relative;
   width: 100%;
   height: 100px;
   border: 1px solid orange;
 }
-.calender-event-floating-btn{
+.calendar-event-floating-btn{
   border-radius: 10px;
-  padding: 10px;
-  background: var(--bg-secondary);
+  width: 100%;
+  background: var(--bg);
   box-shadow: 4px 4px 5px black;
 }
-.calender-event-floating-btn button{
+.calendar-event-floating-btn div{
+  padding: 10px;
+}
+.calendar-event-floating-btn button{
   margin-left: 5px;
   margin-right: 5px;
 }
 .calendar-number{
+  position: absolute;
+  left: 0;
   margin: 5px;
   user-select: none;
   color: white;
@@ -356,12 +404,29 @@ select{
 }
 .event-side-menu-btn{
   position: relative;
-  margin: 10px;
-  padding: 5px;
-  width: 70px;
+  width: 100%;
   height: 50px;
-  text-align: center;
-  cursor: pointer;
+}
+.event-side-menu-user-list{
+  width: 100%;
+  height: 410px;
+  white-space: nowrap;
+  overflow: hidden;
+  overflow-y: auto;
   user-select: none;
-  box-shadow: 2px 2px 5px orange;
+  margin-top: 20px;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  background: var(--bg-tertiary);
+}
+.event-side-menu-user-list div{
+  padding: 5px;
+  padding-left: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  border-bottom: 1px solid white;
 }

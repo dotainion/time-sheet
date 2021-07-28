@@ -43,7 +43,7 @@ export const AddUser = ({isOpen}) =>{
                     <div className="float-center">Email</div>
                 </div>
                 <div className="admin-user-input">
-                    <input ref={emailRef} className="input" placeholder="Email" />
+                    <input ref={emailRef} className="input input-hover" placeholder="Email" />
                 </div>
             </div> 
             <div className="flex h-seperator">
@@ -51,7 +51,7 @@ export const AddUser = ({isOpen}) =>{
                     <div className="float-center">First Name</div>
                 </div>
                 <div className="admin-user-input">
-                    <input ref={fNameRef} className="input" placeholder="First Name" />
+                    <input ref={fNameRef} className="input input-hover" placeholder="First Name" />
                 </div>
             </div> 
             <div className="flex h-seperator">
@@ -59,7 +59,7 @@ export const AddUser = ({isOpen}) =>{
                     <div className="float-center">Last Name</div>
                 </div>
                 <div className="admin-user-input">
-                    <input ref={lNameRef} className="input" placeholder="Last Name" />
+                    <input ref={lNameRef} className="input input-hover" placeholder="Last Name" />
                 </div> 
             </div>  
             <div className="flex h-seperator">
@@ -67,7 +67,7 @@ export const AddUser = ({isOpen}) =>{
                     <div className="float-center">Password</div>
                 </div>
                 <div className="admin-user-input">
-                    <input ref={passRef} className="input" placeholder="Password" />
+                    <input ref={passRef} className="input input-hover" placeholder="Password" />
                 </div>                
             </div>  
             <div className="flex h-seperator">
@@ -75,7 +75,7 @@ export const AddUser = ({isOpen}) =>{
                     <div className="float-center">Role</div>
                 </div>
                 <div className="admin-user-input">
-                    <select ref={roleRef} className="input">
+                    <select ref={roleRef} className="input input-hover">
                         <option hidden defaultChecked>{roleDefault}</option>
                         <option>Administrator</option>
                         <option>Employee</option>
@@ -92,7 +92,7 @@ export const AddUser = ({isOpen}) =>{
                 <div className="admin-user-input">Notify user</div>
             </div>  
             <div style={{textAlign:"right",paddingTop:"40px"}}>
-                <button onClick={onAddUser} disabled={loading} className="btn">Add user</button>
+                <button onClick={onAddUser} disabled={loading} className="btn btn-hover">Add user</button>
             </div>          
         </ContentsWrapper>
     )

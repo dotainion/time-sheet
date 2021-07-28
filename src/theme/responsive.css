@@ -25,10 +25,30 @@
         width: 100%;
         height: 100vh;
     }
+    .hide-on-desktop{
+        display: block;
+      }
     .hide-on-mobile{
         display: none;
     }
+    .mobile-overlay{
+        position: absolute;
+        z-index: 9999;
+        top: -70px;
+        left: -10px;
+        border: 1px solid black;
+    }
     .HamburgerMenu{
         display: inline;
+    }
+    .modal{
+        width: 93%;
+    }
+    .calendar-event-on-mobile{
+        background: var(--bg-fade-horizontal);
+        box-shadow: 4px 4px 10px orange;
+    }
+    .calendar-event-date-container{
+        height: 70px;
     }
 }
