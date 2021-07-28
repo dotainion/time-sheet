@@ -7,7 +7,7 @@ export const Modal = ({isOpen, onClose, children}) =>{
             <AiOutlineClose
                 className="float-top-right"
                 onClick={onClose}
-                style={{color:"red",margin:"3px",zIndex:"9999"}}
+                style={{color:"red",margin:"3px",zIndex:"9999",display:!onClose && "none"}}
             />
             <div className="relative">
                 {children}

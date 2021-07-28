@@ -108,7 +108,6 @@ export const Users = ({isOpen, members}) =>{
             }
         </ContentsWrapper>
         <AsignTimeSheet
-            members={members}
             usersSelected={usersSelected}
             isOpen={asignTimeSheet}
             onClose={()=>setAsignTimeSheet(false)}

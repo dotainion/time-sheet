@@ -40,7 +40,7 @@ export const SignIn = () =>{
                 <input ref={emailRef} className="input centered" style={{width:"250px"}} type="email" placeholder="Email" />
                 <input ref={passwordRef} className="input centered" style={{width:"250px"}} type="password" placeholder="Password" />
                 <div style={{paddingLeft:"18px",paddingRight:"18px",textAlign:"right",marginTop:"20px"}}>
-                    <button onClick={login} disabled={loading} className="btn">Sign in</button>
+                    <button onClick={login} disabled={loading} className="btn btn-hover">Sign in</button>
                 </div>
             </div>
         </div>
