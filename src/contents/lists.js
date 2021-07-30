@@ -1,18 +1,22 @@
-import { routes } from "../routes/Routes";
+import { adminRoutes, routes } from "../routes/Routes";
 
-export const adminNavs = [
+export const ADMIN_SIDE_NAV = [
     { 
         title: "ADD USERS",
+        route: adminRoutes.addUser
     },{
         title: "VIEW USERS",
+        route: adminRoutes.users
     },{
         title: "VIEW LOGS",
+        route: adminRoutes.logs
     },{
-        title: "SETTINGS"
+        title: "SETTINGS",
+        route: adminRoutes.settings
     }
 ];
 
-export const userNavs = [
+export const USER_SIDE_NAV = [
     {
         title: "CLOCK IN/OUT",
         route: routes.clocked
@@ -28,7 +32,7 @@ export const userNavs = [
     }
 ];
 
-export const months = [
+export const MONTHS = [
     "January",
     "February",
     "March",
@@ -43,7 +47,7 @@ export const months = [
     "December"
 ];
 
-export const week = [
+export const WEEK = [
     "Sunday",
     "Monday",
     "Tuesday",
@@ -51,4 +55,14 @@ export const week = [
     "Thursday",
     "Friday",
     "Saturday"
+];
+
+export const ROLES = [
+    "Administrator",
+    "Employer",
+    "Supervisor",
+    "Employee",
+    /*"Constractor",
+    "Intern",
+    "Other"*/
 ]

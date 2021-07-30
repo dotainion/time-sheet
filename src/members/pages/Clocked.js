@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import Clock from 'react-clock';
 import StopClock from 'react-stop-clock';
 import 'react-clock/dist/Clock.css';
-import { token } from '../token/Tokenize';
-import { addEndLog, addStartLog } from '../database/dbActions';
-import { useAuth } from '../auth/Authentication';
-import { UserNavBar } from '../container/UserNavBar';
-import { tools } from '../tools/Tools';
+import { token } from '../../token/Tokenize';
+import { useAuth } from '../../auth/Authentication';
+import { UserNavBar } from '../../container/UserNavBar';
+import { tools } from '../../tools/Tools';
+import { addEndLog, addStartLog, getInProgressLog } from '../../database/logs/LogDb';
 
 
 const {
@@ -52,19 +52,24 @@ export const Clocked = () =>{
             await addStartTimeLog();
             window.location.reload();
         }else{
-
+            alert("Already started");
         }
     }
 
     const onEnd = async() =>{
         if (isActive()){
-            endRef.current.innerText = tools.time.time();
+            endRef.current.innerText = tools.time.time() || "";
             stopTimer();
             token.clear();
             await addEndTimeLog();
         }else{
-            
+            alert("Already ended");
         }
+    }
+
+    const setStartTime = async() =>{
+        const time = await getInProgressLog(user?.id);
+        startRef.current.innerText = tools.time.time(time?.[0]?.info?.start) || "";
     }
 
     const isActive = () =>{
@@ -73,6 +78,7 @@ export const Clocked = () =>{
 
     useEffect(()=>{
         if (!isActive()) stopTimer();
+        else setStartTime();
     }, []);
  
     useEffect(() => {
@@ -88,13 +94,17 @@ export const Clocked = () =>{
                     <TimerComponent labels={{ minutes: 'min' }}/>
                 </div>
                 <div style={{}}>
-                    <button onClick={onStart} className="time-btn btn-success">
-                        <div>Start</div>
-                        <span ref={startRef} />
+                    <button onClick={onStart} className="time-btn btn-success relative">
+                        <div className="float-center">
+                            <div>Start</div>
+                            <span ref={startRef} />
+                        </div>
                     </button>
-                    <button onClick={onEnd} className="time-btn btn-warning">
-                        <div>End</div>
-                        <span ref={endRef} />
+                    <button onClick={onEnd} className="time-btn btn-warning relative">
+                        <div className="float-center">
+                            <div>End</div>
+                            <span ref={endRef} />
+                        </div>
                     </button>
                 </div>
             </div>

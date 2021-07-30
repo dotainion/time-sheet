@@ -24,6 +24,18 @@ export const getDataByField = async(collection,queryKey,queryValue,limit=false) 
     return allData;
 }
 
+export const getDataByDoubleField = async(collection,queryKey,queryValue,queryKey2,queryValue2,limit=false) =>{
+    let allData = [];
+    let accountRef = "";
+    if (limit !== false) accountRef = db.collection(collection).where(queryKey,"==",queryValue).where(queryKey2,"==",queryValue2).limit(limit);
+    else accountRef = db.collection(collection).where(queryKey,"==",queryValue).where(queryKey2,"==",queryValue2);
+    let data = await accountRef.get();
+    data.forEach((record) => {
+        allData.push({ id: record.id, info: record.data() });
+    });
+    return allData;
+}
+
 export const getDataById = async(collection, uId) =>{
     if(uId){
         const aUser = db.collection(collection).doc(uId);

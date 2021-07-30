@@ -4,28 +4,17 @@ import { useAuth } from '../auth/Authentication';
 import { Toolbar } from '../widgets/Toolbar';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoPrimitiveDot } from 'react-icons/go';
+import { SelectOptions } from '../widgets/SelectOptions';
 
-export const NavigationBar = ({menues, onClick, datePicker, onDatePicker, returnValue, router, children}) =>{
+export const NavigationBar = ({menues, onOptionClick, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
 
     const [navToggle, setNavToggle] = useState(true);
-    const [selected, setSelected] = useState("");
-
-    const command = (value) =>{
-        setSelected(value?.title);
-        toggleNav();
-        if (router){
-            history.push(value?.route);
-        }
-        if (returnValue){
-            onClick?.(value?.title);
-        }
-    }
 
     const isActive = (nav) =>{
-        if (history.location.pathname === nav?.route || nav?.title === selected){
+        if (history.location.pathname === nav?.route){
             return "nav-btn-is-active";
         }
         return "";
@@ -46,7 +35,7 @@ export const NavigationBar = ({menues, onClick, datePicker, onDatePicker, return
                 </div>
                 {menues?.map((nav, key)=>(
                     <div
-                        onClick={()=>command(nav)}
+                        onClick={()=>history.push(nav?.route)}
                         className={`nav-btn ${isActive(nav) && "nav-btn-is-active"}`}
                         key={key}>
                         <span>{nav?.title}</span>
@@ -63,7 +52,9 @@ export const NavigationBar = ({menues, onClick, datePicker, onDatePicker, return
                     datePicker={datePicker}
                     onMenuClick={toggleNav} 
                     onDatePicker={onDatePicker} 
+                    onOptionClick={onOptionClick}
                 />
+                <SelectOptions onChange={onOptionChange} defaultValue={defaultOptionValue} options={options} cssClass="nav-option-select" />
                 {children}
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../auth/Authentication';
-import { routes } from '../routes/Routes';
+import { adminRoutes, routes } from '../routes/Routes';
 
 
 export const SignIn = () =>{
@@ -25,9 +25,9 @@ export const SignIn = () =>{
     useEffect(()=>{
         if (isAuthenticated){
             if (user?.role === "Administrator"){
-                history.push(routes.admin)
+                history.push(adminRoutes.welcome)
             }else{
-                history.push(routes.clocked);
+                history.push(routes.welcome);
             }
         }
     }, [user]);

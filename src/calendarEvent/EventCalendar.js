@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { calendarUtils } from './Utils';
 import { tools } from '../tools/Tools';
-import { week } from '../contents/lists';
+import { WEEK } from '../contents/lists';
 import { AsignSchedule } from './AsignSchedule';
 import { EventSideMenu } from './EventSideMenu';
 import { ButtonOption } from '../widgets/ButtonOption';
 import { BiDotsVertical } from 'react-icons/bi';
+import { addSchedule } from '../database/schedules/SchedulesDb';
+import { useStore } from '../state/stateManagement';
 
 /**
  * @param members is a list of all members 
@@ -15,8 +17,10 @@ let holdScheduleDate = [];
 let holdTempDateForComment = {};
 
 const utils = calendarUtils.init(new Date().getMonth(), new Date().getFullYear());
-
+const monthDates = utils.get();
 export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
+    const { settings } = useStore();
+
     const [calendarDate, setCalendarDate] = useState([]);
     const [showAsignTask, setShowAsignTask] = useState(false);
     const [initValuetoBeEdited, setInitValuetoBeEdited] = useState(null);
@@ -87,19 +91,18 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
 
     const onAddDate = (id, date) =>{;
         heilight(id);
-        parseSchedule({date,comment:null});
+        parseSchedule({date,comment:null, duration:settings?.durationDefault});
     }
 
     const onPushEdit = (obj) =>{
-        holdScheduleDate[obj?.index] = {date:obj?.date, comment:obj?.comment};
+        holdScheduleDate[obj?.index] = {date:obj?.date, comment:obj?.comment, duration:obj?.duration};
     }
 
-    const onPushComments = (comment) =>{
+    const onPushComments = (obj) =>{ 
         if (!holdTempDateForComment?.id || !holdTempDateForComment?.date) return;
         const {date, id} = holdTempDateForComment;
         heilight(id);
-        parseSchedule({date, comment});
-        setInitValuetoBeEdited(null);
+        parseSchedule({date, comment:obj?.comment, duration:obj?.duration});
     }
 
     const onAddComment = (id, date) =>{
@@ -124,38 +127,52 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
 
     //check if date included in asign dates
     const isTaskAsign = (date) =>{
-        for (let time of tasksAsign){
-            if (tools.time.date(time?.info?.date) === tools.time.date(date)){
-                return time?.info?.comment;
+        for (let time of tasksAsign || []){
+            if (tools.time.date(time?.date) === tools.time.date(date)){
+                return {comment: time?.comment, asign:true};
             }
         }
         return null;
     }
 
-    //will iterate through each users and check if any user was mark as unasign to prevent asignment
-    const onAsignSchedule = (users) =>{
-
+    const configScheduleTimeStamp = () =>{
+        let objTimeStamp = [];
+        for (let obj of holdScheduleDate){
+            obj["date"] = tools.time.digits(obj?.date);
+            objTimeStamp.push(obj);
+        }
+        holdScheduleDate = objTimeStamp;
+        return objTimeStamp;
     }
 
+    //will iterate through each users and check if any user was mark as unasign to prevent asignment
+    //for now user is not being unasign
+    //Note: unasignment should be handled in EventSideMenu.js
+    const onAsignSchedule = async(users) =>{
+        if (!users?.length) return alert("No members selected");
+        if (!holdScheduleDate.length) return alert("No schedule selected");
+        configScheduleTimeStamp();
+        for (let user of users){
+            await addSchedule({schedules: holdScheduleDate},user?.id);
+        }
+        alert("Tasks asigned");
+    }
 
     useEffect(()=>{
         let data = [];
         if (readOnly){
-            for (let dateObj of utils.get()){
+            for (let dateObj of monthDates){
                 let tempArray = [];
                 for (let time of dateObj){
-                    const comment = isTaskAsign(time?.value);
-                    if (comment) tempArray.push({...time, comment, isAsign: true});
+                    const asignment = isTaskAsign(time?.value);
+                    if (asignment?.asign) tempArray.push({...time, comment: asignment?.comment, isAsign: true});
                     else tempArray.push(time);
                 }
                 data.push(tempArray);
             }
-        }else{
-            data = utils.get();
-        }
+        }else data = monthDates;
         setCalendarDate(data);
-        return ()=> null;
-    }, []);
+    }, [tasksAsign]);
     return(
         <div className="float-center calendar-event">
             <div className="flex">
@@ -172,16 +189,16 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
                 </div>
                 <div className="max-width calendar-event-on-mobile">
                     <div className="calendar-event-week">
-                        {week?.map((month, key)=>(
+                        {WEEK?.map((month, key)=>(
                             <div className="calendar-event-week-header" key={key}>
                                 <div className="">{month}</div>
                             </div>
                         ))}
                     </div>
                     <div className="relative" style={{background:"var(--bg-fade-horizontal)"}}>
-                        {calendarDate?.map((weekDate, key)=>(
+                        {calendarDate?.map?.((weekDate, key)=>(
                             <div className="calendar-event-week" key={key}>
-                                {weekDate?.map((date, key)=>(
+                                {weekDate?.map?.((date, key)=>(
                                     <div 
                                         //onClick, onMouseEnter and onMouseLeave will show <ButtonOption>
                                         //if date value is stared that will determine which <buttonOption? will be display on hover
@@ -230,6 +247,7 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
                             onClose={()=>{
                                 setShowAsignTask(false);
                                 holdTempDateForComment = {};
+                                setInitValuetoBeEdited(null);
                             }}
                             onAdd={onPushComments}
                             onEdit={onPushEdit}

@@ -3,10 +3,11 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { Calendar } from './Calendar';
 import { MdDateRange } from 'react-icons/md';
 import { tools } from '../tools/Tools';
-import { useStateMangement } from '../stateManagement/stateManagement';
+import { useStore } from '../state/stateManagement';
+import { HiDotsVertical } from 'react-icons/hi';
 
-export const Toolbar = ({onMenuClick, datePicker, onDatePicker}) =>{
-    const { dateObject, setDateObject } = useStateMangement();
+export const Toolbar = ({onMenuClick, onOptionClick, datePicker, onDatePicker}) =>{
+    const { dateObject, setDateObject } = useStore();
     const [showCalendar, setShowCalendar] = useState();
     const [dateType, setDateType] = useState("");
 
@@ -56,6 +57,7 @@ export const Toolbar = ({onMenuClick, datePicker, onDatePicker}) =>{
                         </div>
                     </div>
                 </div>
+                <HiDotsVertical onClick={onOptionClick} className="float-right" style={{fontSize:"20px",right:"15px",display:!onOptionClick && "none"}} />
             </div>
             <Calendar
                 isOpen={showCalendar} 

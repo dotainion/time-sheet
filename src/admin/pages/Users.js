@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import { ContentsWrapper } from '../../container/ContentsWrapper';
-import { AsignTimeSheet } from './AsignTimeSheet';
+import { AsignTimeSheet } from '../widgets/AsignTimeSheet';
 import { AiOutlineFieldTime } from 'react-icons/ai';
+import { AdminNavBar } from '../../container/AdminNavBar';
+import { getUsers } from '../../database/accounts/AccountsDb';
 
 let checkboxIds = [];
 let userAppended = [];
-export const Users = ({isOpen, members}) =>{
+export const Users = () =>{
+    const [users, setUsers] = useState([]);
     const [asignTimeSheet, setAsignTimeSheet] = useState(false);
     const [usersSelected, setUsersSelected] = useState([]);
     const [showSelectOption, setShowSelectOption]= useState(false);
@@ -21,7 +24,7 @@ export const Users = ({isOpen, members}) =>{
         for (let id of checkboxIds){
             document.getElementById(id).checked = state;
         }
-        if (state) userAppended = members;
+        if (state) userAppended = users;
         else userAppended = [];
         setIdToggle(state);
     }
@@ -70,48 +73,51 @@ export const Users = ({isOpen, members}) =>{
         }
     }
 
+    const initUsers = async() =>{
+        setUsers(await getUsers());
+    }
+
     useEffect(()=>{
-        //trigger close when page close
-        if (!isOpen)setAsignTimeSheet(false);
-    }, [isOpen]);
+        initUsers()
+    }, []);
     return (
-        <>
-        <ContentsWrapper isOpen={isOpen}>
-            <div hidden={!showSelectOption} className="calendar-event-floating-btn float-top-left" style={{top:"-30px"}}>
-                <div>
-                    <button onClick={()=>onSelectAll(!idToggle)} className="btn btn-hover" style={{color:"blue"}}>{idToggle?"Deselect All":"Select All"}</button>
-                    <button onClick={onShowAsigntimeSheet} className="btn btn-hover" style={{color:"teal"}}>Asign</button>
-                    <button onClick={onCancelSelect} className="btn btn-hover" style={{color:"red"}}>Cancel</button>
-                </div>
-            </div>
-            {
-                members?.length?
-                members?.map((user, key)=>(
-                    <div className="flex content-container" key={key}>
-                        <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} className="float-left" style={{left:"-50px"}} type="checkbox"/>
-                        <IoPersonCircleOutline className="float-center log-icon" />
-                        <div className="content-inner-container">
-                            <div><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                            <div>{user?.info?.email}</div>
-                            <div>Role: {user?.info?.role}</div>
-                        </div>
-                        <div className="time-icon-container">
-                            <AiOutlineFieldTime
-                                className="float-right time-icon"
-                                style={{color:showSelectOption && "gray",zIndex:"99"}}
-                                onClick={()=>{!showSelectOption && selectSingleUser(user)}}
-                            />
-                        </div>
+        <AdminNavBar>
+            <ContentsWrapper isOpen={true}>
+                <div hidden={!showSelectOption} className="calendar-event-floating-btn float-top-left" style={{top:"-30px"}}>
+                    <div>
+                        <button onClick={()=>onSelectAll(!idToggle)} className="btn btn-hover" style={{color:"blue"}}>{idToggle?"Deselect All":"Select All"}</button>
+                        <button onClick={onShowAsigntimeSheet} className="btn btn-hover" style={{color:"teal"}}>Asign</button>
+                        <button onClick={onCancelSelect} className="btn btn-hover" style={{color:"red"}}>Cancel</button>
                     </div>
-                )):
-                <div>No Users</div>
-            }
-        </ContentsWrapper>
-        <AsignTimeSheet
-            usersSelected={usersSelected}
-            isOpen={asignTimeSheet}
-            onClose={()=>setAsignTimeSheet(false)}
-        />
-        </>
+                </div>
+                {
+                    users?.length?
+                    users?.map((user, key)=>(
+                        <div className="flex content-container" key={key}>
+                            <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} className="float-left" style={{left:"-50px"}} type="checkbox"/>
+                            <IoPersonCircleOutline className="float-center log-icon" />
+                            <div className="content-inner-container">
+                                <div><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                <div>{user?.info?.email}</div>
+                                <div>Role: {user?.info?.role}</div>
+                            </div>
+                            <div className="time-icon-container">
+                                <AiOutlineFieldTime
+                                    className="float-right time-icon"
+                                    style={{color:showSelectOption && "gray",zIndex:"99"}}
+                                    onClick={()=>{!showSelectOption && selectSingleUser(user)}}
+                                />
+                            </div>
+                        </div>
+                    )):
+                    <div>No Users</div>
+                }
+            </ContentsWrapper>
+            <AsignTimeSheet
+                usersSelected={usersSelected}
+                isOpen={asignTimeSheet}
+                onClose={()=>setAsignTimeSheet(false)}
+            />
+        </AdminNavBar>
     )
 }

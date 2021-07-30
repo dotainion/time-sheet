@@ -17,6 +17,7 @@ code {
   --bg-secondary: rgb(36, 63, 63);
   --bg-tertiary: rgb(30, 37, 37);
   --bg-fade-horizontal: linear-gradient(to right, teal 0%, rgb(0, 10, 10) 100%);
+  --bg-fade-horizontal-reverse: linear-gradient(to left, teal 0%, rgb(0, 10, 10) 100%);
   --bg-fade-vertical: linear-gradient(to bottom, teal 0%, rgb(0, 10, 10) 100%);
   --bg-fade-vertical-light: linear-gradient(to bottom, teal 0%, rgb(1, 46, 46) 100%);
   --bg-fade-vertical-light-hover: linear-gradient(to bottom, rgb(1, 190, 190) 0%, rgb(1, 46, 46) 100%);

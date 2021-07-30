@@ -1,16 +1,22 @@
+import { MONTHS, WEEK } from "../contents/lists";
+
 class Time{
-    strObjs = (dateNum) =>{
-        const date = new Date(dateNum).toDateString();
-        const time = new Date(dateNum).toLocaleTimeString();
-        return {date, time};
-    }
     time(date){
         if (date) return new Date(date).toLocaleTimeString();
         return new Date().toLocaleTimeString();
     }
+    addHour(date, hour){
+        let d = new Date(date);
+        d.setHours(hour || 0);
+        return this.digits(d);
+    }
     date(date){
         if (date) return new Date(date).toDateString();
         return new Date().toDateString();
+    }
+    year(date){
+        if (date) return new Date(date).getFullYear();
+        return new Date().getFullYear();
     }
     digits(date){
         if (date) return new Date(date).getTime();
@@ -19,6 +25,52 @@ class Time{
     day(date){
         if (date) return new Date(date).getDate();
         return new Date().getDate();
+    }
+    hour(date){
+        if (date) return new Date(date).getHours();
+        return new Date().getHours();
+    }
+    week(date){
+        if (date) return new Date(date).getDay();
+        return new Date().getDay();
+    }
+    month(date){
+        if (date) return new Date(date).getMonth();
+        return new Date().getMonth();
+    }
+    strObjs = (dateNum) =>{
+        return {date:this.date(dateNum), time:this.time()};
+    }
+    strWeek(date){
+        if (date) return WEEK[this.week(date)];
+        return WEEK[this.week()];
+    }
+    strMonth(date){
+        if (date) return MONTHS[this.month(date)];
+        return MONTHS[this.month()];
+    }
+    subHour(date1, date2){
+        return "-";
+    }
+    subDays(date1, date2) {
+        var t2 = this.digits(date2);
+        var t1 = this.digits(date1);
+        return parseInt((t2 - t1) / (24 * 3600* 1000));
+    }
+    subWeeks(date1, date2) {
+        var t2 = this.digits(date2);
+        var t1 = this.digits(date1);
+        return parseInt((t2 - t1) / (24 * 3600 * 1000 * 7));
+    }
+    subMonths(date1, date2) {
+        var d1Y = this.year(date1);
+        var d2Y = this.year(date2);
+        var d1M = this.month(date1);
+        var d2M = this.month(date2);
+        return (d2M + 12 * d2Y) - (d1M + 12 * d1Y);
+    }
+    subYears(date1, date2) {
+        return this.year(date2) - this.year(date1);
     }
     sort(array){
         array.sort(function(a, b){
@@ -41,8 +93,27 @@ class Time{
     }
 }
 
+class GoLocation{
+    run(){
+        navigator.permissions .query({ name: "geolocation" }) .then(function (result) {
+            if (result.state === "granted") {
+                console.log(result.state);
+                //If granted then you can directly call your function here
+            } else if (result.state === "prompt") {
+                console.log(result.state);
+            } else if (result.state === "denied") {
+                //If denied then you have to show instructions to enable location
+            }
+            result.onchange = function () {
+                console.log(result.state);
+            };
+        });
+    }
+}
+
 class Tools{
     time = new Time();
+    goLocation = new GoLocation();
 }
 
 export const tools = new Tools();

@@ -1,16 +1,14 @@
 import React from 'react';
 import { NavigationBar } from './NavigationBar';
-import { adminNavs } from '../contents/lists';
+import { ADMIN_SIDE_NAV } from '../contents/lists';
 
-export const AdminNavBar = ({onClick, datePicker, onDatePicker, children}) =>{
+export const AdminNavBar = ({datePicker, onDatePicker, children}) =>{
 
     return(
         <NavigationBar
-            returnValue 
-            onClick={onClick} 
-            datePicker={datePicker}
-            onDatePicker={onDatePicker} 
-            menues={adminNavs}
+            //datePicker={datePicker}
+            //onDatePicker={onDatePicker} 
+            menues={ADMIN_SIDE_NAV}
         >
             {children}
         </NavigationBar>

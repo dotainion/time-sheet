@@ -1,8 +1,9 @@
-import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export const EventSideMenu = ({onAsign, onClose, usersSelected}) =>{
-    
+    const triggerAsign = () =>{
+        onAsign?.(usersSelected);
+    }
     return(
         <div className="event-side-menu">
             <div className="relative" style={{width:"100px",padding:"10px"}}>
@@ -10,7 +11,7 @@ export const EventSideMenu = ({onAsign, onClose, usersSelected}) =>{
                 <div>title</div>
                 <div className="event-side-menu-btn">
                     <div className="float-center">
-                        <button onClick={onAsign} className="btn btn-hover" style={{color:"teal"}}>Asign</button>
+                        <button onClick={triggerAsign} className="btn btn-hover" style={{color:"teal"}}>Asign</button>
                     </div>
                 </div>
                 

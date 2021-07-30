@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { auth } from '../config/AuthConfig';
-import { addUser, getUser } from '../database/dbActions';
+import { addUser, getUser } from '../database/accounts/AccountsDb';
 import { routes } from '../routes/Routes';
 
 const AuthContextProvider = createContext();
@@ -43,11 +43,16 @@ export const AuthContext = ({children}) =>{
         }
     }
 
+    const initialize = async() =>{
+
+    }
+
     useEffect(()=>{
         auth.onAuthStateChanged(async(user)=>{
             let authUser = await getUser(user?.uid);
             if (Object.keys(authUser || {}).length) authUser["id"] = user?.uid;
             setUser(authUser);
+            await initialize();
             setIsAuthenticated(user);
             setLoading(false);
         });
@@ -58,7 +63,7 @@ export const AuthContext = ({children}) =>{
         signIn,
         signOut,
         createUser,
-        isAuthenticated
+        isAuthenticated,
     }
     return(
         <AuthContextProvider.Provider value={providerValue}>

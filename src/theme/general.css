@@ -104,10 +104,12 @@
   transform: scale(1.05);
 }
 .time-btn{
+  height: 50px;
   margin: 15px;
   padding: 10px;
   min-width: 100px;
   border-radius: 10px;
+  white-space: nowrap;
   box-shadow: 2px 2px 5px black;
 }
 .btn-success{
@@ -152,6 +154,11 @@
 }
 .nav-btn-is-active{
   fill: orange;
+}
+.nav-option-select{
+  float: right;
+  margin-right: 60px;
+  box-shadow: 4px 4px 10px black;
 }
 .input{
   padding: 5px;
@@ -206,6 +213,11 @@
   width: 90%;
   overflow: hidden;
   white-space: nowrap;
+}
+.content-inner-container:hover{
+  transform: scale(1.03);
+  color: orange;
+  font-size: 17px;
 }
 .log-icon{
   left: 0;
@@ -364,9 +376,8 @@
   white-space: nowrap;
   overflow: hidden;
   border-radius: 10px;
-  padding: 5px;
-  cursor: pointer;
   user-select: none;
+  padding: 5px;
   box-shadow: 1px 1px 5px black;
 }
 .calendar-contents:hover{
@@ -376,6 +387,7 @@
   overflow: visible;
   z-index: 99;
   color: teal;
+  user-select: text;
   white-space: normal;
   background-color: white;
 }
@@ -441,4 +453,57 @@ select{
 }
 .hide{
   display: none;
+}
+.time-card-name{
+  font-size: 20px;
+  padding: 8px;
+  color: orange;
+  user-select: none;
+  background: var(--bg-fade-horizontal-reverse);
+}
+.time-card-scroll{
+  overflow-y: auto;
+  height: 47vh;
+}
+.time-card-container{
+  position: relative;
+  display: flex;
+  color: white;
+  cursor: pointer;
+}
+.time-card-container:hover .time-card-comment{
+  display: block;
+  width: auto;
+  min-width: 200px;
+  max-width: 80%;
+  overflow: visible;
+  z-index: 99;
+  color: teal;
+  user-select: text;
+  background-color: white;
+  white-space: normal;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 1px 1px 5px black;
+}
+.time-card-content{
+  width: 50%;
+  padding: 8px;
+}
+.time-card-header-container{
+  display: flex;
+  width: 100%;
+  color: orange;
+  font-weight: bold;
+  user-select: none;
+  background-color: teal;
+  border-bottom: 1px solid white;
+}
+.time-card-calc-container{
+  display: flex;
+  width: 100%;
+  font-weight: bold;
+  color: orange;
+  user-select: none;
+  background-color: teal;
 }
