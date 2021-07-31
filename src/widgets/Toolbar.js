@@ -6,7 +6,7 @@ import { tools } from '../tools/Tools';
 import { useStore } from '../state/stateManagement';
 import { HiDotsVertical } from 'react-icons/hi';
 
-export const Toolbar = ({onMenuClick, onOptionClick, datePicker, onDatePicker}) =>{
+export const Toolbar = ({onMenuClick, on3DotClick, datePicker, onDatePicker}) =>{
     const { dateObject, setDateObject } = useStore();
     const [showCalendar, setShowCalendar] = useState();
     const [dateType, setDateType] = useState("");
@@ -57,7 +57,7 @@ export const Toolbar = ({onMenuClick, onOptionClick, datePicker, onDatePicker}) 
                         </div>
                     </div>
                 </div>
-                <HiDotsVertical onClick={onOptionClick} className="float-right" style={{fontSize:"20px",right:"15px",display:!onOptionClick && "none"}} />
+                <HiDotsVertical onClick={on3DotClick} className="float-right" style={{fontSize:"20px",right:"15px",display:!on3DotClick && "none"}} />
             </div>
             <Calendar
                 isOpen={showCalendar} 

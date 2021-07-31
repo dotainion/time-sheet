@@ -15,6 +15,12 @@ export const AdminLogs = () =>{
     const [logs, setLogs] = useState([]);
     const [userId, setUserId] = useState([]);
 
+    const onToggleView = [
+        [...users],
+        [{title: "List view",command: ()=>setToggleView(true)},
+        {title: "Clasic view",command: ()=>setToggleView(false)}]
+    ];
+
     const searchLogsById = async(id) =>{
         setUserId(id);
         setLogs(await getLogsById(id));
@@ -25,13 +31,16 @@ export const AdminLogs = () =>{
         setLogs(await getLogsRange(from, to, userId));
     }
 
-    const onToggleView = (cmd) =>{
-        if (cmd === "true") setToggleView(true);
-        if (cmd === "false") setToggleView(false);
-    }
-
     const initUsers = async() =>{
-        setUsers(await getUsers());
+        let tempArray = []
+        for (let user of await getUsers()){
+            tempArray.push({
+                title: `${user?.info?.firstName} ${user?.info?.lastName}`,
+                value: user?.id,
+                command: (value) => searchLogsById(value)
+            });
+        }
+        setUsers(tempArray);
     }
 
     useEffect(()=>{
@@ -39,22 +48,7 @@ export const AdminLogs = () =>{
     }, []);
 
     return (
-        <AdminNavBar>
-            <div className="centered" style={{whiteSpace:"nowrap"}}>
-                <select onChange={(e)=>searchLogsById(e.target.value)} className="input" style={{boxShadow:"4px 4px 5px black"}}>
-                    <option hidden defaultChecked>Select Member</option>
-                    {users?.map((member, key)=>(
-                        <option value={member?.id} key={key}>{`
-                            ${member?.info?.firstName}
-                            ${member?.info?.lastName}
-                        `}</option>
-                    ))}
-                </select>
-                <select onChange={(e)=>onToggleView(e.target.value)} className="input" style={{boxShadow:"4px 4px 5px black",marginLeft:"10px"}}>
-                    <option value={true}>List view</option>
-                    <option value={false}>Clasic view</option>
-                </select>
-            </div>
+        <AdminNavBar options={onToggleView}>
             <ContentsWrapper isOpen={!toggleView} noScroll>
                 <div className="scrollbar" style={{height:"60vh",overflowY:"auto"}}>
                     <TimeLog logs={logs} />

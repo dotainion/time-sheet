@@ -11,13 +11,14 @@ export const AuthContext = ({children}) =>{
     const history = useHistory();
 
     const [loading, setLoading] = useState(true);
+    const [triggerAuthChange, setTriggerAuthChange] = useState();
     const [user, setUser] = useState({});
     const [isAuthenticated, setIsAuthenticated] = useState();
 
     const signIn = async(email, password) =>{
         try{
             const response = await auth.signInWithEmailAndPassword(email, password);
-            return setIsAuthenticated(response);
+            //return setTriggerAuthChange(response);
         }catch(error){
             return {error:error.message};
         }
@@ -37,22 +38,29 @@ export const AuthContext = ({children}) =>{
                 lastName: nUser.lastName,
                 role: nUser.role
             }, response?.user?.uid);
-            return response;
+            //return setTriggerAuthChange(response);
         }catch(error){
             return {error: error.message};
         }
     }
 
     const initialize = async() =>{
-
+        let authUser = await getUser(isAuthenticated?.uid);
+        if (Object.keys(authUser || {}).length){
+            authUser["id"] = isAuthenticated?.uid;
+        }
+        setUser(authUser);
     }
 
     useEffect(()=>{
+        initialize();
+    }, [isAuthenticated]);
+
+    useEffect(()=>{
         auth.onAuthStateChanged(async(user)=>{
-            let authUser = await getUser(user?.uid);
+            /*let authUser = await getUser(user?.uid);
             if (Object.keys(authUser || {}).length) authUser["id"] = user?.uid;
-            setUser(authUser);
-            await initialize();
+            setUser(authUser);*/
             setIsAuthenticated(user);
             setLoading(false);
         });

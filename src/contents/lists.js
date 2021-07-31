@@ -1,4 +1,5 @@
 import { adminRoutes, routes } from "../routes/Routes";
+import { ADMINISTRATOR, SUPERVISOR } from "./AuthValue";
 
 export const ADMIN_SIDE_NAV = [
     { 
@@ -58,11 +59,11 @@ export const WEEK = [
 ];
 
 export const ROLES = [
-    "Administrator",
+    ADMINISTRATOR,
+    SUPERVISOR,
     "Employer",
-    "Supervisor",
     "Employee",
     /*"Constractor",
     "Intern",
     "Other"*/
-]
+];

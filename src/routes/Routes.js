@@ -1,9 +1,13 @@
 const welcomePage = "/welcome";
 const defaults = "/";
+const signIn = "/sign-in";
+const register = "/register";
 
 export const adminRoutes = {
     welcome: welcomePage,
     default: defaults,
+    signIn: signIn,
+    register: register,
     addUser: "/add-user",
     users: "/users",
     logs: "/admin-logs",
@@ -13,7 +17,8 @@ export const adminRoutes = {
 export const routes = {
     welcome: welcomePage,
     default: defaults,
-    signIn: "/sign-in",
+    signIn: signIn,
+    register: register,
     clocked: "/clockec-in-out",
     logs: "/logs",
     settings: "/settings",

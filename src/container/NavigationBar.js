@@ -6,12 +6,14 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoPrimitiveDot } from 'react-icons/go';
 import { SelectOptions } from '../widgets/SelectOptions';
 
-export const NavigationBar = ({menues, onOptionClick, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{
+let TOGGLE_STATE = false;
+export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
 
     const [navToggle, setNavToggle] = useState(true);
+    const [showOptons, setShowOptions] = useState(false);
 
     const isActive = (nav) =>{
         if (history.location.pathname === nav?.route){
@@ -22,6 +24,11 @@ export const NavigationBar = ({menues, onOptionClick, datePicker, onDatePicker, 
 
     const toggleNav = () =>{
         setNavToggle(!navToggle);
+    }
+
+    const onDotMenuToggle = () =>{
+        TOGGLE_STATE = !TOGGLE_STATE
+        setShowOptions(TOGGLE_STATE);
     }
 
     return(
@@ -52,9 +59,19 @@ export const NavigationBar = ({menues, onOptionClick, datePicker, onDatePicker, 
                     datePicker={datePicker}
                     onMenuClick={toggleNav} 
                     onDatePicker={onDatePicker} 
-                    onOptionClick={onOptionClick}
+                    on3DotClick={options && onDotMenuToggle}
                 />
-                <SelectOptions onChange={onOptionChange} defaultValue={defaultOptionValue} options={options} cssClass="nav-option-select" />
+                <div hidden={!showOptons} className="nav-option-select-container centered">
+                    {options?.map?.((opt, key)=>(
+                        <SelectOptions 
+                            onChange={onOptionChange} 
+                            defaultValue={defaultOptionValue} 
+                            options={opt} 
+                            cssClass="nav-option-select" 
+                            key={key}
+                        />
+                    ))}
+                </div>
                 {children}
             </div>
         </div>

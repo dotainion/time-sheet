@@ -22,5 +22,10 @@ code {
   --bg-fade-vertical-light: linear-gradient(to bottom, teal 0%, rgb(1, 46, 46) 100%);
   --bg-fade-vertical-light-hover: linear-gradient(to bottom, rgb(1, 190, 190) 0%, rgb(1, 46, 46) 100%);
   --scrollbar: linear-gradient(to right, rgb(2, 247, 247) 0%, rgb(0, 10, 10) 100%);
+  --dark-translucent: rgb(0, 0, 0,0.40);
   --backdrop: rgb(0, 0, 0,0.50);
+  --dark-orange: rgb(168, 110, 3);
+  --light-blue: rgb(12, 95, 179);
+  --dark-blue: rgb(26, 59, 92);
+  --darker-blue: rgb(8, 28, 48);
 }

@@ -12,7 +12,6 @@ export const Logs = () =>{
 
     const [logs, setLogs] = useState([]);
     const [showView, setShowView] = useState(false);
-    const [showOption, setShowOption] = useState();
 
     const options = [{title:"List view"},{title:"Clasic view"}];
 
@@ -23,10 +22,6 @@ export const Logs = () =>{
 
     const initLogs = async() =>{
         setLogs(await getLogs(user?.id));
-    }
-
-    const toggleMenuOption = (state) =>{
-        setShowOption(state);
     }
 
     const toggleView = (e) =>{
@@ -40,7 +35,7 @@ export const Logs = () =>{
     }, []);
 
     return(
-        <UserNavBar onDatePicker={onSearch} onOptionClick={toggleMenuOption} onOptionChange={toggleView} options={showOption && options}>
+        <UserNavBar onDatePicker={onSearch} onOptionChange={toggleView} options={options}>
             <ContentsWrapper isOpen={showView} maxWith >
                 <TimeLog logs={logs} />
             </ContentsWrapper>

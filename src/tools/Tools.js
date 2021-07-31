@@ -114,6 +114,13 @@ class GoLocation{
 class Tools{
     time = new Time();
     goLocation = new GoLocation();
+    remCharInArr(char, array){
+        let tempArr = [];
+        for (let elem of array || []){
+            tempArr.push(elem.replace(char, ""));
+        }
+        return tempArr;
+    }
 }
 
 export const tools = new Tools();
