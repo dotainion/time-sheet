@@ -5,7 +5,7 @@ import { ADMINISTRATOR, ADMIN_SUPERVISER, SUPERVISOR } from '../../contents/Auth
 import { addUser, getUser } from '../../database/accounts/AccountsDb';
 import { addCreds } from '../../database/credentials/Credentials';
 import { routes } from '../../utils/routes/Routes';
-import { secure } from '../../utils/security/Security';
+import { secure } from '../../security/Security';
 import { tools } from '../../utils/tools/Tools';
 
 const AuthContextProvider = createContext();

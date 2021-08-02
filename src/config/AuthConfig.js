@@ -1,13 +1,14 @@
 import firebase from 'firebase';
+import { FB_API_KEY, FB_APP_ID, FB_AUTH_DOMAIN, FB_MEASUREMENT_ID, FB_MESSAGING_SENDER_ID, FB_PROJECT_ID, FB_STORAGE_BUCKET } from '../security/EnvVariables';
 
 export const fbConfig = {
-    apiKey: "AIzaSyCNju7Xg6KXSmrDGi-Sl0NPihWdWue0pmA",
-    authDomain: "time-sheet-b2950.firebaseapp.com",
-    projectId: "time-sheet-b2950",
-    storageBucket: "time-sheet-b2950.appspot.com",
-    messagingSenderId: "263715555278",
-    appId: "1:263715555278:web:3ec6c411410812fb678d9f",
-    measurementId: "G-Z1WGN8N82Y"
+    apiKey: FB_API_KEY,
+    authDomain: FB_AUTH_DOMAIN,
+    projectId: FB_PROJECT_ID,
+    storageBucket: FB_STORAGE_BUCKET,
+    messagingSenderId: FB_MESSAGING_SENDER_ID,
+    appId: FB_APP_ID,
+    measurementId: FB_MEASUREMENT_ID
 };
 
 const app = firebase.initializeApp(fbConfig);
