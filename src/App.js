@@ -6,21 +6,21 @@ import './theme/text.css';
 import './theme/animate.css';
 import { Logs } from './members/pages/Logs';
 import { Clocked } from './members/pages/Clocked';
-import { AuthContext } from './auth/Authentication';
+import { AuthContext } from '././state/auth/Authentication';
 import { Authenticate } from './Authenticate';
-import { adminRoutes, routes } from './routes/Routes';
-import { SignIn } from './entryPoint/signIn/SignIn';
+import { adminRoutes, routes } from '././utils/routes/Routes';
+import { SignIn } from '././public/entryPoint/signIn/SignIn';
 import { Settings } from "./settings/user/Settings";
-import { StateMangement } from "./state/stateManagement";
+import { StateMangement } from "./state/stateManagement/stateManagement";
 import { TimeSheet } from "./members/pages/TimeSheet";
-import { AddUser } from "./admin/pages/AddUser";
-import { Welcome } from "./welcome/Welcome";
+import { AddUser } from "././private/admin/pages/AddUser";
+import { Welcome } from "././public/welcome/Welcome";
 import { AdminSettings } from "./settings/admin/AdminSettings";
-import { Users } from "./admin/pages/Users";
-import { AdminLogs } from "./admin/pages/AdminLogs";
-import { Page404 } from "./404Error/404Errror";
-import { Register } from "./entryPoint/register/Register";
-import { ErrorHandler } from "./errors/Error";
+import { Users } from "././private/admin/pages/Users";
+import { AdminLogs } from "././private/admin/pages/AdminLogs";
+import { Page404 } from "./public/404Error/404Errror";
+import { Register } from "././public/entryPoint/register/Register";
+import { ErrorHandler } from "././state/errors/Error";
 
 
 function App() {

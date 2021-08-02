@@ -1,11 +1,10 @@
 import React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { Page404 } from './404Error/404Errror';
-import { NotAutherize } from './404Error/NotAutherize';
-import { useAuth } from './auth/Authentication';
+import { NotAutherize } from './public/404Error/NotAutherize';
+import { useAuth } from './state/auth/Authentication';
 import { ADMIN_SUPERVISER } from './contents/AuthValue';
-import { adminRoutes, routes } from './routes/Routes';
-import { Welcome } from './welcome/Welcome';
+import { adminRoutes, routes } from './utils/routes/Routes';
+import { Welcome } from '././public/welcome/Welcome';
 
 
 export const Authenticate = ({Component}) =>{

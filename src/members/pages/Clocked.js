@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import Clock from 'react-clock';
 import StopClock from 'react-stop-clock';
 import 'react-clock/dist/Clock.css';
-import { token } from '../../token/Tokenize';
-import { useAuth } from '../../auth/Authentication';
+import { token } from '../../utils/token/Tokenize';
+import { useAuth } from '../../state/auth/Authentication';
 import { UserNavBar } from '../../container/UserNavBar';
-import { tools } from '../../tools/Tools';
+import { tools } from '../../utils/tools/Tools';
 import { addEndLog, addStartLog, getInProgressLog } from '../../database/logs/LogDb';
 
 

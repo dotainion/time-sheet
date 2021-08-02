@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAuth } from '../../auth/Authentication';
-import { EventCalendar } from '../../calendarEvent/EventCalendar';
+import { useAuth } from '../../state/auth/Authentication';
+import { EventCalendar } from '../../apps/calendarEvent/EventCalendar';
 import { Modal } from '../../container/Modal';
 import { UserNavBar } from '../../container/UserNavBar';
 import { getSchedule } from '../../database/schedules/SchedulesDb';
-import { TimeCart } from '../../widgets/TimeCard';
+import { TimeCart } from '../../components/widgets/TimeCard';
 
 
 export const TimeSheet = () =>{

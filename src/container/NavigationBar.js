@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../auth/Authentication';
-import { Toolbar } from '../widgets/Toolbar';
+import { useAuth } from '../state/auth/Authentication';
+import { Toolbar } from '../components/widgets/Toolbar';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoPrimitiveDot } from 'react-icons/go';
-import { SelectOptions } from '../widgets/SelectOptions';
+import { SelectOptions } from '../components/widgets/SelectOptions';
 
 let TOGGLE_STATE = false;
 export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{

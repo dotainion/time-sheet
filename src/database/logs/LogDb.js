@@ -1,5 +1,6 @@
+
 import { collection } from "../../config/databaseConfig";
-import { tools } from "../../tools/Tools";
+import { tools } from "../../utils/tools/Tools";
 import { addData, getDataByDoubleField, getDataByField, updateDataByField } from "../CollectionRef";
 
 export const addEndLog = async(data, id) =>{

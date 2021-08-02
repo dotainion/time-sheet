@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../../auth/Authentication';
+import { useAuth } from '../../state/auth/Authentication';
 import { UserNavBar } from '../../container/UserNavBar';
-import { TimeLog } from '../../widgets/TimeLog';
+import { TimeLog } from '../../components/widgets/TimeLog';
 import { ContentsWrapper } from '../../container/ContentsWrapper';
-import { TimeCart } from '../../widgets/TimeCard';
+import { TimeCart } from '../../components/widgets/TimeCard';
 import { getLogs, getLogsRange } from '../../database/logs/LogDb';
 
 

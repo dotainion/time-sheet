@@ -1,4 +1,4 @@
-import { adminRoutes, routes } from "../routes/Routes";
+import { adminRoutes, routes } from "../utils/routes/Routes";
 import { ADMINISTRATOR, SUPERVISOR } from "./AuthValue";
 
 export const ADMIN_SIDE_NAV = [
