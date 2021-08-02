@@ -1,5 +1,5 @@
 import { collection } from "../../config/databaseConfig";
-import { addData, getData, getDataById } from "../CollectionRef";
+import { addData, getData, getDataByDoubleField, getDataByField, getDataById } from "../CollectionRef";
 
 export const addUser = async(newUser, id) =>{
     try{
@@ -20,9 +20,10 @@ export const getUser = async(id) =>{
     }
 }
 
-export const getUsers = async(limit=false) =>{
+export const getUsers = async(accessId, supervisorId, limit=false) =>{
     try{
-        return await getData(collection.user,limit);
+        const response = await getDataByDoubleField(collection.user,"accessId",accessId,"supervisorId",supervisorId, limit);
+        return response.filter((record)=>!record?.id.includes(supervisorId));
     }catch(error){
         console.log(error);
         return [];

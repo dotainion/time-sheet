@@ -6,8 +6,10 @@ import { useStore } from '../../state/stateManagement';
 import { TimeCart } from '../../widgets/TimeCard';
 import { AdminNavBar } from '../../container/AdminNavBar';
 import { getUsers } from '../../database/accounts/AccountsDb';
+import { useAuth } from '../../auth/Authentication';
 
 export const AdminLogs = () =>{
+    const { user } = useAuth();
     const { dateObject } = useStore();
 
     const [users, setUsers] = useState([]);
@@ -15,10 +17,10 @@ export const AdminLogs = () =>{
     const [logs, setLogs] = useState([]);
     const [userId, setUserId] = useState([]);
 
-    const onToggleView = [
+    const membersList = [
         [...users],
-        [{title: "List view",command: ()=>setToggleView(true)},
-        {title: "Clasic view",command: ()=>setToggleView(false)}]
+        [{title: "List view",command: ()=>setToggleView(false)},
+        {title: "Clasic view",command: ()=>setToggleView(true)}]
     ];
 
     const searchLogsById = async(id) =>{
@@ -33,10 +35,10 @@ export const AdminLogs = () =>{
 
     const initUsers = async() =>{
         let tempArray = []
-        for (let user of await getUsers()){
+        for (let mebr of await getUsers(user?.accessId, user?.id)){
             tempArray.push({
-                title: `${user?.info?.firstName} ${user?.info?.lastName}`,
-                value: user?.id,
+                title: `${mebr?.info?.firstName} ${mebr?.info?.lastName}`,
+                value: mebr?.id,
                 command: (value) => searchLogsById(value)
             });
         }
@@ -48,13 +50,13 @@ export const AdminLogs = () =>{
     }, []);
 
     return (
-        <AdminNavBar options={onToggleView}>
-            <ContentsWrapper isOpen={!toggleView} noScroll>
+        <AdminNavBar options={membersList}>
+            <ContentsWrapper isOpen={toggleView} noScroll>
                 <div className="scrollbar" style={{height:"60vh",overflowY:"auto"}}>
                     <TimeLog logs={logs} />
                 </div>
             </ContentsWrapper>
-            <TimeCart isOpen={toggleView}  timeOptions={logs} />
+            <TimeCart isOpen={!toggleView}  timeOptions={logs} />
         </AdminNavBar>
     )
 }

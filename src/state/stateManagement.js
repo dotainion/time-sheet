@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../auth/Authentication';
+import { ADMIN_SUPERVISER } from '../contents/AuthValue';
 import { adminRoutes, routes } from '../routes/Routes';
 import { tools } from '../tools/Tools';
+import { LoadingBar } from '../widgets/LoadingBar';
 
 const Management = createContext();
 export const useStore = () => useContext(Management);
@@ -13,6 +15,7 @@ export const StateMangement = ({children}) =>{
     
     const { user, isAuthenticated } = useAuth();
 
+    const [loader, setLoader] = useState(false);
     const [dateObject, setDateObject] = useState({from: initTime, to: initTime});
     const [settings, setSettings] = useState({
         durationDefault: 4
@@ -20,7 +23,7 @@ export const StateMangement = ({children}) =>{
 
     const onContinue = () =>{
         if (isAuthenticated){
-            if (user?.role === "Administrator") history.push(adminRoutes.addUser);
+            if (ADMIN_SUPERVISER.includes(user?.role)) history.push(adminRoutes.addUser);
             else history.push(routes.clocked);
         }
     }
@@ -29,10 +32,12 @@ export const StateMangement = ({children}) =>{
         dateObject,
         setDateObject,
         settings,
-        onContinue
+        onContinue,
+        setLoader
     }
     return(
         <Management.Provider value={providerValue}>
+            <LoadingBar isOpen={loader} />
             {children}
         </Management.Provider>
     )

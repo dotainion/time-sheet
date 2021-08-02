@@ -3,6 +3,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import { Page404 } from './404Error/404Errror';
 import { NotAutherize } from './404Error/NotAutherize';
 import { useAuth } from './auth/Authentication';
+import { ADMIN_SUPERVISER } from './contents/AuthValue';
 import { adminRoutes, routes } from './routes/Routes';
 import { Welcome } from './welcome/Welcome';
 
@@ -29,6 +30,7 @@ export const Authenticate = ({Component}) =>{
         if (Object.values(routes).includes(history.location.pathname)){
             return <NotAutherize/>;
         }
+        return <Component/>;
     }
 
     const userHandler = () =>{
@@ -40,7 +42,7 @@ export const Authenticate = ({Component}) =>{
     }
 
     if (isAuthenticated){
-        if (user?.role === "Administrator"){
+        if (ADMIN_SUPERVISER.includes(user?.role)){
             return adminHandler();
         }
         return userHandler();

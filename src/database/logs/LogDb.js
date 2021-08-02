@@ -51,7 +51,7 @@ export const getLogs = async(id, limit=false) =>{
 
 export const getLogsById = async(id) =>{
     try{
-        return await getDataByField(collection.logs, "id", id);
+        return await getDataByField(collection.logs, "id",id);
     }catch(error){
         console.log(error);
         return [];

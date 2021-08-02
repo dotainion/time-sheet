@@ -7,13 +7,15 @@ import { useError } from '../../errors/Error';
 import { FcCalendar } from 'react-icons/fc';
 import { SubHeaderInfo } from '../widgets/SubHeaderInfo';
 import { SideInfo } from '../widgets/SideInfo';
-import { ADMINISTRATOR } from '../../contents/AuthValue';
+import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
+import { useStore } from '../../state/stateManagement';
 
 export const SignIn = () =>{
     const history = useHistory();
     
     const { setPayload, processPayload, clearPayload } = useError();
     const { user, signIn, isAuthenticated } = useAuth();
+    const { setLoader } = useStore();
 
     const [loading, setLoading] = useState(false);
 
@@ -21,17 +23,22 @@ export const SignIn = () =>{
     const passwordRef = useRef();
 
     const login = async() =>{
+        setLoader(true);
         setLoading(true);
         clearPayload();
         const res = await signIn(emailRef.current.value, passwordRef.current.value);
-        if (res?.error)  setPayload(res?.error);
+        if (res?.error){
+            setPayload(res?.error);
+            setLoader(false);
+        }
         setLoading(false);
         processPayload();
     }
 
     useEffect(()=>{
         if (isAuthenticated){
-            if (user?.role === ADMINISTRATOR) history.push(adminRoutes.welcome);
+            setLoader(false);
+            if (ADMIN_SUPERVISER.includes(user?.role)) history.push(adminRoutes.welcome);
             else history.push(routes.welcome);
         }
     }, [user]);
@@ -48,7 +55,7 @@ export const SignIn = () =>{
                         <div className="pad">Sign In</div>
                         <input ref={emailRef} className="input input-hover block pad" placeholder="Your email" type="email" />
                         <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
-                        <button onClick={login} disabled={loading} className="btn btn-hover creds-btn">login</button>
+                        <button onClick={login} disabled={loading} className="btn btn-hover creds-btn">Login</button>
                     </div>
                 </div>
             </div>

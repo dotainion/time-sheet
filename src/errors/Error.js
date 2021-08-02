@@ -56,7 +56,7 @@ export const ErrorHandler = ({children}) =>{
         }, 5000);
     }
 
-    const checkObject = (object, endOfMsg) =>{
+    const checkObject = (object, endOfMsg = "is required.") =>{
         let STATE = true;
         for (let key of Object.keys(object || {})){
             if (!object[key]){

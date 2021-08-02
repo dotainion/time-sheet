@@ -5,10 +5,13 @@ import { AsignTimeSheet } from '../widgets/AsignTimeSheet';
 import { AiOutlineFieldTime } from 'react-icons/ai';
 import { AdminNavBar } from '../../container/AdminNavBar';
 import { getUsers } from '../../database/accounts/AccountsDb';
+import { useAuth } from '../../auth/Authentication';
 
 let checkboxIds = [];
 let userAppended = [];
 export const Users = () =>{
+    const { user } = useAuth();
+    
     const [users, setUsers] = useState([]);
     const [asignTimeSheet, setAsignTimeSheet] = useState(false);
     const [usersSelected, setUsersSelected] = useState([]);
@@ -74,7 +77,7 @@ export const Users = () =>{
     }
 
     const initUsers = async() =>{
-        setUsers(await getUsers());
+        setUsers(await getUsers(user?.accessId, user?.id));
     }
 
     useEffect(()=>{
@@ -93,20 +96,22 @@ export const Users = () =>{
                 {
                     users?.length?
                     users?.map((user, key)=>(
-                        <div className="flex content-container" key={key}>
-                            <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} className="float-left" style={{left:"-50px"}} type="checkbox"/>
-                            <IoPersonCircleOutline className="float-center log-icon" />
-                            <div className="content-inner-container">
-                                <div><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                                <div>{user?.info?.email}</div>
-                                <div>Role: {user?.info?.role}</div>
+                        <div className="flex relative" key={key}>
+                            <div className="relative" style={{width:"40px"}}>
+                                <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} className="float-left" type="checkbox"/>
                             </div>
-                            <div className="time-icon-container">
-                                <AiOutlineFieldTime
-                                    className="float-right time-icon"
-                                    style={{color:showSelectOption && "gray",zIndex:"99"}}
-                                    onClick={()=>{!showSelectOption && selectSingleUser(user)}}
-                                />
+                            <div className="relative" style={{width:"40px"}}>
+                                <IoPersonCircleOutline className="float-left log-icon" />
+                            </div>
+                            <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
+                                <div className="content-inner-container flex d-flex-on-mobile">
+                                    <div className="max-width"><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                    <div className="max-width">{user?.info?.email}</div>
+                                    <div style={{backgroundColor:"red"}} className="max-width">Role: {user?.info?.role}</div>
+                                </div>
+                                <div className="time-icon-container">
+                                    <AiOutlineFieldTime className="float-right time-icon" style={{zIndex:"99"}} />
+                                </div>
                             </div>
                         </div>
                     )):

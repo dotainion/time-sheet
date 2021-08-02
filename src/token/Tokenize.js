@@ -41,8 +41,10 @@ class Token{
         try{
             for (let token of this.get()){
                 let res = null;
+                console.log(token)
                 try{
                     res = jwt.verify(token?.key, `${this.tokenKey}${ref}`);
+                    //console.log(res)
                 }finally{
                     if (res){
                         if (res.email === ref) return true;
@@ -50,11 +52,10 @@ class Token{
                 }
             }
             return false;
-        }catch{return false;}
-    }
-    tokBind(tokenKey=null, ref=null){
-        if (tokenKey && ref) this.bindedKey = `${tokenKey}${ref}`;
-        return this.bindedKey;
+        }catch(error){
+            console.log(error)
+            return false;
+        }
     }
     clear(ref="all"){
         if (ref.toLowerCase() === "all") window.localStorage.clear();

@@ -5,6 +5,7 @@ import { MdDateRange } from 'react-icons/md';
 import { tools } from '../tools/Tools';
 import { useStore } from '../state/stateManagement';
 import { HiDotsVertical } from 'react-icons/hi';
+import { ShowErrors } from '../errors/ShowErrors';
 
 export const Toolbar = ({onMenuClick, on3DotClick, datePicker, onDatePicker}) =>{
     const { dateObject, setDateObject } = useStore();
@@ -58,6 +59,7 @@ export const Toolbar = ({onMenuClick, on3DotClick, datePicker, onDatePicker}) =>
                     </div>
                 </div>
                 <HiDotsVertical onClick={on3DotClick} className="float-right" style={{fontSize:"20px",right:"15px",display:!on3DotClick && "none"}} />
+                <ShowErrors/>
             </div>
             <Calendar
                 isOpen={showCalendar} 

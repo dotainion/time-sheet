@@ -31,6 +31,9 @@
     .hide-on-mobile{
         display: none;
     }
+    .d-flex-on-mobile{
+        display: block;
+    }
     .mobile-overlay{
         position: absolute;
         z-index: 9999;
@@ -63,4 +66,19 @@
         text-align: left;
         margin-bottom: 0px;
     }
+    .profile-bg-image{
+        text-shadow: 1px 1px 1px gray;
+        height: 200px;
+        background-size: 98%;
+    }
+    .welcome-card{
+        display: inline-flex;
+        width: 100%;
+        height: 400px;
+    }
+    .content-container{
+        margin: 10px;
+        padding: 0px;
+        padding-left: 20px;
+      }
 }

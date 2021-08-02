@@ -4,7 +4,7 @@ import { SideInfo } from '../widgets/SideInfo';
 import { SubHeaderInfo } from '../widgets/SubHeaderInfo';
 import { useAuth } from '../../auth/Authentication';
 import { useError } from '../../errors/Error';
-import { ADMINISTRATOR } from '../../contents/AuthValue';
+import { ADMINISTRATOR, ADMIN_SUPERVISER } from '../../contents/AuthValue';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes, routes } from '../../routes/Routes';
 
@@ -34,7 +34,6 @@ export const Register = () =>{
             if (!isObject) return processPayload();
             setLoading(true);
             const res = await createUser(object);
-            console.log(res)
             if (res?.error)  setPayload(res?.error);
         }catch{
 
@@ -46,7 +45,7 @@ export const Register = () =>{
 
     useEffect(()=>{
         if (isAuthenticated){
-            if (user?.role === ADMINISTRATOR) history.push(adminRoutes.welcome);
+            if (ADMIN_SUPERVISER.includes(user?.role)) history.push(adminRoutes.welcome);
             else  history.push(routes.welcome);
         }
     }, [user]);

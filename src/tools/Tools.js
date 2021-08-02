@@ -111,9 +111,27 @@ class GoLocation{
     }
 }
 
+class Storage{
+    adminAccess = "admin-access";
+    setAuthAccess(email, encriptPassword){
+        window.localStorage.setItem(
+            this.adminAccess, JSON.stringify({email, password: encriptPassword})
+        );
+    }
+    getAuthAccess(){
+        let result = window.localStorage.getItem(this.adminAccess);
+        if (result) return JSON.parse(result);
+        return null;
+    }
+    clearAuthAccess(){
+        window.localStorage.removeItem(this.adminAccess);
+    }
+}
+
 class Tools{
     time = new Time();
     goLocation = new GoLocation();
+    store = new Storage();
     remCharInArr(char, array){
         let tempArr = [];
         for (let elem of array || []){

@@ -1,13 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../auth/Authentication';
 import { AdminNavBar } from '../../container/AdminNavBar';
 import { ContentsWrapper } from '../../container/ContentsWrapper';
 import { ROLES } from '../../contents/lists';
+import { useError } from '../../errors/Error';
+import { useStore } from '../../state/stateManagement';
 
 
 const roleDefault = "No Role";
 export const AddUser = () =>{
-    const { createUser } = useAuth();
+    const { checkObject, processPayload, setPayload } = useError();
+    const { adminCreateUser } = useAuth();
+    const { setLoader } = useStore();
 
     const [loading, setLoading] = useState(false);
 
@@ -25,32 +29,30 @@ export const AddUser = () =>{
         roleRef.current.value = roleDefault;
     }
 
-    const isFeildsNotValid = () =>{
-        let msg = "";
-        if (!emailRef.current.value) msg = msg + " a valid email address";
-        if (!fNameRef.current.value) msg = msg + " first name";
-        if (!lNameRef.current.value) msg = msg + " last name";
-        if (!passRef.current.value) msg = msg + " Please password";
-        if (roleRef.current.value === roleDefault) msg = msg + " Please select a role";
-        if (!msg) return false;
-        alert("Plaase add" + msg);
-        return true;
-    }
-
     const onAddUser = async () =>{
-        if (isFeildsNotValid()) return;
-        setLoading(true);
-        const response = await createUser({
+        const userObj = {
             email: emailRef.current.value,
             firstName: fNameRef.current.value,
             lastName: lNameRef.current.value,
             password: passRef.current.value,
             role: roleRef.current.value
-        });
-        if (response?.error) alert(response?.error);
-        else reset();
-        setLoading(false);
+        };
+        try{
+            setLoader(true);
+            if (!checkObject(userObj)) return processPayload();
+            setLoading(true);
+            const response = await adminCreateUser(userObj);
+            if (response?.error) setPayload(response?.error);
+            else reset();
+        }catch{
+
+        }finally{
+            setLoading(false);
+            setLoader(false);
+        }
+        
     }
+
     return (
         <AdminNavBar>
             <ContentsWrapper isOpen={true} noScroll>
@@ -59,7 +61,7 @@ export const AddUser = () =>{
                         <div className="float-center">Email</div>
                     </div>
                     <div className="admin-user-input">
-                        <input ref={emailRef} className="input input-hover" placeholder="Email" />
+                        <input ref={emailRef} className="input input-hover" placeholder="Email" type="email" />
                     </div>
                 </div> 
                 <div className="flex h-seperator">
@@ -83,7 +85,7 @@ export const AddUser = () =>{
                         <div className="float-center">Password</div>
                     </div>
                     <div className="admin-user-input">
-                        <input ref={passRef} className="input input-hover" placeholder="Password" />
+                        <input ref={passRef} className="input input-hover" placeholder="Password" type="password" />
                     </div>                
                 </div>  
                 <div className="flex h-seperator">
