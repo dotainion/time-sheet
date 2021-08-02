@@ -9,16 +9,20 @@ export const TimeLog = ({logs, hidden, onClick}) =>{
         if (cmd === "date") return tools.time.date(time);
     }
     return (
-        <div hidden={hidden}>
+        <div hidden={hidden} className="max-width">
             {
                 logs?.length?
                 tools.time.sort(logs)?.reverse()?.map((log, key)=>(
-                    <div onClick={onClick} className="flex content-container" key={key}>
-                        <FcOvertime className="float-center log-icon" />
-                        <div>
-                            <div>Date: {timeHander("date",log?.info?.start)}</div>
-                            <div>Start: {timeHander("time",log?.info?.start)}</div>
-                            <div>End: {timeHander("time",log?.info?.end)}</div>
+                    <div onClick={onClick} className="relative" style={{margin:"10px",marginRight:"40px"}} key={key}>
+                        <div style={{minWidth:"50px"}}>
+                            <FcOvertime className="float-left log-icon" style={{transform:"translate3d(-20%,-50%,0)"}} />
+                        </div>
+                        <div className="flex content-container" style={{overflow:"hidden"}}>
+                            <div className="flex d-flex-on-mobile max-width" style={{paddingLeft:"30px"}}>
+                                <div style={{minWidth:"150px",with:"50%"}}>Date: {timeHander("date",log?.info?.start)}</div>
+                                <div style={{minWidth:"150px",with:"50%"}}>Start: {timeHander("time",log?.info?.start)}</div>
+                                <div style={{minWidth:"150px",with:"50%"}}>End: {timeHander("time",log?.info?.end)}</div>
+                            </div>
                         </div>
                     </div>
                 )):

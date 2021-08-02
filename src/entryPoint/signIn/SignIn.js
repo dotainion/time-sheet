@@ -9,6 +9,8 @@ import { SubHeaderInfo } from '../widgets/SubHeaderInfo';
 import { SideInfo } from '../widgets/SideInfo';
 import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
 import { useStore } from '../../state/stateManagement';
+import { tools } from '../../tools/Tools';
+
 
 export const SignIn = () =>{
     const history = useHistory();
@@ -41,7 +43,7 @@ export const SignIn = () =>{
             if (ADMIN_SUPERVISER.includes(user?.role)) history.push(adminRoutes.welcome);
             else history.push(routes.welcome);
         }
-    }, [user]);
+    }, [user]); 
     return(
         <div className="single-page">
             <UnAuthHeader useRegister usePricing />

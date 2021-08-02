@@ -211,8 +211,8 @@
 .content-container{
   position: relative;
   width: 100%;
-  margin: 10px;
   padding: 10px;
+  padding-left: 20px;
   user-select: none;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;

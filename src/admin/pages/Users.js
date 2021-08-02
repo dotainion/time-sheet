@@ -96,21 +96,21 @@ export const Users = () =>{
                 {
                     users?.length?
                     users?.map((user, key)=>(
-                        <div className="flex relative" key={key}>
-                            <div className="relative" style={{width:"40px"}}>
-                                <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} className="float-left" type="checkbox"/>
+                        <div className="flex relative" style={{padding:"10px"}} key={key}>
+                            <div className="relative">
+                                <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
                             </div>
-                            <div className="relative" style={{width:"40px"}}>
-                                <IoPersonCircleOutline className="float-left log-icon" />
+                            <div className="relative">
+                                <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px"}} />
                             </div>
                             <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
                                 <div className="content-inner-container flex d-flex-on-mobile">
-                                    <div className="max-width"><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                                    <div className="max-width">{user?.info?.email}</div>
-                                    <div style={{backgroundColor:"red"}} className="max-width">Role: {user?.info?.role}</div>
+                                    <div className="max-width" style={{minWidth:"150px"}}><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                    <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
+                                    <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
                                 </div>
-                                <div className="time-icon-container">
-                                    <AiOutlineFieldTime className="float-right time-icon" style={{zIndex:"99"}} />
+                                <div className="float-right" style={{top:"20%",right:"10px"}}>
+                                    <AiOutlineFieldTime className="time-icon" style={{zIndex:"99"}} />
                                 </div>
                             </div>
                         </div>

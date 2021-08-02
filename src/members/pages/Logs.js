@@ -13,7 +13,10 @@ export const Logs = () =>{
     const [logs, setLogs] = useState([]);
     const [showView, setShowView] = useState(false);
 
-    const options = [{title:"List view"},{title:"Clasic view"}];
+    const options = [[
+        {title:"List view",command:()=>setShowView(false)},
+        {title:"Clasic view",command:()=>setShowView(true)}
+    ]];
 
     const onSearch = async(dateObj) =>{
         const {from, to} = dateObj;
@@ -35,7 +38,7 @@ export const Logs = () =>{
     }, []);
 
     return(
-        <UserNavBar onDatePicker={onSearch} onOptionChange={toggleView} options={options}>
+        <UserNavBar onDatePicker={onSearch} options={options}>
             <ContentsWrapper isOpen={showView} maxWith >
                 <TimeLog logs={logs} />
             </ContentsWrapper>

@@ -128,10 +128,24 @@ class Storage{
     }
 }
 
+class File{
+    //xlsx
+    download(filename, textInput){
+        var element = document.createElement('a');
+        const dateType = 'data:text/plain;charset=utf-8, ';
+        element.setAttribute('href', dateType + encodeURIComponent(textInput));
+        element.setAttribute('download', filename);
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+}
+
 class Tools{
     time = new Time();
     goLocation = new GoLocation();
     store = new Storage();
+    file = new File();
     remCharInArr(char, array){
         let tempArr = [];
         for (let elem of array || []){
