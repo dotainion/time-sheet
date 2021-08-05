@@ -35,8 +35,8 @@ export const AdminSettings = () =>{
         <AdminNavBar>
             <ContentsWrapper isOpen>
                 <div>
-                    <div className="admin-settings-card-container">
-                        <div className="admin-settings-card">
+                    <div className="settings-card-container">
+                        <div className="settings-card">
                             <div className="pad" style={{color:"orange"}}><b>Passwords Update</b></div>
                             <div className="pad">
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
@@ -55,8 +55,8 @@ export const AdminSettings = () =>{
                             </div>
                         </div>
                     </div>
-                    <div className="admin-settings-card-container">
-                        <div className="admin-settings-card">
+                    <div className="settings-card-container">
+                        <div className="settings-card">
                             <div className="pad" style={{color:"orange"}}><b>Work Duration</b></div>
                             <div className="pad">
                                 <input ref={durationRef} className="input input-hover" placeholder="Default work duration" style={{marginRight:"20px"}} type="number" />

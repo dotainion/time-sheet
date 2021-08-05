@@ -38,7 +38,8 @@ export const WhatsThis = ({info}) =>{
                     padding:"3px",
                     borderRadius:"3px",
                     minWidth: "150px",
-                    maxWidth:"300px"
+                    maxWidth:"300px",
+                    zIndex:"9999999999"
                 }}
             >{info || "What is this?"}</div>
         </div>

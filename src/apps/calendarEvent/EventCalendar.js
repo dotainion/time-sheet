@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { calendarUtils } from './Utils';
 import { tools } from '../../utils/tools/Tools';
 import { WEEK } from '../../contents/lists';
 import { AsignSchedule } from './AsignSchedule';
@@ -8,6 +7,7 @@ import { ButtonOption } from '../../components/widgets/ButtonOption';
 import { BiDotsVertical } from 'react-icons/bi';
 import { addSchedule } from '../../database/schedules/SchedulesDb';
 import { useStore } from '../../state/stateManagement/stateManagement';
+import { NavBar } from './NavBar';
 
 /**
  * @param members is a list of all members 
@@ -16,8 +16,7 @@ import { useStore } from '../../state/stateManagement/stateManagement';
 let holdScheduleDate = [];
 let holdTempDateForComment = {};
 
-const utils = calendarUtils.init(new Date().getMonth(), new Date().getFullYear());
-const monthDates = utils.get();
+
 export const EventCalendar = ({onAsignStart, onAsignStop, readOnly, tasksAsign, usersSelected}) => {
     const { settings, setLoader } = useStore();
 
@@ -25,6 +24,8 @@ export const EventCalendar = ({onAsignStart, onAsignStop, readOnly, tasksAsign, 
     const [showAsignTask, setShowAsignTask] = useState(false);
     const [initValuetoBeEdited, setInitValuetoBeEdited] = useState(null);
     const [closeEventSideMenuOnMobile, setCloseEventSideMenuOnMobile] = useState("");
+    const [showNavBar, setShowNavBar] = useState(false);
+    const [dateList, setDateList] = useState([]);
 
     const recurrenceRef = useRef();
 
@@ -172,7 +173,7 @@ export const EventCalendar = ({onAsignStart, onAsignStop, readOnly, tasksAsign, 
     useEffect(()=>{
         let data = [];
         if (readOnly){
-            for (let dateObj of monthDates){
+            for (let dateObj of dateList){
                 let tempArray = [];
                 for (let time of dateObj){
                     const asignment = isTaskAsign(time?.value);
@@ -181,90 +182,96 @@ export const EventCalendar = ({onAsignStart, onAsignStop, readOnly, tasksAsign, 
                 }
                 data.push(tempArray);
             }
-        }else data = monthDates;
+        }else data = dateList;
         setCalendarDate(data);
-    }, [tasksAsign, usersSelected]);
+    }, [tasksAsign, usersSelected, dateList]);
     return(
         <div className="float-center calendar-event">
-            <div className="flex">
-                <div className="float-top-right hide-on-desktop" style={{top:"-60px"}}>
-                    <BiDotsVertical onClick={toggleEventMenu} style={{fontSize:"30px"}}/>
-                </div>
-                <div hidden={readOnly} className={`mobile-overlay ${closeEventSideMenuOnMobile}`}>
-                    <div className="backdrop hide-on-desktop" style={{width:window.screen.width,zIndex:"-1"}} />
-                    <SideMenu
-                        usersSelected={usersSelected}
-                        onClose={toggleEventMenu}
-                        onAsign={onAsignSchedule}
-                        recurrenceRef={recurrenceRef}
-                    />
-                </div>
-                <div className="max-width calendar-event-on-mobile">
-                    <div className="calendar-event-week">
-                        {WEEK?.map((month, key)=>(
-                            <div className="calendar-event-week-header" key={key}>
-                                <div className="">{month}</div>
-                            </div>
-                        ))}
+            <div onMouseEnter={()=>setShowNavBar(true)} onMouseLeave={()=>setShowNavBar(false)} className="relative">
+                <NavBar
+                    isOpen={showNavBar} 
+                    onUpdateDate={setDateList}
+                />
+                <div className="flex">
+                    <div className="float-top-right hide-on-desktop" style={{top:"-60px"}}>
+                        <BiDotsVertical onClick={toggleEventMenu} style={{fontSize:"30px"}}/>
                     </div>
-                    <div className="relative" style={{background:"var(--bg-fade-horizontal)"}}>
-                        {calendarDate?.map?.((weekDate, key)=>(
-                            <div className="calendar-event-week" key={key}>
-                                {weekDate?.map?.((date, key)=>(
-                                    <div 
-                                        //onClick, onMouseEnter and onMouseLeave will show <ButtonOption>
-                                        //if date value is stared that will determine which <buttonOption? will be display on hover
-                                        onClick={()=>showBtnOptions(false, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
-                                        onMouseEnter={()=>showBtnOptions(false, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
-                                        onMouseLeave={()=>showBtnOptions(true, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
-                                        className={`calendar-event-date-container ${!date?.is && "not-in-month"}`} 
-                                        key={key}>
-                                        <div id={`${tools.time.digits(date?.value)}-cal-num`} className={`calendar-number relative ${readOnly && date?.isAsign?"isAsign":null}`}>{tools.time.day(date?.value)}</div>
-                                        <div  hidden={!readOnly} className={`calendar-contents ${readOnly && date?.isAsign && date?.comment?null:"hide"}`}>{date?.comment}</div>
-                                        <div hidden={readOnly} className="float-center">Tasks</div>
-                                        <ButtonOption
-                                            options={[
-                                                {
-                                                    title: !isDateInclude(date?.value) && "Add",
-                                                    command: ()=>onAddDate(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
-                                                },{
-                                                    title: "comment",
-                                                    command: ()=>onAddComment(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
-                                                }
-                                            ]}
-                                            id={`${tools.time.digits(date?.value)}-cal-btn-option-add`}
-                                            cssClass="float-center"
-                                            hidden
-                                        />
-                                        <ButtonOption
-                                            options={[
-                                                {
-                                                    title: "Edit",
-                                                    command: ()=>editDate(date?.value)
-                                                },{
-                                                    title: "Delete",
-                                                    command: ()=>deleteDate(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
-                                                }
-                                            ]}
-                                            id={`${tools.time.digits(date?.value)}-cal-btn-option-edit`}
-                                            cssClass="float-center"
-                                            hidden
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                        <AsignSchedule
-                            isOpen={showAsignTask} 
-                            onClose={()=>{
-                                setShowAsignTask(false);
-                                holdTempDateForComment = {};
-                                setInitValuetoBeEdited(null);
-                            }}
-                            onAdd={onPushComments}
-                            onEdit={onPushEdit}
-                            valueObj={initValuetoBeEdited}
+                    <div hidden={readOnly} className={`mobile-overlay ${closeEventSideMenuOnMobile}`}>
+                        <div className="backdrop hide-on-desktop" style={{width:window.screen.width,zIndex:"-1"}} />
+                        <SideMenu
+                            usersSelected={usersSelected}
+                            onClose={toggleEventMenu}
+                            onAsign={onAsignSchedule}
+                            recurrenceRef={recurrenceRef}
                         />
+                    </div>
+                    <div className="max-width calendar-event-on-mobile">
+                        <div className="calendar-event-week">
+                            {WEEK?.map((month, key)=>(
+                                <div className="calendar-event-week-header" key={key}>
+                                    <div className="">{month}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="relative" style={{background:"var(--bg-fade-horizontal)"}}>
+                            {calendarDate?.map?.((weekDate, key)=>(
+                                <div className="calendar-event-week" key={key}>
+                                    {weekDate?.map?.((date, key)=>(
+                                        <div 
+                                            //onClick, onMouseEnter and onMouseLeave will show <ButtonOption>
+                                            //if date value is stared that will determine which <buttonOption? will be display on hover
+                                            onClick={()=>showBtnOptions(false, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
+                                            onMouseEnter={()=>showBtnOptions(false, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
+                                            onMouseLeave={()=>showBtnOptions(true, `${tools.time.digits(date?.value)}-cal-btn-option`, date?.value)} 
+                                            className={`calendar-event-date-container ${!date?.is && "not-in-month"}`} 
+                                            key={key}>
+                                            <div id={`${tools.time.digits(date?.value)}-cal-num`} className={`calendar-number relative ${readOnly && date?.isAsign?"isAsign":null}`}>{tools.time.day(date?.value)}</div>
+                                            <div  hidden={!readOnly} className={`calendar-contents ${readOnly && date?.isAsign && date?.comment?null:"hide"}`}>{date?.comment}</div>
+                                            <div hidden={readOnly} className="float-center">Tasks</div>
+                                            <ButtonOption
+                                                options={[
+                                                    {
+                                                        title: !isDateInclude(date?.value) && "Add",
+                                                        command: ()=>onAddDate(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
+                                                    },{
+                                                        title: "comment",
+                                                        command: ()=>onAddComment(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
+                                                    }
+                                                ]}
+                                                id={`${tools.time.digits(date?.value)}-cal-btn-option-add`}
+                                                cssClass="float-center"
+                                                hidden
+                                            />
+                                            <ButtonOption
+                                                options={[
+                                                    {
+                                                        title: "Edit",
+                                                        command: ()=>editDate(date?.value)
+                                                    },{
+                                                        title: "Delete",
+                                                        command: ()=>deleteDate(`${tools.time.digits(date?.value)}-cal-num`, date?.value)
+                                                    }
+                                                ]}
+                                                id={`${tools.time.digits(date?.value)}-cal-btn-option-edit`}
+                                                cssClass="float-center"
+                                                hidden
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                            <AsignSchedule
+                                isOpen={showAsignTask} 
+                                onClose={()=>{
+                                    setShowAsignTask(false);
+                                    holdTempDateForComment = {};
+                                    setInitValuetoBeEdited(null);
+                                }}
+                                onAdd={onPushComments}
+                                onEdit={onPushEdit}
+                                valueObj={initValuetoBeEdited}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

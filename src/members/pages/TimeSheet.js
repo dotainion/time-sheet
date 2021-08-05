@@ -13,24 +13,21 @@ export const TimeSheet = () =>{
     const [showView, setShowView] = useState(false);
     const [schedules, setSchedules] = useState([]);
 
-    const options = [{title:"Calendar view"},{title:"List view"}];
+    const options = [[
+        {title:"Calendar view", command: ()=>setShowView(false)},
+        {title:"List view", command: ()=>setShowView(true)}
+    ]];
 
     const initSchedule = async() =>{
         const result = await getSchedule(user?.id);
         setSchedules(result?.schedules);
     }
 
-    const toggleView = (e) =>{
-        const cmd = e.target.value;
-        if (cmd === options[0].title) setShowView(false);
-        if(cmd === options[1].title) setShowView(true);
-    }
-
     useEffect(()=>{
         initSchedule();
     }, []);
     return(
-        <UserNavBar onOptionChange={toggleView} options={options}>
+        <UserNavBar options={options}>
             <Modal isOpen={!showView}>
                 <EventCalendar readOnly tasksAsign={schedules}/>
             </Modal>

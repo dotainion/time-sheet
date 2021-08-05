@@ -63,6 +63,7 @@ class CalendarUtils{
     init(month=new Date().getMonth(), year=new Date().getFullYear()){
         this.year = year;
         this.month = month;
+        this.daysInMonths = [];
         this.getCalendarDays(month, year);
         this.addDaysFromPrevMonth();
         this.addDaysFromNextMonth();

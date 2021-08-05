@@ -74,7 +74,7 @@
   border-radius: 50%;
   border: 10px solid red;
   transform: translateX(-50%);
-  box-shadow: 4px 4px 10px black;
+  box-shadow: 4px 4px 10px var(--box-shadow-dark);
 }
 .class2{
   
@@ -91,7 +91,7 @@
   color: white;
   user-select: none;
   border: 1px solid black;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark);
   background-color: purple;
 }
 .btn{
@@ -102,10 +102,10 @@
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark);
 }
 .btn:active{
-  box-shadow: 1px 1px 2px black;
+  box-shadow: 1px 1px 2px var(--box-shadow-dark);
 }
 .btn-hover:hover{
   transform: scale(1.05);
@@ -117,7 +117,7 @@
   min-width: 100px;
   border-radius: 10px;
   white-space: nowrap;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark);
 }
 .btn-success{
   color: white;
@@ -130,7 +130,7 @@
 .nav-btn-container{
   width: 200px;
   overflow: hidden;
-  box-shadow: 2px 2px 5px orange;
+  box-shadow: 2px 2px 5px var(--box-shadow);
   border-right: 1px solid orange;
   background: var(--bg-fade-vertical);
 }
@@ -157,7 +157,7 @@
 }
 .nav-btn:active{
   background-color: rgb(5, 150, 150);
-  box-shadow: 1px 1px 3px black;
+  box-shadow: 1px 1px 3px var(--box-shadow-dark);
 }
 .nav-btn-is-active{
   fill: orange;
@@ -172,12 +172,12 @@
   margin-top: 10px;
   border-radius: 25px;
   background: var(--bg-fade-horizontal-reverse);
-  box-shadow: 2px 2px 5px orange;
+  box-shadow: 2px 2px 5px var(--box-shadow);
 }
 .nav-option-select{
   max-width: 40%;
   margin-left: 10px;
-  box-shadow: 4px 4px 10px black;
+  box-shadow: 4px 4px 10px var(--box-shadow-dark);
 }
 .input{
   padding: 5px;
@@ -202,7 +202,7 @@
   margin-top: 70px;
   color: white;
   user-select: none;
-  box-shadow: 2px 2px 5px orange;
+  box-shadow: 2px 2px 5px var(--box-shadow);
   background: var(--bg-fade-horizontal);
 }
 .page-wrapper-container{
@@ -223,7 +223,7 @@
 .content-container:hover{
   cursor: pointer;
   color: orange;
-  background-color: teal;
+  background-color: var(--bg);
 }
 .content-inner-container{
   width: 100%;
@@ -236,7 +236,7 @@
   border-radius: 50%;
   z-index: 99999999999999;
   background-color: orange;
-  box-shadow: 1px 1px 2px black;
+  box-shadow: 1px 1px 2px var(--box-shadow-dark);
 }
 .flex{
   display: flex;
@@ -248,7 +248,7 @@
   display: block;
 }
 .h-seperator{
-  border-bottom: 1px solid orange;
+  border-bottom: 1px solid var(--box-shadow);
 }
 .admin-user-name{
   position: relative;
@@ -280,7 +280,7 @@
   color: white;
   height: 55px;
   user-select: none;
-  box-shadow: 2px 2px 5px orange;
+  box-shadow: 2px 2px 5px var(--box-shadow);
   background: var(--bg-fade-horizontal);
 }
 .HamburgerMenu{
@@ -315,7 +315,7 @@
   width: 85%;
   height: 65vh;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px orange;
+  box-shadow: 2px 2px 5px var(--box-shadow);
   background: var(--bg-fade-horizontal);
 }
 .calendar-event{
@@ -347,7 +347,7 @@
   border-radius: 10px;
   width: 100%;
   background: var(--bg-fade-horizontal);
-  box-shadow: 4px 4px 5px rgb(0, 0, 0, 0.50);
+  box-shadow: 4px 4px 5px var(--box-shadow-dark-fade);
 }
 .calendar-event-floating-btn div{
   padding: 10px;
@@ -375,7 +375,7 @@
   border-radius: 10px;
   user-select: none;
   padding: 5px;
-  box-shadow: 1px 1px 5px black;
+  box-shadow: 1px 1px 5px var(--box-shadow-dark);
 }
 .calendar-contents:hover{
   width: auto;
@@ -400,7 +400,7 @@
   padding: 10px;
   color: white;
   z-index: 999999;
-  box-shadow: 4px 4px 10px black;
+  box-shadow: 4px 4px 10px var(--box-shadow-dark);
 }
 select{
   cursor: pointer;
@@ -446,7 +446,7 @@ select{
   text-align: center;
   border-radius: 50%;
   background-color: blue;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark);
 }
 .hide{
   display: none;
@@ -481,7 +481,7 @@ select{
   white-space: normal;
   border-radius: 10px;
   padding: 5px;
-  box-shadow: 1px 1px 5px black;
+  box-shadow: 1px 1px 5px var(--box-shadow-dark);
 }
 .time-card-content{
   width: 50%;
@@ -493,7 +493,7 @@ select{
   color: orange;
   font-weight: bold;
   user-select: none;
-  background-color: teal;
+  background-color: var(--bg);
   border-bottom: 1px solid white;
 }
 .time-card-calc-container{
@@ -502,7 +502,8 @@ select{
   font-weight: bold;
   color: orange;
   user-select: none;
-  background-color: teal;
+  background-color: var(--bg);
+  border-bottom: 1px solid white;
 }
 .error{
   color: orangered;
@@ -520,7 +521,7 @@ select{
   user-select: none;
   text-align: center;
   border-radius: 5px;
-  box-shadow: 2px 2px 10px black;
+  box-shadow: 2px 2px 10px var(--box-shadow-dark);
   background-color: var(--dark-translucent);
 }
 .creds-container input{
@@ -554,7 +555,7 @@ select{
   padding: 12px;
   color: white;
   user-select: none;
-  box-shadow: 2px 2px 5px black;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark);
   background-color: var(--light-blue);
 }
 .auther-header-container label{
@@ -582,7 +583,7 @@ select{
   padding: 50px;
   text-align: center;
   border: 1px solid lightgray;
-  box-shadow: 2px 2px 10px lightgray;
+  box-shadow: 2px 2px 10px var(--box-shadow-light);
 }
 .welcome-card-container{
   text-align: center;
@@ -632,12 +633,18 @@ select{
 .lower-case{ 
   text-transform: lowercase;
 }
-.admin-settings-card-container{
+.settings-card-container{
   margin: 15px;
 }
-.admin-settings-card{
+.settings-card{
   border-radius: 5px;
   padding-left: 20px;
   padding-bottom: 10px;
-  box-shadow: 1px 1px 5px orange;
+  border: 1px solid rgb(211, 211, 211, 0.50);
+  box-shadow: 1px 1px 5px var(--box-shadow-light);
+}
+.shack-up{
+  border-radius: 5px;
+  border: 2px solid red;
+  animation: shake-float 0.1s linear infinite forwards;
 }

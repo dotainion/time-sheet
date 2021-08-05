@@ -12,14 +12,26 @@ import { secure } from './Security';
 
 export const ChangePassword = ({isOpen, onClose}) =>{
     const { user, changePassword } = useAuth();
-    const { isError, setPayload, processPayload} = useError();
+    const { error, setPayload, processPayload} = useError();
 
     const [toggleInputs, setToggleInputs] = useState(true);
+    const [shake, setShake] = useState("");
+
+    const timeoutRef = useRef();
 
     const emailRef = useRef();
     const oldPasswordRef = useRef();
     const newPasswordRef = useRef();
     const confirmPasswordRef = useRef();
+
+    const onProccessError = () =>{
+        processPayload();
+        setShake("shack-up");
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            setShake("");
+        }, 500);
+}
 
     const onCheckCurrentPassword = async() =>{
         let STATE = true;
@@ -31,7 +43,7 @@ export const ChangePassword = ({isOpen, onClose}) =>{
             STATE = false;
             setPayload(" Invalid password");
         }
-        if (!STATE) return processPayload();
+        if (!STATE) return onProccessError();
         const creds = await getCreds(user?.id);
         if (
                 user?.email === emailRef.current.value &&
@@ -64,7 +76,7 @@ export const ChangePassword = ({isOpen, onClose}) =>{
 
     return(
         <Backdrop isOpen={isOpen}>
-            <SpanWrapper isOpen onClose={onClose} shadow>
+            <SpanWrapper isOpen onClose={onClose} shadow cssClass={shake}>
                 <div className="pad" style={{width:"300px"}}>
                     <div className="pad" style={{color:"orange"}}><b>Change Password</b></div>
                     <div hidden={!toggleInputs} className="pad centered" style={{width:"275px"}}>

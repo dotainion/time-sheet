@@ -1,0 +1,9 @@
+
+
+@keyframes shake-float {
+    from{ 
+        transform: translate3d(-47%, -50%, 0);
+    }to{ 
+        transform: translate3d(-53%, -50%, 0);
+    }
+}
