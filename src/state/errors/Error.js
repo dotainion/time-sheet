@@ -9,10 +9,12 @@ let extentionRequire = "";
 let holdError = [];
 export const ErrorHandler = ({children}) =>{
     const [error, setError] = useState("");
+    const [isError, setIsError] = useState(false);
 
     const errorClearRef = useRef();
 
     const setPayload = (msg) =>{
+        setIsError(true);
         holdError.push(msg);
     }
 
@@ -20,6 +22,7 @@ export const ErrorHandler = ({children}) =>{
         holdError = [];
         extentionRequire = "";
         setError(holdError);
+        setIsError(false);
     }
 
     const config = () =>{
@@ -70,6 +73,7 @@ export const ErrorHandler = ({children}) =>{
 
     const providerValue = {
         error,
+        isError,
         setPayload,
         processPayload,
         clearPayload,

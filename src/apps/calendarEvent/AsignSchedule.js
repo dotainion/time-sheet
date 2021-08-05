@@ -41,7 +41,7 @@ export const AsignSchedule = ({isOpen, onClose, onAdd, onEdit, valueObj, zIndex}
             commentRef.current.value = comment;
             durationRef.current.value = duration;
         }else{
-            durationRef.current.value = settings?.durationDefault;
+            durationRef.current.value = settings?.workDuration || 4;
         }
     }, [valueObj, isOpen]);
     return(

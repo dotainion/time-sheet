@@ -1,6 +1,10 @@
 import React from 'react';
 
-
+/**
+ * 
+ * @param {command, title} options 
+ * @returns HTML
+ */
 export const ButtonOption  = ({cssClass, options, hidden, id, style}) =>{
     return(
         <div hidden={hidden} className={`${cssClass}`} style={{zIndex:"99",...style}} id={id}>

@@ -61,7 +61,7 @@ export const AddUser = () =>{
                         <div className="float-center">Email</div>
                     </div>
                     <div className="admin-user-input">
-                        <input ref={emailRef} className="input input-hover" placeholder="Email" type="email" />
+                        <input ref={emailRef} className="input input-hover lower-case" placeholder="Email" type="email" />
                     </div>
                 </div> 
                 <div className="flex h-seperator">
@@ -69,7 +69,7 @@ export const AddUser = () =>{
                         <div className="float-center">First Name</div>
                     </div>
                     <div className="admin-user-input">
-                        <input ref={fNameRef} className="input input-hover" placeholder="First Name" />
+                        <input ref={fNameRef} className="input input-hover title-case" placeholder="First Name" />
                     </div>
                 </div> 
                 <div className="flex h-seperator">
@@ -77,7 +77,7 @@ export const AddUser = () =>{
                         <div className="float-center">Last Name</div>
                     </div>
                     <div className="admin-user-input">
-                        <input ref={lNameRef} className="input input-hover" placeholder="Last Name" />
+                        <input ref={lNameRef} className="input input-hover title-case" placeholder="Last Name" />
                     </div> 
                 </div>  
                 <div className="flex h-seperator">

@@ -13,7 +13,7 @@ export const TimeLog = ({logs, hidden, onClick}) =>{
             {
                 logs?.length?
                 tools.time.sort(logs)?.reverse()?.map((log, key)=>(
-                    <div onClick={onClick} className="relative" style={{margin:"10px",marginRight:"40px"}} key={key}>
+                    <div onClick={onClick} className="relative max-width" style={{margin:"10px",marginRight:"40px"}} key={key}>
                         <div style={{minWidth:"50px"}}>
                             <FcOvertime className="float-left log-icon" style={{transform:"translate3d(-20%,-50%,0)"}} />
                         </div>

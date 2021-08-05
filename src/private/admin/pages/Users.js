@@ -6,6 +6,8 @@ import { AiOutlineFieldTime } from 'react-icons/ai';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
+import { ButtonOption } from '../../../components/widgets/ButtonOption';
+
 
 let checkboxIds = [];
 let userAppended = [];
@@ -18,7 +20,7 @@ export const Users = () =>{
     const [showSelectOption, setShowSelectOption]= useState(false);
     const [idToggle, setIdToggle] = useState(false);
 
-    const configIds = (id) =>{
+    const appendCheckboxIds = (id) =>{
         checkboxIds.push(id);
         return id;
     }
@@ -58,7 +60,7 @@ export const Users = () =>{
         userAppended = tempAppend;
     }
 
-    const appendUser = (checked, membr) =>{
+    const appendUserOrPop = (checked, membr) =>{
         if (checked) append(membr);
         else poped(membr);
         isAnyCheckboxSelected();
@@ -96,21 +98,18 @@ export const Users = () =>{
                 {
                     users?.length?
                     users?.map((user, key)=>(
-                        <div className="flex relative" style={{padding:"10px"}} key={key}>
+                        <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid orange"}} key={key}>
                             <div className="relative">
-                                <input onChange={e=>appendUser(e.target.checked, user)} id={configIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
+                                <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
                             </div>
                             <div className="relative">
-                                <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px"}} />
+                                <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px",color:"white"}} />
                             </div>
                             <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
                                 <div className="content-inner-container flex d-flex-on-mobile">
                                     <div className="max-width" style={{minWidth:"150px"}}><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
                                     <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
                                     <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
-                                </div>
-                                <div className="float-right" style={{top:"20%",right:"10px"}}>
-                                    <AiOutlineFieldTime className="time-icon" style={{zIndex:"99"}} />
                                 </div>
                             </div>
                         </div>
@@ -121,7 +120,10 @@ export const Users = () =>{
             <AsignTimeSheet
                 usersSelected={usersSelected}
                 isOpen={asignTimeSheet}
-                onClose={()=>setAsignTimeSheet(false)}
+                onClose={()=>{
+                    setUsersSelected([]);
+                    setAsignTimeSheet(false);
+                }}
             />
         </AdminNavBar>
     )

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { calendarUtils } from './Utils';
 import { tools } from '../../utils/tools/Tools';
 import { WEEK } from '../../contents/lists';
 import { AsignSchedule } from './AsignSchedule';
-import { EventSideMenu } from './EventSideMenu';
+import { SideMenu } from './SideMenu';
 import { ButtonOption } from '../../components/widgets/ButtonOption';
 import { BiDotsVertical } from 'react-icons/bi';
 import { addSchedule } from '../../database/schedules/SchedulesDb';
@@ -18,13 +18,15 @@ let holdTempDateForComment = {};
 
 const utils = calendarUtils.init(new Date().getMonth(), new Date().getFullYear());
 const monthDates = utils.get();
-export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
-    const { settings } = useStore();
+export const EventCalendar = ({onAsignStart, onAsignStop, readOnly, tasksAsign, usersSelected}) => {
+    const { settings, setLoader } = useStore();
 
     const [calendarDate, setCalendarDate] = useState([]);
     const [showAsignTask, setShowAsignTask] = useState(false);
     const [initValuetoBeEdited, setInitValuetoBeEdited] = useState(null);
     const [closeEventSideMenuOnMobile, setCloseEventSideMenuOnMobile] = useState("");
+
+    const recurrenceRef = useRef();
 
     const toggleEventMenu = () =>{
         if (!closeEventSideMenuOnMobile) setCloseEventSideMenuOnMobile("hide-on-mobile");
@@ -91,7 +93,7 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
 
     const onAddDate = (id, date) =>{;
         heilight(id);
-        parseSchedule({date,comment:null, duration:settings?.durationDefault});
+        parseSchedule({date,comment:null, duration:settings?.workDuration || 4});
     }
 
     const onPushEdit = (obj) =>{
@@ -151,11 +153,20 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
     const onAsignSchedule = async(users) =>{
         if (!users?.length) return alert("No members selected");
         if (!holdScheduleDate.length) return alert("No schedule selected");
+        setLoader(true);
+        onAsignStart?.();
         configScheduleTimeStamp();
         for (let user of users){
-            await addSchedule({schedules: holdScheduleDate},user?.id);
+            await addSchedule(
+                {
+                    schedules: holdScheduleDate,
+                    recurrence: recurrenceRef.current.checked
+                },user?.id);
         }
-        alert("Tasks asigned");
+        setLoader(false);
+        onAsignStop?.();
+        setCalendarDate([]);
+        holdScheduleDate = [];
     }
 
     useEffect(()=>{
@@ -172,7 +183,7 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
             }
         }else data = monthDates;
         setCalendarDate(data);
-    }, [tasksAsign]);
+    }, [tasksAsign, usersSelected]);
     return(
         <div className="float-center calendar-event">
             <div className="flex">
@@ -181,10 +192,11 @@ export const EventCalendar = ({readOnly, tasksAsign, usersSelected}) => {
                 </div>
                 <div hidden={readOnly} className={`mobile-overlay ${closeEventSideMenuOnMobile}`}>
                     <div className="backdrop hide-on-desktop" style={{width:window.screen.width,zIndex:"-1"}} />
-                    <EventSideMenu
+                    <SideMenu
                         usersSelected={usersSelected}
                         onClose={toggleEventMenu}
                         onAsign={onAsignSchedule}
+                        recurrenceRef={recurrenceRef}
                     />
                 </div>
                 <div className="max-width calendar-event-on-mobile">

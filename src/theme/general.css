@@ -57,7 +57,7 @@
 .single-page{
   width: 100%;
   height: 100vh;
-  overflow-y: hidden;
+  overflow-y: auto;
   background-color: var(--dark-blue);
 }
 .inline{
@@ -191,8 +191,13 @@
 .input-hover:hover{
   transform: scale(1.05);
 }
+.label-hover:hover{
+  color: orange;
+  cursor: pointer;
+  text-decoration: underline;
+}
 .page-wrapper-outter-container{
-  width: 70%;
+  width: 85%;
   padding: 20px;
   margin-top: 70px;
   color: white;
@@ -214,13 +219,11 @@
   padding: 10px;
   padding-left: 20px;
   user-select: none;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
-  box-shadow: 1px 1px 3px orange;
-  border: 1px solid gray;
 }
 .content-container:hover{
+  cursor: pointer;
   color: orange;
+  background-color: teal;
 }
 .content-inner-container{
   width: 100%;
@@ -229,16 +232,11 @@
 }
 .log-icon{
   left: 0;
-  font-size: 50px;
+  font-size: 40px;
   border-radius: 50%;
   z-index: 99999999999999;
   background-color: orange;
   box-shadow: 1px 1px 2px black;
-}
-.time-icon{
-  font-size: 25px;
-  right: 20px;
-  cursor: pointer;
 }
 .flex{
   display: flex;
@@ -314,8 +312,8 @@
   color: white;
 }
 .modal{
-  width: 80%;
-  height: 60vh;
+  width: 85%;
+  height: 65vh;
   border-radius: 5px;
   box-shadow: 2px 2px 5px orange;
   background: var(--bg-fade-horizontal);
@@ -513,7 +511,7 @@ select{
   padding-bottom: 5px;
   font-size: 18px;
   text-align: center;
-  z-index:"99999999999";
+  z-index:"9999999999999999999999999999999";
   background-color: rgb(0, 0, 0, 0.80);
 }
 .creds-container{
@@ -627,4 +625,19 @@ select{
   padding-right: 10px;
   border-radius: 5px;
   box-shadow: 4px 4px 10px rgb(128, 128, 128, 0.30);
+}
+.title-case{ 
+  text-transform: capitalize;
+}
+.lower-case{ 
+  text-transform: lowercase;
+}
+.admin-settings-card-container{
+  margin: 15px;
+}
+.admin-settings-card{
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  box-shadow: 1px 1px 5px orange;
 }

@@ -61,9 +61,5 @@ export const WEEK = [
 export const ROLES = [
     ADMINISTRATOR,
     SUPERVISOR,
-    "Employer",
     "Employee",
-    /*"Constractor",
-    "Intern",
-    "Other"*/
 ];

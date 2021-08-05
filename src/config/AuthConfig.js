@@ -14,3 +14,8 @@ export const fbConfig = {
 const app = firebase.initializeApp(fbConfig);
 export const auth = app.auth();
 export const db = app.firestore();
+db.enablePersistence().then(()=>{
+    
+}).catch(()=>{
+
+});

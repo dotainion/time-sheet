@@ -34,6 +34,9 @@
     .d-flex-on-mobile{
         display: block;
     }
+    .no-float-on-mobile{
+        position: relative;
+    }
     .mobile-overlay{
         position: absolute;
         z-index: 9999;

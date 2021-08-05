@@ -1,5 +1,5 @@
 import { collection } from "../../config/databaseConfig";
-import { addData } from "../CollectionRef";
+import { addData, getDataById } from "../CollectionRef";
 
 export const addCreds = async(newUser, id) =>{
     try{
@@ -8,5 +8,14 @@ export const addCreds = async(newUser, id) =>{
     }catch(error){
         console.log(error);
         return false;
+    }
+}
+
+export const getCreds = async(id) =>{
+    try{
+        return await getDataById(collection.credentials,id);
+    }catch(error){
+        console.log(error);
+        return {};
     }
 }

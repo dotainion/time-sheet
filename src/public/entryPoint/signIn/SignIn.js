@@ -15,24 +15,29 @@ export const SignIn = () =>{
     
     const { setPayload, processPayload, clearPayload } = useError();
     const { user, signIn, isAuthenticated } = useAuth();
-    const { setLoader } = useStore();
-
-    const [loading, setLoading] = useState(false);
+    const { loading, setLoader } = useStore();
 
     const emailRef = useRef();
     const passwordRef = useRef();
 
     const login = async() =>{
-        setLoader(true);
-        setLoading(true);
-        clearPayload();
-        const res = await signIn(emailRef.current.value, passwordRef.current.value);
-        if (res?.error){
-            setPayload(res?.error);
+        try{
+            setLoader(true);
+            clearPayload();
+            const res = await signIn(emailRef.current.value, passwordRef.current.value);
+            if (res?.error){
+                setPayload(res?.error);
+            }
+        }catch{
+
+        }finally{
+            processPayload();
             setLoader(false);
         }
-        setLoading(false);
-        processPayload();
+    }
+
+    const onEnterPress = (key) =>{
+        if (key === "Enter") login();
     }
 
     useEffect(()=>{
@@ -51,9 +56,9 @@ export const SignIn = () =>{
             <div className="flex">
                 <SideInfo/>
                 <div className="relative max-width">
-                    <div className="float-top-center creds-container">
+                    <div onKeyDown={(e)=>onEnterPress(e.key)} className="float-top-center creds-container">
                         <div className="pad">Sign In</div>
-                        <input ref={emailRef} className="input input-hover block pad" placeholder="Your email" type="email" />
+                        <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
                         <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
                         <button onClick={login} disabled={loading} className="btn btn-hover creds-btn">Login</button>
                     </div>

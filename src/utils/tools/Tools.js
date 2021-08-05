@@ -153,6 +153,9 @@ class Tools{
         }
         return tempArr;
     }
+    titleCase(string){
+        return string.charAt(0).toUpperCase() + string.substr(1).toLowerCase();
+    }
 }
 
 export const tools = new Tools();
