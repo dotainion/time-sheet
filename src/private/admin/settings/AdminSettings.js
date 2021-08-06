@@ -60,7 +60,7 @@ export const AdminSettings = () =>{
                             <div className="pad" style={{color:"orange"}}><b>Work Duration</b></div>
                             <div className="pad">
                                 <input ref={durationRef} className="input input-hover" placeholder="Default work duration" style={{marginRight:"20px"}} type="number" />
-                                <button onClick={onUpdateSettings} className="btn btn-hover">Update</button>
+                                <button onClick={onUpdateSettings} className="btn-hover label-hover" style={{backgroundColor:"inherit",border:"none",color:"white"}}>Update</button>
                             </div>
                         </div>
                     </div>

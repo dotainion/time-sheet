@@ -32,7 +32,7 @@ code {
   --dark-blue: rgb(26, 59, 92);
   --darker-blue: rgb(8, 28, 48);
   --box-shadow: orange;
-  --box-shadow-light: orange;
+  --box-shadow-light: lightgray;
   --box-shadow-dark: black;
   --box-shadow-dark-fade: rgb(0, 0, 0, 0.50);
 }

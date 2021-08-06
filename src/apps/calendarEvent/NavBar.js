@@ -33,14 +33,34 @@ export const NavBar = ({isOpen, onUpdateDate}) =>{
     }, [trigger])
     return(
         <div hidden={!isOpen} className="float-top-center">
-            <div className="flex no-select" style={{backgroundColor:"white"}}>
-                <AiOutlineDoubleLeft onClick={()=>onSetDate(1, "-")} className="pad" />
-                <div className="pad" style={{width:"130px",textAlign:"center"}}>
-                    {tools.time.strMonth(nowdate.getTime())}
-                    {" - "}
-                    {tools.time.year(nowdate.getTime())}
+            <div className="flex no-select calendar-nav-bar">
+                <AiOutlineDoubleLeft 
+                    onClick={()=>onSetDate(1, "-")} 
+                    className="pad" 
+                    style={{
+                        backgroundColor:"white",
+                        borderRadius:"50%",
+                        marginTop:"3px",
+                        marginLeft:"3px"
+                    }} 
+                />
+                <div className="pad">
+                    <span>
+                        {tools.time.strMonth(nowdate.getTime())}
+                        {" - "}
+                        {tools.time.year(nowdate.getTime())}
+                    </span>
                 </div>
-                <AiOutlineDoubleRight onClick={()=>onSetDate(1, "+")} className="pad" />
+                <AiOutlineDoubleRight 
+                    onClick={()=>onSetDate(1, "+")} 
+                    className="pad" 
+                    style={{
+                        backgroundColor:"white",
+                        borderRadius:"50%",
+                        marginTop:"3px",
+                        marginRight:"3px"
+                    }} 
+                />
             </div>
         </div>
     )
