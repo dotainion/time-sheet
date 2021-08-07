@@ -21,6 +21,9 @@ import { AdminLogs } from "././private/admin/pages/AdminLogs";
 import { Page404 } from "./public/404Error/404Errror";
 import { Register } from "././public/entryPoint/register/Register";
 import { ErrorHandler } from "././state/errors/Error";
+import { GeoLocatation } from "./state/geoLocation/GeoLocation";
+import { SimpleMap } from "./state/geoLocation/Maps";
+import { Pricing } from "./public/pricing/Pricing";
 
 
 function App() {
@@ -28,26 +31,29 @@ function App() {
     <BrowserRouter>
       <AuthContext>
         <StateMangement>
-          <ErrorHandler>
-            <Switch>
-              <Route exact path={routes.signIn} render={()=><SignIn/>}/>
-              <Route exact path={routes.register} render={()=><Register/>}/>
-              {/******************************************************************************/}
-              <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>
-              <Route exact path={adminRoutes.users} render={()=><Authenticate Component={Users}/>}/>
-              <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={AdminSettings}/>}/>
-              <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
-              <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
-              {/******************************************************************************/}
-              <Route exact path={routes.default} render={()=><Authenticate Component={Welcome}/>}/>
-              <Route exact path={routes.clocked} render={()=><Authenticate Component={Clocked}/>}/>
-              <Route exact path={routes.settings} render={()=><Authenticate Component={Settings}/>}/>
-              <Route exact path={routes.timeSheet} render={()=><Authenticate Component={TimeSheet}/>}/>
-              <Route exact path={routes.logs} render={()=><Authenticate Component={Logs}/>}/>
-              {/******************************************************************************/}
-              <Route render={()=><Page404/>}/>
-            </Switch>
-          </ErrorHandler>
+          <GeoLocatation>
+            <ErrorHandler>
+              <Switch>
+                <Route exact path={routes.pricing} render={()=><Pricing/>}/>
+                <Route exact path={routes.signIn} render={()=><SignIn/>}/>
+                <Route exact path={routes.register} render={()=><Register/>}/>
+                {/******************************************************************************/}
+                <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>
+                <Route exact path={adminRoutes.users} render={()=><Authenticate Component={Users}/>}/>
+                <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={AdminSettings}/>}/>
+                <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
+                <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
+                {/******************************************************************************/}
+                <Route exact path={routes.default} render={()=><Authenticate Component={Welcome}/>}/>
+                <Route exact path={routes.clocked} render={()=><Authenticate Component={Clocked}/>}/>
+                <Route exact path={routes.settings} render={()=><Authenticate Component={Settings}/>}/>
+                <Route exact path={routes.timeSheet} render={()=><Authenticate Component={TimeSheet}/>}/>
+                <Route exact path={routes.logs} render={()=><Authenticate Component={Logs}/>}/>
+                {/******************************************************************************/}
+                <Route render={()=><Page404/>}/>
+              </Switch>
+            </ErrorHandler>
+          </GeoLocatation>
         </StateMangement>
       </AuthContext>
     </BrowserRouter>

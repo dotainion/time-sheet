@@ -547,7 +547,7 @@ select{
   color: white;
   background-color: var(--dark-orange);
 }
-.auther-header-container{
+.auth-header-container{
   display: flex;
   width: 100%;
   position: relative;
@@ -555,10 +555,10 @@ select{
   padding: 12px;
   color: white;
   user-select: none;
-  box-shadow: 2px 2px 5px var(--box-shadow-dark);
+  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
   background-color: var(--light-blue);
 }
-.auther-header-container label{
+.auth-header-container label{
   font-weight: bold;
 }
 .auth-header-btn-container{
@@ -582,6 +582,7 @@ select{
   width: 100%;
   padding: 50px;
   text-align: center;
+  background-color: white;
   border: 1px solid lightgray;
   box-shadow: 2px 2px 10px var(--box-shadow-light);
 }
@@ -662,4 +663,48 @@ select{
   padding-right: 5px;
   border-radius: 3px;
   background-color: white;
+}
+.price-main-container{
+  display: flex;
+  margin: 60px;
+}
+.price-container{
+  width: 100%;
+  margin: 20px;
+  user-select: none;
+  border: 1px solid lightblue;
+  background-color: white;
+  box-shadow: 4px 4px 5px var(--box-shadow-dark-fade);
+}
+.price-sub-container{
+  padding: 50px;
+}
+.price-title{
+  padding: 10px;
+  color: white;
+  background-color: teal;
+}
+.price-cost{
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+.price-offers{
+  display: flex;
+  font-size: 20px;
+}
+.price-button{
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  color: white;
+  background-color: teal;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
+}
+.price-button:hover{
+  background-color: rgb(2, 172, 172);
+}
+.price-button:active{
+  box-shadow: 1px 1px 2px var(--box-shadow-dark-fade);
 }
