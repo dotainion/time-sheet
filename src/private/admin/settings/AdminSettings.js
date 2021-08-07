@@ -9,9 +9,14 @@ import { WhatsThis } from '../../../components/widgets/WhatsThis';
 import { useStore } from '../../../state/stateManagement/stateManagement';
 import { updateSettings } from '../../../database/settings/Settings';
 import { useAuth } from '../../../state/auth/Authentication';
+import { RiUserSettingsLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
+import { adminRoutes } from '../../../utils/routes/Routes';
 
 
 export const AdminSettings = () =>{
+    const history = useHistory();
+
     const { user } = useAuth();
     const { settings, setLoader } = useStore();
 
@@ -45,13 +50,26 @@ export const AdminSettings = () =>{
                             </div>
                             <div className="pad">
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>setShowResetPassword(true)} className="label-hover">Reset a users password.</span>
+                                <span onClick={()=>setShowResetPassword(true)} className="label-hover">Reset a user password.</span>
                                 <WhatsThis info="This section will send a user a email with informatin to reset their account." />
                             </div>
                             <div className="pad">
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"red"}} />
                                 <span onClick={()=>{}} className="label-hover">Advance users password reset.</span>
                                 <WhatsThis info="This section will generate a temporary password that the user can use to log in then they can change their password" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="settings-card-container">
+                        <div className="settings-card">
+                            <div className="pad" style={{color:"orange"}}><b>Update Profile</b></div>
+                            <div className="pad">
+                                <RiUserSettingsLine style={{marginRight:"5px",color:"orange"}} />
+                                <span onClick={()=>history.push(adminRoutes.profile)} className="label-hover">Update my account</span>
+                            </div>
+                            <div className="pad">
+                                <RiUserSettingsLine style={{marginRight:"5px",color:"orange"}} />
+                                <span onClick={()=>history.push(adminRoutes.usersProfile)} className="label-hover">Update a user account</span>
                             </div>
                         </div>
                     </div>

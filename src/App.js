@@ -24,6 +24,8 @@ import { ErrorHandler } from "././state/errors/Error";
 import { GeoLocatation } from "./state/geoLocation/GeoLocation";
 import { SimpleMap } from "./state/geoLocation/Maps";
 import { Pricing } from "./public/pricing/Pricing";
+import { AdminProfile } from "./private/admin/settings/AdminProfile";
+import { UsersProfile } from "./private/admin/settings/UsersProfile";
 
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 {/******************************************************************************/}
+                <Route exact path={adminRoutes.profile} render={()=><Authenticate Component={AdminProfile}/>}/>
+                <Route exact path={adminRoutes.usersProfile} render={()=><Authenticate Component={UsersProfile}/>}/>
                 <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>
                 <Route exact path={adminRoutes.users} render={()=><Authenticate Component={Users}/>}/>
                 <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={AdminSettings}/>}/>

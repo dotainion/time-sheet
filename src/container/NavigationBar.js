@@ -5,6 +5,7 @@ import { Toolbar } from '../components/widgets/Toolbar';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { GoPrimitiveDot } from 'react-icons/go';
 import { SelectOptions } from '../components/widgets/SelectOptions';
+import { adminRoutes } from '../utils/routes/Routes';
 
 let TOGGLE_STATE = false;
 export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{
@@ -17,6 +18,16 @@ export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionVa
 
     const isActive = (nav) =>{
         if (history.location.pathname === nav?.route){
+            return "nav-btn-is-active";
+        }else if (
+            nav?.route === adminRoutes.settings && 
+            history.location.pathname === adminRoutes.profile
+            ){
+            return "nav-btn-is-active";
+        }else if (
+            nav?.route === adminRoutes.settings && 
+            history.location.pathname === adminRoutes.usersProfile
+            ){
             return "nav-btn-is-active";
         }
         return "";

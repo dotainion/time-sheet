@@ -708,3 +708,30 @@ select{
 .price-button:active{
   box-shadow: 1px 1px 2px var(--box-shadow-dark-fade);
 }
+.user-setting-icon{
+  font-size: 25px;
+  margin-right: 10px;
+}
+.user-setting-icon:hover{
+  color: dodgerblue;
+  padding: 5px;
+  border-radius: 50%;
+  border: 1px solid orange;
+  background-color: white;
+}
+.users-lists{
+  padding: 3px;
+  width: 150px;
+  border: 1px solid white;
+  background-color: dodgerblue;
+}
+.users-name{
+  padding: 5px;
+  border-bottom: 1px solid white;
+}
+.users-name:hover{
+  color: orange;
+  cursor: pointer;
+  background-color: var(--bg);
+  border-bottom: 1px solid orange;
+}

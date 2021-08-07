@@ -7,6 +7,7 @@ import { AdminNavBar } from '../../../container/AdminNavBar';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { ButtonOption } from '../../../components/widgets/ButtonOption';
+import { RiUserSettingsLine } from 'react-icons/ri';
 
 
 let checkboxIds = [];
@@ -111,6 +112,9 @@ export const Users = () =>{
                                     <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
                                     <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
                                 </div>
+                            </div>
+                            <div className="float-right">
+                                <RiUserSettingsLine className="user-setting-icon" />
                             </div>
                         </div>
                     )):

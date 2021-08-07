@@ -14,6 +14,8 @@ export const adminRoutes = {
     users: "/users",
     logs: "/admin-logs",
     settings: "/admin-settings",
+    profile: "/admin-profile",
+    usersProfile: "/admin-users-profile"
 }
 
 export const routes = {
