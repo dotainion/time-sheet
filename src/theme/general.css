@@ -191,6 +191,20 @@
 .input-hover:hover{
   transform: scale(1.05);
 }
+.input-success{
+  white-space: nowrap;
+  padding: 2px;
+  left: 0;
+  color: greenyellow;
+  transform: translate3d(0, 100%, 0);
+}
+.input-error{
+  white-space: nowrap;
+  padding: 2px;
+  left: 0;
+  color: red;
+  transform: translate3d(0, 100%, 0);
+}
 .label-hover:hover{
   color: orange;
   cursor: pointer;
@@ -722,12 +736,16 @@ select{
 .users-lists{
   padding: 3px;
   width: 150px;
+  overflow-y: auto;
   border: 1px solid white;
   background-color: dodgerblue;
 }
 .users-name{
-  padding: 5px;
+  padding: 2px;
+  margin-bottom: 3px;
+  white-space: nowrap;
   border-bottom: 1px solid white;
+  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
 }
 .users-name:hover{
   color: orange;

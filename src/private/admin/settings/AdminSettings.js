@@ -12,6 +12,7 @@ import { useAuth } from '../../../state/auth/Authentication';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
+import { Entry } from '../../../components/widgets/Entry';
 
 
 export const AdminSettings = () =>{
@@ -22,15 +23,21 @@ export const AdminSettings = () =>{
 
     const [showResetPassword, setShowResetPassword] = useState(false);
     const [showChangePassword, setShowChangePassword] = useState(false);
+    const [durationError, setDurationError] = useState("");
+    const [durationSuccess, setDurationSuccess] = useState("");
 
     const durationRef = useRef();
 
     const onUpdateSettings = async() =>{
-        setLoader(true);
+        if (!durationRef.current.value || parseInt(durationRef.current.value || 0) < 1){
+            return setDurationError("Must be a valid duration");
+        }
+        //setLoader(true);
         await updateSettings({
             workDuration: durationRef.current.value || 4
         }, user?.id);
-        setLoader(false);
+        //setLoader(false);
+        setDurationSuccess("Saved");
     }
 
     useEffect(()=>{
@@ -77,8 +84,18 @@ export const AdminSettings = () =>{
                         <div className="settings-card">
                             <div className="pad" style={{color:"orange"}}><b>Work Duration</b></div>
                             <div className="pad">
-                                <input ref={durationRef} className="input input-hover" placeholder="Default work duration" style={{marginRight:"20px"}} type="number" />
-                                <button onClick={onUpdateSettings} className="btn-hover label-hover" style={{backgroundColor:"inherit",border:"none",color:"white"}}>Update</button>
+                                <Entry
+                                    inputRef={durationRef} 
+                                    errorMsg={durationError} 
+                                    successMsg={durationSuccess}
+                                    endTyping={onUpdateSettings}
+                                    startTyping={()=>{
+                                        setDurationError("");
+                                        setDurationSuccess("");
+                                    }}
+                                    placeholder="Default work duration" 
+                                    type="number"
+                                />
                             </div>
                         </div>
                     </div>

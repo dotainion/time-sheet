@@ -8,11 +8,15 @@ import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { ButtonOption } from '../../../components/widgets/ButtonOption';
 import { RiUserSettingsLine } from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
+import { adminRoutes } from '../../../utils/routes/Routes';
 
 
 let checkboxIds = [];
 let userAppended = [];
 export const Users = () =>{
+    const history = useHistory();
+
     const { user } = useAuth();
     
     const [users, setUsers] = useState([]);
@@ -114,7 +118,7 @@ export const Users = () =>{
                                 </div>
                             </div>
                             <div className="float-right">
-                                <RiUserSettingsLine className="user-setting-icon" />
+                                <RiUserSettingsLine onClick={()=>history.push({pathname:adminRoutes.usersProfile, user:user})} className="user-setting-icon" />
                             </div>
                         </div>
                     )):

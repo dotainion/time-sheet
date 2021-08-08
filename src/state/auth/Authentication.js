@@ -114,6 +114,12 @@ export const AuthContext = ({children}) =>{
         tools.store.setAuthAccess(email, password);
     }
 
+    const initUser = async() =>{
+        let iUser = await getUser(user?.id);
+        iUser["id"] = user?.id;
+        setUser(iUser);
+    }
+
     const initialize = async() =>{
         
     }
@@ -148,7 +154,8 @@ export const AuthContext = ({children}) =>{
         adminCreateUser,
         isAuthenticated,
         changePassword,
-        resetPasswordViaEmail
+        resetPasswordViaEmail,
+        initUser
     }
     return(
         <AuthContextProvider.Provider value={providerValue}>

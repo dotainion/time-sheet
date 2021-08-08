@@ -1,5 +1,5 @@
 import { collection } from "../../config/databaseConfig";
-import { addData, getData, getDataByDoubleField, getDataByField, getDataById } from "../CollectionRef";
+import { addData, getData, getDataByDoubleField, getDataByField, getDataById, updateData } from "../CollectionRef";
 
 export const addUser = async(newUser, id) =>{
     try{
@@ -27,5 +27,15 @@ export const getUsers = async(accessId, supervisorId, limit=false) =>{
     }catch(error){
         console.log(error);
         return [];
+    }
+}
+
+export const updateUser = async(data, id) =>{
+    try{
+        await updateData(collection.user, data, id);
+        return true;
+    }catch(error){
+        console.log(error);
+        return false;
     }
 }

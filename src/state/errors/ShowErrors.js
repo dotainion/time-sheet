@@ -5,6 +5,8 @@ import { useError } from '../errors/Error';
 export const ShowErrors = () =>{
     const { error } = useError();
     return(
-        <div hidden={!error} className="float-bottom-overflow error">{error}</div>
+        <div>
+            {error?.trim?.() && <div className="float-bottom-overflow error">{error}</div>}
+        </div>
     )
 }
