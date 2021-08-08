@@ -16,7 +16,7 @@ export const AddUser = () =>{
             <ContentsWrapper isOpen={true} noScroll>
                 <div
                     style={{
-                        fontSize:"30px",
+                        fontSize:"25px",
                         borderBottom:"1px solid white",
                         marginBottom:"30px"
                     }}

@@ -84,7 +84,14 @@ export const Users = () =>{
     }
 
     const initUsers = async() =>{
-        setUsers(await getUsers(user?.accessId, user?.id));
+        let p = await getUsers(user?.accessId, user?.id);
+        let u = [];
+        for (let c of p){
+            for (let j=0;j<100;j++){
+                u.push(c);
+            }
+        }
+        setUsers(u);
     }
 
     useEffect(()=>{
@@ -92,7 +99,7 @@ export const Users = () =>{
     }, []);
     return (
         <AdminNavBar>
-            <ContentsWrapper isOpen={true}>
+            <ContentsWrapper isOpen={true} noScroll>
                 <div hidden={!showSelectOption} className="calendar-event-floating-btn float-top-left" style={{top:"-30px"}}>
                     <div>
                         <button onClick={()=>onSelectAll(!idToggle)} className="btn btn-hover" style={{color:"blue"}}>{idToggle?"Deselect All":"Select All"}</button>
@@ -100,30 +107,39 @@ export const Users = () =>{
                         <button onClick={onCancelSelect} className="btn btn-hover" style={{color:"red"}}>Cancel</button>
                     </div>
                 </div>
-                {
-                    users?.length?
-                    users?.map((user, key)=>(
-                        <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid orange"}} key={key}>
-                            <div className="relative">
-                                <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
-                            </div>
-                            <div className="relative">
-                                <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px",color:"white"}} />
-                            </div>
-                            <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
-                                <div className="content-inner-container flex d-flex-on-mobile">
-                                    <div className="max-width" style={{minWidth:"150px"}}><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                                    <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
-                                    <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
+                <div
+                    style={{
+                        fontSize:"25px",
+                        borderBottom:"1px solid white",
+                        marginBottom:"10px"
+                    }}
+                ><b>New Member</b></div>
+                <div className="scrollbar" style={{overflowY:"auto",overflowX:"hidden",height:"65vh"}}>
+                    {
+                        users?.length?
+                        users?.map((user, key)=>(
+                            <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid orange"}} key={key}>
+                                <div className="relative">
+                                    <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
+                                </div>
+                                <div className="relative">
+                                    <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px",color:"white"}} />
+                                </div>
+                                <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
+                                    <div className="content-inner-container flex d-flex-on-mobile">
+                                        <div className="max-width" style={{minWidth:"150px"}}><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                        <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
+                                        <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
+                                    </div>
+                                </div>
+                                <div className="float-right">
+                                    <RiUserSettingsLine onClick={()=>history.push({pathname:adminRoutes.usersProfile, user:user})} className="user-setting-icon" />
                                 </div>
                             </div>
-                            <div className="float-right">
-                                <RiUserSettingsLine onClick={()=>history.push({pathname:adminRoutes.usersProfile, user:user})} className="user-setting-icon" />
-                            </div>
-                        </div>
-                    )):
-                    <div>No Users</div>
-                }
+                        )):
+                        <div>No Users</div>
+                    }
+                </div>
             </ContentsWrapper>
             <AsignTimeSheet
                 usersSelected={usersSelected}
