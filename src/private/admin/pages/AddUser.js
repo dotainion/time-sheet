@@ -1,16 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useAuth } from '../../../state/auth/Authentication';
+import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
-import { ROLES } from '../../../contents/lists';
-import { useError } from '../../../state/errors/Error';
-import { useStore } from '../../../state/stateManagement/stateManagement';
 import { AddOrUpdateNewUser } from '../settings/AddOrUpdateNewUser';
 
 
 export const AddUser = () =>{
-    
-
     return (
         <AdminNavBar>
             <ContentsWrapper isOpen={true} noScroll>

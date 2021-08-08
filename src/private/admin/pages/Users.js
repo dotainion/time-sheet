@@ -84,14 +84,7 @@ export const Users = () =>{
     }
 
     const initUsers = async() =>{
-        let p = await getUsers(user?.accessId, user?.id);
-        let u = [];
-        for (let c of p){
-            for (let j=0;j<100;j++){
-                u.push(c);
-            }
-        }
-        setUsers(u);
+        setUsers(await getUsers(user?.accessId, user?.id));
     }
 
     useEffect(()=>{
