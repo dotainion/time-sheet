@@ -62,7 +62,7 @@ export const AdminSettings = () =>{
                             </div>
                             <div className="pad">
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"red"}} />
-                                <span onClick={()=>{}} className="label-hover">Advance users password reset.</span>
+                                <span onClick={()=>{}} className="label-hover">Advance password reset.</span>
                                 <WhatsThis info="This section will generate a temporary password that the user can use to log in then they can change their password" />
                             </div>
                         </div>
