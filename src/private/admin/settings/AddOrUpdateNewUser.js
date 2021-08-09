@@ -127,14 +127,14 @@ export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpd
                 <InputEntry inputRef={passRef} label="Password" error={passError} errorReset={setPassError} hidden={useUpdate} />
             </div>
             <div className="h-seperator relative">
-                <InputSelect inputRef={roleRef} label="Role" options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
+                <InputSelect inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
             </div>   
 
             <div className="flex h-seperator" style={{paddingTop:"10px",paddingBottom:"20px",display:useUpdate && "none"}}>
                 <input style={{margin:"15px"}} type="checkbox" />
                 <div style={{margin:"11px"}}>Notify user</div>
             </div>  
-            <div style={{textAlign:"right",paddingTop:"40px"}}>
+            <div style={{paddingTop:"40px"}}>
                 <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "ADD USER"}</button>
             </div>
         </div>

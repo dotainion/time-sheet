@@ -4,6 +4,7 @@ import { UserNavBar } from '../../container/UserNavBar';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { WhatsThis } from '../../components/widgets/WhatsThis';
 import { ChangePassword } from '../../security/ChangePassord';
+import { MdEmail } from 'react-icons/md';
 
 export const Settings = () =>{
     const [showChangePassword, setShowChangePassword] = useState();
@@ -19,6 +20,11 @@ export const Settings = () =>{
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
                                 <span onClick={()=>setShowChangePassword(true)} className="label-hover">Change my password.</span>
                                 <WhatsThis info="Change my current passdword to a new one." />
+                            </div>
+                            <div className="pad">
+                                <MdEmail style={{marginRight:"5px",color:"orange"}} />
+                                <span onClick={()=>{}} className="label-hover">Change my email.</span>
+                                <WhatsThis info="This section will change the email address linked to your account" />
                             </div>
                         </div>
                     </div>
