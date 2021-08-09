@@ -53,7 +53,7 @@ export const UsersProfile = () =>{
                             </div>
                         ))}
                     </div>
-                    <div style={{paddingLeft:"40px"}}>
+                    <div className="max-width" style={{paddingLeft:"40px"}}>
                         {
                             Object.keys(userSelected || {}).length?
                             <div>

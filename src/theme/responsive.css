@@ -2,17 +2,10 @@
     .page-wrapper-outter-container{
         width: 90%;
         padding: 10px;
+        margin-top: 10px;
     }
     .page-wrapper-container{
         padding: 0px;
-    }
-    .admin-user-name{
-        width: 30%;
-        margin-right: 0px;
-    }
-    .admin-user-input{
-        width: 70%;
-        margin-left: 0px;
     }
     .mobile-nav{
         position: absolute;
@@ -83,5 +76,14 @@
         margin: 10px;
         padding: 0px;
         padding-left: 20px;
-      }
+    }
+    .max-width-on-mobile{
+        width: 100%;
+    }
+    .price-main-container{
+        margin: 20px;
+    }
+    .price-container{
+        margin: 0px;
+    }
 }

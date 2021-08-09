@@ -179,6 +179,14 @@
   margin-left: 10px;
   box-shadow: 4px 4px 10px var(--box-shadow-dark);
 }
+.input-entery{
+  padding: 7px;
+  outline: none;
+  border: 1px solid var(--bg);
+}
+.input-entery:hover{
+  transform: scale(1.02);
+}
 .input{
   padding: 5px;
   font-size: inherit;
@@ -264,16 +272,6 @@
 .h-seperator{
   border-bottom: 1px solid var(--box-shadow);
 }
-.admin-user-name{
-  position: relative;
-  width: 100px;
-  margin-right: 20px;
-  white-space: nowrap;
-}
-.admin-user-input{
-  width: 250px;
-  margin-left: 20px;
-}
 .scrollbar::-webkit-scrollbar{
   width: 10px;
   height: 10px;
@@ -305,6 +303,9 @@
 }
 .max-width{
   width: 100%;
+}
+.half-width{
+  width: 50%;
 }
 .max-size{
   width: 100%;

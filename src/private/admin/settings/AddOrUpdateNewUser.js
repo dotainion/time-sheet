@@ -1,18 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { InputEntry } from '../../../components/widgets/InputEntry';
+import { InputSelect } from '../../../components/widgets/InputSelect';
 import { ROLES } from '../../../contents/lists';
 import { updateUser } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { useError } from '../../../state/errors/Error';
 import { useStore } from '../../../state/stateManagement/stateManagement';
+import { adminRoutes } from '../../../utils/routes/Routes';
 
 
-const roleDefault = "No Role";
+const roleDefault = "Select Role";
 export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpdateComplete}) =>{
     const { checkObject, processPayload, setPayload } = useError();
     const { adminCreateUser } = useAuth();
     const { setLoader } = useStore();
 
     const [loading, setLoading] = useState(false);
+    const [emailError, setEmailError] = useState("");
+    const [fNameError, setFNameError] = useState("");
+    const [lNameError, setLNameError] = useState("");
+    const [passError, setPassError] = useState("");
+    const [roleError, setRoleError] = useState("");
 
     const emailRef = useRef();
     const fNameRef = useRef();
@@ -33,15 +41,34 @@ export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpd
             email: emailRef.current.value,
             firstName: fNameRef.current.value,
             lastName: lNameRef.current.value,
-            password: useUpdate? true: passRef.current.value,
+            password: passRef.current.value,
             role: roleRef.current.value
         };
         try{
-            if (!checkObject(userObj)) return processPayload();
+            let STATE = true;
+            if (!userObj.email){
+                STATE = false;
+                setEmailError("Invalid email address");
+            }
+            if (!userObj.firstName){
+                STATE = false;
+                setFNameError("A valid name is required");
+            }
+            if (!userObj.lastName){
+                STATE = false;
+                setLNameError("A valid name is required");
+            }
+            if (!userObj.password && !useUpdate){
+                STATE = false;
+                setPassError("A valid password is required");
+            }
             if (userObj.role === roleDefault){
-                setPayload("No role selected");
-                return processPayload();
+                STATE = false;
+                setRoleError("Please provide a role");
             } 
+
+            if (!STATE) return;
+
             setLoader(true);
             setLoading(true);
 
@@ -87,59 +114,28 @@ export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpd
     }, [userSelected]);
     return (
         <div>
-            <div className="flex h-seperator">
-                <div className="admin-user-name">
-                    <div className="float-center">Email</div>
-                </div>
-                <div className="admin-user-input">
-                    <input disabled={useUpdate} ref={emailRef} className={`input lower-case ${!useUpdate && "input-hover"}`} style={{backgroundColor:useUpdate && "rgb(192, 217, 245)",color:useUpdate && "gray"}} placeholder="Email" type="email" />
-                </div>
-            </div> 
-            <div className="flex h-seperator">
-                <div className="admin-user-name">
-                    <div className="float-center">First Name</div>
-                </div>
-                <div className="admin-user-input">
-                    <input ref={fNameRef} className="input input-hover title-case" placeholder="First Name" />
-                </div>
-            </div> 
-            <div className="flex h-seperator">
-                <div className="admin-user-name">
-                    <div className="float-center">Last Name</div>
-                </div>
-                <div className="admin-user-input">
-                    <input ref={lNameRef} className="input input-hover title-case" placeholder="Last Name" />
-                </div> 
-            </div>  
-            <div className="flex h-seperator" style={{display:useUpdate && "none"}}>
-                <div className="admin-user-name">
-                    <div className="float-center">Password</div>
-                </div>
-                <div className="admin-user-input">
-                    <input ref={passRef} className="input input-hover" placeholder="Password" type="password" />
-                </div>                
-            </div>  
-            <div className="flex h-seperator">
-                <div className="admin-user-name">
-                    <div className="float-center">Role</div>
-                </div>
-                <div className="admin-user-input">
-                    <select disabled={roleDisabled} ref={roleRef} style={{backgroundColor:roleDisabled && "rgb(192, 217, 245)",color:roleDisabled && "gray"}} className={`input ${!roleDisabled && "input-hover"}`}>
-                        <option hidden defaultChecked>{roleDefault}</option>
-                        {ROLES.map((role, key)=>(
-                            <option key={key}>{role}</option>
-                        ))}
-                    </select>
-                </div>
+            <div className="h-seperator">
+                <InputEntry inputRef={emailRef} label="Email" error={emailError} errorReset={setEmailError} disabled={useUpdate} />
+            </div>
+            <div className="h-seperator">
+                <InputEntry inputRef={fNameRef} label="First Name" error={fNameError} errorReset={setFNameError} />
+            </div>
+            <div className="h-seperator">
+                <InputEntry inputRef={lNameRef} label="Last Name" error={lNameError} errorReset={setLNameError} />
+            </div>
+            <div className="h-seperator">
+                <InputEntry inputRef={passRef} label="Password" error={passError} errorReset={setPassError} hidden={useUpdate} />
+            </div>
+            <div className="h-seperator relative">
+                <InputSelect inputRef={roleRef} label="Role" options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
             </div>   
+
             <div className="flex h-seperator" style={{paddingTop:"10px",paddingBottom:"20px",display:useUpdate && "none"}}>
-                <div className="admin-user-name">
-                    <input type="checkbox" className="float-center" />
-                </div> 
-                <div className="admin-user-input">Notify user</div>
+                <input style={{margin:"15px"}} type="checkbox" />
+                <div style={{margin:"11px"}}>Notify user</div>
             </div>  
             <div style={{textAlign:"right",paddingTop:"40px"}}>
-                <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "Add user"}</button>
+                <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "ADD USER"}</button>
             </div>
         </div>
     )

@@ -26,6 +26,7 @@ import { SimpleMap } from "./state/geoLocation/Maps";
 import { Pricing } from "./public/pricing/Pricing";
 import { AdminProfile } from "./private/admin/settings/AdminProfile";
 import { UsersProfile } from "./private/admin/settings/UsersProfile";
+import { Tests } from "./tests/Tests";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <GeoLocatation>
             <ErrorHandler>
               <Switch>
+                <Route exact path="/tests" render={()=><Tests/>}/>
                 <Route exact path={routes.pricing} render={()=><Pricing/>}/>
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>

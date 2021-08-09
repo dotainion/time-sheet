@@ -13,6 +13,7 @@ import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { Entry } from '../../../components/widgets/Entry';
+import { MdEmail } from 'react-icons/md';
 
 
 export const AdminSettings = () =>{
@@ -56,7 +57,7 @@ export const AdminSettings = () =>{
                                 <WhatsThis info="Change my current passdword to a new one." />
                             </div>
                             <div className="pad">
-                                <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
+                                <RiLockPasswordFill style={{marginRight:"5px",color:"yellow"}} />
                                 <span onClick={()=>setShowResetPassword(true)} className="label-hover">Reset a user password.</span>
                                 <WhatsThis info="This section will send a user a email with informatin to reset their account." />
                             </div>
@@ -64,6 +65,16 @@ export const AdminSettings = () =>{
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"red"}} />
                                 <span onClick={()=>{}} className="label-hover">Advance password reset.</span>
                                 <WhatsThis info="This section will generate a temporary password that the user can use to log in then they can change their password" />
+                            </div>
+                            <div className="pad">
+                                <MdEmail style={{marginRight:"5px",color:"orange"}} />
+                                <span onClick={()=>{}} className="label-hover">Change my email.</span>
+                                <WhatsThis info="This section will change the email address linked to your account" />
+                            </div>
+                            <div className="pad">
+                                <MdEmail style={{marginRight:"5px",color:"yellow"}} />
+                                <span onClick={()=>{}} className="label-hover">Change a user email.</span>
+                                <WhatsThis info="This section will change the email address linked to a user account" />
                             </div>
                         </div>
                     </div>
