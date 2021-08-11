@@ -4,7 +4,7 @@ import { TiTick } from 'react-icons/ti';
 
 
 export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset}) =>{
-    const [labelStyle, setLabelStyle] = useState({color:"black",left:"40px"});
+    const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
 
     const onFloatLabel = () =>{
@@ -15,7 +15,7 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
     const onCenterLabel = () =>{
         if (!inputRef?.current?.value){
             setToggleIcon(false);
-            setLabelStyle({color:"black",left:"40px"});
+            setLabelStyle({color:"gray",left:"40px"});
         }else{
             setToggleIcon(true);
         }
@@ -50,7 +50,10 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
                 }}>
                 <BsPencilSquare 
                     className="float-left pad" 
-                    style={{color:"black",display:toggleIcon && "none"}} 
+                    style={{
+                        color:error?"red":"gray",
+                        display:toggleIcon && "none"
+                    }} 
                 />
                 <TiTick
                     className="float-left pad" 

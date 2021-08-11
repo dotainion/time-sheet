@@ -5,13 +5,16 @@ import { TiTick } from 'react-icons/ti';
 
 export const InputSelect = ({label, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
+    const [grayColor, setGrayColor] = useState(false);
 
     const onChange = () =>{
         errorReset("");
         if (inputRef?.current?.value === defaultOption){
             setToggleIcon(false);
+            setGrayColor(true);
         }else{
             setToggleIcon(true);
+            setGrayColor(false);
         }
     }
 
@@ -40,7 +43,10 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
                 }}>
                 <AiOutlineSelect
                     className="float-left pad" 
-                    style={{color:"black",display:toggleIcon && "none"}} 
+                    style={{
+                        color:error?"red":"gray",
+                        display:toggleIcon && "none"
+                    }} 
                 />
                 <TiTick
                     className="float-left pad" 
@@ -57,14 +63,14 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
                 onChange={onChange}
                 style={{
                     backgroundColor:disabled && "rgb(192, 217, 245)",
-                    color:disabled && "gray",
+                    color:disabled && "gray" || grayColor && "gray",
                     border:error && "1px solid red",
                 }} 
                 className={`input-entery`}
             >
                 <option hidden defaultChecked>{defaultOption}</option>
                 {options?.map?.((role, key)=>(
-                    <option key={key}>{role}</option>
+                    <option style={{color:"black"}} key={key}>{role}</option>
                 ))}
             </select>
             <div
