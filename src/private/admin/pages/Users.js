@@ -111,7 +111,7 @@ export const Users = () =>{
                     {
                         users?.length?
                         users?.map((user, key)=>(
-                            <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid orange"}} key={key}>
+                            <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid skyblue",marginTop:"10px"}} key={key}>
                                 <div className="relative">
                                     <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
                                 </div>

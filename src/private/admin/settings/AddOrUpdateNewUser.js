@@ -123,7 +123,7 @@ export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpd
             <div className="h-seperator">
                 <InputEntry inputRef={lNameRef} label="Last Name" error={lNameError} errorReset={setLNameError} />
             </div>
-            <div className="h-seperator">
+            <div hidden={useUpdate} className="h-seperator">
                 <InputEntry inputRef={passRef} label="Password" error={passError} errorReset={setPassError} hidden={useUpdate} />
             </div>
             <div className="h-seperator relative">

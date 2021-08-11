@@ -180,12 +180,17 @@
   box-shadow: 4px 4px 10px var(--box-shadow-dark);
 }
 .input-entery{
-  padding: 7px;
+  padding: 8px;
+  padding-left: 40px;
   outline: none;
+  border-radius: 5px;
   border: 1px solid var(--bg);
 }
 .input-entery:hover{
-  transform: scale(1.02);
+  border: 1px solid orange;
+}
+.input-entery:focus{
+  border: 1px solid orange;
 }
 .input{
   padding: 5px;
@@ -270,7 +275,7 @@
   display: block;
 }
 .h-seperator{
-  border-bottom: 1px solid var(--box-shadow);
+  border-bottom: 1px solid skyblue;
 }
 .scrollbar::-webkit-scrollbar{
   width: 10px;

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { BsPencilSquare } from 'react-icons/bs';
+import { TiTick } from 'react-icons/ti';
 
 
 export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset}) =>{
-    const [labelStyle, setLabelStyle] = useState({color:"black",left:"5px"});
+    const [labelStyle, setLabelStyle] = useState({color:"black",left:"40px"});
+    const [toggleIcon, setToggleIcon] = useState(false);
 
     const onFloatLabel = () =>{
         setLabelStyle({top:"-9px"});
@@ -11,7 +14,10 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
 
     const onCenterLabel = () =>{
         if (!inputRef?.current?.value){
-            setLabelStyle({color:"black",left:"5px"});
+            setToggleIcon(false);
+            setLabelStyle({color:"black",left:"40px"});
+        }else{
+            setToggleIcon(true);
         }
     }
 
@@ -30,8 +36,31 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
             <div
                 onClick={onFloatLabel} 
                 className="float-left" 
-                style={labelStyle}
+                style={{
+                    ...labelStyle,
+                    cursor:"text"
+                }}
             >{label}</div>
+            <div 
+                className="float-left" 
+                style={{
+                    width:"35px",
+                    height:"100%",
+                    borderRight:"1px solid gray"
+                }}>
+                <BsPencilSquare 
+                    className="float-left pad" 
+                    style={{color:"black",display:toggleIcon && "none"}} 
+                />
+                <TiTick
+                    className="float-left pad" 
+                    style={{
+                        color:"green",
+                        fontSize:"20px",
+                        display:!toggleIcon && "none"
+                    }} 
+                />
+            </div>
             <input
                 disabled={disabled}
                 ref={inputRef}
