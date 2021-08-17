@@ -3,7 +3,7 @@ import { Backdrop } from '../container/Backdrop';
 import { SpanWrapper } from '../container/SpanWrapper';
 import { CHAGNE_PASSWORD, RESET_USER_PASSWORD } from '../contents/GlobalValues';
 import { getUsers } from '../database/accounts/AccountsDb';
-import { getCreds } from '../database/credentials/Credentials';
+import { getCreds } from '../database/credentials/CredentialsDb';
 import { useAuth } from '../state/auth/Authentication';
 import { useError } from '../state/errors/Error';
 import { useStore } from '../state/stateManagement/stateManagement';

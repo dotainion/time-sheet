@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BsPencilSquare } from 'react-icons/bs';
+import { BsPencil } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
+import { MdEmail } from 'react-icons/md';
 
 
-export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset}) =>{
+export const InputEntry = ({email, label, inputRef, disabled, hidden, error, errorReset}) =>{
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
 
@@ -27,7 +28,7 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
     return(
         <div 
             hidden={hidden}
-            className="relative half-width max-width-on-mobile"
+            className="relative"
             style={{
                 marginTop:"20px",
                 marginBottom:"20px",
@@ -48,19 +49,29 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
                     height:"100%",
                     borderRight:"1px solid gray"
                 }}>
-                <BsPencilSquare 
-                    className="float-left pad" 
-                    style={{
-                        color:error?"red":"gray",
-                        display:toggleIcon && "none"
-                    }} 
-                />
+                {
+                    email?
+                        <MdEmail
+                            className="float-left pad" 
+                            style={{
+                                color:error?"red":"gray",
+                                display:error && "block" || toggleIcon && "none"
+                            }} 
+                        />
+                    :<BsPencil 
+                        className="float-left pad" 
+                        style={{
+                            color:error?"red":"gray",
+                            display:error && "block" || toggleIcon && "none"
+                        }} 
+                    />
+                }
                 <TiTick
                     className="float-left pad" 
                     style={{
                         color:"green",
                         fontSize:"20px",
-                        display:!toggleIcon && "none"
+                        display:!toggleIcon && "none" || error && "none"
                     }} 
                 />
             </div>
@@ -72,6 +83,15 @@ export const InputEntry = ({label, inputRef, disabled, hidden, error, errorReset
                 onChange={()=>errorReset?.("")}
                 className="input-entery max-width"
                 style={{border:error && "1px solid red"}}
+            />
+            <div
+                className="float-left input-entery max-width"
+                style={{
+                    transform:"translateY(120%)",
+                    border:"none",
+                    borderRadius:"0",
+                    borderBottom:"1px solid skyblue"
+                }}
             />
             <div
                 className="float-bottom-overflow"

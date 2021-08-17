@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
-import { AddOrUpdateNewUser } from '../settings/AddOrUpdateNewUser';
+import { UserEntryInputs } from '../settings/UserEntryInputs';
 
 
 export const AddUser = () =>{
@@ -15,7 +15,7 @@ export const AddUser = () =>{
                         marginBottom:"30px"
                     }}
                 ><b>New Member</b></div>
-                <AddOrUpdateNewUser/>         
+                <UserEntryInputs/>         
             </ContentsWrapper>
         </AdminNavBar>
     )

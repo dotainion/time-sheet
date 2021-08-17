@@ -2,14 +2,14 @@ import React, { createContext, useContext, useEffect, useRef, useState } from 'r
 import { useHistory } from 'react-router-dom';
 import { auth } from '../../config/AuthConfig';
 import { ADMINISTRATOR, ADMIN_SUPERVISER, SUPERVISOR } from '../../contents/AuthValue';
-import { addUser, getUser, getUsers } from '../../database/accounts/AccountsDb';
-import { addCreds } from '../../database/credentials/Credentials';
+import { addUser, getUser, getUsers, updateUser } from '../../database/accounts/AccountsDb';
+import { addCreds, getCreds } from '../../database/credentials/CredentialsDb';
 import { routes } from '../../utils/routes/Routes';
 import { secure } from '../../security/Security';
 import { tools } from '../../utils/tools/Tools';
 import { addSettings, getSettings } from '../../database/settings/Settings';
-import { getData } from '../../database/CollectionRef';
-import { collection } from '../../config/databaseConfig';
+
+
 
 const AuthContextProvider = createContext();
 export const useAuth = () => useContext(AuthContextProvider);
@@ -47,9 +47,36 @@ export const AuthContext = ({children}) =>{
 
     const resetPasswordViaEmail = async(email) =>{
         try{
-            await auth.sendPasswordResetEmail(email);
+            return await auth.sendPasswordResetEmail(email);
         }catch(error){
             return {error:error.message};
+        }
+    }
+
+    const changeEmail = async(email) =>{
+        try{
+            return await auth.currentUser.updateEmail(email);
+        }catch(error){
+            return {error:error.message};
+        }
+    }
+
+    const changeUserEmail = async(uUser) =>{
+        if (!ADMIN_SUPERVISER.includes(user?.role)){
+            return {error: "You dont have access to create this user"};
+        }
+        const {email, password} = tools.store.getAuthAccess();
+        if (!email && !password) return {error:"Something went wrong, user was not created"}
+        try{
+            creatingUser.current = true;
+            const uCreds = await getCreds(uUser?.id);
+            const response = await signIn(uUser?.email, secure.decrypt(uCreds?.password));
+            response?.currentUser?.updateEmail?.(uUser?.email);
+            await updateUser({email:uUser?.email}, uUser?.id);
+            await signIn(email, secure.decrypt(password));
+            return response;
+        }catch(error){
+            return {error: error.message};
         }
     }
 
@@ -155,7 +182,9 @@ export const AuthContext = ({children}) =>{
         isAuthenticated,
         changePassword,
         resetPasswordViaEmail,
-        initUser
+        initUser,
+        changeEmail,
+        changeUserEmail
     }
     return(
         <AuthContextProvider.Provider value={providerValue}>

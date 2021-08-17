@@ -3,5 +3,6 @@ export const collection = {
     logs: "logs",
     settings: "settings",
     schedule: "schedule",
-    credentials: "credentials"
+    credentials: "credentials",
+    geolocation: "geolocation"
 }

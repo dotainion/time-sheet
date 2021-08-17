@@ -759,3 +759,16 @@ select{
   background-color: var(--bg);
   border-bottom: 1px solid orange;
 }
+.add-update-new-user-info{
+  margin-left: 45%;
+  transform: translateX(-50%);
+}
+.new-user-info-margin{
+  margin-left: 30%;
+}
+.users-lists-icon{
+  display: none;
+  font-size: 30px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 1px lightblue;
+}

@@ -27,6 +27,9 @@ import { Pricing } from "./public/pricing/Pricing";
 import { AdminProfile } from "./private/admin/settings/AdminProfile";
 import { UsersProfile } from "./private/admin/settings/UsersProfile";
 import { Tests } from "./tests/Tests";
+import { AdvancePasswordReset } from "./private/admin/settings/AdvancePasswordReset";
+import { UpdateUserEmail } from "./private/admin/settings/UpdateUserEmail";
+import { UpdateEmail } from "./private/admin/settings/UpdateEmail";
 
 
 function App() {
@@ -42,6 +45,9 @@ function App() {
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 {/******************************************************************************/}
+                <Route exact path={adminRoutes.updateEmail} render={()=><Authenticate Component={UpdateEmail}/>}/>
+                <Route exact path={adminRoutes.updateUserEmail} render={()=><Authenticate Component={UpdateUserEmail}/>}/>
+                <Route exact path={adminRoutes.advanceReset} render={()=><Authenticate Component={AdvancePasswordReset}/>}/>
                 <Route exact path={adminRoutes.profile} render={()=><Authenticate Component={AdminProfile}/>}/>
                 <Route exact path={adminRoutes.usersProfile} render={()=><Authenticate Component={UsersProfile}/>}/>
                 <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>

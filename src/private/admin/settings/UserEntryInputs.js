@@ -10,7 +10,7 @@ import { adminRoutes } from '../../../utils/routes/Routes';
 
 
 const roleDefault = "Select Role";
-export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpdateComplete}) =>{
+export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdateComplete}) =>{
     const { checkObject, processPayload, setPayload } = useError();
     const { adminCreateUser } = useAuth();
     const { setLoader } = useStore();
@@ -113,20 +113,20 @@ export const AddOrUpdateNewUser = ({useUpdate, roleDisabled, userSelected, onUpd
         }
     }, [userSelected]);
     return (
-        <div>
-            <div className="h-seperator">
-                <InputEntry inputRef={emailRef} label="Email" error={emailError} errorReset={setEmailError} disabled={useUpdate} />
+        <div className="add-update-new-user-info">
+            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
+                <InputEntry inputRef={emailRef} label="Email" maxWidth error={emailError} errorReset={setEmailError} disabled={useUpdate} />
             </div>
-            <div className="h-seperator">
-                <InputEntry inputRef={fNameRef} label="First Name" error={fNameError} errorReset={setFNameError} />
+            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
+                <InputEntry inputRef={fNameRef} label="First Name" maxWidth error={fNameError} errorReset={setFNameError} />
             </div>
-            <div className="h-seperator">
-                <InputEntry inputRef={lNameRef} label="Last Name" error={lNameError} errorReset={setLNameError} />
+            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
+                <InputEntry inputRef={lNameRef} label="Last Name" maxWidth error={lNameError} errorReset={setLNameError} />
             </div>
-            <div hidden={useUpdate} className="h-seperator">
-                <InputEntry inputRef={passRef} label="Password" error={passError} errorReset={setPassError} hidden={useUpdate} />
+            <div hidden={useUpdate} className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
+                <InputEntry inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} />
             </div>
-            <div className="h-seperator relative">
+            <div className="h-seperator relative" style={{borderColor:"rgb(0,0,0,0)"}}>
                 <InputSelect inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
             </div>   
 

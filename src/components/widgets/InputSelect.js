@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineSelect } from 'react-icons/ai';
+import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
@@ -24,7 +24,7 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
     return(
         <div 
             hidden={hidden}
-            className="relative half-width max-width-on-mobile"
+            className="relative"
             style={{
                 marginTop:"20px",
                 marginBottom:"20px",
@@ -41,7 +41,7 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
                     height:"100%",
                     borderRight:"1px solid gray"
                 }}>
-                <AiOutlineSelect
+                <BiSelectMultiple
                     className="float-left pad" 
                     style={{
                         color:error?"red":"gray",
@@ -73,6 +73,15 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
                     <option style={{color:"black"}} key={key}>{role}</option>
                 ))}
             </select>
+            <div
+                className="float-left input-entery max-width"
+                style={{
+                    transform:"translateY(120%)",
+                    border:"none",
+                    borderRadius:"0",
+                    borderBottom:"1px solid skyblue"
+                }}
+            />
             <div
                 className="float-bottom-overflow"
                 style={{

@@ -24,6 +24,9 @@
     .hide-on-mobile{
         display: none;
     }
+    .hide-switch{
+        display: none;
+    }
     .d-flex-on-mobile{
         display: block;
     }
@@ -85,5 +88,21 @@
     }
     .price-container{
         margin: 0px;
+    }
+    .add-update-new-user-info{
+        width: 84%;
+        margin-left: 0;
+        transform: none;
+    }
+    .users-lists{
+        position: absolute;
+        z-index: 9999999;
+        height: 100%;
+        top: 0;
+        left: 0;
+        padding-bottom: 0;
+    }
+    .users-lists-icon{
+        display: block;
     }
 }

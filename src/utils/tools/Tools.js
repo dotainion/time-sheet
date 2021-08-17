@@ -156,6 +156,12 @@ class Tools{
     titleCase(string){
         return string.charAt(0).toUpperCase() + string.substr(1).toLowerCase();
     }
+    isEmailValid(email){
+        //check if email in valid format
+        var validate = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        if (validate.test(email)) return true;
+        else return false;
+    }
 }
 
 export const tools = new Tools();

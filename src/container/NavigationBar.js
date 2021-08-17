@@ -7,6 +7,14 @@ import { GoPrimitiveDot } from 'react-icons/go';
 import { SelectOptions } from '../components/widgets/SelectOptions';
 import { adminRoutes } from '../utils/routes/Routes';
 
+const SETTINGS_ROUTES = [
+    adminRoutes.profile,
+    adminRoutes.usersProfile,
+    adminRoutes.advanceReset,
+    adminRoutes.updateEmail,
+    adminRoutes.updateUserEmail
+]
+
 let TOGGLE_STATE = false;
 export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionValue, options, onOptionChange, children}) =>{
     const history = useHistory();
@@ -16,18 +24,18 @@ export const NavigationBar = ({menues, datePicker, onDatePicker, defaultOptionVa
     const [navToggle, setNavToggle] = useState(true);
     const [showOptons, setShowOptions] = useState(false);
 
+    const isSettingsRoute = (nav) =>{
+        return nav === adminRoutes.settings?true:false;
+    }
+
+    const isRouteInSettings = () =>{
+        return SETTINGS_ROUTES.includes(history.location.pathname);
+    }
+
     const isActive = (nav) =>{
         if (history.location.pathname === nav?.route){
             return "nav-btn-is-active";
-        }else if (
-            nav?.route === adminRoutes.settings && 
-            history.location.pathname === adminRoutes.profile
-            ){
-            return "nav-btn-is-active";
-        }else if (
-            nav?.route === adminRoutes.settings && 
-            history.location.pathname === adminRoutes.usersProfile
-            ){
+        }else if (isSettingsRoute(nav?.route) && isRouteInSettings()){
             return "nav-btn-is-active";
         }
         return "";

@@ -63,17 +63,17 @@ export const AdminSettings = () =>{
                             </div>
                             <div className="pad">
                                 <RiLockPasswordFill style={{marginRight:"5px",color:"red"}} />
-                                <span onClick={()=>{}} className="label-hover">Advance password reset.</span>
+                                <span onClick={()=>history.push(adminRoutes.advanceReset)} className="label-hover">Advance password reset.</span>
                                 <WhatsThis info="This section will generate a temporary password that the user can use to log in then they can change their password" />
                             </div>
                             <div className="pad">
                                 <MdEmail style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>{}} className="label-hover">Change my email.</span>
+                                <span onClick={()=>history.push(adminRoutes.updateEmail)} className="label-hover">Change my email.</span>
                                 <WhatsThis info="This section will change the email address linked to your account" />
                             </div>
                             <div className="pad">
                                 <MdEmail style={{marginRight:"5px",color:"yellow"}} />
-                                <span onClick={()=>{}} className="label-hover">Change a user email.</span>
+                                <span onClick={()=>history.push(adminRoutes.updateUserEmail)} className="label-hover">Change a user email.</span>
                                 <WhatsThis info="This section will change the email address linked to a user account" />
                             </div>
                         </div>
