@@ -36,12 +36,12 @@ export const Clocked = () =>{
             id: user?.id,
             email: user?.email,
             start: tools.time.digits(),
-            end: "none"
+            end: "none"//todo: remain string "none"
         });
     }
 
     const addEndTimeLog = async() =>{
-        await addEndLog({end: tools.time.digits(),}, user?.id);
+        await addEndLog({end: tools.time.digits()}, user?.id);
     }
 
     const onStart = async() =>{

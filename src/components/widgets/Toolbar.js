@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { Calendar } from './Calendar';
+import { Calendar } from '../../apps/calendar/Calendar';
 import { MdDateRange } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 import { useStore } from '../../state/stateManagement/stateManagement';

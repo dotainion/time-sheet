@@ -105,4 +105,21 @@
     .users-lists-icon{
         display: block;
     }
+    .time-card-buttons-container{
+        right: 0px;
+        padding: 5px;
+        padding-top: 25px;
+        border: 1px solid skyblue;
+        background: var(--bg-fade-horizontal-reverse);
+    }
+    .time-card-buttons{
+        width: 100%;
+        display: block;
+        margin-top: 5px;
+        text-align: left;
+        padding-top: 5px;
+        margin-left: 0px;
+        padding-bottom: 5px;
+        border: 1px solid var(--bg);
+    }
 }

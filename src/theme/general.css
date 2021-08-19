@@ -772,3 +772,20 @@ select{
   border-radius: 50%;
   box-shadow: 1px 1px 1px lightblue;
 }
+.time-card-buttons-container{
+  right: 10px;
+}
+.time-card-buttons{
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+  border: 1px solid white;
+  background: var(--bg-fade-vertical-light-hover);
+  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
+}
+.time-card-buttons option{
+  color: black;
+}
+.time-card-buttons:hover{
+  background: var(--bg-fade-vertical-lighter-hover);
+}

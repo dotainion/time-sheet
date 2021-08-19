@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export const SelectOptions  = ({onChange, options, cssClass, defaultValue, style}) =>{
+export const SelectOptions  = ({onChange, options, cssOverride, cssClass, defaultValue, style}) =>{
     const triggerChanges = (e) =>{
         for (let elemets of options || []){
             if (elemets?.command){
@@ -13,7 +13,7 @@ export const SelectOptions  = ({onChange, options, cssClass, defaultValue, style
         onChange?.(e);
     }
     return(
-        <select hidden={!options} onChange={triggerChanges} className={`input ${cssClass}`} style={style}>
+        <select hidden={!options} onChange={triggerChanges} className={`${!cssOverride && "input"} ${cssClass}`} style={style}>
             <option hidden defaultChecked>{defaultValue || options?.[0]?.title}</option>
             {options?.map?.((opt, key)=>(
                 <option onClick={()=>alert("hello wthi sis me")} value={opt?.value || opt?.title} key={key}>{opt?.title}</option>

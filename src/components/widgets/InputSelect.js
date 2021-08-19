@@ -3,12 +3,12 @@ import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
-export const InputSelect = ({label, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
+export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
     const [grayColor, setGrayColor] = useState(false);
 
     const onChange = () =>{
-        errorReset("");
+        errorReset?.("");
         if (inputRef?.current?.value === defaultOption){
             setToggleIcon(false);
             setGrayColor(true);
@@ -41,13 +41,22 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
                     height:"100%",
                     borderRight:"1px solid gray"
                 }}>
-                <BiSelectMultiple
-                    className="float-left pad" 
-                    style={{
-                        color:error?"red":"gray",
-                        display:toggleIcon && "none"
-                    }} 
-                />
+                {
+                    Icon? <Icon
+                        className="float-left pad" 
+                        style={{
+                            color:error?"red":"gray",
+                            display:toggleIcon && "none"
+                        }} 
+                    />:
+                    <BiSelectMultiple
+                        className="float-left pad" 
+                        style={{
+                            color:error?"red":"gray",
+                            display:toggleIcon && "none"
+                        }} 
+                    />
+                }
                 <TiTick
                     className="float-left pad" 
                     style={{
@@ -76,6 +85,7 @@ export const InputSelect = ({label, inputRef, options, defaultOption, disabled, 
             <div
                 className="float-left input-entery max-width"
                 style={{
+                    display: noBottomBorder && "none",
                     transform:"translateY(120%)",
                     border:"none",
                     borderRadius:"0",

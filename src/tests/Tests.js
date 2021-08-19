@@ -1,33 +1,26 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { InputEntry } from '../components/widgets/InputEntry';
 import { ContentsWrapper } from '../container/ContentsWrapper';
+import { addData } from '../database/CollectionRef';
 
 
-const getCoords = () =>{
-    // Try HTML5 geolocation.
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                console.log(pos.lat, pos.lng);
-            }, () => {
-                alert("unable to get location")
-            }
-        );
-    } else {
-        // Browser doesn't support Geolocation
-        alert("not surported")
+export const add_data = async(data) =>{
+    try{
+        return await addData("test", data);
+    }catch(error){
+        console.log(error);
+        return false;
     }
 }
 
 export const Tests = () =>{
+    let before = new Date();
+    
     return(
         <ContentsWrapper isOpen>
             <div className="float-center">
-                <button onClick={getCoords}>Locate</button>
+                <button onClick={()=>{add_data(before.toString())}} >Locate</button>
+                <div></div>
             </div>
         </ContentsWrapper>
     )

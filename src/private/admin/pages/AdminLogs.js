@@ -28,11 +28,6 @@ export const AdminLogs = () =>{
         setLogs(await getLogsById(id));
     }
 
-    const searchLogsByDate = async() =>{
-        const {from, to} = dateObject;
-        setLogs(await getLogsRange(from, to, userId));
-    }
-
     const initUsers = async() =>{
         let tempArray = []
         for (let mebr of await getUsers(user?.accessId, user?.id)){
