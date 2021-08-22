@@ -196,9 +196,9 @@
   color: black;
   right: -8%;
   font-size: 20px;
-}
-.input-entery-show:hover{
-  color: dodgerblue;
+  z-index: 999999;
+  padding: 5px;
+  border-radius: 50%;
 }
 .input{
   padding: 5px;

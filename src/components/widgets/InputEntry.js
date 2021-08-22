@@ -9,6 +9,7 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
     const [showPasswordInput, setShowPasswordInput] = useState(false);
+    const [showEyeIcon, setShowEyeIcon] = useState(false);
 
     const onFloatLabel = () =>{
         setLabelStyle({top:"-9px"});
@@ -35,6 +36,8 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 marginTop:"20px",
                 marginBottom:"20px",
             }}
+            onMouseEnter={()=>setShowEyeIcon(true)}
+            onMouseLeave={()=>setShowEyeIcon(false)}
         >
             <div
                 onClick={onFloatLabel} 
@@ -87,11 +90,22 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 style={{border:error && "1px solid red"}}
                 type={!showPasswordInput && type}
             />
-            <BiShowAlt 
-                className="float-top-right input-entery-show"
-                style={{display:type !== "password" && "none"}}
-                onClick={()=>setShowPasswordInput(!showPasswordInput)}
-            />
+            <div 
+                className="float-left pad" 
+                style={{
+                    display:!showEyeIcon && "none",
+                    paddingLeft:"2px"
+                }}>
+                <BiShowAlt 
+                    className="input-entery-show"
+                    style={{
+                        color:showPasswordInput && "dodgerblue",
+                        display:type !== "password" && "none",
+                        backgroundColor:"lightgray"
+                    }} 
+                    onClick={()=>setShowPasswordInput(!showPasswordInput)}
+                />
+            </div>
             <div
                 className="float-left input-entery max-width"
                 style={{
