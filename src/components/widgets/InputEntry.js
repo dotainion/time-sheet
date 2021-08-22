@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BsPencil } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
 import { MdEmail } from 'react-icons/md';
-import { BiShowAlt } from 'react-icons/bi';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 export const InputEntry = ({email, label, type, inputRef, disabled, hidden, error, errorReset}) =>{
@@ -96,15 +96,32 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                     display:!showEyeIcon && "none",
                     paddingLeft:"2px"
                 }}>
-                <BiShowAlt 
-                    className="input-entery-show"
+                <span 
                     style={{
-                        color:showPasswordInput && "dodgerblue",
-                        display:type !== "password" && "none",
-                        backgroundColor:"lightgray"
-                    }} 
-                    onClick={()=>setShowPasswordInput(!showPasswordInput)}
-                />
+                        display:showPasswordInput && "none"
+                    }}>
+                    <FaEye 
+                        className="input-entery-show"
+                        style={{
+                            display:type !== "password" && "none",
+                            backgroundColor:"lightgray"
+                        }} 
+                        onClick={()=>setShowPasswordInput(!showPasswordInput)}
+                    />
+                </span>
+                <span 
+                    style={{
+                        display:!showPasswordInput && "none"
+                    }}>
+                    <FaEyeSlash 
+                        className="input-entery-show"
+                        style={{
+                            display:type !== "password" && "none",
+                            backgroundColor:"lightgray"
+                        }} 
+                        onClick={()=>setShowPasswordInput(!showPasswordInput)}
+                    />
+                </span>
             </div>
             <div
                 className="float-left input-entery max-width"
