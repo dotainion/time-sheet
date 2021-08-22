@@ -3,7 +3,7 @@ import { getLogsById, getLogsRange } from '../../../database/logs/LogDb';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { TimeLog } from '../../../components/widgets/TimeLog';
 import { useStore } from '../../../state/stateManagement/stateManagement';
-import { TimeCart } from '../../../components/widgets/TimeCard';
+import { TimeCard } from '../../../components/widgets/TimeCard';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
@@ -51,7 +51,7 @@ export const AdminLogs = () =>{
                     <TimeLog logs={logs} />
                 </div>
             </ContentsWrapper>
-            <TimeCart isOpen={!toggleView}  timeOptions={logs} />
+            <TimeCard isOpen={!toggleView}  timeOptions={logs} />
         </AdminNavBar>
     )
 }

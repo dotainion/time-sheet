@@ -124,7 +124,7 @@ export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdate
                 <InputEntry inputRef={lNameRef} label="Last Name" maxWidth error={lNameError} errorReset={setLNameError} />
             </div>
             <div hidden={useUpdate} className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} />
+                <InputEntry inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />
             </div>
             <div className="h-seperator relative" style={{borderColor:"rgb(0,0,0,0)"}}>
                 <InputSelect inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />

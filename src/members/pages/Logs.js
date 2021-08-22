@@ -3,7 +3,7 @@ import { useAuth } from '../../state/auth/Authentication';
 import { UserNavBar } from '../../container/UserNavBar';
 import { TimeLog } from '../../components/widgets/TimeLog';
 import { ContentsWrapper } from '../../container/ContentsWrapper';
-import { TimeCart } from '../../components/widgets/TimeCard';
+import { TimeCard } from '../../components/widgets/TimeCard';
 import { getLogs, getLogsRange } from '../../database/logs/LogDb';
 
 
@@ -42,7 +42,7 @@ export const Logs = () =>{
             <ContentsWrapper isOpen={showView} maxWith >
                 <TimeLog logs={logs} />
             </ContentsWrapper>
-            <TimeCart isOpen={!showView} timeOptions={logs} />
+            <TimeCard isOpen={!showView} timeOptions={logs} useSchedule />
         </UserNavBar>
     )
 }

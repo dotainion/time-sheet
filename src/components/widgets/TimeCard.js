@@ -6,13 +6,12 @@ import { useAuth } from '../../state/auth/Authentication';
 import { tools } from '../../utils/tools/Tools';
 import { IconButton } from './IconButon';
 import { IconSelect } from './IconSelect';
-import { MdDateRange } from 'react-icons/md';
 import { Calendar } from '../../apps/calendar/Calendar';
 import { IoMdOptions } from 'react-icons/io';
 
 
 let userArray = [];
-export const TimeCart = ({isOpen, onClose, timeOptions, useSchedule}) =>{
+export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     const { user } = useAuth();
 
     const [totalHours, setTotalHours] = useState();
@@ -72,18 +71,21 @@ export const TimeCart = ({isOpen, onClose, timeOptions, useSchedule}) =>{
         if (!useSchedule) calcTotalLog();
         else calcTotalSchedule();
     },[logs, useSchedule]);
+
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="time-card-name relative">
-                <label>Time Sheet <span style={{color:"white",fontSize:"13px"}}><b>{userSelected}</b></span></label>
+            <div className="time-card-name relative" style={{zIndex:"999999"}}>
+                <label>Time Sheet <span style={{color:"white",fontSize:"13px"}}><b>{!useSchedule? userSelected: user?.firstName + " " + user?.lastName}</b></span></label>
+                <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px",display:useSchedule && "none"}} />
+                <div className={`float-top-right time-card-buttons-container ${hideBtnOption}`} style={{display:useSchedule && "none"}}>
+                    <div className="float-top-left hide-on-desktop" style={{fontSize:"11px",left:"5px",top:"3px"}}>{tools.time.date(selectedDate)}</div>
+                    <label style={{fontSize:"15px"}}>From: <b>{tools.time.date(selectedDate)}</b></label>
                     <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
-                    <div className={`float-top-right time-card-buttons-container ${hideBtnOption}`}>
-                        <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
-                        <IconButton onClick={()=>setShowCalendar(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
-                        <IconSelect cssClass="time-card-buttons" icon="people" options={users} defaultValue="Users" />
-                        <IconButton cssClass="time-card-buttons" icon="download" label="Export" />
-                        <span hidden><IconSelect cssClass="time-card-buttons" icon="settings" options={options} defaultValue="Options" /></span>
-                    </div>
+                    <IconButton onClick={()=>setShowCalendar(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
+                    <IconSelect cssClass="time-card-buttons" icon="people" options={users} defaultValue="Users" />
+                    <IconButton cssClass="time-card-buttons" icon="download" label="Export" />
+                    <span hidden><IconSelect cssClass="time-card-buttons" icon="settings" options={options} defaultValue="Options" /></span>
+                </div>
             </div>
             <div className="time-card-header-container">
                 <div className="time-card-content">{useSchedule?"Date":"Day"}</div>
@@ -114,7 +116,7 @@ export const TimeCart = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                 isOpen={showCalendar}
                 onClose={()=>setShowCalendar(false)} 
                 onSelect={setSelectedDate} 
-            />
+                />
         </Modal>
     )
 }

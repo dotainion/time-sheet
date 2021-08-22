@@ -192,6 +192,14 @@
 .input-entery:focus{
   border: 1px solid orange;
 }
+.input-entery-show{
+  color: black;
+  right: -8%;
+  font-size: 20px;
+}
+.input-entery-show:hover{
+  color: dodgerblue;
+}
 .input{
   padding: 5px;
   font-size: inherit;
@@ -779,6 +787,7 @@ select{
   color: white;
   cursor: pointer;
   margin-left: 10px;
+  padding: 5px;
   border: 1px solid white;
   background: var(--bg-fade-vertical-light-hover);
   box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);

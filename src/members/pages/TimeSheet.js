@@ -4,7 +4,7 @@ import { EventCalendar } from '../../apps/calendarEvent/EventCalendar';
 import { Modal } from '../../container/Modal';
 import { UserNavBar } from '../../container/UserNavBar';
 import { getSchedule } from '../../database/schedules/SchedulesDb';
-import { TimeCart } from '../../components/widgets/TimeCard';
+import { TimeCard } from '../../components/widgets/TimeCard';
 
 
 export const TimeSheet = () =>{
@@ -29,9 +29,9 @@ export const TimeSheet = () =>{
     return(
         <UserNavBar options={options}>
             <Modal isOpen={!showView}>
-                <EventCalendar readOnly tasksAsign={schedules}/>
+                <EventCalendar readOnly tasksAsign={schedules} />
             </Modal>
-            <TimeCart isOpen={showView} timeOptions={schedules} useSchedule />
+            <TimeCard isOpen={showView} timeOptions={schedules} useSchedule />
         </UserNavBar>
     )
 }

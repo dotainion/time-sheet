@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { BsPencil } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
 import { MdEmail } from 'react-icons/md';
+import { BiShowAlt } from 'react-icons/bi';
 
 
-export const InputEntry = ({email, label, inputRef, disabled, hidden, error, errorReset}) =>{
+export const InputEntry = ({email, label, type, inputRef, disabled, hidden, error, errorReset}) =>{
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
+    const [showPasswordInput, setShowPasswordInput] = useState(false);
 
     const onFloatLabel = () =>{
         setLabelStyle({top:"-9px"});
@@ -83,6 +85,12 @@ export const InputEntry = ({email, label, inputRef, disabled, hidden, error, err
                 onChange={()=>errorReset?.("")}
                 className="input-entery max-width"
                 style={{border:error && "1px solid red"}}
+                type={!showPasswordInput && type}
+            />
+            <BiShowAlt 
+                className="float-top-right input-entery-show"
+                style={{display:type !== "password" && "none"}}
+                onClick={()=>setShowPasswordInput(!showPasswordInput)}
             />
             <div
                 className="float-left input-entery max-width"
