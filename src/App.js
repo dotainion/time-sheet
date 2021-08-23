@@ -30,6 +30,10 @@ import { Tests } from "./tests/Tests";
 import { AdvancePasswordReset } from "./private/admin/settings/AdvancePasswordReset";
 import { UpdateUserEmail } from "./private/admin/settings/UpdateUserEmail";
 import { UpdateEmail } from "./private/admin/settings/UpdateEmail";
+import { AdminMessages } from "./private/admin/pages/AdminMessages";
+import { UserMessages } from "./members/pages/Messages";
+import { Notifications } from "./members/pages/Notifications";
+import { AdminNotifications } from "./private/admin/pages/Notifications";
 
 
 function App() {
@@ -45,6 +49,8 @@ function App() {
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 {/******************************************************************************/}
+                <Route exact path={adminRoutes.notification} render={()=><Authenticate Component={AdminNotifications}/>}/>
+                <Route exact path={adminRoutes.adminMessages} render={()=><Authenticate Component={AdminMessages}/>}/>
                 <Route exact path={adminRoutes.updateEmail} render={()=><Authenticate Component={UpdateEmail}/>}/>
                 <Route exact path={adminRoutes.updateUserEmail} render={()=><Authenticate Component={UpdateUserEmail}/>}/>
                 <Route exact path={adminRoutes.advanceReset} render={()=><Authenticate Component={AdvancePasswordReset}/>}/>
@@ -56,6 +62,8 @@ function App() {
                 <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
                 <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
                 {/******************************************************************************/}
+                <Route exact path={routes.notification} render={()=><Authenticate Component={Notifications}/>}/>
+                <Route exact path={routes.messages} render={()=><Authenticate Component={UserMessages}/>}/>
                 <Route exact path={routes.default} render={()=><Authenticate Component={Welcome}/>}/>
                 <Route exact path={routes.clocked} render={()=><Authenticate Component={Clocked}/>}/>
                 <Route exact path={routes.settings} render={()=><Authenticate Component={Settings}/>}/>

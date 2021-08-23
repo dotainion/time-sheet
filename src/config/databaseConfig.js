@@ -3,6 +3,7 @@ export const collection = {
     logs: "logs",
     settings: "settings",
     schedule: "schedule",
+    messages: "messages",
     credentials: "credentials",
     geolocation: "geolocation"
 }

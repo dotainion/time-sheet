@@ -74,8 +74,8 @@ class Time{
     }
     sort(array){
         array.sort(function(a, b){
-            const aDate = new Date(a?.info?.start);
-            const bDate = new Date(b?.info?.start);
+            const aDate = new Date(a?.info?.start || a?.info?.date);
+            const bDate = new Date(b?.info?.start || b?.info?.date);
             return aDate - bDate;
         });
         return array;
@@ -161,6 +161,9 @@ class Tools{
         var validate = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         if (validate.test(email)) return true;
         else return false;
+    }
+    bindId(from, to){
+        return [from, to].sort().join("");
     }
 }
 

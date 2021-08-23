@@ -18,7 +18,9 @@ export const adminRoutes = {
     usersProfile: "/admin-users-profile",
     advanceReset: "/advance-password-reset",
     updateEmail: "/update-email",
-    updateUserEmail: "/update-user-email"
+    updateUserEmail: "/update-user-email",
+    adminMessages: "/admin-messages",
+    notification: "/admin-notification"
 }
 
 export const routes = {
@@ -31,4 +33,6 @@ export const routes = {
     logs: "/logs",
     settings: "/settings",
     timeSheet: "/time-sheet",
+    messages: "/messages",
+    notification: "/notification"
 }

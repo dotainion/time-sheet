@@ -12,6 +12,12 @@ export const ADMIN_SIDE_NAV = [
         title: "VIEW LOGS",
         route: adminRoutes.logs
     },{
+        title: "CHAT",
+        route: adminRoutes.adminMessages
+    },{
+        title: "NOTIFICATION",
+        route: adminRoutes.notification
+    },{
         title: "SETTINGS",
         route: adminRoutes.settings
     }
@@ -27,6 +33,12 @@ export const USER_SIDE_NAV = [
     },{
         title: "TIME SHEET",
         route: routes.timeSheet
+    },{
+        title: "CHAT",
+        route: routes.messages
+    },{
+        title: "NOTIFICATION",
+        route: routes.notification
     },{
         title: "SETTINGS",
         route: routes.settings

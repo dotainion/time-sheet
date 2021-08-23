@@ -225,6 +225,22 @@
   color: red;
   transform: translate3d(0, 100%, 0);
 }
+.search-input{
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 25px;
+  padding: 8px;
+  width: 70%;
+  padding-right: 30px;
+  background-color: white;
+}
+.search-input input{
+  width: 100%;
+  font-size: 15px;
+  outline: none;
+  border: none;
+  background-color: inherit;
+}
 .label-hover:hover{
   color: orange;
   cursor: pointer;
@@ -283,6 +299,9 @@
 }
 .h-seperator{
   border-bottom: 1px solid skyblue;
+}
+.scrollbar{
+  overflow-y: auto;
 }
 .scrollbar::-webkit-scrollbar{
   width: 10px;
@@ -796,4 +815,55 @@ select{
 }
 .time-card-buttons:hover{
   background: var(--bg-fade-vertical-lighter-hover);
+}
+.msg-profile{
+  position: relative;
+  border-bottom: 1px solid lightgray;
+}
+.msg-profile:hover{
+  background-color: lightgray;
+}
+.msg-content{
+  margin-bottom: 10px;
+  align-items: right;
+}
+.msg-content-left{
+  padding: 8px;
+  margin-right: 20%;
+  background-color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 15px;
+  border: 1px solid lightgray;
+}
+.msg-content-right{
+  padding: 8px;
+  margin-left: 20%;
+  text-align: right;
+  background-color: skyblue;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 15px;
+  border: 1px solid lightgray;
+}
+.msg-main-container{
+  padding: 20px;
+}
+.msg-contact-container{
+  width: 30%;
+}
+.msg-container{
+  width: 70%;
+}
+.msg-send-box{
+  width: 80%;
+}
+.msg-send-btn{
+  right: 30px;
+  font-size: 30px;
+  color: var(--bg-fade-dark);
+  cursor: pointer;
+}
+.spin{
+  animation: spiner 1s linear infinite;
 }

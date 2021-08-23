@@ -122,4 +122,26 @@
         padding-bottom: 5px;
         border: 1px solid var(--bg);
     }
+    .msg-main-container{
+        display: block;
+        padding: 2px;
+    }
+    .msg-contact-container{
+        width: 100%;
+    }
+    .msg-container{
+        position: absolute;
+        z-index: 99;
+        width: 100%;
+        top: 57px;
+    }
+    .msg-send-box{
+        width: 100%;
+    }
+    .msg-send-btn{
+        right: 0px;
+        font-size: 30px;
+        color: var(--bg-fade-dark);
+        cursor: pointer;
+    }
 }
