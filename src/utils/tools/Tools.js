@@ -165,6 +165,20 @@ class Tools{
     bindId(from, to){
         return [from, to].sort().join("");
     }
+    async toBase64(file){
+        console.log(file)
+        try{
+            return await new Promise((res, rej) => {
+                const reader = new FileReader();
+                reader.onload = e => res(e.target.result);
+                reader.onerror = e => rej(e);
+                reader.readAsDataURL(file); 
+            });
+        }catch(error){
+            console.log(error)
+            return null;
+        }
+    };
 }
 
 export const tools = new Tools();

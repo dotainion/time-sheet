@@ -23,19 +23,14 @@ export const UsersProfile = () =>{
                     <div className="max-width" style={{paddingLeft:"40px"}}>
                         {
                             Object.keys(userSelected || {}).length?
-                            <div>
-                                <div style={{borderBottom:"1px solid white",padding:"5px",marginBottom:"30px"}}>
-                                    <b>{`${userSelected?.firstName} ${userSelected?.lastName}`}</b>
-                                </div>
-                                <UserEntryInputs
-                                    useUpdate
-                                    userSelected={userSelected}
-                                    onUpdateComplete={()=>{
-                                        //initUsers();
-                                        setUserSelected({});
-                                    }}
-                                />
-                            </div>:
+                            <UserEntryInputs
+                                useUpdate
+                                userSelected={userSelected}
+                                onUpdateComplete={()=>{
+                                    //initUsers();
+                                    setUserSelected({});
+                                }}
+                            />:
                             <div>Select a user for editing</div>
                         }
                         

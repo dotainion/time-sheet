@@ -17,7 +17,7 @@ export const SideMenu = ({onAsign, onClose, recurrenceRef, usersSelected}) =>{
 
                 <div className="label-hover no-select">
                     <input ref={recurrenceRef} type="checkbox" id="recurrence" />
-                    <label for="recurrence">Recurrence</label>
+                    <label htmlFor="recurrence">Recurrence</label>
                 </div>
                 
                 <div className="event-side-menu-user-list scrollbar">

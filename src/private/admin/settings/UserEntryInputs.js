@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Profile } from '../../../apps/other/Profile';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { InputSelect } from '../../../components/widgets/InputSelect';
 import { ROLES } from '../../../contents/lists';
@@ -10,9 +11,9 @@ import { adminRoutes } from '../../../utils/routes/Routes';
 
 
 const roleDefault = "Select Role";
-export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdateComplete}) =>{
+export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLName, profileStyle, roleDisabled, userSelected, onUpdateComplete}) =>{
     const { checkObject, processPayload, setPayload } = useError();
-    const { adminCreateUser } = useAuth();
+    const { user, adminCreateUser } = useAuth();
     const { setLoader } = useStore();
 
     const [loading, setLoading] = useState(false);
@@ -21,6 +22,7 @@ export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdate
     const [lNameError, setLNameError] = useState("");
     const [passError, setPassError] = useState("");
     const [roleError, setRoleError] = useState("");
+    const [userImg, setUserImg] = useState("");
 
     const emailRef = useRef();
     const fNameRef = useRef();
@@ -42,7 +44,8 @@ export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdate
             firstName: fNameRef.current.value,
             lastName: lNameRef.current.value,
             password: passRef.current.value,
-            role: roleRef.current.value
+            role: roleRef.current.value,
+            image: userImg || ""
         };
         try{
             let STATE = true;
@@ -79,7 +82,8 @@ export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdate
                         email: userObj.email,
                         firstName: userObj.firstName,
                         lastName: userObj.lastName,
-                        role: userObj.role
+                        role: userObj.role,
+                        image: userObj.image
                     }, userSelected?.id);
                     onUpdateComplete?.();
                 }else response = {error:"No user selected."};
@@ -114,14 +118,25 @@ export const UserEntryInputs = ({useUpdate, roleDisabled, userSelected, onUpdate
     }, [userSelected]);
     return (
         <div className="add-update-new-user-info">
+            <Profile
+                cssClass="admin-profile-hover centered"
+                style={{marginBottom:"60px",...profileStyle}}
+                firstName={profileFName || userSelected?.firstName}
+                lastName={profileLName || userSelected?.lastName}
+                msg={profileMsg || userSelected?.role}
+                img={userSelected?.image}
+                onImgSelected={setUserImg}
+                useUpdateImage
+                //onClick
+            />
             <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
                 <InputEntry inputRef={emailRef} label="Email" maxWidth error={emailError} errorReset={setEmailError} disabled={useUpdate} />
             </div>
             <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={fNameRef} label="First Name" maxWidth error={fNameError} errorReset={setFNameError} />
+                <InputEntry inputRef={fNameRef} label="First Name" maxWidth titleCase error={fNameError} errorReset={setFNameError} />
             </div>
             <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={lNameRef} label="Last Name" maxWidth error={lNameError} errorReset={setLNameError} />
+                <InputEntry inputRef={lNameRef} label="Last Name" maxWidth titleCase error={lNameError} errorReset={setLNameError} />
             </div>
             <div hidden={useUpdate} className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
                 <InputEntry inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />

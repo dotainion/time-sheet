@@ -5,7 +5,7 @@ import { MdEmail } from 'react-icons/md';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
-export const InputEntry = ({email, label, type, inputRef, disabled, hidden, error, errorReset}) =>{
+export const InputEntry = ({email, label, type, inputRef, disabled, hidden, error, errorReset, titleCase}) =>{
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
     const [showPasswordInput, setShowPasswordInput] = useState(false);
@@ -86,7 +86,7 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 onFocus={onFloatLabel}
                 onBlur={onCenterLabel}
                 onChange={()=>errorReset?.("")}
-                className="input-entery max-width"
+                className={`input-entery max-width ${titleCase && "title-case"}`}
                 style={{border:error && "1px solid red"}}
                 type={!showPasswordInput && type}
             />

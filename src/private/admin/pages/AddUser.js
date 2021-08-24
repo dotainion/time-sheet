@@ -15,7 +15,15 @@ export const AddUser = () =>{
                         marginBottom:"30px"
                     }}
                 ><b>New Member</b></div>
-                <UserEntryInputs/>         
+                <UserEntryInputs
+                    profileFName="Select"
+                    profileLName="user image"
+                    profileMsg="Optional"
+                    profileStyle={{
+                        marginLeft:"0px",
+                        transform: "translateX(0%)"
+                    }}
+                />         
             </ContentsWrapper>
         </AdminNavBar>
     )

@@ -1,19 +1,6 @@
 import React, { useState } from 'react';
 import { BsQuestionCircle } from 'react-icons/bs';
-import { Backdrop } from '../../container/Backdrop';
-import { SpanWrapper } from '../../container/SpanWrapper';
-import { HiOutlineInformationCircle } from 'react-icons/hi';
 
-import { geolocated } from "react-geolocated";
-
-const go = geolocated({
-    positionOptions: {
-        enableHighAccuracy: false,
-    },
-    userDecisionTimeout: 5000,
-});
-
-console.log(go.latitude);
 
 export const WhatsThis = ({info}) =>{
     const [showInfo, setShowInfo] = useState(false);

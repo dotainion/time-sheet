@@ -12,6 +12,7 @@ export const Messages = () =>{
 
     const [contacts, setContacts] = useState([]);
     const [messages, setMessages] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
     const [msgError, setMsgError] = useState(false);
     const [userSelected, setUserSelected] = useState({});
     const [hideWhenMobile, setHideWhenMobile] = useState("hide-on-mobile");
@@ -40,6 +41,33 @@ export const Messages = () =>{
         messageRef.current.value = "";
     }
 
+    const onSearch = () =>{
+        let contactTemp = [];
+        if (searchRef.current.value){
+            for  (let contact of contacts){
+                if (contact?.info?.firstName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
+                    contact?.info?.lastName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
+                    contact?.info?.email?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase())){
+                    contactTemp.push(contact);
+                }
+            }
+        }
+        setSearchResults(contactTemp);
+    }
+
+    const clearSearchResults = () =>{
+        searchRef.current.value = "";
+        setSearchResults([]);
+    }
+
+    const onSelectUser = (contact, id) =>{
+        if (userSelected?.id !== contact?.id){
+            setUserSelected(contact);
+            initUserMessages(contact, id);
+        }
+        clearSearchResults();
+    }
+
     const initUserMessages = async(uUser, id) =>{
         setMsgError(false);
         document.getElementById(id).style.display = "block";
@@ -49,7 +77,8 @@ export const Messages = () =>{
     }
 
     const initContacts = async() =>{
-        setContacts(await getContacts(user?.accessId));
+        const contacts = await getContacts(user?.accessId);
+        setContacts(contacts.filter((contact)=>!contact?.id?.includes(user?.id)));
     }
 
     useEffect(()=>{
@@ -71,9 +100,32 @@ export const Messages = () =>{
                             lastName={user?.lastName}
                             msg={user?.role}
                         />
-                        <SearchBar searchRef={searchRef} />
+                        <SearchBar onTyping={onSearch} searchRef={searchRef} />
                     </div>
                     <div className="scrollbar" style={{height:"71vh"}}>
+                        <div
+                            style={{
+                                display:!searchResults.length && "none",
+                                backgroundColor:"lightblue",marginBottom:"20px",
+                                borderBottom:"2px solid dodgerblue"
+                            }}>
+                            {
+                                searchResults.length?
+                                searchResults.map((contact, key)=>(
+                                    <Profile
+                                        pointer
+                                        firstName={contact?.info?.firstName}
+                                        lastName={contact?.info?.lastName}
+                                        onClick={()=>onSelectUser(contact, contact?.id)}
+                                        loaderId={contact?.id}
+                                        key={key}
+                                    />
+                                )):
+                                <div className="pad" style={{display:!searchRef.current?.value && "none"}}>
+                                    <label>No results found for your search</label>
+                                </div>
+                            }
+                        </div>
                         {
                             contacts.length?
                             contacts.map((contact, key)=>(
@@ -81,10 +133,8 @@ export const Messages = () =>{
                                     pointer
                                     firstName={contact?.info?.firstName}
                                     lastName={contact?.info?.lastName}
-                                    onClick={()=>{
-                                        setUserSelected(contact);
-                                        initUserMessages(contact, contact?.id);
-                                    }}
+                                    onClick={()=>onSelectUser(contact, contact?.id)}
+                                    style={{backgroundColor:userSelected?.id === contact?.id && "lightgray"}}
                                     loaderId={contact?.id}
                                     key={key}
                                 />

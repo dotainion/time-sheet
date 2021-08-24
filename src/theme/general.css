@@ -867,3 +867,6 @@ select{
 .spin{
   animation: spiner 1s linear infinite;
 }
+.admin-profile-hover:hover{
+  background-color: rgb(135, 206, 235, 0.10);
+}
