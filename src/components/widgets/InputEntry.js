@@ -5,29 +5,34 @@ import { MdEmail } from 'react-icons/md';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
-export const InputEntry = ({email, label, type, inputRef, disabled, hidden, error, errorReset, titleCase}) =>{
+export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRef, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [showEyeIcon, setShowEyeIcon] = useState(false);
 
     const onFloatLabel = () =>{
-        setLabelStyle({top:"-9px"});
-        inputRef?.current?.focus();
+        if (!labelFixed){
+            setLabelStyle({top:"-13px"});
+            inputRef?.current?.focus();
+        }
     }
 
     const onCenterLabel = () =>{
-        if (!inputRef?.current?.value){
-            setToggleIcon(false);
-            setLabelStyle({color:"gray",left:"40px"});
-        }else{
-            setToggleIcon(true);
+        if (!labelFixed){
+            if (!inputRef?.current?.value){
+                setToggleIcon(false);
+                setLabelStyle({color:"gray",left:"40px"});
+            }else{
+                setToggleIcon(true);
+            }
         }
     }
 
     useEffect(()=>{
-        onFloatLabel();
-    }, [inputRef?.current]);
+        if (!labelFixed) onFloatLabel();
+        else setLabelStyle({top:"-13px"});
+    }, []);
     return(
         <div 
             hidden={hidden}
@@ -44,7 +49,7 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 className="float-left" 
                 style={{
                     ...labelStyle,
-                    cursor:"text"
+                    cursor:"text",
                 }}
             >{label}</div>
             <div 
@@ -86,6 +91,7 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 onFocus={onFloatLabel}
                 onBlur={onCenterLabel}
                 onChange={()=>errorReset?.("")}
+                placeholder={labelFixed?placeholder || label:null}
                 className={`input-entery max-width ${titleCase && "title-case"}`}
                 style={{border:error && "1px solid red"}}
                 type={!showPasswordInput && type}
@@ -129,7 +135,8 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                     transform:"translateY(120%)",
                     border:"none",
                     borderRadius:"0",
-                    borderBottom:"1px solid skyblue"
+                    borderBottom: border?"1px solid skyblue":"none",
+                    borderColor:borderColor
                 }}
             />
             <div
@@ -137,7 +144,7 @@ export const InputEntry = ({email, label, type, inputRef, disabled, hidden, erro
                 style={{
                     left:"0",
                     color: "orangered",
-                    fontSize:"12px",
+                    fontSize:"14px",
                     transform:"translate3d(0, 80%, 0)"
                 }}
             >{error}</div>

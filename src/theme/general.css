@@ -805,7 +805,8 @@ select{
   color: white;
   cursor: pointer;
   margin-left: 10px;
-  padding: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
   border: 1px solid white;
   background: var(--bg-fade-vertical-light-hover);
   box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
@@ -818,7 +819,8 @@ select{
 }
 .msg-profile{
   position: relative;
-  border-bottom: 1px solid lightgray;
+  /*border-bottom: 1px solid lightgray;*/
+  box-shadow: 2px 2px 5px lightgray;
 }
 .msg-profile:hover{
   background-color: lightgray;
@@ -869,4 +871,10 @@ select{
 }
 .admin-profile-hover:hover{
   background-color: rgb(135, 206, 235, 0.10);
+}
+.no-wrap{
+  white-space: nowrap;
+}
+.item-hover:hover{
+  background-color: var(--box-shadow-dark-fade);
 }

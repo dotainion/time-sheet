@@ -3,7 +3,7 @@ import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
-export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
+export const InputSelect = ({label, labelFixed, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
     const [grayColor, setGrayColor] = useState(false);
 
@@ -20,7 +20,7 @@ export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, def
 
     useEffect(()=>{
         onChange();
-    }, [inputRef?.current]);
+    }, []);
     return(
         <div 
             hidden={hidden}
@@ -32,7 +32,9 @@ export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, def
         >
             <div
                 className="float-left" 
-                style={{top:"-9px"}}
+                style={{
+                    top:"-13px",
+                }}
             >{label}</div>
             <div 
                 className="float-left"
@@ -89,7 +91,8 @@ export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, def
                     transform:"translateY(120%)",
                     border:"none",
                     borderRadius:"0",
-                    borderBottom:"1px solid skyblue"
+                    borderBottom: border?"1px solid skyblue":"none",
+                    borderColor:borderColor
                 }}
             />
             <div
@@ -97,7 +100,7 @@ export const InputSelect = ({label, Icon, noBottomBorder, inputRef, options, def
                 style={{
                     left:"0",
                     color: "orangered",
-                    fontSize:"12px",
+                    fontSize:"14px",
                     transform:"translate3d(0, 80%, 0)"
                 }}
             >{error}</div>

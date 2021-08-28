@@ -13,11 +13,6 @@ export const Profile = ({img, msg, firstName, lastName, onImgSelected, cssClass,
 
     const imgRef = useRef();
 
-    const onUpdateImage = (e) =>{
-        e?.stopPropagation?.();
-        //info to update image
-    }
-
     const onImageSelected = async() =>{
         const nImg = await tools.toBase64(imgRef.current?.files?.[0]);
         setImageSelected(nImg);

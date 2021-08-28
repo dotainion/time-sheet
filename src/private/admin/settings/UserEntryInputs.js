@@ -11,7 +11,7 @@ import { adminRoutes } from '../../../utils/routes/Routes';
 
 
 const roleDefault = "Select Role";
-export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLName, profileStyle, roleDisabled, userSelected, onUpdateComplete}) =>{
+export const UserEntryInputs = ({useUpdate, profileMsg, border, profileFName, profileLName, profileStyle, roleDisabled, userSelected, onUpdateComplete}) =>{
     const { checkObject, processPayload, setPayload } = useError();
     const { user, adminCreateUser } = useAuth();
     const { setLoader } = useStore();
@@ -23,6 +23,7 @@ export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLNa
     const [passError, setPassError] = useState("");
     const [roleError, setRoleError] = useState("");
     const [userImg, setUserImg] = useState("");
+    const [msgSuccess, setMsgSuccess] = useState("");
 
     const emailRef = useRef();
     const fNameRef = useRef();
@@ -47,6 +48,7 @@ export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLNa
             role: roleRef.current.value,
             image: userImg || ""
         };
+        setMsgSuccess("");
         try{
             let STATE = true;
             if (!userObj.email){
@@ -93,7 +95,10 @@ export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLNa
                 setPayload(response?.error);
                 processPayload();
             }
-            else reset();
+            else{
+                reset();
+                setMsgSuccess("User added successfully");
+            }
         }catch{
 
         }finally{
@@ -119,8 +124,14 @@ export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLNa
     return (
         <div className="add-update-new-user-info">
             <Profile
-                cssClass="admin-profile-hover centered"
-                style={{marginBottom:"60px",...profileStyle}}
+                cssClass="admin-profile-hover"
+                style={{
+                    marginBottom:"60px",
+                    ...profileStyle,
+                    boxShadow:"none",
+                    borderBottom:"1px solid skyblue",
+                    borderColor:border?"rgb(0,0,0,0)":"transparent"
+                }}
                 firstName={profileFName || userSelected?.firstName}
                 lastName={profileLName || userSelected?.lastName}
                 msg={profileMsg || userSelected?.role}
@@ -129,28 +140,29 @@ export const UserEntryInputs = ({useUpdate, profileMsg, profileFName, profileLNa
                 useUpdateImage
                 //onClick
             />
-            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={emailRef} label="Email" maxWidth error={emailError} errorReset={setEmailError} disabled={useUpdate} />
+            <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
+                <InputEntry labelFixed inputRef={emailRef} label="Email" maxWidth error={emailError} errorReset={setEmailError} disabled={useUpdate} />
             </div>
-            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={fNameRef} label="First Name" maxWidth titleCase error={fNameError} errorReset={setFNameError} />
+            <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
+                <InputEntry labelFixed inputRef={fNameRef} label="First Name" maxWidth titleCase error={fNameError} errorReset={setFNameError} />
             </div>
-            <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={lNameRef} label="Last Name" maxWidth titleCase error={lNameError} errorReset={setLNameError} />
+            <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
+                <InputEntry labelFixed inputRef={lNameRef} label="Last Name" maxWidth titleCase error={lNameError} errorReset={setLNameError} />
             </div>
-            <div hidden={useUpdate} className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputEntry inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />
+            <div hidden={useUpdate} className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
+                <InputEntry labelFixed inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />
             </div>
-            <div className="h-seperator relative" style={{borderColor:"rgb(0,0,0,0)"}}>
-                <InputSelect inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
+            <div className="h-seperator relative" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
+                <InputSelect labelFixed inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
             </div>   
 
-            <div className="flex h-seperator" style={{paddingTop:"10px",paddingBottom:"20px",display:useUpdate && "none"}}>
+            <div className="flex h-seperator" style={{paddingTop:"10px",paddingBottom:"20px",display:useUpdate && "none",borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
                 <input style={{margin:"15px"}} type="checkbox" />
                 <div style={{margin:"11px"}}>Notify user</div>
             </div>  
             <div style={{paddingTop:"40px"}}>
                 <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "ADD USER"}</button>
+                <label className="centered" style={{marginLeft:"10%",color:"lightgreen"}}>{msgSuccess}</label>
             </div>
         </div>
     )
