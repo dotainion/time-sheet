@@ -8,11 +8,10 @@ import { IconButton } from './IconButon';
 import { IconSelect } from './IconSelect';
 import { Calendar } from '../../apps/calendar/Calendar';
 import { IoMdOptions } from 'react-icons/io';
-import { downloadXlFile } from '../../files/File';
+import { downloadXlFile } from '../../files/ExcelFile';
 
 
 let userArray = [];
-let uu = '';
 export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     const { user } = useAuth();
 
@@ -27,8 +26,6 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     const selectedToDate = useRef();
     const selectedFromDate = useRef();
     const userSelected = useRef();
-
-
 
     const options = [
         {title:"test", command:()=>{alert("hello world")}}
