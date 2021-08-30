@@ -5,5 +5,6 @@ export const collection = {
     schedule: "schedule",
     messages: "messages",
     credentials: "credentials",
-    geolocation: "geolocation"
+    geolocation: "geolocation",
+    notification: "notification"
 }

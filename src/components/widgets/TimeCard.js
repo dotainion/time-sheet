@@ -9,10 +9,19 @@ import { IconSelect } from './IconSelect';
 import { Calendar } from '../../apps/calendar/Calendar';
 import { IoMdOptions } from 'react-icons/io';
 import { downloadXlFile } from '../../files/ExcelFile';
+import { BiRefresh } from 'react-icons/bi';
+import { SpanWrapper } from '../../container/SpanWrapper';
+import { MessageBox } from './MessageBox';
+import { addNotification } from '../../database/notifications/NotificationsDb';
+import { IoMdNotificationsOutline } from 'react-icons/io';
+import { useHistory } from 'react-router-dom';
+import { adminRoutes, routes } from '../../utils/routes/Routes';
 
 
 let userArray = [];
 export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
+    const history = useHistory();
+
     const { user } = useAuth();
 
     const [totalHours, setTotalHours] = useState();
@@ -22,6 +31,7 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     const [showCalendarTo, setShowCalendarTo] = useState(false);
     const [showCalendarFrom, setShowCalendarFrom] = useState(false);
     const [hideBtnOption, setHideBtnOption] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const selectedToDate = useRef();
     const selectedFromDate = useRef();
@@ -32,6 +42,7 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     ]
 
     const handleOnUserSelect = async(id) =>{
+        setLoading(true);
         for (let u of userArray){
             if (u?.id === id){
                 userSelected.current = u;
@@ -45,6 +56,7 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                 );
             }
         }
+        setLoading(false);
     }
 
     const calcTotalLog = () =>{
@@ -105,6 +117,10 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
         else setHideBtnOption("hide-switch");
     }
 
+    const toggleShowIcon = (id, state) =>{
+        document.getElementById(id).hidden = state;
+    }
+
     useEffect(()=>{
         initUsers();
         if (!useSchedule) calcTotalLog();
@@ -138,16 +154,48 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                 <div className="time-card-content">{useSchedule?"Date":"Day"}</div>
                 <div className="time-card-content">Hours</div>
                 <div className="time-card-content">Start</div>
-                <div className="time-card-content">End</div>
+                <div className="time-card-content relative">
+                    <span>End</span>
+                    <div className="float-right" style={{right:"20px",fontSize:"25px"}}>
+                        <BiRefresh
+                            className={`icon-hover ${loading && "spin"}`} 
+                            style={{
+                                borderRadius:"50%",
+                                cursor:"pointer"
+                            }}
+                            onClick={()=>handleOnUserSelect(userSelected.current?.id)}
+                        />
+                    </div>
+                </div>
             </div>
             <div className="time-card-scroll no-select scrollbar">
                 {logs?.map((time, key)=>(
-                    <div className="time-card-container item-hover" key={key}>
+                    <div 
+                        onMouseEnter={()=>toggleShowIcon(`time-card${key}`, false)} 
+                        onMouseLeave={()=>toggleShowIcon(`time-card${key}`, true)} 
+                        className="time-card-container relative item-hover" 
+                        key={key}
+                    >
                         <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): tools.time.date(time?.date)}</div>
                         <div className="time-card-content">{!useSchedule? tools.time.subHour(time?.info?.start, time?.info?.end): time?.duration}</div>
                         <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): tools.time.time(time?.date)}</div>
                         <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): tools.time.time(tools.time.addHour(time?.date, time?.duration))}</div>
                         {time?.comment && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.comment}</div>}
+                        <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
+                            <IoMdNotificationsOutline
+                                style={{color:"orange"}}
+                                onClick={()=>{
+                                    history.push({
+                                        pathname: adminRoutes.notification,
+                                        data: {
+                                            type: adminRoutes.logs,
+                                            user: userSelected.current,
+                                            value: !useSchedule? time?.info?.start: time?.date
+                                        }
+                                    });
+                                }}
+                            />
+                        </div>
                     </div>
                 ))}
             </div>

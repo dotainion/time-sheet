@@ -20,7 +20,7 @@ export const InputSelect = ({label, labelFixed, Icon, noBottomBorder, border, bo
 
     useEffect(()=>{
         onChange();
-    }, []);
+    }, [inputRef?.current]);
     return(
         <div 
             hidden={hidden}

@@ -14,25 +14,27 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
     const onFloatLabel = () =>{
         if (!labelFixed){
             setLabelStyle({top:"-13px"});
-            inputRef?.current?.focus();
         }
+        inputRef?.current?.focus();
     }
 
     const onCenterLabel = () =>{
-        if (!labelFixed){
-            if (!inputRef?.current?.value){
-                setToggleIcon(false);
+        if (!inputRef?.current?.value){
+            setToggleIcon(false);
+            if (!labelFixed){
                 setLabelStyle({color:"gray",left:"40px"});
-            }else{
-                setToggleIcon(true);
             }
+        }else{
+            setToggleIcon(true);
         }
     }
 
     useEffect(()=>{
         if (!labelFixed) onFloatLabel();
         else setLabelStyle({top:"-13px"});
-    }, []);
+        if (inputRef?.current?.value) setToggleIcon(true);
+        else  setToggleIcon(false);
+    }, [inputRef?.current]);
     return(
         <div 
             hidden={hidden}

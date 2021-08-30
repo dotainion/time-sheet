@@ -144,4 +144,14 @@
         color: var(--bg-fade-dark);
         cursor: pointer;
     }
+    .notification-container{
+        top: 40%;
+        width: 80%;
+        left: 43%;
+        padding: 0px;
+        padding-right: 0px;
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+    }
 }

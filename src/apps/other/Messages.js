@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SearchBar } from '../../components/widgets/SearchBar';
 import { Profile } from './Profile';
 import { useAuth } from '../../state/auth/Authentication';
-import { addMessage, getContacts, getMessages } from '../../database/messages/Messages';
+import { addMessage, getContacts, getMessages } from '../../database/messages/MessagesDb';
 import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 
