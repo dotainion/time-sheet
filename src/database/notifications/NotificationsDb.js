@@ -1,10 +1,20 @@
 import { collection } from "../../config/databaseConfig";
-import { addData, getDataByField } from "../CollectionRef";
+import { addData, getDataByField, updateData } from "../CollectionRef";
 
 
 export const addNotification = async(data) =>{
     try{
         await addData(collection.notification, data);
+        return true;
+    }catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
+export const updateNotification = async(data, id) =>{
+    try{
+        await updateData(collection.notification, data, id);
         return true;
     }catch(error){
         console.log(error);

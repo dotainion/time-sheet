@@ -75,8 +75,8 @@ class Time{
     }
     sort(array){
         array.sort(function(a, b){
-            const aDate = new Date(a?.info?.start || a?.info?.date);
-            const bDate = new Date(b?.info?.start || b?.info?.date);
+            const aDate = new Date(a?.info?.start || a?.info?.date || a?.date);
+            const bDate = new Date(b?.info?.start || b?.info?.date || b?.date);
             return aDate - bDate;
         });
         return array;

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { InputTextarea } from '../../../components/widgets/InputTextarea';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { addNotification, getNotificationByAuthId } from '../../../database/notifications/NotificationsDb';
+import { addNotification, getNotificationByAuthId, updateNotification } from '../../../database/notifications/NotificationsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { tools } from '../../../utils/tools/Tools';
@@ -12,6 +12,8 @@ import { MdSettingsEthernet } from 'react-icons/md';
 import { IconSelect } from '../../../components/widgets/IconSelect';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { NotificationLogs } from '../../../components/widgets/NotificationLogs';
+import { MessageBox } from '../../../components/widgets/MessageBox';
+import { NotificationBox } from '../../../components/widgets/NotificationBox';
 
 
 let uMembers = [];
@@ -29,11 +31,13 @@ export const AdminNotifications = () =>{
     const [notification, setNotification] = useState([]);
     const [notificationContainAll, setNotificationContainAll] = useState([]);
     const [switchView, setSwitchView] = useState(false);
+    const [showMessageBox, setShowMessageBox] = useState(false);
 
     const headerRef = useRef();
     const infoRef = useRef();
     const messageRef = useRef();
     const userToNotifyInfoRef = useRef();
+    const notificationSelected = useRef();
 
     const navOption = [[
         {title:"Add Notification", command:()=>setSwitchView(false)},
@@ -63,10 +67,19 @@ export const AdminNotifications = () =>{
             header: headerRef.current.value,
             from: `(${user?.role}) ${user?.firstName} ${user?.lastName}`,
             id: userToNotifyInfoRef.current?.id,
-            message: messageRef.current.value,
+            adminMessage: [{
+                msg: messageRef.current.value,
+                date: tools.time.digits()
+            }],
+            userMessage: [],
             info: infoRef.current.value,
-            adminId: user?.id
+            adminId: user?.id,
+            userSeen: false,
+            adminSeen: true
         });
+        headerRef.current.value = "";
+        infoRef.current.value = "";
+        messageRef.current.value = "";
         setLoading(false);
         setSent(true);
     }
@@ -108,6 +121,11 @@ export const AdminNotifications = () =>{
         setNotification(noticeRecords);
     }
 
+    const onShowMessageBox = (notificationObj) =>{
+        setShowMessageBox(true);
+        notificationSelected.current = notificationObj;
+    }
+
     const toggleMore = (id, state) =>{
         document.getElementById(id).hidden = state;
         document.getElementById(`${id}btn`).hidden = !state;
@@ -144,12 +162,12 @@ export const AdminNotifications = () =>{
                 <div className="centered" style={{width:"105%",marginLeft:"53%"}}>
                     <InputTextarea inputRef={messageRef} label="Message" labelFixed placeholder="Enter message about your notification here" />
                 </div>
-                <div style={{marginTop:"20px"}}>
-                    <span className="centered" style={{display:!loading && "none"}}>
+                <div className="relative" style={{marginTop:"20px"}}>
+                    <span className="float-center" style={{display:!loading && "none"}}>
                         <BiRefresh className="spin" style={{fontSize:"25px",marginBottom:"-5px"}} />
                         <span>{loading && "Sending..."}</span>
                     </span>
-                    <span className="centered">{sent && "Notification sent"}</span>
+                    <span className="float-center">{sent && "Notification sent"}</span>
                     <button onClick={onNotify} className="btn btn-hover" style={{float:"right"}}>Send</button>
                 </div>
             </div>
@@ -160,21 +178,29 @@ export const AdminNotifications = () =>{
                         notification.length?
                         notification.map((notice, key)=>(
                             <NotificationLogs
-                                    header={notice?.info?.header}
-                                    from={notice?.info?.from}
-                                    info={notice?.info?.info}
-                                    message={notice?.info?.message}
-                                    moreId={`user-notif${key}btn`}
-                                    lessId={`user-notif${key}`}
-                                    onShowMore={()=>toggleMore(`user-notif${key}`,false)}
-                                    onShowLess={()=>toggleMore(`user-notif${key}`,true)}
-                                    key={key}
-                                />
+                                header={notice?.info?.header}
+                                from={notice?.info?.from}
+                                info={notice?.info?.info}
+                                adminMessage={notice?.info?.adminMessage}
+                                userMessage={notice?.info?.userMessage}
+                                moreId={`user-notif${key}btn`}
+                                lessId={`user-notif${key}`}
+                                onShowMore={()=>toggleMore(`user-notif${key}`,false)}
+                                onShowLess={()=>toggleMore(`user-notif${key}`,true)}
+                                onAdd={()=>onShowMessageBox(notice)}
+                                key={key}
+                            />
                         )):
                         <div>No notification</div>
                     }
                 </div>
             </div>
+            <NotificationBox 
+                useAdmin
+                isOpen={showMessageBox}
+                onClose={()=>setShowMessageBox(false)}
+                notifySelected={notificationSelected.current}
+            />
         </AdminNavBar>
     )
 }

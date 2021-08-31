@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { UserNavBar } from '../../container/UserNavBar';
 import { getNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { NotificationLogs } from '../../components/widgets/NotificationLogs';
+import { MessageBox } from '../../components/widgets/MessageBox';
+import { NotificationBox } from '../../components/widgets/NotificationBox';
+import { GiTriquetra } from 'react-icons/gi';
 
 
 export const Notifications = () =>{
     const { user } = useAuth();
 
     const [notifications, setNotifications] = useState([]);
+    const [showMessageBox, setShowMessageBox] = useState(false);
+
+    const notificationSelected = useRef();
 
     const toggleMore = (id, state) =>{
         document.getElementById(id).hidden = state;
         document.getElementById(`${id}btn`).hidden = !state;
+    }
+
+    const onShowMessageBox = (notifyObj) =>{
+        setShowMessageBox(true);
+        notificationSelected.current = notifyObj;
     }
 
     const initNotifications = async() =>{
@@ -34,11 +45,13 @@ export const Notifications = () =>{
                                 header={notice?.info?.header}
                                 from={notice?.info?.from}
                                 info={notice?.info?.info}
-                                message={notice?.info?.message}
+                                adminMessage={notice?.info?.adminMessage}
+                                userMessage={notice?.info?.userMessage}
                                 moreId={`user-notif${key}btn`}
                                 lessId={`user-notif${key}`}
                                 onShowMore={()=>toggleMore(`user-notif${key}`,false)}
                                 onShowLess={()=>toggleMore(`user-notif${key}`,true)}
+                                onAdd={()=>onShowMessageBox(notice)}
                                 key={key}
                             />
                         )):
@@ -46,6 +59,11 @@ export const Notifications = () =>{
                     }
                 </div>
             </div>
+            <NotificationBox
+                isOpen={showMessageBox}
+                onClose={()=>setShowMessageBox(false)}
+                notifySelected={notificationSelected.current}
+            />
         </UserNavBar>
     )
 }
