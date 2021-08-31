@@ -146,8 +146,7 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                     <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
                     <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
                     <IconSelect cssClass="time-card-buttons" icon="people" options={users} defaultValue="Users" />
-                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" />
-                    <span hidden><IconSelect cssClass="time-card-buttons" icon="settings" options={options} defaultValue="Options" /></span>
+                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" disabled={!logs.length} />
                 </div>
             </div>
             <div className="time-card-header-container">

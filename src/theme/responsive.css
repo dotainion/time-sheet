@@ -154,4 +154,7 @@
         box-shadow: none;
         background-color: transparent;
     }
+    .notification-user-select{
+        left: 0px;
+    }
 }

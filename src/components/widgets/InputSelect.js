@@ -3,7 +3,7 @@ import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
-export const InputSelect = ({label, labelFixed, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
+export const InputSelect = ({label, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
     const [grayColor, setGrayColor] = useState(false);
 

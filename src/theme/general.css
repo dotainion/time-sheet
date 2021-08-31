@@ -127,6 +127,9 @@
   color: white;
   background-color: rgb(136, 7, 7);
 }
+.btn-disabled{
+  cursor:not-allowed;
+}
 .nav-btn-container{
   width: 200px;
   overflow: hidden;
@@ -143,6 +146,7 @@
   font-weight: bold;
 }
 .nav-btn{
+  position: relative;
   padding: 10px;
   margin-top: 5px;
   user-select: none;
@@ -162,22 +166,21 @@
 .nav-btn-is-active{
   fill: orange;
 }
-.nav-option-select-container{
-  position: absolute;
-  text-align: right;
-  width: 85%;
-  z-index: 999;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 10px;
-  border-radius: 25px;
-  background: var(--bg-fade-horizontal-reverse);
-  box-shadow: 2px 2px 5px var(--box-shadow);
+.nav-btn-icon{
+  z-index: 99999;
+  right: 10px;
 }
-.nav-option-select{
-  max-width: 40%;
-  margin-left: 10px;
-  box-shadow: 4px 4px 10px var(--box-shadow-dark);
+.nav-btn-option-container{
+  position: absolute;
+  color: white;
+  width: auto;
+  z-index: 999;
+  right: 10px;
+  margin-top: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background: var(--bg-fade-horizontal-reverse);
+  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
 }
 .input-entery{
   padding: 8px;
@@ -634,8 +637,7 @@ select{
   padding: 50px;
   text-align: center;
   background-color: white;
-  border: 1px solid lightgray;
-  box-shadow: 2px 2px 10px var(--box-shadow-light);
+  box-shadow: 2px 2px 10px var(--box-shadow-dark-fade);
 }
 .welcome-card-container{
   text-align: center;
@@ -720,12 +722,13 @@ select{
   margin: 60px;
 }
 .price-container{
-  width: 100%;
+  /*width: 100%;*/
+  width: 25%;
   margin: 20px;
+  text-align: left;
   user-select: none;
-  border: 1px solid lightblue;
   background-color: white;
-  box-shadow: 4px 4px 5px var(--box-shadow-dark-fade);
+  box-shadow: 4px 4px 10px var(--box-shadow-dark-fade);
 }
 .price-sub-container{
   padding: 50px;
@@ -750,6 +753,7 @@ select{
   margin-bottom: 20px;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
   background-color: teal;
   box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
 }
@@ -910,4 +914,8 @@ select{
 }
 .user-notification-container span:hover{
   color: gray;
+}
+.notification-user-select{
+  padding-top: 10px;
+  padding-right: 40px;
 }

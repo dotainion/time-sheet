@@ -3,6 +3,7 @@ import { UserNavBar } from '../../container/UserNavBar';
 import { getNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
+import { NotificationLogs } from '../../components/widgets/NotificationLogs';
 
 
 export const Notifications = () =>{
@@ -20,7 +21,7 @@ export const Notifications = () =>{
     }
 
     useEffect(()=>{
-        //initNotifications();
+        initNotifications();
     }, []);
     return(
         <UserNavBar>
@@ -29,21 +30,17 @@ export const Notifications = () =>{
                     {
                         notifications.length?
                         notifications.map((notice, key)=>(
-                            <div className="user-notification-container" key={key}>
-                                <div><b>{notice?.info?.header}</b></div>
-                                <div>{notice?.info?.from}</div>
-                                <span 
-                                    onClick={()=>toggleMore(`user-notif${key}`,false)}
-                                    id={`user-notif${key}btn`}
-                                >More...<FaAngleDown/></span>
-                                <div hidden id={`user-notif${key}`}>
-                                    <div>{notice?.info?.info}</div>
-                                    <div>{notice?.info?.message}</div>
-                                    <span 
-                                        onClick={()=>toggleMore(`user-notif${key}`,true)}
-                                    >Close...<FaAngleUp/></span>
-                                </div>
-                            </div>
+                            <NotificationLogs
+                                header={notice?.info?.header}
+                                from={notice?.info?.from}
+                                info={notice?.info?.info}
+                                message={notice?.info?.message}
+                                moreId={`user-notif${key}btn`}
+                                lessId={`user-notif${key}`}
+                                onShowMore={()=>toggleMore(`user-notif${key}`,false)}
+                                onShowLess={()=>toggleMore(`user-notif${key}`,true)}
+                                key={key}
+                            />
                         )):
                         <div className="user-notification-container" style={{marginTop:"40px"}}>No Notifications</div>
                     }

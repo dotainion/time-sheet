@@ -1,47 +1,67 @@
 import { adminRoutes, routes } from "../utils/routes/Routes";
 import { ADMINISTRATOR, SUPERVISOR } from "./AuthValue";
+import { ImUserPlus } from 'react-icons/im';
+import { FaUsers } from 'react-icons/fa';
+import { CgTimelapse } from 'react-icons/cg';
+import { BsFillChatDotsFill } from 'react-icons/bs';
+import { IoIosNotifications } from 'react-icons/io';
+import { RiSettings5Fill } from 'react-icons/ri';
+import { AiFillSchedule } from 'react-icons/ai';
+import { BsFillClockFill } from 'react-icons/bs';
 
 export const ADMIN_SIDE_NAV = [
     { 
         title: "ADD USERS",
-        route: adminRoutes.addUser
+        route: adminRoutes.addUser,
+        icon: ImUserPlus
     },{
         title: "VIEW USERS",
-        route: adminRoutes.users
+        route: adminRoutes.users,
+        icon: FaUsers
     },{
         title: "VIEW LOGS",
-        route: adminRoutes.logs
+        route: adminRoutes.logs,
+        icon: CgTimelapse
     },{
         title: "CHAT",
-        route: adminRoutes.adminMessages
+        route: adminRoutes.adminMessages,
+        icon: BsFillChatDotsFill
     },{
         title: "NOTIFICATION",
-        route: adminRoutes.notification
+        route: adminRoutes.notification,
+        icon: IoIosNotifications
     },{
         title: "SETTINGS",
-        route: adminRoutes.settings
+        route: adminRoutes.settings,
+        icon: RiSettings5Fill
     }
 ];
 
 export const USER_SIDE_NAV = [
     {
         title: "CLOCK IN/OUT",
-        route: routes.clocked
+        route: routes.clocked,
+        icon: BsFillClockFill
     },{
         title: "VIEW LOGS",
-        route: routes.logs
+        route: routes.logs,
+        icon: CgTimelapse
     },{
         title: "TIME SHEET",
-        route: routes.timeSheet
+        route: routes.timeSheet,
+        icon: AiFillSchedule
     },{
         title: "CHAT",
-        route: routes.messages
+        route: routes.messages,
+        icon: BsFillChatDotsFill
     },{
         title: "NOTIFICATION",
-        route: routes.notification
+        route: routes.notification,
+        icon: IoIosNotifications
     },{
         title: "SETTINGS",
-        route: routes.settings
+        route: routes.settings,
+        icon: RiSettings5Fill
     }
 ];
 

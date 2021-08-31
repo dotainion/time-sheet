@@ -11,65 +11,101 @@ export const Pricing = () =>{
             cost: "0",
             offers: [
                 {
-                    title:"none",
-                    available: true
-                },{
-                    title:"tow",
+                    title:"Unlimited users",
                     available: false
                 },{
-                    title:"three",
+                    title:"Multiple administrators",
                     available: true
+                },{
+                    title:"Export data",
+                    available: false
+                },{
+                    title:"In app messaging",
+                    available: true
+                },{
+                    title:"Clock In/Out",
+                    available: true
+                },{
+                    title:"Asing schedules",
+                    available: false
                 }
             ]
         },{
             title: "BASIC",
-            cost: "25",
+            cost: "10",
             offers: [
                 {
-                    title:"none",
+                    title:"Unlimited users",
                     available: true
                 },{
-                    title:"tow",
+                    title:"Multiple administrators",
+                    available: true
+                },{
+                    title:"Export data",
                     available: false
                 },{
-                    title:"three",
+                    title:"In app messaging",
                     available: true
+                },{
+                    title:"Clock In/Out",
+                    available: true
+                },{
+                    title:"Asing schedules",
+                    available: false
                 }
             ]
         },{
             title: "STANDARD",
-            cost: "25",
+            cost: "20",
             offers: [
                 {
-                    title:"none",
-                    available: false
-                },{
-                    title:"tow",
-                    available: false
-                },{
-                    title:"three",
+                    title:"Unlimited users",
                     available: true
+                },{
+                    title:"Multiple administrators",
+                    available: true
+                },{
+                    title:"Export data",
+                    available: true
+                },{
+                    title:"In app messaging",
+                    available: true
+                },{
+                    title:"Clock In/Out",
+                    available: true
+                },{
+                    title:"Asing schedules",
+                    available: false
                 }
             ]
         },{
             title: "PREMIUM",
-            cost: "25",
+            cost: "40",
             offers: [
                 {
-                    title:"none",
-                    available: false
+                    title:"Unlimited users",
+                    available: true
                 },{
-                    title:"tow",
-                    available: false
+                    title:"Multiple administrators",
+                    available: true
                 },{
-                    title:"three",
+                    title:"Export data",
+                    available: true
+                },{
+                    title:"In app messaging",
+                    available: true
+                },{
+                    title:"Clock In/Out",
+                    available: true
+                },{
+                    title:"Asing schedules",
                     available: true
                 }
             ]
         }
     ]
     return(
-        <div className="single-page">
+        <div className="single-page" style={{backgroundColor:"white"}}>
             <UnAuthHeader useRegister useLogin/>
 
             <div className="price-main-container d-flex-on-mobile">
@@ -101,7 +137,7 @@ export const Pricing = () =>{
             <div className="welcome-card-container">
                 {BENEFITS.map((benefit, key)=>(
                     <div className="welcome-card" key={key}>
-                        <div className="welcome-inner-card" style={{boxShadow:"2px 2px 5px black"}}>
+                        <div className="welcome-inner-card">
                             <benefit.icon style={{fontSize:"180px",color:"orange"}} />
                             <div>{benefit.title}</div>
                         </div>

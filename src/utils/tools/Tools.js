@@ -1,3 +1,4 @@
+import { FaWindows } from "react-icons/fa";
 import { MONTHS, WEEK } from "../../contents/lists";
 
 class Time{
@@ -179,6 +180,13 @@ class Tools{
             return null;
         }
     };
+    share(name){
+        navigator.share({
+            title: "Time-sheet",
+            text: `${name} invite you to try this application.`,
+            url: window.location.origin,
+        }).then(()=>{}).catch(()=>{});
+    }
 }
 
 export const tools = new Tools();

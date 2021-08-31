@@ -20,3 +20,12 @@ export const getNotification = async(id) =>{
         return [];
     }
 }
+
+export const getNotificationByAuthId = async(id) =>{
+    try{
+        return await getDataByField(collection.notification, "adminId", id);
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
