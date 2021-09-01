@@ -160,7 +160,7 @@ export const UserEntryInputs = ({useUpdate, profileMsg, border, profileFName, pr
                 <input style={{margin:"15px"}} type="checkbox" />
                 <div style={{margin:"11px"}}>Notify user</div>
             </div>  
-            <div style={{paddingTop:"40px"}}>
+            <div style={{paddingTop:"20px"}}>
                 <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "ADD USER"}</button>
                 <label className="centered" style={{marginLeft:"10%",color:"lightgreen"}}>{msgSuccess}</label>
             </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { UserEntryInputs } from '../settings/UserEntryInputs';
+import { FaUsers } from 'react-icons/fa';
 
 
 export const AddUser = () =>{
@@ -14,7 +15,7 @@ export const AddUser = () =>{
                         borderBottom:"1px solid white",
                         marginBottom:"30px"
                     }}
-                ><b>New Member</b></div>
+                ><FaUsers style={{marginRight:"10px",fontSize:"35px"}} /><b>New Member</b></div>
                 <UserEntryInputs
                     profileFName="Select"
                     profileLName="user image"

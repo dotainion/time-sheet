@@ -5,6 +5,7 @@ import { useAuth } from '../../state/auth/Authentication';
 import { addMessage, getContacts, getMessages } from '../../database/messages/MessagesDb';
 import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
+import { NoRecord } from '../../components/widgets/NoRecord';
 
 
 export const Messages = () =>{
@@ -185,14 +186,32 @@ export const Messages = () =>{
                                 </div>
                             )):
                             <div>
-                                <div style={{display:!Object.keys(userSelected || {}).length && "none"}}>
-                                    <div>No messages</div>
-                                </div>
-                                <div style={{display:Object.keys(userSelected || {}).length && "none"}}>
-                                    <div className="float-center">
-                                        <p>some information about what ever</p>
-                                    </div>
-                                </div>
+                                {contacts.length?
+                                    <>
+                                        <div style={{display:!Object.keys(userSelected || {}).length && "none"}}>
+                                            <NoRecord
+                                                icon="message"
+                                                header="No message"
+                                                message={`Send your fist message to ${userSelected?.info?.firstName} ${userSelected?.info?.lastName},`}
+                                                subMessage="and let him/her knows of the issue you are having."
+                                            />
+                                        </div>
+                                        <div style={{display:Object.keys(userSelected || {}).length && "none"}}>
+                                            <NoRecord
+                                                icon="users"
+                                                header="No contact selected"
+                                                message="To start a new conversation Select a contact from your list."
+                                                subMessage="Stay connected, stay in touch."
+                                            />
+                                        </div>
+                                    </>:
+                                    <NoRecord
+                                        icon="users"
+                                        header="No contact in your list"
+                                        message="If you are not an administrator and positive there is members under this administration,"
+                                        subMessage=" then contact your administrator or add contacts by going to {ADD USERS) tab."
+                                    />
+                                }
                             </div>
                         }
                     </div>

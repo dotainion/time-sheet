@@ -14,6 +14,7 @@ import { getUsers } from '../../../database/accounts/AccountsDb';
 import { NotificationLogs } from '../../../components/widgets/NotificationLogs';
 import { MessageBox } from '../../../components/widgets/MessageBox';
 import { NotificationBox } from '../../../components/widgets/NotificationBox';
+import { NoRecord } from '../../../components/widgets/NoRecord';
 
 
 let uMembers = [];
@@ -191,7 +192,12 @@ export const AdminNotifications = () =>{
                                 key={key}
                             />
                         )):
-                        <div>No notification</div>
+                        <NoRecord 
+                            icon="notification"
+                            header="No notification" 
+                            message="Notification provides details to spesific information." 
+                            subMessage="It cant be for knowledge, errors, clarification or areas that needs updating."
+                        />
                     }
                 </div>
             </div>

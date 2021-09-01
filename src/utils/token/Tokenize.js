@@ -41,7 +41,6 @@ class Token{
         try{
             for (let token of this.get()){
                 let res = null;
-                console.log(token)
                 try{
                     res = jwt.verify(token?.key, `${this.tokenKey}${ref}`);
                     //console.log(res)

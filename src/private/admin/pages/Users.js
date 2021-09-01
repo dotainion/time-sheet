@@ -10,7 +10,11 @@ import { ButtonOption } from '../../../components/widgets/ButtonOption';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
+import { NoRecord } from '../../../components/widgets/NoRecord';
 
+
+const NO_RECORD_INFO = "There is no contact in your list.";
+const NO_RECORD_SUB_INFO = "Try addin a user first by clicking the (ADD USERS) tab.";
 
 let checkboxIds = [];
 let userAppended = [];
@@ -130,7 +134,7 @@ export const Users = () =>{
                                 </div>
                             </div>
                         )):
-                        <div>No Users</div>
+                        <NoRecord icon="users" message={NO_RECORD_INFO} subMessage={NO_RECORD_SUB_INFO} />
                     }
                 </div>
             </ContentsWrapper>

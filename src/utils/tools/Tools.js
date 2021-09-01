@@ -1,4 +1,3 @@
-import { FaWindows } from "react-icons/fa";
 import { MONTHS, WEEK } from "../../contents/lists";
 
 class Time{
@@ -81,15 +80,38 @@ class Time{
         });
         return array;
     }
+    sortAccurate(){
+
+    }
     includes(from, to, date){
-        if (
-            new Date(date).getDate() >= new Date(from).getDate() &&
-            new Date(date).getDate() <= new Date(to).getDate() &&
-            new Date(date).getFullYear() >= new Date(from).getFullYear() &&
-            new Date(date).getFullYear() <= new Date(to).getFullYear() &&
-            new Date(date).getMonth() >= new Date(from).getMonth() &&
-            new Date(date).getMonth() <= new Date(to).getMonth()
-            ) return true;
+        let uTo = new Date(to);
+        let uFrom = new Date(from);
+        let uDate = new Date(date);
+        while (true){            
+            if (
+                uDate.getDate() === uFrom.getDate() &&
+                uDate.getDate() === uFrom.getDate() &&
+                uDate.getMonth() === uFrom.getMonth() &&
+                uDate.getMonth() === uFrom.getMonth() &&
+                uDate.getFullYear() === uFrom.getFullYear() &&
+                uDate.getFullYear() === uFrom.getFullYear()
+            ){
+                return true;
+            }
+
+            if (
+                uFrom.getDate() === uTo.getDate() &&
+                uFrom.getDate() === uTo.getDate() &&
+                uFrom.getMonth() === uTo.getMonth() &&
+                uFrom.getMonth() === uTo.getMonth() &&
+                uFrom.getFullYear() === uTo.getFullYear() &&
+                uFrom.getFullYear() === uTo.getFullYear()
+            ){
+                break;
+            }
+
+            uFrom.setDate(uFrom.getDate() + 1);
+        }
         return false;
     }
 }
