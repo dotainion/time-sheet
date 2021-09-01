@@ -7,6 +7,7 @@ import { NotificationLogs } from '../../components/widgets/NotificationLogs';
 import { MessageBox } from '../../components/widgets/MessageBox';
 import { NotificationBox } from '../../components/widgets/NotificationBox';
 import { GiTriquetra } from 'react-icons/gi';
+import { NoRecord } from '../../components/widgets/NoRecord';
 
 
 export const Notifications = () =>{
@@ -55,7 +56,12 @@ export const Notifications = () =>{
                                 key={key}
                             />
                         )):
-                        <div className="user-notification-container" style={{marginTop:"40px"}}>No Notifications</div>
+                        <NoRecord 
+                            icon="notification"
+                            header="No notification" 
+                            message="Notification provides details to spesific information." 
+                            subMessage="It cant be for knowledge, errors, clarification or areas that needs updating."
+                        />
                     }
                 </div>
             </div>
