@@ -34,8 +34,8 @@ const userBuilder = (user) =>{
       {type:String, fontWeight:"bold", value:"FirstName", backgroundColor:"#808080"},
       {type:String, fontWeight:"bold", value:"LastName", backgroundColor:"#808080"}
     ],[
-      {type:String, value:user?.id},
-      {type:String, value:user?.email},
+      {type:String, value: user?.id},
+      {type:String, value: user?.email},
       {type:String, value: user?.role},
       {type:String, value: user?.firstName},
       {type:String, value: user?.lastName}
