@@ -1,5 +1,6 @@
 import { MONTHS, WEEK } from "../../contents/lists";
 
+
 class Time{
     time(date){
         if (date) return new Date(date).toLocaleTimeString();
@@ -84,6 +85,7 @@ class Time{
 
     }
     includes(from, to, date){
+        if (!from || !to || !date) return false;
         let uTo = new Date(to);
         let uFrom = new Date(from);
         let uDate = new Date(date);
@@ -113,6 +115,58 @@ class Time{
             uFrom.setDate(uFrom.getDate() + 1);
         }
         return false;
+    }
+    subTimeReturnObj(date1, date2){
+        //more obj keys can be added
+        let lDate = new Date(date1);
+        let rDate = new Date(date2);
+        if (!date1 && !date2){
+            lDate = new Date();
+        }else if (!date1){
+            lDate = new Date(date2);
+        }else if (!date2){
+            lDate = new Date(date1);
+        }else{
+            lDate.setHours(lDate.getHours() - rDate.getHours());
+            lDate.setMinutes(lDate.getMinutes() - rDate.getMinutes());
+            lDate.setSeconds(lDate.getSeconds() - rDate.getSeconds());
+            lDate.setMilliseconds(lDate.getMilliseconds() - rDate.getMilliseconds());
+        }
+        const en = this.time(lDate)?.toLowerCase?.()?.includes?.("am")?"AM":"PM";
+        return {
+            hour: lDate.getHours(),
+            minutes: lDate.getMinutes(),
+            seconds: lDate.getSeconds(),
+            date: lDate,
+            en: en,
+            dateString: `${lDate.getHours()}:${lDate.getMinutes()}:${lDate.getSeconds()} ${en}`
+        };
+    }
+    addTimeReturnObj(date1, date2){
+        //more obj keys can be added
+        let lDate = new Date(date1);
+        let rDate = new Date(date2);
+        if (!date1 && !date2){
+            lDate = new Date();
+        }else if (!date1){
+            lDate = new Date(date2);
+        }else if (!date2){
+            lDate = new Date(date1);
+        }else{
+            lDate.setHours(lDate.getHours() + rDate.getHours());
+            lDate.setMinutes(lDate.getMinutes() + rDate.getMinutes());
+            lDate.setSeconds(lDate.getSeconds() + rDate.getSeconds());
+            lDate.setMilliseconds(lDate.getMilliseconds() + rDate.getMilliseconds());
+        }
+        const en = this.time(lDate)?.toLowerCase?.()?.includes?.("am")?"AM":"PM";
+        return {
+            hour: lDate.getHours(),
+            minutes: lDate.getMinutes(),
+            seconds: lDate.getSeconds(),
+            date: lDate,
+            en: en,
+            dateString: `${lDate.getHours()}:${lDate.getMinutes()}:${lDate.getSeconds()} ${en}`
+        };
     }
 }
 

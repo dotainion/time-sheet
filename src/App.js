@@ -33,6 +33,7 @@ import { AdminMessages } from "./private/admin/pages/AdminMessages";
 import { UserMessages } from "./members/pages/Messages";
 import { Notifications } from "./members/pages/Notifications";
 import { AdminNotifications } from "./private/admin/pages/Notifications";
+import { Test } from "./test/Test";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <GeoLocatation>
             <ErrorHandler>
               <Switch>
+                <Route exact path="/tests" render={()=><Test/>}/>
                 <Route exact path={routes.pricing} render={()=><Pricing/>}/>
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>

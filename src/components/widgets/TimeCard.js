@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Modal } from '../../container/Modal';
 import { getUsers } from '../../database/accounts/AccountsDb';
-import { getLogsRange } from '../../database/logs/LogDb';
+import { getLogs, getLogsRange } from '../../database/logs/LogDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { tools } from '../../utils/tools/Tools';
 import { IconButton } from './IconButon';
@@ -10,99 +10,115 @@ import { Calendar } from '../../apps/calendar/Calendar';
 import { IoMdOptions } from 'react-icons/io';
 import { downloadXlFile } from '../../files/ExcelFile';
 import { BiRefresh } from 'react-icons/bi';
-import { SpanWrapper } from '../../container/SpanWrapper';
-import { MessageBox } from './MessageBox';
-import { addNotification } from '../../database/notifications/NotificationsDb';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
-import { adminRoutes, routes } from '../../utils/routes/Routes';
+import { adminRoutes } from '../../utils/routes/Routes';
 import { NoRecord } from './NoRecord';
+import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
+import { IconCheckbox } from './IconCheckbox';
 
 
 const NO_RECORD_INFO = "You can query records between two date range by clicking on the calendar icon to the top right,";
 const NO_RECORD_SUB_INFO = "then select from the list of users next to the calendar icon to display log";
 
 let userArray = [];
-export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
+export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
     const history = useHistory();
 
     const { user } = useAuth();
 
-    const [totalHours, setTotalHours] = useState();
+    const [totalHours, setTotalHours] = useState("0");
     const [users, setUsers] = useState([]);
-    const [userNameSelected, setUserNameSelected] = useState("");
     const [logs, setLogs] = useState([]);
     const [showCalendarTo, setShowCalendarTo] = useState(false);
     const [showCalendarFrom, setShowCalendarFrom] = useState(false);
-    const [spinTo, setSpinTo] = useState("");
-    const [spinFrom, setSpinFrom] = useState("");
     const [hideBtnOption, setHideBtnOption] = useState("");
     const [loading, setLoading] = useState(false);
 
     const selectedToDate = useRef();
     const selectedFromDate = useRef();
-    const userSelected = useRef();
-    const timeoutRef = useRef();
+    const userSelectedId = useRef();
 
-    const options = [
-        {title:"test", command:()=>{alert("hello world")}}
-    ]
-
-    const handleOnUserSelect = async(id) =>{
-        setLoading(true);
-        for (let u of userArray){
-            if (u?.id === id){
-                userSelected.current = u;
-                setUserNameSelected(`${u?.info?.firstName} ${u?.info?.lastName}`);
-                setLogs(
-                    await getLogsRange(
-                        selectedFromDate.current,
-                        selectedToDate.current,
-                        id
-                    )
-                );
-            }
-        }
-        setLoading(false);
+    const getALog = async(id) =>{
+        return await getLogsRange( selectedFromDate.current, selectedToDate.current, id);
     }
 
     const calcTotalLog = () =>{
-
+        let subTime = null;
+        for (let log of logs){
+            if (log?.info?.start && log?.info?.end){
+                const tTime = tools.time.subTimeReturnObj(log?.info?.end, log?.info?.start);
+                subTime = tools.time.addTimeReturnObj(subTime?.date, tTime?.date);
+            }
+        }
+        setTotalHours(subTime?.dateString);
     }
 
     const calcTotalSchedule = () =>{
-        let total = 0;
-        for (let time of timeOptions || []){
-            total = total + parseInt(time?.duration);
+        let duration = 0;
+        for (let time of logs){
+            if (time?.duration){
+                duration = duration + parseInt(time?.duration);
+            }
         }
-        setTotalHours(total);
+        setTotalHours(duration);
     }
 
-    const buildData = () =>{
-        let holdLogs = [];
+    const objectizeUser = (obj) =>{
+        return {
+            id: obj?.id, 
+            role: obj?.info?.role, 
+            email: obj?.info?.email,
+            firstName: obj?.info?.firstName,
+            lastName: obj?.info?.lastName,
+        }
+    }
+
+    const handleOnUsersSelect = async(id = null) =>{
+        if (!loading){
+            setLoading(true);
+            let uLogs = [];
+            let holdIds = [];
+            for (let uUser of userArray){
+                if (id && id === uUser?.id){
+                    userSelectedId.current = id;
+                    uLogs.push(objectizeUser(uUser));
+                    uLogs.push(...await getALog(uUser?.id));
+                    break;
+                }else{
+                    const obj = objectizeUser(uUser);
+                    if (!holdIds.includes(obj.id)){
+                        uLogs.push(obj);
+                        holdIds.push(obj.id);
+                    }
+                    uLogs.push(...await getALog(uUser?.id));
+                }
+            };
+            setLogs(uLogs);
+            setLoading(false);
+        }
+    }
+
+    const buildDataForExcelFile = (fileName="untitled") =>{
+        let holdLogs = [{fileName}];
         for (let log of logs){
-            holdLogs.push({
-                startTime:log?.info?.start,
-                endTime:log?.info?.end
-            });
+            if (log?.firstName || log?.lastName){
+                holdLogs.push({
+                    id: log?.id,
+                    firstName: log?.firstName,
+                    lastName: log?.lastName,
+                    role: log?.role,
+                    email: log?.email
+                });
+            }else{
+                holdLogs.push({startTime:log?.info?.start, endTime:log?.info?.end});
+            }
         }
         return holdLogs;
     }
 
     const onDownloadFile = () =>{
-        if (userSelected.current){
-            downloadXlFile(
-                buildData(),
-                {
-                    id: userSelected.current?.id,
-                    firstName: userSelected.current?.info?.firstName,
-                    lastName: userSelected.current?.info?.lastName,
-                    role: userSelected.current?.info?.role,
-                    email: userSelected.current?.info?.email
-                },
-                "time-sheet"
-            );
-        };
+        downloadXlFile(buildDataForExcelFile("time-sheet"));
     }
 
     const initUsers = async() =>{
@@ -113,10 +129,14 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
             tempArray.push({
                 title: `${mebr?.info?.firstName} ${mebr?.info?.lastName}`,
                 value: mebr?.id,
-                command: (id) => handleOnUserSelect(id)
+                command: (id) => handleOnUsersSelect(id)
             });
         }
         setUsers(tempArray);
+    }
+
+    const initLogs = async() =>{
+        setLogs(await getLogs(user?.id));
     }
 
     const toggleBtnOption = () =>{
@@ -129,33 +149,19 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
     }
 
     useEffect(()=>{
-        if (spinTo){
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(()=>{
-                setSpinTo("");
-            }, 10);
-        }
-    },[spinTo]);
-
-    useEffect(()=>{
-        if (spinFrom){
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(()=>{
-                setSpinFrom("");
-            }, 10);
-        }
-    },[spinFrom]);
-
-    useEffect(()=>{
-        initUsers();
         if (!useSchedule) calcTotalLog();
         else calcTotalSchedule();
     },[logs, useSchedule]);
 
+    useEffect(()=>{
+        if (ADMIN_SUPERVISER.includes(user?.role)) initUsers();
+        else initLogs();
+    },[]);
+
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className="time-card-name relative" style={{zIndex:"999999"}}>
-                <label>Time Sheet <span style={{color:"white",fontSize:"13px"}}><b>{!useSchedule? userNameSelected: user?.firstName + " " + user?.lastName}</b></span></label>
+                <label>{header || "Time Sheet"} <span style={{color:"white",fontSize:"13px"}}><b>{!useSchedule || user?.firstName + " " + user?.lastName}</b></span></label>
                 <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px",display:useSchedule && "none"}} />
                 <div className={`float-top-right time-card-buttons-container ${hideBtnOption}`} style={{display:useSchedule && "none"}}>
                     <div className="float-top-left no-wrap hide-on-desktop" style={{fontSize:"10px",left:"5px"}}>
@@ -169,8 +175,9 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                         </div>
                     </div>
                     <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
-                    <IconButton onClick={()=>{setSpinFrom("spin"); setShowCalendarFrom(true)}} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
-                    <IconSelect cssClass="time-card-buttons" icon="people" options={users} defaultValue="Users" />
+                    <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
+                    <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons" icon="users" label="All" />
+                    <IconSelect cssClass="time-card-buttons" icon="user" options={users} defaultValue="users" />
                     <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" disabled={!logs.length} />
                 </div>
             </div>
@@ -187,7 +194,7 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                                 borderRadius:"50%",
                                 cursor:"pointer"
                             }}
-                            onClick={()=>handleOnUserSelect(userSelected.current?.id)}
+                            onClick={()=>handleOnUsersSelect(userSelectedId.current)}
                         />
                     </div>
                 </div>
@@ -196,33 +203,45 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                 {
                     logs?.length?
                     logs?.map((time, key)=>(
-                        <div 
-                            onMouseEnter={()=>toggleShowIcon(`time-card${key}`, false)} 
-                            onMouseLeave={()=>toggleShowIcon(`time-card${key}`, true)} 
-                            className="time-card-container relative item-hover" 
-                            key={key}
-                        >
-                            <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): tools.time.date(time?.date)}</div>
-                            <div className="time-card-content">{!useSchedule? tools.time.subHour(time?.info?.start, time?.info?.end): time?.duration}</div>
-                            <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): tools.time.time(time?.date)}</div>
-                            <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): tools.time.time(tools.time.addHour(time?.date, time?.duration))}</div>
-                            {time?.comment && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.comment}</div>}
-                            <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
-                                <IoMdNotificationsOutline
-                                    style={{color:"orange"}}
-                                    onClick={()=>{
-                                        history.push({
-                                            pathname: adminRoutes.notification,
-                                            data: {
-                                                type: adminRoutes.logs,
-                                                user: userSelected.current,
-                                                value: !useSchedule? time?.info?.start: time?.date
-                                            }
-                                        });
-                                    }}
-                                />
+                        <div key={key}>{
+                            time?.firstName || time?.lastName?
+                            <div 
+                                className="time-card-container relative item-hover" 
+                                style={{color:"orange",background:"inherit",cursor:"default"}}
+                            >
+                                <div className="time-card-content no-wrap" style={{color:"orange"}}>Name:</div>
+                                <div className="time-card-content no-wrap" style={{color:"orange"}}>{`${time?.firstName} ${time?.lastName}`}</div>
+                                <div className="time-card-content"/>
+                                <div className="time-card-content"/>
                             </div>
-                        </div>
+                            :
+                            <div 
+                                onMouseEnter={()=>toggleShowIcon(`time-card${key}`, false)} 
+                                onMouseLeave={()=>toggleShowIcon(`time-card${key}`, true)} 
+                                className="time-card-container relative item-hover" 
+                            >
+                                <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): tools.time.date(time?.date)}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.subTimeReturnObj(time?.info?.end, time?.info?.start).dateString: time?.duration}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): tools.time.time(time?.date)}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): tools.time.time(tools.time.addHour(time?.date, time?.duration))}</div>
+                                {time?.comment && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.comment}</div>}
+                                <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
+                                    <IoMdNotificationsOutline
+                                        style={{color:"orange", display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}
+                                        onClick={()=>{
+                                            history.push({
+                                                pathname: adminRoutes.notification,
+                                                data: {
+                                                    type: adminRoutes.logs,
+                                                    user: userSelectedId.current,
+                                                    value: !useSchedule? time?.info?.start: time?.date
+                                                }
+                                            });
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        }</div>
                     )):
                     <NoRecord message={NO_RECORD_INFO} subMessage={NO_RECORD_SUB_INFO} />
                 }
@@ -237,7 +256,6 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
             <Calendar 
                 closeOnSelect
                 header="Search From"
-                cssClass={showCalendarFrom && spinFrom}
                 headerStyle={{
                     backgroundColor:"blue",
                     color:"white",
@@ -245,7 +263,6 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
                 }}
                 isOpen={showCalendarFrom}
                 onClose={()=>{
-                    setSpinTo("spin");
                     setShowCalendarFrom(false);
                     setShowCalendarTo(true);
                 }} 
@@ -254,7 +271,6 @@ export const TimeCard = ({isOpen, onClose, timeOptions, useSchedule}) =>{
             <Calendar 
                 closeOnSelect
                 header="Search To"
-                cssClass={showCalendarTo && spinTo}
                 headerStyle={{
                     backgroundColor:"green",
                     color:"white",

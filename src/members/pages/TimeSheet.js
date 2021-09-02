@@ -31,7 +31,7 @@ export const TimeSheet = () =>{
             <Modal isOpen={!showView}>
                 <EventCalendar readOnly tasksAsign={schedules} />
             </Modal>
-            <TimeCard isOpen={showView} timeOptions={schedules} useSchedule />
+            <TimeCard isOpen={showView} useSchedule />
         </UserNavBar>
     )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoMdSettings } from 'react-icons/io';
-import { FaUsers } from 'react-icons/fa';
+import { FaUsers, FaUser } from 'react-icons/fa';
 import { SelectOptions } from './SelectOptions';
 
 
@@ -18,7 +18,8 @@ export const IconSelect = ({style, hidden, cssSelectClass, selectStyle, icon, ic
     }
     return(
         <button hidden={hidden} className={cssClass} style={style}>
-            {icon === "people" && <FaUsers style={{...bStyle,...iconStyle}}/>}
+            {icon === "user" && <FaUser style={{...bStyle,...iconStyle}}/>}
+            {icon === "users" && <FaUsers style={{...bStyle,...iconStyle}}/>}
             {icon === "settings" && <IoMdSettings style={{...bStyle,...iconStyle}}/>}
             <SelectOptions 
                 options={options}

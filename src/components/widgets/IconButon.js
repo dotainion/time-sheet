@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoMdDownload, IoMdSettings } from 'react-icons/io';
 import { MdDateRange } from 'react-icons/md';
+import { FaUser, FaUsers } from 'react-icons/fa';
 
 
 export const IconButton = ({style, onClick, disabled, cssClass, iconStyle, icon, label}) =>{
@@ -19,6 +20,8 @@ export const IconButton = ({style, onClick, disabled, cssClass, iconStyle, icon,
                 cursor: disabled && "not-allowed"
             }}
         >
+            {icon === "user" && <FaUser style={{...bStyle,...iconStyle}}/>}
+            {icon === "users" && <FaUsers style={{...bStyle,...iconStyle}}/>}
             {icon === "download" && <IoMdDownload style={{...bStyle,...iconStyle}}/>}
             {icon === "settings" && <IoMdSettings style={{...bStyle,...iconStyle}}/>}
             {icon === "calendar" && <MdDateRange style={{...bStyle,...iconStyle}}/>}
