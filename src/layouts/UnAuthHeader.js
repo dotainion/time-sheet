@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { ShowErrors } from '../../state/errors/ShowErrors';
-import { routes } from '../../utils/routes/Routes';
+import { ShowErrors } from '../state/errors/ShowErrors';
+import { routes } from '../utils/routes/Routes';
 
 export const UnAuthHeader = ({useRegister, useLogin, usePricing}) =>{
     const history = useHistory();

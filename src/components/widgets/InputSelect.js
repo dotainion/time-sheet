@@ -3,7 +3,7 @@ import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
-export const InputSelect = ({label, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
+export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
     const [grayColor, setGrayColor] = useState(false);
 
@@ -25,10 +25,10 @@ export const InputSelect = ({label, Icon, noBottomBorder, border, borderColor, i
         <div 
             hidden={hidden}
             className="relative"
-            style={{
+            style={!style? {
                 marginTop:"20px",
                 marginBottom:"20px",
-            }}
+            }: style}
         >
             <div
                 className="float-left" 
@@ -41,7 +41,8 @@ export const InputSelect = ({label, Icon, noBottomBorder, border, borderColor, i
                 style={{
                     width:"35px",
                     height:"100%",
-                    borderRight:"1px solid gray"
+                    borderRight:"1px solid gray",
+                    cursor:"pointer"
                 }}>
                 {
                     Icon? <Icon
@@ -76,6 +77,7 @@ export const InputSelect = ({label, Icon, noBottomBorder, border, borderColor, i
                     backgroundColor:disabled && "rgb(192, 217, 245)",
                     color:disabled && "gray" || grayColor && "gray",
                     border:error && "1px solid red",
+                    ...optionStyle,
                 }} 
                 className={`input-entery`}
             >

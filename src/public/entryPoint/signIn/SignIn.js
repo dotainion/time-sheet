@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes, routes } from '../../../utils/routes/Routes';
-import { UnAuthHeader } from '../../../components/layouts/UnAuthHeader';
+import { UnAuthHeader } from '../../../layouts/UnAuthHeader';
 import { useError } from '../../../state/errors/Error';
 import { SubHeaderInfo } from '.././widgets/SubHeaderInfo';
 import { SideInfo } from '.././widgets/SideInfo';

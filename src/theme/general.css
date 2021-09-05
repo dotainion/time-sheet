@@ -909,15 +909,9 @@ select{
   padding: 5px;
   cursor: default;
   margin: 10px;
+  cursor: pointer;
   background-color: white;
   box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
-}
-.user-notification-container span{
-  cursor: pointer;
-  color: dodgerblue;
-}
-.user-notification-container span:hover{
-  color: gray;
 }
 .user-notification-entery{
   width: 350px;

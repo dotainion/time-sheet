@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SpanWrapper } from '../container/SpanWrapper';
+import { Header } from '../layouts/Header';
 
 
 export const Test = () =>{
@@ -9,8 +10,7 @@ export const Test = () =>{
     }, []);
     return(
         <div>
-            <SpanWrapper isOpen>
-            </SpanWrapper>
+            <Header/>
         </div>
     )
 }

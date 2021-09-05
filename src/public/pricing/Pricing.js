@@ -1,5 +1,5 @@
 import React from 'react';
-import { UnAuthHeader } from '../../components/layouts/UnAuthHeader';
+import { UnAuthHeader } from '../../layouts/UnAuthHeader';
 import { FaCheck } from 'react-icons/fa';
 import { BENEFITS } from '../../contents/aboutus/aboutus';
 

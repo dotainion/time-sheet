@@ -16,6 +16,8 @@ import { adminRoutes } from '../../utils/routes/Routes';
 import { NoRecord } from './NoRecord';
 import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
 import { IconCheckbox } from './IconCheckbox';
+import defaultImage from '../../images/default-profile-image.png';
+import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
 
 
 const NO_RECORD_INFO = "You can query records between two date range by clicking on the calendar icon to the top right,";
@@ -41,6 +43,12 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
 
     const getALog = async(id) =>{
         return await getLogsRange( selectedFromDate.current, selectedToDate.current, id);
+    }
+
+    const pullUserById = (id) =>{
+        for (let uUser of userArray){
+            if (uUser?.id === id) return uUser;
+        }
     }
 
     const calcTotalLog = () =>{
@@ -175,10 +183,10 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                         </div>
                     </div>
                     <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
-                    <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" />
-                    <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons" icon="users" label="All" />
-                    <IconSelect cssClass="time-card-buttons" icon="user" options={users} defaultValue="users" />
-                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" disabled={!logs.length} />
+                    <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" info="Select date from calendar" />
+                    <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons" icon="users" label="All" info="Select log for all users" />
+                    <IconSelect cssClass="time-card-buttons" icon="user" options={users} defaultValue="users" info="Select a user" />
+                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" disabled={!logs.length} info="Download logs" />
                 </div>
             </div>
             <div className="time-card-header-container">
@@ -188,14 +196,16 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 <div className="time-card-content relative">
                     <span>End</span>
                     <div className="float-right" style={{right:"20px",fontSize:"25px"}}>
-                        <BiRefresh
-                            className={`icon-hover ${loading && "spin"}`} 
-                            style={{
-                                borderRadius:"50%",
-                                cursor:"pointer"
-                            }}
-                            onClick={()=>handleOnUsersSelect(userSelectedId.current)}
-                        />
+                        <InfoOnHoverWrapper info="Refresh search">
+                            <BiRefresh
+                                className={`icon-hover ${loading && "spin"}`} 
+                                style={{
+                                    borderRadius:"50%",
+                                    cursor:"pointer"
+                                }}
+                                onClick={()=>handleOnUsersSelect(userSelectedId.currentd)}
+                            />
+                        </InfoOnHoverWrapper>
                     </div>
                 </div>
             </div>
@@ -209,7 +219,12 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 className="time-card-container relative item-hover" 
                                 style={{color:"orange",background:"inherit",cursor:"default"}}
                             >
-                                <div className="time-card-content no-wrap" style={{color:"orange"}}>Name:</div>
+                                <div className="time-card-content no-wrap relative" style={{color:"orange"}}>
+                                    <div className="float-left" style={{left:"5px",top:"55%"}}>
+                                        <img src={user?.image || defaultImage} style={{width:"35px",height:"35px",borderRadius:"50%"}} alt="" />
+                                    </div>
+                                    <label style={{marginLeft:"40px"}}>Name:</label>
+                                </div>
                                 <div className="time-card-content no-wrap" style={{color:"orange"}}>{`${time?.firstName} ${time?.lastName}`}</div>
                                 <div className="time-card-content"/>
                                 <div className="time-card-content"/>
@@ -226,19 +241,21 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): tools.time.time(tools.time.addHour(time?.date, time?.duration))}</div>
                                 {time?.comment && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.comment}</div>}
                                 <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
-                                    <IoMdNotificationsOutline
-                                        style={{color:"orange", display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}
-                                        onClick={()=>{
-                                            history.push({
-                                                pathname: adminRoutes.notification,
-                                                data: {
-                                                    type: adminRoutes.logs,
-                                                    user: userSelectedId.current,
-                                                    value: !useSchedule? time?.info?.start: time?.date
-                                                }
-                                            });
-                                        }}
-                                    />
+                                    <InfoOnHoverWrapper info="Send notification to this user">
+                                        <IoMdNotificationsOutline
+                                            style={{display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}
+                                            onClick={()=>{
+                                                history.push({
+                                                    pathname: adminRoutes.notification,
+                                                    data: {
+                                                        type: adminRoutes.logs,
+                                                        user: pullUserById(time?.info?.id),
+                                                        value: !useSchedule? time?.info?.start: time?.date
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                    </InfoOnHoverWrapper>
                                 </div>
                             </div>
                         }</div>

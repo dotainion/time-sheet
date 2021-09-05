@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { UnAuthHeader } from '../../../components/layouts/UnAuthHeader';
+import { UnAuthHeader } from '../../../layouts/UnAuthHeader';
 import { SideInfo } from '.././widgets/SideInfo';
 import { SubHeaderInfo } from '.././widgets/SubHeaderInfo';
 import { useAuth } from '../../../state/auth/Authentication';

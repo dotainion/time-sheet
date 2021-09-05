@@ -8,11 +8,8 @@ import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { tools } from '../../../utils/tools/Tools';
 import { BiRefresh } from 'react-icons/bi';
-import { MdSettingsEthernet } from 'react-icons/md';
 import { IconSelect } from '../../../components/widgets/IconSelect';
 import { getUsers } from '../../../database/accounts/AccountsDb';
-import { NotificationLogs } from '../../../components/widgets/NotificationLogs';
-import { MessageBox } from '../../../components/widgets/MessageBox';
 import { NotificationBox } from '../../../components/widgets/NotificationBox';
 import { NoRecord } from '../../../components/widgets/NoRecord';
 
@@ -31,19 +28,38 @@ export const AdminNotifications = () =>{
     const [members, setMembers] = useState([]);
     const [notification, setNotification] = useState([]);
     const [notificationContainAll, setNotificationContainAll] = useState([]);
-    const [switchView, setSwitchView] = useState(false);
-    const [showMessageBox, setShowMessageBox] = useState(false);
+    const [showAddNotification, setShowAddNotification] = useState(true);
+    const [showViewNotification, setShowViewNotification] = useState(false);
+    const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
     const headerRef = useRef();
     const infoRef = useRef();
     const messageRef = useRef();
     const userToNotifyInfoRef = useRef();
-    const notificationSelected = useRef();
 
-    const navOption = [[
-        {title:"Add Notification", command:()=>setSwitchView(false)},
-        {title:"View Notification", command:()=>setSwitchView(true)}
-    ]];
+    const navOption = [
+        [
+            {
+                title:"Add Notification", 
+                command:()=>onSwitchView("add"),
+                isActive: showAddNotification
+            },{
+                title:"View Notification", 
+                command:()=>onSwitchView("view"),
+                isActive: showViewNotification
+            }
+        ]
+    ];
+
+    const onSwitchView = (cmd) =>{
+        if (cmd === "add"){
+            setShowAddNotification(true);
+            setShowViewNotification(false);
+        }else{
+            setShowViewNotification(true);
+            setShowAddNotification(false);
+        }
+    }
 
     const onNotify = async() =>{
         let STATE = true;
@@ -68,15 +84,10 @@ export const AdminNotifications = () =>{
             header: headerRef.current.value,
             from: `(${user?.role}) ${user?.firstName} ${user?.lastName}`,
             id: userToNotifyInfoRef.current?.id,
-            adminMessage: [{
-                msg: messageRef.current.value,
-                date: tools.time.digits()
-            }],
-            userMessage: [],
+            message: messageRef.current.value,
             info: infoRef.current.value,
             adminId: user?.id,
-            userSeen: false,
-            adminSeen: true
+            seen: false
         });
         headerRef.current.value = "";
         infoRef.current.value = "";
@@ -122,16 +133,6 @@ export const AdminNotifications = () =>{
         setNotification(noticeRecords);
     }
 
-    const onShowMessageBox = (notificationObj) =>{
-        setShowMessageBox(true);
-        notificationSelected.current = notificationObj;
-    }
-
-    const toggleMore = (id, state) =>{
-        document.getElementById(id).hidden = state;
-        document.getElementById(`${id}btn`).hidden = !state;
-    }
-
     useEffect(()=>{
         initUsers();
         initNotifications();
@@ -149,7 +150,7 @@ export const AdminNotifications = () =>{
 
     return(
         <AdminNavBar options={navOption}>
-            <div hidden={switchView} className="float-center notification-container">
+            <div hidden={!showAddNotification} className="float-center notification-container">
                 <div className="float-top-right notification-user-select">
                     <IconSelect icon="people" options={members} defaultValue={DEFAULT_USER_SELECTED} />
                 </div>
@@ -173,24 +174,15 @@ export const AdminNotifications = () =>{
                 </div>
             </div>
 
-            <div hidden={!switchView} className="max-size" style={{backgroundColor:"rgb(243, 243, 243)",height:"94vh"}}>
+            <div hidden={!showViewNotification} className="max-size" style={{backgroundColor:"rgb(243, 243, 243)",height:"94vh"}}>
                 <div className="centered scrollbar" style={{height:"92vh"}}>
                     {
                         notification.length?
                         notification.map((notice, key)=>(
-                            <NotificationLogs
-                                header={notice?.info?.header}
-                                from={notice?.info?.from}
-                                info={notice?.info?.info}
-                                adminMessage={notice?.info?.adminMessage}
-                                userMessage={notice?.info?.userMessage}
-                                moreId={`user-notif${key}btn`}
-                                lessId={`user-notif${key}`}
-                                onShowMore={()=>toggleMore(`user-notif${key}`,false)}
-                                onShowLess={()=>toggleMore(`user-notif${key}`,true)}
-                                onAdd={()=>onShowMessageBox(notice)}
-                                key={key}
-                            />
+                            <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="user-notification-container" key={key}>
+                                <div className="relative"><b>{notice?.info?.header}</b></div>
+                                <div>{notice?.info?.from}</div>
+                            </div>
                         )):
                         <NoRecord 
                             icon="notification"
@@ -201,11 +193,10 @@ export const AdminNotifications = () =>{
                     }
                 </div>
             </div>
-            <NotificationBox 
-                useAdmin
-                isOpen={showMessageBox}
-                onClose={()=>setShowMessageBox(false)}
-                notifySelected={notificationSelected.current}
+            <NotificationBox
+                isOpen={showMessageBox.state}
+                onClose={()=>setShowMessageBox({state:false, data: null})}
+                data={showMessageBox.data}
             />
         </AdminNavBar>
     )

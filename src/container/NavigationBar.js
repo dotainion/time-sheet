@@ -21,7 +21,7 @@ const SETTINGS_ROUTES = [
 ]
 
 let TOGGLE_STATE = false;
-export const NavigationBar = ({menues, datePicker, onDatePicker, options, children}) =>{
+export const NavigationBar = ({menues, options, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
@@ -66,7 +66,6 @@ export const NavigationBar = ({menues, datePicker, onDatePicker, options, childr
                 <div className="nav-btn-header">
                     <GiHamburgerMenu onClick={toggleNav} className="float-left HamburgerMenu" />
                     <span>Time Sheet</span>
-                    <div>{user?.firstName}</div>
                 </div>
                 {menues?.map((nav, key)=>(
                     <div
@@ -89,9 +88,7 @@ export const NavigationBar = ({menues, datePicker, onDatePicker, options, childr
             </div>
             <div className="relative" style={{width:"100%"}}>
                 <Toolbar
-                    datePicker={datePicker}
                     onMenuClick={toggleNav} 
-                    onDatePicker={onDatePicker} 
                     on3DotClick={options && onDotMenuToggle}
                 />
                 <div hidden={!showOptons} className="nav-btn-option-container">

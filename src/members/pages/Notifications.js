@@ -3,7 +3,6 @@ import { UserNavBar } from '../../container/UserNavBar';
 import { getNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import { NotificationLogs } from '../../components/widgets/NotificationLogs';
 import { MessageBox } from '../../components/widgets/MessageBox';
 import { NotificationBox } from '../../components/widgets/NotificationBox';
 import { GiTriquetra } from 'react-icons/gi';
@@ -14,19 +13,7 @@ export const Notifications = () =>{
     const { user } = useAuth();
 
     const [notifications, setNotifications] = useState([]);
-    const [showMessageBox, setShowMessageBox] = useState(false);
-
-    const notificationSelected = useRef();
-
-    const toggleMore = (id, state) =>{
-        document.getElementById(id).hidden = state;
-        document.getElementById(`${id}btn`).hidden = !state;
-    }
-
-    const onShowMessageBox = (notifyObj) =>{
-        setShowMessageBox(true);
-        notificationSelected.current = notifyObj;
-    }
+    const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
     const initNotifications = async() =>{
         setNotifications(await getNotification(user?.id));
@@ -42,19 +29,14 @@ export const Notifications = () =>{
                     {
                         notifications.length?
                         notifications.map((notice, key)=>(
-                            <NotificationLogs
-                                header={notice?.info?.header}
-                                from={notice?.info?.from}
-                                info={notice?.info?.info}
-                                adminMessage={notice?.info?.adminMessage}
-                                userMessage={notice?.info?.userMessage}
-                                moreId={`user-notif${key}btn`}
-                                lessId={`user-notif${key}`}
-                                onShowMore={()=>toggleMore(`user-notif${key}`,false)}
-                                onShowLess={()=>toggleMore(`user-notif${key}`,true)}
-                                onAdd={()=>onShowMessageBox(notice)}
-                                key={key}
-                            />
+                            <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="user-notification-container" key={key}>
+                                <div className="relative"><b>{notice?.info?.header}</b></div>
+                                <div>{notice?.info?.from}</div>
+                                <div hidden>
+                                    <div>{notice?.info?.info}</div>
+                                    <div>{notice?.info?.message}</div>
+                                </div>
+                            </div>
                         )):
                         <NoRecord 
                             icon="notification"
@@ -66,9 +48,9 @@ export const Notifications = () =>{
                 </div>
             </div>
             <NotificationBox
-                isOpen={showMessageBox}
-                onClose={()=>setShowMessageBox(false)}
-                notifySelected={notificationSelected.current}
+                isOpen={showMessageBox.state}
+                onClose={()=>setShowMessageBox({state:false, data: null})}
+                data={showMessageBox.data}
             />
         </UserNavBar>
     )

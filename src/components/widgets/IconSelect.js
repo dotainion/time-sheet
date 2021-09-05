@@ -2,9 +2,10 @@ import React from 'react';
 import { IoMdSettings } from 'react-icons/io';
 import { FaUsers, FaUser } from 'react-icons/fa';
 import { SelectOptions } from './SelectOptions';
+import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
 
 
-export const IconSelect = ({style, hidden, cssSelectClass, selectStyle, icon, iconStyle, onChange, options, cssClass, defaultValue}) =>{
+export const IconSelect = ({info, style, hidden, cssSelectClass, selectStyle, icon, iconStyle, onChange, options, cssClass, defaultValue}) =>{
     const bStyle = {
         marginRight:"1px"
     }
@@ -17,17 +18,19 @@ export const IconSelect = ({style, hidden, cssSelectClass, selectStyle, icon, ic
         marginBottom:"-1px",
     }
     return(
-        <button hidden={hidden} className={cssClass} style={style}>
-            {icon === "user" && <FaUser style={{...bStyle,...iconStyle}}/>}
-            {icon === "users" && <FaUsers style={{...bStyle,...iconStyle}}/>}
-            {icon === "settings" && <IoMdSettings style={{...bStyle,...iconStyle}}/>}
-            <SelectOptions 
-                options={options}
-                onChange={onChange}
-                defaultValue={defaultValue}
-                cssOverride 
-                cssClass={cssSelectClass}
-                style={{...s_selectStyle,...selectStyle}} />
-        </button>
+        <InfoOnHoverWrapper info={info}>
+            <button hidden={hidden} className={cssClass} style={style}>
+                {icon === "user" && <FaUser style={{...bStyle,...iconStyle}}/>}
+                {icon === "users" && <FaUsers style={{...bStyle,...iconStyle}}/>}
+                {icon === "settings" && <IoMdSettings style={{...bStyle,...iconStyle}}/>}
+                <SelectOptions 
+                    options={options}
+                    onChange={onChange}
+                    defaultValue={defaultValue}
+                    cssOverride 
+                    cssClass={cssSelectClass}
+                    style={{...s_selectStyle,...selectStyle}} />
+            </button>
+        </InfoOnHoverWrapper>
     )
 }
