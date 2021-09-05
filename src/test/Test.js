@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SpanWrapper } from '../container/SpanWrapper';
+import { ADMIN_SIDE_NAV } from '../contents/lists';
+import { Navigation } from '../DEV/container/Navigation';
 import { Header } from '../layouts/Header';
 
 
@@ -11,7 +13,7 @@ export const Test = () =>{
     }, []);
     return(
         <div>
-            <Header/>
+            <Navigation menu={ADMIN_SIDE_NAV} />
         </div>
     )
 }

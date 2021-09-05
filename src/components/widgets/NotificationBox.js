@@ -3,7 +3,6 @@ import { Backdrop } from '../../container/Backdrop';
 import { SpanWrapper } from '../../container/SpanWrapper';
 import { updateNotification } from '../../database/notifications/NotificationsDb';
 import { tools } from '../../utils/tools/Tools';
-import { MessageBox } from './MessageBox';
 
 
 export const NotificationBox = ({isOpen, onClose, data}) =>{

@@ -3,7 +3,6 @@ import { UserNavBar } from '../../container/UserNavBar';
 import { getNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
-import { MessageBox } from '../../components/widgets/MessageBox';
 import { NotificationBox } from '../../components/widgets/NotificationBox';
 import { GiTriquetra } from 'react-icons/gi';
 import { NoRecord } from '../../components/widgets/NoRecord';
