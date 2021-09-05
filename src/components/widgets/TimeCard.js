@@ -18,6 +18,7 @@ import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
 import { IconCheckbox } from './IconCheckbox';
 import defaultImage from '../../images/default-profile-image.png';
 import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
+import { LoadingBar } from './LoadingBar';
 
 
 const NO_RECORD_INFO = "You can query records between two date range by clicking on the calendar icon to the top right,";
@@ -297,6 +298,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 onClose={()=>setShowCalendarTo(false)} 
                 onSelect={(date)=>selectedToDate.current = date} 
             />
+            <LoadingBar isOpen={loading} />
         </Modal>
     )
 }

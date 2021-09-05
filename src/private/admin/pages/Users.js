@@ -107,15 +107,28 @@ export const Users = () =>{
                 <div
                     style={{
                         fontSize:"25px",
-                        borderBottom:"1px solid white",
-                        marginBottom:"10px"
+                        borderBottom:"1px solid white"
                     }}
                 ><b>New Member</b></div>
+                <div 
+                    className="flex" 
+                    style={{
+                        marginBottom:"10px",
+                        paddingTop:"10px",
+                        backgroundColor:"white",
+                        fontWeight:"bold",
+                        color:"dodgerblue",
+                    }}
+                >
+                    <div className="max-width" style={{marginLeft:"100px"}}>Name</div>
+                    <div className="max-width">Email</div>
+                    <div className="max-width">Role</div>
+                </div>
                 <div className="scrollbar" style={{overflowY:"auto",overflowX:"hidden",height:"65vh"}}>
                     {
                         users?.length?
                         users?.map((user, key)=>(
-                            <div className="flex relative content-container" style={{padding:"2px",boxShadow:"2px 2px 5px dodgerblue",marginTop:"10px"}} key={key}>
+                            <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid lightgray",paddingTop:"10px"}} key={key}>
                                 <div className="relative">
                                     <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
                                 </div>
