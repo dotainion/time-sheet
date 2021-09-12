@@ -23,14 +23,14 @@ export const ADMIN_SIDE_NAV = [
         icon: GiHamburgerMenu,
         info: "Expand menu option"
     },{
+        title: "Grid",
+        icon: BsGrid3X3Gap,
+        info: ""
+    },{
         title: "Add User",
         icon: HiUserAdd,
         route: adminRoutes.addUser,
         info: "Add a new member"
-    },{
-        title: "Grid",
-        icon: BsGrid3X3Gap,
-        info: ""
     },{
         title: "Users",
         icon: FaUsers,
@@ -52,15 +52,15 @@ export const ADMIN_SIDE_NAV = [
         route: adminRoutes.adminMessages,
         info: "Send messages"
     },{
-        title: "Settings",
-        icon: RiSettings5Fill,
-        route: adminRoutes.settings,
-        info: "Update settigns"
-    },{
         title: "Notification",
         icon: ImNotification,
         route: adminRoutes.notification,
         info: "Assign or view notification"
+    },{
+        title: "Settings",
+        icon: RiSettings5Fill,
+        route: adminRoutes.settings,
+        info: "Update settigns"
     }
 ];
 
