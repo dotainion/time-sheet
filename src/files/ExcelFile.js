@@ -53,7 +53,7 @@ const fileBuilder = (data) =>{
             {type:String, value:""},
             {type:String, value:""},
             {type:String, value:""},
-            {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes} ${eDate.en}`}
+            {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes}`}// ${eDate.en} = AM or PM
           ]
         );
         objData.push([]);
@@ -66,7 +66,7 @@ const fileBuilder = (data) =>{
           {type:String, value:`${tools.time.time(obj?.startTime)}`},
           {type:String, value:`${tools.time.date(obj?.endTime)}`},
           {type:String, value:`${tools.time.time(obj?.endTime)}`},
-          {type:String, value:`${dDate.hour}:${dDate.seconds}:${dDate.minutes} ${dDate.en}`}
+          {type:String, value:`${dDate.hour}:${dDate.seconds}:${dDate.minutes}`}// ${eDate.en} = AM or PM
         ]
       );
       eDate = dateBuilder(eDate?.date, dDate.date);
@@ -79,18 +79,18 @@ const fileBuilder = (data) =>{
       {type:String, value:""},
       {type:String, value:""},
       {type:String, value:""},
-      {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes} ${eDate.en}`}
+      {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes}`}// ${eDate.en} = AM or PM
     ]
   );
   return objData;
 }
 
 const columnStyle = [
-  {width:15},
-  {width:15},
-  {width:15},
-  {width:15},
-  {width:15}
+  {width:30},
+  {width:30},
+  {width:20},
+  {width:20},
+  {width:20}
 ]
 
 /**
@@ -108,7 +108,7 @@ export const downloadXlFile = async(data=[]) =>{
       ...fileBuilder(data)
     ], {
       columns:columnStyle,
-      fileName: `${fileName}.xlsx`
+      fileName: `${fileName.fileName}.xlsx`
     }
   );
 }
