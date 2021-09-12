@@ -11,80 +11,39 @@ import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { NoRecord } from '../../../components/widgets/NoRecord';
+import { Profile } from '../../../components/other/Profile';
+import { Button } from '../../../components/widgets/Buttons';
+import defaultImage from '../../../images/default-image.jpg';
+import { AiOutlineMail } from 'react-icons/ai';
+import { FaCriticalRole } from 'react-icons/fa';
+import { CgNametag } from 'react-icons/cg';
+import { MdSystemUpdateAlt } from 'react-icons/md';
 
 
 const NO_RECORD_INFO = "There is no contact in your list.";
 const NO_RECORD_SUB_INFO = "Try addin a user first by clicking the (ADD USERS) tab.";
 
-let checkboxIds = [];
-let userAppended = [];
+
+
 export const Users = () =>{
     const history = useHistory();
 
     const { user } = useAuth();
     
     const [users, setUsers] = useState([]);
-    const [asignTimeSheet, setAsignTimeSheet] = useState(false);
-    const [usersSelected, setUsersSelected] = useState([]);
-    const [showSelectOption, setShowSelectOption]= useState(false);
-    const [idToggle, setIdToggle] = useState(false);
 
-    const appendCheckboxIds = (id) =>{
-        checkboxIds.push(id);
-        return id;
+    const onUpdate = (uUser) =>{
+        history.push({
+            pathname:adminRoutes.usersProfile, 
+            user:uUser
+        });
     }
 
-    const onSelectAll = (state) =>{
-        for (let id of checkboxIds){
-            document.getElementById(id).checked = state;
-        }
-        if (state) userAppended = users;
-        else userAppended = [];
-        setIdToggle(state);
-    }
-
-    const onCancelSelect = () =>{
-        onSelectAll(false);
-        setShowSelectOption(false);
-    }
-
-    const isAnyCheckboxSelected = () =>{
-        if (userAppended.length){
-            return setShowSelectOption(true);
-        }
-        setShowSelectOption(false);
-    }
-
-    const append = (membr) =>{
-        userAppended.push(membr);
-    }
-
-    const poped = (membr) =>{
-        let tempAppend = [];
-        for (let mbr of userAppended){
-            if (mbr?.id !== membr?.id){
-                tempAppend.push(mbr);
-            }
-        }
-        userAppended = tempAppend;
-    }
-
-    const appendUserOrPop = (checked, membr) =>{
-        if (checked) append(membr);
-        else poped(membr);
-        isAnyCheckboxSelected();
-    }
-
-    const selectSingleUser = (data) =>{
-        userAppended = [data];
-        onShowAsigntimeSheet();
-    }
-
-    const onShowAsigntimeSheet = () =>{
-        if (userAppended.length){
-            setUsersSelected(userAppended);
-            setAsignTimeSheet(true);
-        }
+    const onSchedule = (uUser) =>{
+        history.push({
+            pathname:adminRoutes.schedule, 
+            user:uUser
+        });
     }
 
     const initUsers = async() =>{
@@ -96,69 +55,49 @@ export const Users = () =>{
     }, []);
     return (
         <AdminNavBar>
-            <ContentsWrapper isOpen={true} noScroll>
-                <div hidden={!showSelectOption} className="calendar-event-floating-btn float-top-left" style={{top:"-30px"}}>
-                    <div>
-                        <button onClick={()=>onSelectAll(!idToggle)} className="btn btn-hover" style={{color:"blue"}}>{idToggle?"Deselect All":"Select All"}</button>
-                        <button onClick={onShowAsigntimeSheet} className="btn btn-hover" style={{color:"teal"}}>Asign</button>
-                        <button onClick={onCancelSelect} className="btn btn-hover" style={{color:"red"}}>Cancel</button>
-                    </div>
-                </div>
+            <div className="pad">
                 <div
                     style={{
+                        color:"dodgerblue",
                         fontSize:"25px",
-                        borderBottom:"1px solid white"
+                        backgroundColor:"lightgray",
                     }}
-                ><b>New Member</b></div>
+                ><b>Member</b></div>
                 <div 
                     className="flex" 
                     style={{
                         marginBottom:"10px",
-                        paddingTop:"10px",
-                        backgroundColor:"white",
+                        padding:"5px",
                         fontWeight:"bold",
-                        color:"dodgerblue",
+                        color:"white",
+                        backgroundColor:"dodgerblue",
                     }}
                 >
-                    <div className="max-width" style={{marginLeft:"100px"}}>Name</div>
-                    <div className="max-width">Email</div>
-                    <div className="max-width">Role</div>
+                    <div className="max-width" style={{paddingLeft:"55px"}}><CgNametag style={{marginRight:"5px",fontSize:"20px"}}/>Name</div>
+                    <div className="max-width"><AiOutlineMail style={{marginRight:"5px",fontSize:"20px"}}/>Email</div>
+                    <div className="max-width"><FaCriticalRole style={{marginRight:"5px",fontSize:"20px"}}/>Role</div>
+                    <div className="max-width"><MdSystemUpdateAlt style={{marginRight:"5px",fontSize:"20px"}}/>Update</div>
                 </div>
-                <div className="scrollbar" style={{overflowY:"auto",overflowX:"hidden",height:"65vh"}}>
+                <div style={{overflowY:"auto",overflowX:"hidden",height:"65vh"}}>
                     {
                         users?.length?
                         users?.map((user, key)=>(
-                            <div className="flex relative content-container" style={{padding:"2px",borderBottom:"1px solid lightgray",paddingTop:"10px"}} key={key}>
-                                <div className="relative">
-                                    <input onChange={e=>appendUserOrPop(e.target.checked, user)} id={appendCheckboxIds(`${user?.id}-ec`)} style={{margin:"10px",marginTop:"20px"}} type="checkbox"/>
-                                </div>
-                                <div className="relative">
-                                    <IoPersonCircleOutline className="log-icon" style={{marginRight:"10px",color:"white"}} />
-                                </div>
-                                <div onClick={()=>{!showSelectOption && selectSingleUser(user)}} className="content-container">
-                                    <div className="content-inner-container flex d-flex-on-mobile">
-                                        <div className="max-width" style={{minWidth:"150px"}}><b>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                                        <div className="max-width" style={{minWidth:"150px"}}>{user?.info?.email}</div>
-                                        <div style={{minWidth:"150px"}} className="max-width">Role: {user?.info?.role}</div>
+                            <div onClick={()=>onSchedule(user)} className="content-container" key={key}>
+                                <div className="header-profile"><img src={defaultImage} alt="" style={{cursor:"pointer"}} /></div>
+                                <div className="max-width" style={{minWidth:"150px"}}><b className="float-left" style={{left:"5px"}}>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.email}</div></div>
+                                <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.role}</div></div>
+                                <div className="max-width">
+                                    <div className="float-left">
+                                        <Button onClick={()=>onUpdate(user)} label="Update" />
                                     </div>
-                                </div>
-                                <div className="float-right">
-                                    <RiUserSettingsLine onClick={()=>history.push({pathname:adminRoutes.usersProfile, user:user})} className="user-setting-icon" />
                                 </div>
                             </div>
                         )):
                         <NoRecord icon="users" message={NO_RECORD_INFO} subMessage={NO_RECORD_SUB_INFO} />
                     }
                 </div>
-            </ContentsWrapper>
-            <AsignTimeSheet
-                usersSelected={usersSelected}
-                isOpen={asignTimeSheet}
-                onClose={()=>{
-                    setUsersSelected([]);
-                    setAsignTimeSheet(false);
-                }}
-            />
+            </div>
         </AdminNavBar>
     )
 }

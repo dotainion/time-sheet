@@ -12,6 +12,8 @@ import { IconSelect } from '../../../components/widgets/IconSelect';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { NotificationBox } from '../../../components/widgets/NotificationBox';
 import { NoRecord } from '../../../components/widgets/NoRecord';
+import { TiArrowBack } from 'react-icons/ti';
+import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 
 
 let uMembers = [];
@@ -31,25 +33,12 @@ export const AdminNotifications = () =>{
     const [showAddNotification, setShowAddNotification] = useState(true);
     const [showViewNotification, setShowViewNotification] = useState(false);
     const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
+    const [errorSelect, setErrorSelect] = useState("");
 
     const headerRef = useRef();
     const infoRef = useRef();
     const messageRef = useRef();
     const userToNotifyInfoRef = useRef();
-
-    const navOption = [
-        [
-            {
-                title:"Add Notification", 
-                command:()=>onSwitchView("add"),
-                isActive: showAddNotification
-            },{
-                title:"View Notification", 
-                command:()=>onSwitchView("view"),
-                isActive: showViewNotification
-            }
-        ]
-    ];
 
     const onSwitchView = (cmd) =>{
         if (cmd === "add"){
@@ -63,6 +52,7 @@ export const AdminNotifications = () =>{
 
     const onNotify = async() =>{
         let STATE = true;
+        setErrorSelect("");
         if (!infoRef.current.value){
             STATE = false;
             setInfoError("No informatin specify");
@@ -73,7 +63,7 @@ export const AdminNotifications = () =>{
         }
         if (!userToNotifyInfoRef.current?.id){
             STATE = false;
-            alert("No user selected");
+            setErrorSelect("No user selected.");
         }
 
         if (!STATE) return;
@@ -149,22 +139,25 @@ export const AdminNotifications = () =>{
     }, []);
 
     return(
-        <AdminNavBar options={navOption}>
-            <div hidden={!showAddNotification} className="float-center notification-container">
-                <div className="float-top-right notification-user-select">
-                    <IconSelect icon="people" options={members} defaultValue={DEFAULT_USER_SELECTED} />
+        <AdminNavBar>
+            <div hidden={!showAddNotification} className="notification-container">
+                <div onClick={()=>onSwitchView("view")} className="float-top-right label-hover pad" style={{color:"var(--primary-color)",cursor:"pointer"}}>View notifications</div>
+
+                <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Notification</div>
+                
+                <div style={{marginTop:"40px",marginBottom:"40px"}}>
+                    <IconSelect icon="users" options={members} defaultValue={DEFAULT_USER_SELECTED} error={errorSelect} errorReset={setErrorSelect} />
                 </div>
-                <div className="header" style={{width:"109%",marginBottom:"40px",borderBottom:"1px solid white"}}>Notification</div>
-                <div style={{marginBottom:"40px"}}>
+                <div className="notification-sub-container">
                     <InputEntry inputRef={headerRef} label="Header" labelFixed placeholder="Notification type" error={headerError} errorReset={setHeaderError} />
                 </div>
-                <div style={{marginBottom:"40px"}}>
+                <div className="notification-sub-container">
                     <InputEntry inputRef={infoRef} label="Information" labelFixed placeholder="Information specify to notification" error={infoError} errorReset={setInfoError} />
                 </div>
-                <div className="centered" style={{width:"105%",marginLeft:"53%"}}>
+                <div className="notification-sub-container">
                     <InputTextarea inputRef={messageRef} label="Message" labelFixed placeholder="Enter message about your notification here" />
                 </div>
-                <div className="relative" style={{marginTop:"20px"}}>
+                <div className="relative">
                     <span className="float-center" style={{display:!loading && "none"}}>
                         <BiRefresh className="spin" style={{fontSize:"25px",marginBottom:"-5px"}} />
                         <span>{loading && "Sending..."}</span>
@@ -174,14 +167,27 @@ export const AdminNotifications = () =>{
                 </div>
             </div>
 
-            <div hidden={!showViewNotification} className="max-size" style={{backgroundColor:"rgb(243, 243, 243)",height:"94vh"}}>
-                <div className="centered scrollbar" style={{height:"92vh"}}>
+            <div hidden={!showViewNotification} className="max-size" style={{backgroundColor:"var(--bg)"}}>
+                <div className="float-top-right pad" style={{color:"var(--primary-color)",cursor:"pointer",right:"60px"}}>
+                    <WidgetsInfo info="Black">
+                        <TiArrowBack onClick={()=>onSwitchView("add")} style={{fontSize:"30px"}} />
+                    </WidgetsInfo>
+                </div>
+
+                <div style={{marginTop:"40px",height:"70vh",overflowY:"scroll"}}>
                     {
                         notification.length?
                         notification.map((notice, key)=>(
-                            <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="user-notification-container" key={key}>
-                                <div className="relative"><b>{notice?.info?.header}</b></div>
-                                <div>{notice?.info?.from}</div>
+                            <div className="notification-item-container" key={key}>
+                                <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="notification-item">
+                                    <div onClick={e=>e.stopPropagation()} className="notification-item-count">
+                                        <div className="float-center">{key+1}</div>
+                                    </div>
+                                    <div className="float-center">
+                                        <div className="relative" style={{color:"var(--primary-color)"}}><b>{notice?.info?.header}</b></div>
+                                        <div>{notice?.info?.from}</div>
+                                    </div>
+                                </div>
                             </div>
                         )):
                         <NoRecord 

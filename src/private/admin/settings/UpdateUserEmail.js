@@ -57,7 +57,7 @@ export const UpdateUserEmail = () =>{
     return(
         <AdminNavBar>
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs/>
+                <BreadCrumbs updateUserEmail />
                 <div className="flex d-flex-on-mobile max-size">
                     <UsersLists onSelected={setUserSelected} />
                     <div className="add-update-new-user-info new-user-info-margin">

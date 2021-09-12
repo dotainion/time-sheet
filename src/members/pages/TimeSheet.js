@@ -27,10 +27,10 @@ export const TimeSheet = () =>{
         initSchedule();
     }, []);
     return(
-        <UserNavBar options={options}>
-            <Modal isOpen={!showView}>
+        <UserNavBar>
+            {/*<Modal isOpen={!showView}>
                 <EventCalendar readOnly tasksAsign={schedules} />
-            </Modal>
+            </Modal>*/}
             <TimeCard isOpen={showView} useSchedule />
         </UserNavBar>
     )

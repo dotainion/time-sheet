@@ -23,17 +23,20 @@ export const Notifications = () =>{
     }, []);
     return(
         <UserNavBar>
-            <div className="max-size" style={{backgroundColor:"rgb(243, 243, 243)",height:"94vh"}}>
-                <div className="centered scrollbar" style={{height:"92vh"}}>
+            <div className="max-size">
+                <div style={{height:"90vh",overflowY:"auto"}}>
                     {
                         notifications.length?
                         notifications.map((notice, key)=>(
-                            <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="user-notification-container" key={key}>
-                                <div className="relative"><b>{notice?.info?.header}</b></div>
-                                <div>{notice?.info?.from}</div>
-                                <div hidden>
-                                    <div>{notice?.info?.info}</div>
-                                    <div>{notice?.info?.message}</div>
+                            <div className="notification-item-container" key={key}>
+                                <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="notification-item">
+                                    <div onClick={e=>e.stopPropagation()} className="notification-item-count">
+                                        <div className="float-center">{key+1}</div>
+                                    </div>
+                                    <div className="float-center">
+                                        <div className="relative" style={{color:"var(--primary-color)"}}><b>{notice?.info?.header}</b></div>
+                                        <div>{notice?.info?.from}</div>
+                                    </div>
                                 </div>
                             </div>
                         )):

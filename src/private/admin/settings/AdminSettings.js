@@ -16,6 +16,7 @@ import { Entry } from '../../../components/widgets/Entry';
 import { MdEmail } from 'react-icons/md';
 
 
+
 export const AdminSettings = () =>{
     const history = useHistory();
 
@@ -28,6 +29,71 @@ export const AdminSettings = () =>{
     const [durationSuccess, setDurationSuccess] = useState("");
 
     const durationRef = useRef();
+
+    const SETTINGS_LISTS = [
+        {
+            header: "Passwords Update",
+            cards: [
+                {
+                    title: "Change my password.",
+                    icon: RiLockPasswordFill,
+                    action: ()=>setShowChangePassword(true),
+                    info: "Change my current passdword to a new one."
+                },{
+                    title: "Reset a user password.",
+                    icon: RiLockPasswordFill,
+                    action: ()=>setShowResetPassword(true),
+                    info: "This section will send a user a email with informatin to reset their account."
+                },{
+                    title: "Advance password reset.",
+                    icon: RiLockPasswordFill,
+                    action: ()=>history.push(adminRoutes.advanceReset),
+                    info: "This section will generate a temporary password that the user can use to log in then they can change their password"
+                },{
+                    title: "Change my email.",
+                    icon: MdEmail,
+                    action: ()=>history.push(adminRoutes.updateEmail),
+                    info: "This section will change the email address linked to your account"
+                },{
+                    title: "Change a user email.",
+                    icon: MdEmail,
+                    action: ()=>history.push(adminRoutes.updateUserEmail),
+                    info: "This section will change the email address linked to a user account"
+                }
+            ]
+        },{
+            header: "Update Profile",
+            cards: [
+                {
+                    title: "Update my account",
+                    icon: RiUserSettingsLine,
+                    action: ()=>history.push(adminRoutes.profile),
+                    info: ""
+                },{
+                    title: "Update a user account",
+                    icon: RiUserSettingsLine,
+                    action: ()=>history.push(adminRoutes.usersProfile),
+                    info: ""
+                }
+            ]
+        },{
+            header: "Work Duration",
+            cards: [
+                {
+                    inputRef: durationRef,
+                    errorMsg: durationError,
+                    successMsg: durationSuccess,
+                    endTyping: ()=>onUpdateSettings(),
+                    startTyping: ()=>{
+                        setDurationError("");
+                        setDurationSuccess("");
+                    },
+                    placeholder: "Default work duration" ,
+                    type: "number"
+                }
+            ]
+        }
+    ]
 
     const onUpdateSettings = async() =>{
         if (!durationRef.current.value || parseInt(durationRef.current.value || 0) < 1){
@@ -46,72 +112,33 @@ export const AdminSettings = () =>{
     }, [settings]);
     return (
         <AdminNavBar>
-            <ContentsWrapper isOpen>
-                <div>
-                    <div className="settings-card-container">
-                        <div className="settings-card">
-                            <div className="pad" style={{color:"orange"}}><b>Passwords Update</b></div>
-                            <div className="pad">
-                                <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>setShowChangePassword(true)} className="label-hover">Change my password.</span>
-                                <WhatsThis info="Change my current passdword to a new one." />
+            <div className="pad max-size">
+                {SETTINGS_LISTS.map((settings, key)=>(
+                    <div key={key}>
+                        <div className="settings-header">{settings?.header}</div>
+                        {settings?.cards?.map((card, key2)=>(
+                            <div onClick={card?.action} className="settings-card-container" key={key2}>
+                                <div className="settings-inner-card-container">
+                                    {card?.icon && <card.icon className="float-top-left pad" />}
+                                    <div className="float-center">
+                                        <div>{card?.title}</div>
+                                        {card?.inputRef && <Entry
+                                            inputRef={card?.inputRef} 
+                                            errorMsg={card?.errorMsg} 
+                                            successMsg={card?.successMsg}
+                                            endTyping={card?.endTyping}
+                                            startTyping={card?.startTyping}
+                                            placeholder={card?.placeholder}
+                                            type={card?.type}
+                                        />}
+                                    </div>
+                                    <WhatsThis cssClass="float-bottom-right pad" info={card?.info}/>
+                                </div>
                             </div>
-                            <div className="pad">
-                                <RiLockPasswordFill style={{marginRight:"5px",color:"yellow"}} />
-                                <span onClick={()=>setShowResetPassword(true)} className="label-hover">Reset a user password.</span>
-                                <WhatsThis info="This section will send a user a email with informatin to reset their account." />
-                            </div>
-                            <div className="pad">
-                                <RiLockPasswordFill style={{marginRight:"5px",color:"red"}} />
-                                <span onClick={()=>history.push(adminRoutes.advanceReset)} className="label-hover">Advance password reset.</span>
-                                <WhatsThis info="This section will generate a temporary password that the user can use to log in then they can change their password" />
-                            </div>
-                            <div className="pad">
-                                <MdEmail style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>history.push(adminRoutes.updateEmail)} className="label-hover">Change my email.</span>
-                                <WhatsThis info="This section will change the email address linked to your account" />
-                            </div>
-                            <div className="pad">
-                                <MdEmail style={{marginRight:"5px",color:"yellow"}} />
-                                <span onClick={()=>history.push(adminRoutes.updateUserEmail)} className="label-hover">Change a user email.</span>
-                                <WhatsThis info="This section will change the email address linked to a user account" />
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                    <div className="settings-card-container">
-                        <div className="settings-card">
-                            <div className="pad" style={{color:"orange"}}><b>Update Profile</b></div>
-                            <div className="pad">
-                                <RiUserSettingsLine style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>history.push(adminRoutes.profile)} className="label-hover">Update my account</span>
-                            </div>
-                            <div className="pad">
-                                <RiUserSettingsLine style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>history.push(adminRoutes.usersProfile)} className="label-hover">Update a user account</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="settings-card-container">
-                        <div className="settings-card">
-                            <div className="pad" style={{color:"orange"}}><b>Work Duration</b></div>
-                            <div className="pad">
-                                <Entry
-                                    inputRef={durationRef} 
-                                    errorMsg={durationError} 
-                                    successMsg={durationSuccess}
-                                    endTyping={onUpdateSettings}
-                                    startTyping={()=>{
-                                        setDurationError("");
-                                        setDurationSuccess("");
-                                    }}
-                                    placeholder="Default work duration" 
-                                    type="number"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </ContentsWrapper>
+                ))}
+            </div>
             <ResetPassword 
                 isOpen={showResetPassword} 
                 onClose={()=>setShowResetPassword(false)} 

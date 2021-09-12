@@ -57,7 +57,7 @@ export const SignIn = () =>{
                 <SideInfo/>
                 <div className="relative max-width">
                     <div onKeyDown={(e)=>onEnterPress(e.key)} className="float-top-center creds-container">
-                        <div className="pad">Sign In</div>
+                        <div className="pad"><b>Sign In</b></div>
                         <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
                         <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
                         <button onClick={login} disabled={loading} className="btn btn-hover creds-btn">Login</button>

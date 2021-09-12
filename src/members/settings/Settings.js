@@ -5,31 +5,49 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { WhatsThis } from '../../components/widgets/WhatsThis';
 import { ChangePassword } from '../../security/ChangePassord';
 import { MdEmail } from 'react-icons/md';
+import { BsQuestionCircle } from 'react-icons/bs';
+import { WidgetsInfo } from '../../components/widgets/WidgetsInfo';
 
 export const Settings = () =>{
     const [showChangePassword, setShowChangePassword] = useState();
 
+    const SETTINGS_LISTS = [
+        {
+            header: "Passwords Update",
+            cards: [
+                {
+                    title: "Passwords Update",
+                    icon: RiLockPasswordFill,
+                    action: ()=>setShowChangePassword(true),
+                    info: "Change my current passdword to a new one."
+                },{
+                    title: "Change my email.",
+                    icon: MdEmail,
+                    action: ()=>{},
+                    info: "This section will change the email address linked to your account"
+                }
+            ]
+        }
+    ];
+    
     return(
         <UserNavBar>
-            <ContentsWrapper isOpen>
-                <div>
-                    <div className="settings-card-container">
-                        <div className="settings-card">
-                            <div className="pad" style={{color:"orange"}}><b>Passwords Update</b></div>
-                            <div className="pad">
-                                <RiLockPasswordFill style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>setShowChangePassword(true)} className="label-hover">Change my password.</span>
-                                <WhatsThis info="Change my current passdword to a new one." />
+            <div className="pad max-size">
+                {SETTINGS_LISTS.map((settings, key)=>(
+                    <div key={key}>
+                        <div className="settings-header">{settings?.header}</div>
+                        {settings?.cards?.map((card, key2)=>(
+                            <div onClick={card?.action} className="settings-card-container" key={key2}>
+                                <div className="settings-inner-card-container">
+                                    <card.icon className="float-top-left pad" />
+                                    <div className="float-center">{card?.title}</div>
+                                    <WhatsThis cssClass="float-bottom-right pad" info={card?.info}/>
+                                </div>
                             </div>
-                            <div className="pad">
-                                <MdEmail style={{marginRight:"5px",color:"orange"}} />
-                                <span onClick={()=>{}} className="label-hover">Change my email.</span>
-                                <WhatsThis info="This section will change the email address linked to your account" />
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                </div>
-            </ContentsWrapper>
+                ))}
+            </div>
             <ChangePassword
                 isOpen={showChangePassword} 
                 onClose={()=>setShowChangePassword(false)} 

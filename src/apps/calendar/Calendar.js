@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import {AiOutlineClose} from 'react-icons/ai';
+import DayPicker, {DateUtils} from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
+import { tools } from '../../utils/tools/Tools';
 
 export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, header, headerStyle}) =>{
     const [shouldOpen, setShouldOpen] = useState(false);
@@ -52,6 +55,51 @@ export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, he
                 value={value}
                 onClickDay={tiggerSelect}
             />
+        </div>
+    )
+}
+
+export const DaysPicker = ({onSelect, clearRef, style}) =>{
+    const [dates, setDates] = useState([]);
+
+    const storeKeyRef = useRef();
+    const storeDateRef = useRef();
+
+    const onTriggerSelect = (date) =>{
+        if (storeKeyRef.current.includes(`${date}`)){
+            storeDateRef.current = [];
+            storeKeyRef.current = [];
+            for (let dDate of dates){
+                if (`${dDate}` !== `${date}`){
+                    storeKeyRef.current = [`${dDate}`,...storeKeyRef.current];
+                    storeDateRef.current = [dDate,...storeDateRef.current];
+                }
+            }
+        }else{
+            storeKeyRef.current = [`${date}`,...storeKeyRef.current];
+            storeDateRef.current = [date,...storeDateRef.current];
+        }
+        setDates(storeDateRef.current);
+        onSelect?.(storeDateRef.current);
+    }
+
+    const onClear = () =>{
+        setDates([]);
+        storeKeyRef.current = [];
+        storeDateRef.current = [];
+    }
+
+    useEffect(()=>{
+        storeKeyRef.current = [];
+        storeDateRef.current = [];
+    }, []);
+    return(
+        <div className="day-picker-container" style={{...style}}>
+            <DayPicker
+                selectedDays={dates}
+                onDayClick={onTriggerSelect}
+            />
+            <div hidden ref={clearRef} onClick={onClear} />
         </div>
     )
 }

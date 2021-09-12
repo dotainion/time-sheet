@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SearchBar } from '../../components/widgets/SearchBar';
-import { Profile } from './Profile';
+import { Profile } from '../../components/other/Profile';
 import { useAuth } from '../../state/auth/Authentication';
 import { addMessage, getContacts, getMessages } from '../../database/messages/MessagesDb';
 import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 import { NoRecord } from '../../components/widgets/NoRecord';
+import { FiLoader } from 'react-icons/fi';
 
 
 export const Messages = () =>{
@@ -89,36 +90,35 @@ export const Messages = () =>{
     return(
         <div>
             <div className="flex msg-main-container">
-                <div className={`msg-contact-container`}>
-                    <div style={{backgroundColor:"lightgray",paddingBottom:"10px",marginBottom:"10px"}}>
+                <div className="msg-contact-container">
+                    <div style={{padding:"10px",backgroundColor:"var(--primary-color)",color:"white",paddingBottom:"10px",marginBottom:"10px"}}>
                         <Profile
-                            style={{
-                                background:"var(--bg-fade-horizontal)",
-                                marginBottom:"10px",
-                                color:"white"
-                            }} 
+                            floatLeft
                             firstName={user?.firstName}
                             lastName={user?.lastName}
-                            msg={user?.role}
+                            role={user?.role}
                         />
-                        <SearchBar onTyping={onSearch} searchRef={searchRef} />
+                        <SearchBar onTyping={onSearch} searchRef={searchRef} cssClass="centered" />
                     </div>
-                    <div className="scrollbar" style={{height:"71vh"}}>
+                    <div style={{height:"71vh"}}>
                         <div
                             style={{
                                 display:!searchResults.length && "none",
-                                backgroundColor:"lightblue",marginBottom:"20px",
+                                marginBottom:"20px",
                                 borderBottom:"2px solid dodgerblue"
                             }}>
                             {
                                 searchResults.length?
                                 searchResults.map((contact, key)=>(
                                     <Profile
-                                        pointer
+                                        floatLeft
+                                        info={false}
+                                        cssClass="item-hover"
                                         firstName={contact?.info?.firstName}
                                         lastName={contact?.info?.lastName}
+                                        role={contact?.info?.role}
                                         onClick={()=>onSelectUser(contact, contact?.id)}
-                                        loaderId={contact?.id}
+                                        style={{width:"100%",cursor:"pointer"}}
                                         key={key}
                                     />
                                 )):
@@ -130,37 +130,43 @@ export const Messages = () =>{
                         {
                             contacts.length?
                             contacts.map((contact, key)=>(
-                                <Profile
-                                    pointer
-                                    firstName={contact?.info?.firstName}
-                                    lastName={contact?.info?.lastName}
+                                <div 
                                     onClick={()=>onSelectUser(contact, contact?.id)}
-                                    style={{backgroundColor:userSelected?.id === contact?.id && "lightgray"}}
-                                    loaderId={contact?.id}
+                                    style={{borderBottom:"1px solid var(--border)"}} 
+                                    className="relative" 
                                     key={key}
-                                />
+                                >
+                                    <Profile
+                                        floatLeft
+                                        info={false}
+                                        cssClass="item-hover"
+                                        firstName={contact?.info?.firstName}
+                                        lastName={contact?.info?.lastName}
+                                        role={contact?.info?.role}
+                                        style={{backgroundColor:userSelected?.id === contact?.id && "var(--border-focus)",cursor:"pointer",width:"100%"}}
+                                    />
+                                    <div id={contact?.id} className="float-right" style={{right:"15px",display:"none"}} >
+                                        <FiLoader className="spiner"/>
+                                    </div>
+                                </div>
                             )):
                             <div>No contacts</div>
                         }
                     </div>
                 </div>
                 <div className={`msg-container ${hideWhenMobile}`}>
-                    <div className="relative">
+                    <div className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
                         <Profile
-                            style={{
-                                background:"var(--bg-fade-horizontal-reverse)",
-                                color:"white",
-                                paddingLeft:"10px"
-                            }}
+                            floatLeft
                             onBack={()=>setHideWhenMobile("hide-on-mobile")}
                             firstName={userSelected?.info?.firstName}
                             lastName={userSelected?.info?.lastName}
-                            msg={userSelected?.info?.role}
+                            role={userSelected?.info?.role}
                         />
                         <div
                             className="float-center max-size"
                             style={{
-                                backgroundColor:"rgb(233, 231, 231)",
+                                backgroundColor:"var(--primary-color)",
                                 display:Object.keys(userSelected || {}).length && "none"
                             }}
                         />

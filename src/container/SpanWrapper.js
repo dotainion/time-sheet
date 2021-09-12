@@ -8,7 +8,7 @@ export const SpanWrapper = ({isOpen, onClose, cssClass, style, zIndex, shadow, c
             className={`float-center ${cssClass}`}
             style={{
                 zIndex:zIndex?zIndex:"99999",
-                boxShadow: shadow&& "1px 1px 2px orange",
+                boxShadow: shadow&& "2px 2px 10px var(--shadow-dark)",
                 ...style
             }}>
             <AiOutlineClose

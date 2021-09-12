@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../state/auth/Authentication';
 import { Toolbar } from '../components/widgets/Toolbar';
@@ -10,6 +10,10 @@ import { tools } from '../utils/tools/Tools';
 import { CgShare } from 'react-icons/cg';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { ButtonOption } from '../components/widgets/ButtonOption';
+import { WidgetsInfo } from '../components/widgets/WidgetsInfo';
+import { Profile } from '../components/other/Profile';
+import $ from 'jquery';
+import { Button } from '../components/widgets/Buttons';
 
 //holds rouutes only for within settings
 const SETTINGS_ROUTES = [
@@ -20,96 +24,105 @@ const SETTINGS_ROUTES = [
     adminRoutes.updateUserEmail
 ]
 
-let TOGGLE_STATE = false;
-export const NavigationBar = ({menues, options, children}) =>{
+
+export const NavigationBar = ({menues, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
 
-    const [navToggle, setNavToggle] = useState(true);
-    const [showOptons, setShowOptions] = useState(false);
+    const navRef = useRef();
 
-    const isSettingsRoute = (nav) =>{
-        return nav === adminRoutes.settings?true:false;
-    }
-
-    const isRouteInSettings = () =>{
-        return SETTINGS_ROUTES.includes(history.location.pathname);
-    }
-
-    const isActive = (nav) =>{
-        if (history.location.pathname === nav?.route){
-            return "nav-btn-is-active";
-        }else if (isSettingsRoute(nav?.route) && isRouteInSettings()){
-            return "nav-btn-is-active";
+    const forMenu = (nav, index) =>{
+        if (index){
+            if (history.location.pathname === nav?.route){
+                return {backgroundColor:"var(--hover-nav)"};
+            }
+            return {};
         }
-        return "";
+        return {
+            height:"52px",
+            backgroundColor:"dodgerblue"
+        }
     }
 
-    const toggleNav = () =>{
-        setNavToggle(!navToggle);
+    const onNavClick = (nav) =>{
+        if (nav.title === menues?.[0].title){
+            return $(navRef.current).animate({width:"toggle"})
+        }
+        history.push(nav?.route || "#");
     }
 
-    const onDotMenuToggle = () =>{
-        TOGGLE_STATE = !TOGGLE_STATE
-        setShowOptions(TOGGLE_STATE);
-    }
+    const onNavHover = (nav, id, state) =>{
+        if (history.location.pathname === nav?.route) return;
 
-    const onShare = () =>{
-        tools.share(`${user?.firstName} ${user?.lastName}`);
+        const bg = forMenu(null).backgroundColor;
+        const left = document.getElementById(`${id}`);
+        const right = document.getElementById(`${id}-left`);
+        
+        if (state){
+            left.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
+            right.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
+        }else{
+            left.style.backgroundColor = id.includes("0")?bg:"";
+            right.style.backgroundColor = id.includes("0")?bg:"";
+        }
+        
     }
 
     return(
-        <div style={{display:"flex",height:"100vh"}}>
-            <div onClick={toggleNav} className={`nav-backdrop-on-mobile ${navToggle && "hide-on-mobile"}`}/>
-            <div className={`nav-btn-container mobile-nav ${navToggle && "hide-on-mobile"}`}>
-                <div className="nav-btn-header">
-                    <GiHamburgerMenu onClick={toggleNav} className="float-left HamburgerMenu" />
-                    <span>Time Sheet</span>
-                </div>
-                {menues?.map((nav, key)=>(
-                    <div
-                        onClick={()=>history.push(nav?.route)}
-                        className={`nav-btn ${isActive(nav) && "nav-btn-is-active"}`}
-                        key={key}>
-                        <span>{nav?.title}</span>
-                        <GoPrimitiveDot
-                            className="nav-btn-is-active"
-                            style={{float:"right",display:!isActive(nav) && "none"}}
-                        />
-                        {nav?.icon && <nav.icon
-                            className="float-right nav-btn-icon"
-                            style={{display:isActive(nav) && "none"}}
-                        />}
-                    </div>
-                ))}
-                <div onClick={onShare} className="nav-btn" >Share<CgShare className="float-right nav-btn-icon" /></div>
-                <div onClick={signOut} className="nav-btn" style={{color:"orangered"}}>SIGN OUT<BiLogOutCircle className="float-right nav-btn-icon" /></div>
-            </div>
-            <div className="relative" style={{width:"100%"}}>
-                <Toolbar
-                    onMenuClick={toggleNav} 
-                    on3DotClick={options && onDotMenuToggle}
-                />
-                <div hidden={!showOptons} className="nav-btn-option-container">
-                    <div>Menu</div>
-                    {options?.map?.((opt, key)=>(
-                        <ButtonOption
-                            options={opt}
-                            style={{
-                                width:"auto",
-                                display:"inline-block",
-                                paddingLeft:"2px",
-                                paddingRight:"2px",
-                                margin:"2px",
-                                border:"1px solid white"
-                            }}
-                            onDidClick={onDotMenuToggle}
+        <div className="flex d-flex-on-mobile" style={{height:"100vh"}}>
+            <div className="nav-container">                
+                <div>
+                    {menues.map((nav, key)=>(
+                        <div 
+                            id={`${key}navs`} 
+                            onMouseEnter={()=>onNavHover(nav, `${key}navs`, true)} 
+                            onMouseLeave={()=>onNavHover(nav, `${key}navs`, false)} 
+                            onClick={()=>onNavClick(nav)} 
+                            className="nav-item" 
+                            style={forMenu(nav, key)} 
                             key={key}
-                        />
+                        >
+                            <WidgetsInfo info={nav.info}>
+                                <nav.icon className="pad icons block" />
+                            </WidgetsInfo>
+                        </div>
                     ))}
                 </div>
-                {children}
+                <div ref={navRef}>
+                    {menues.map((nav, key)=>(
+                        <div 
+                            id={`${key}navs-left`} 
+                            onMouseEnter={()=>onNavHover(nav, `${key}navs`, true)} 
+                            onMouseLeave={()=>onNavHover(nav, `${key}navs`, false)} 
+                            onClick={()=>onNavClick(nav)} 
+                            className="nav-item" 
+                            style={forMenu(nav, key)} 
+                            key={key}
+                        >
+                            <div className="max-width relative no-wrap" style={{width:"180px"}}>
+                                <div className="float-left">{nav.title}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="page-container">
+                <div className="header-container">
+                    <div style={{float:"right",paddingTop:"15px",paddingRight:"20px"}}>
+                        <Button onClick={signOut} label="Logout" style={{backgroundColor:"transparent",color:"black"}} />
+                    </div>
+                    <Profile 
+                        primaryColor 
+                        image={user?.image}
+                        firstName={user?.firstName}
+                        lastName={user?.lastName}
+                        role={user?.role}
+                    />
+                </div>
+                <div className="pad relative" style={{overflowY:"auto",height:"92vh"}}>
+                    {children}
+                </div>
             </div>
         </div>
     )

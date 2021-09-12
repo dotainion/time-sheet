@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Profile } from '../../../apps/other/Profile';
+import { Profile } from '../../../components/other/Profile';
+import { IconCheckbox } from '../../../components/widgets/IconCheckbox';
+import { InputCheckbox } from '../../../components/widgets/InputCheckbox';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { InputSelect } from '../../../components/widgets/InputSelect';
 import { ROLES } from '../../../contents/lists';
@@ -123,42 +125,37 @@ export const UserEntryInputs = ({useUpdate, profileMsg, border, profileFName, pr
     }, [userSelected]);
     return (
         <div className="add-update-new-user-info">
-            <Profile
-                cssClass="admin-profile-hover"
-                style={{
-                    marginBottom:"60px",
-                    ...profileStyle,
-                    boxShadow:"none",
-                    borderBottom:"1px solid skyblue",
-                    borderColor:border?"rgb(0,0,0,0)":"transparent"
-                }}
+            <Profile 
+                floatLeft
+                useSelectImage
+                info={false}
+                cssClass="add-user-new-image"
                 firstName={profileFName || userSelected?.firstName}
                 lastName={profileLName || userSelected?.lastName}
-                msg={profileMsg || userSelected?.role}
-                img={userSelected?.image}
-                onImgSelected={setUserImg}
-                useUpdateImage
-                //onClick
+                image={userSelected?.image}
+                role={"Optional"}
+                style={{...profileStyle}} 
+                onClick={setUserImg}
             />
+
             <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
-                <InputEntry labelFixed inputRef={emailRef} label="Email" maxWidth error={emailError} errorReset={setEmailError} disabled={useUpdate} />
+                <InputEntry labelFixed inputRef={emailRef} label="Email" error={emailError} errorReset={setEmailError} disabled={useUpdate} />
             </div>
             <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
-                <InputEntry labelFixed inputRef={fNameRef} label="First Name" maxWidth titleCase error={fNameError} errorReset={setFNameError} />
+                <InputEntry labelFixed inputRef={fNameRef} label="First Name" titleCase error={fNameError} errorReset={setFNameError} />
             </div>
             <div className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
-                <InputEntry labelFixed inputRef={lNameRef} label="Last Name" maxWidth titleCase error={lNameError} errorReset={setLNameError} />
+                <InputEntry labelFixed inputRef={lNameRef} label="Last Name" titleCase error={lNameError} errorReset={setLNameError} />
             </div>
             <div hidden={useUpdate} className="h-seperator" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
-                <InputEntry labelFixed inputRef={passRef} label="Password" maxWidth error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />
+                <InputEntry labelFixed inputRef={passRef} label="Password" error={passError} errorReset={setPassError} hidden={useUpdate} type="password" />
             </div>
             <div className="h-seperator relative" style={{borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
                 <InputSelect labelFixed inputRef={roleRef} label="Role" disabled={roleDisabled} options={ROLES} defaultOption={roleDefault} error={roleError} errorReset={setRoleError} />
             </div>   
 
             <div className="flex h-seperator" style={{paddingTop:"10px",paddingBottom:"20px",display:useUpdate && "none",borderColor:border?"rgb(0,0,0,0)":"transparent"}}>
-                <input style={{margin:"15px"}} type="checkbox" />
-                <div style={{margin:"11px"}}>Notify user</div>
+                <InputCheckbox label="Notify user" />
             </div>  
             <div style={{}}>
                 <button onClick={onAddUser} disabled={loading} className="btn btn-hover">{useUpdate? "UPDATE": "ADD USER"}</button>

@@ -2,13 +2,14 @@ import React from 'react';
 import { IoMdSettings } from 'react-icons/io';
 import { FaUsers, FaUser } from 'react-icons/fa';
 import { SelectOptions } from './SelectOptions';
-import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
+import { WidgetsInfo } from './WidgetsInfo';
 
 
-export const IconSelect = ({info, style, hidden, cssSelectClass, selectStyle, icon, iconStyle, onChange, options, cssClass, defaultValue}) =>{
+export const IconSelect = ({info, style, error, errorReset, hidden, cssSelectClass, selectStyle, icon, iconStyle, onChange, options, cssClass, defaultValue}) =>{
     const bStyle = {
         marginRight:"1px"
     }
+
     const s_selectStyle = {
         color:"inherit",
         border:"none",
@@ -17,20 +18,29 @@ export const IconSelect = ({info, style, hidden, cssSelectClass, selectStyle, ic
         marginTop:"1px",
         marginBottom:"-1px",
     }
+
+    const onTriggerChange = (change) =>{
+        onChange?.(change);
+        errorReset?.("");
+    }
     return(
-        <InfoOnHoverWrapper info={info}>
-            <button hidden={hidden} className={cssClass} style={style}>
+        <WidgetsInfo info={info} error={error}>
+            <button hidden={hidden} className={cssClass} style={{...style, border:error && "1px solid orangered"}}>
                 {icon === "user" && <FaUser style={{...bStyle,...iconStyle}}/>}
                 {icon === "users" && <FaUsers style={{...bStyle,...iconStyle}}/>}
                 {icon === "settings" && <IoMdSettings style={{...bStyle,...iconStyle}}/>}
                 <SelectOptions 
                     options={options}
-                    onChange={onChange}
+                    onChange={onTriggerChange}
                     defaultValue={defaultValue}
                     cssOverride 
                     cssClass={cssSelectClass}
-                    style={{...s_selectStyle,...selectStyle}} />
+                    style={{
+                        ...s_selectStyle,
+                        ...selectStyle
+                    }}
+                />
             </button>
-        </InfoOnHoverWrapper>
+        </WidgetsInfo>
     )
 }

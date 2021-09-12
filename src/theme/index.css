@@ -13,27 +13,18 @@ code {
 }
 
 #root{
-  --bg: dodgerblue;
-  --bg-fade: rgb(0, 128, 96);
-  --bg-fade-medium: rgb(4, 201, 151);
-  --bg-fade-dark: rgb(2, 41, 80);
-  --bg-secondary: rgb(36, 63, 63);
-  --bg-tertiary: rgb(30, 37, 37);
-  --bg-fade-horizontal: linear-gradient(to right, var(--bg) 0%, var(--bg-fade-dark) 100%);
-  --bg-fade-horizontal-reverse: linear-gradient(to left, var(--bg) 0%, var(--bg-fade-dark) 100%);
-  --bg-fade-vertical: linear-gradient(to bottom, var(--bg) 0%, var(--bg-fade-dark) 100%);
-  --bg-fade-vertical-light: linear-gradient(to bottom, var(--bg) 0%, var(--dark-blue) 100%);
-  --bg-fade-vertical-light-hover: linear-gradient(to bottom, var(--bg) 0%, var(--bg-fade-dark) 100%);
-  --bg-fade-vertical-lighter-hover: linear-gradient(to bottom, var(--bg) 0%, rgb(4, 89, 173) 100%);
-  --scrollbar: linear-gradient(to right, white 0%, skyblue 100%);
-  --dark-translucent: rgb(0, 0, 0,0.40);
-  --backdrop: rgb(0, 0, 0,0.50);
-  --dark-orange: rgb(168, 110, 3);
-  --light-blue: rgb(12, 95, 179);
-  --dark-blue: rgb(26, 59, 92);
-  --darker-blue: rgb(8, 28, 48);
-  --box-shadow: orange;
-  --box-shadow-light: lightgray;
-  --box-shadow-dark: black;
-  --box-shadow-dark-fade: rgb(0, 0, 0, 0.50);
+  --bg: rgb(233, 232, 232);
+  --hover-bg: lightgray;
+  --hover-nav: rgb(37, 37, 37);
+  --shadow: lightgray;
+  --shadow-dark: rgb(170, 169, 169);
+  --border-focus: skyblue;
+  --border-hover: dodgerblue;
+  --border: lightgray;
+  --input-disable: rgb(245, 245, 245);
+  --btn-bg: dodgerblue;
+  --btn-color: white;
+  --primary-color: dodgerblue;
+  --backdrop-light: rgb(0, 0, 0, 0.10);
+  --backdrop: rgb(0, 0, 0, 0.30);
 }

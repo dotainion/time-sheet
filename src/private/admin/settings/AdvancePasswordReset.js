@@ -8,8 +8,7 @@ export const AdvancePasswordReset = () =>{
     return(
         <AdminNavBar>
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs/>
-
+                <BreadCrumbs advanceReset />
             </ContentsWrapper>
         </AdminNavBar>
     )

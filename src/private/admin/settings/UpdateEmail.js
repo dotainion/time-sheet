@@ -48,7 +48,7 @@ export const UpdateEmail = () =>{
     return(
         <AdminNavBar>
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs/>
+                <BreadCrumbs updateEmail />
                 <div className="add-update-new-user-info">
                     <div className="header" style={{marginBottom:"50px"}}>Update a my email address</div>
                     <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>

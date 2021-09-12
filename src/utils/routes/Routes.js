@@ -20,7 +20,8 @@ export const adminRoutes = {
     updateEmail: "/update-email",
     updateUserEmail: "/update-user-email",
     adminMessages: "/admin-messages",
-    notification: "/admin-notification"
+    notification: "/admin-notification",
+    schedule: '/asign-schedule'
 }
 
 export const routes = {

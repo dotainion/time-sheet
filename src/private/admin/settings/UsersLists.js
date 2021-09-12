@@ -47,7 +47,7 @@ export const UsersLists = ({onSelected}) =>{
             className="float-top-left users-lists-icon"
             onClick={toggleSideBar}
         />
-        <div className={`users-lists scrollbar ${showSideBar}`}>
+        <div className={`users-lists ${showSideBar}`}>
             <div
                 className="hide-on-desktop" 
                 style={{
@@ -67,7 +67,10 @@ export const UsersLists = ({onSelected}) =>{
             {users?.map((mbr, key)=>(
                 <div 
                     onClick={()=>{triggerSelect(mbr)}} className="users-name"
-                    style={{backgroundColor:userSelected?.id === mbr?.id && "rgb(43, 100, 156)"}} key={key}
+                    style={{
+                        color: userSelected?.id === mbr?.id && "white",
+                        backgroundColor:userSelected?.id === mbr?.id && "var(--primary-color)"
+                    }} key={key}
                 >
                     {`${mbr?.info?.firstName}
                     ${mbr?.info?.lastName}`}

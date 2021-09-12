@@ -15,6 +15,6 @@ export const getSchedule = async(id) =>{
         return await getDataById(collection.schedule,id);
     }catch(error){
         console.log(error);
-        return {};
+        return [];
     }
 }

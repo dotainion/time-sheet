@@ -1,4 +1,15 @@
 @media screen and (max-width:767px){
+    .d-flex-on-mobile{
+        display: block;
+    }
+    .nav-container{
+        position: absolute;
+        height: 100vh;
+        z-index: 99;
+    }
+    .page-container{
+        padding-left: 40px;
+    }
     .page-wrapper-outter-container{
         width: 90%;
         padding: 10px;
@@ -131,9 +142,9 @@
     }
     .msg-container{
         position: absolute;
-        z-index: 99;
+        z-index: 1;
         width: 100%;
-        top: 57px;
+        top: 0px;
     }
     .msg-send-box{
         width: 100%;
@@ -144,17 +155,36 @@
         color: var(--bg-fade-dark);
         cursor: pointer;
     }
-    .notification-container{
-        top: 40%;
-        width: 80%;
-        left: 43%;
-        padding: 0px;
-        padding-right: 0px;
-        border: none;
+    .add-member-container-on-mobile{
+        width: 90%;
+    }
+    .no-record-container{
+        width: 70%;
         box-shadow: none;
-        background-color: transparent;
     }
-    .notification-user-select{
-        left: 0px;
+    .notification-container{
+        width: auto;
+        margin-left: 0;
+        transform: translateX(0);
     }
+    .notification-item-container{
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    .settings-card-container{
+        display: inline-block;
+        width: 100%;
+    }
+    .settings-header{
+        font-size: 15px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+    .header{
+        font-size: 17px;
+    }
+    .add-member-icon{
+        font-size: 20px;
+      }
 }

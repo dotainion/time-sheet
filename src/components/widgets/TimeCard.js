@@ -17,8 +17,9 @@ import { NoRecord } from './NoRecord';
 import { ADMIN_SUPERVISER } from '../../contents/AuthValue';
 import { IconCheckbox } from './IconCheckbox';
 import defaultImage from '../../images/default-profile-image.png';
-import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
+import { WidgetsInfo } from './WidgetsInfo';
 import { LoadingBar } from './LoadingBar';
+import { getSchedule } from '../../database/schedules/SchedulesDb';
 
 
 const NO_RECORD_INFO = "You can query records between two date range by clicking on the calendar icon to the top right,";
@@ -127,7 +128,9 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
     }
 
     const onDownloadFile = () =>{
-        downloadXlFile(buildDataForExcelFile("time-sheet"));
+        if (ADMIN_SUPERVISER.includes(user?.role)){
+            downloadXlFile(buildDataForExcelFile("time-sheet"));
+        }
     }
 
     const initUsers = async() =>{
@@ -148,6 +151,11 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
         setLogs(await getLogs(user?.id));
     }
 
+    const initSchedule = async() =>{
+        const sched = await getSchedule(user?.id);
+        setLogs(tools.buildScheduleForUi(sched));
+    }
+
     const toggleBtnOption = () =>{
         if (hideBtnOption) setHideBtnOption("");
         else setHideBtnOption("hide-switch");
@@ -158,36 +166,40 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
     }
 
     useEffect(()=>{
-        if (!useSchedule) calcTotalLog();
-        else calcTotalSchedule();
+        if (useSchedule) calcTotalSchedule();
+        else calcTotalLog(); 
     },[logs, useSchedule]);
 
     useEffect(()=>{
-        if (ADMIN_SUPERVISER.includes(user?.role)) initUsers();
-        else initLogs();
+        if (ADMIN_SUPERVISER.includes(user?.role)){
+            initUsers();
+        }else{
+            if (useSchedule) initSchedule();
+            else initLogs();
+        }
     },[]);
 
     return(
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="time-card-name relative" style={{zIndex:"999999"}}>
+        <div className="time-sheet-mains">
+            <div className="time-card-name relative">
                 <label>{header || "Time Sheet"} <span style={{color:"white",fontSize:"13px"}}><b>{!useSchedule || user?.firstName + " " + user?.lastName}</b></span></label>
                 <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px",display:useSchedule && "none"}} />
-                <div className={`float-top-right time-card-buttons-container ${hideBtnOption}`} style={{display:useSchedule && "none"}}>
+                <div className={`float-top-right time-card-buttons-container ${hideBtnOption}`} style={{display:useSchedule && "none"  || !ADMIN_SUPERVISER.includes(user?.role) && "none",zIndex:"9"}}>
                     <div className="float-top-left no-wrap hide-on-desktop" style={{fontSize:"10px",left:"5px"}}>
                         <div>{tools.time.date(selectedFromDate.current)}</div>
                         <div>{tools.time.date(selectedToDate.current)}</div>
                     </div>
-                    <div className="inline-block relative hide-on-mobile" style={{fontSize:"11px"}}>
-                        <div className="float-right no-wrap" style={{top:"-5px"}}>
-                            <label className="block">From: <b>{tools.time.date(selectedFromDate.current)}</b></label>
-                            <label className="block">To: <b>{tools.time.date(selectedToDate.current)}</b></label>
+                    <div className="inline-block relative hide-on-mobile" style={{fontSize:"13px",backgroundColor:"var(--border-focus)"}}>
+                        <div className="no-wrap" style={{color:"navy"}}>
+                            <div className="block">From: <b>{tools.time.date(selectedFromDate.current)}</b></div>
+                            <div className="block">To: <b>{tools.time.date(selectedToDate.current)}</b></div>
                         </div>
                     </div>
                     <IoMdOptions onClick={toggleBtnOption} className="float-top-right hide-on-desktop" style={{top:"5px",right:"5px"}} />
-                    <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons" icon="calendar" label="Calendar" info="Select date from calendar" />
-                    <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons" icon="users" label="All" info="Select log for all users" />
-                    <IconSelect cssClass="time-card-buttons" icon="user" options={users} defaultValue="users" info="Select a user" />
-                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons" icon="download" label="Export" disabled={!logs.length} info="Download logs" />
+                    <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons btn" icon="calendar" label="Calendar" info="Select date from calendar" />
+                    <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons btn" icon="users" label="All" info="Select log for all users" />
+                    <IconSelect cssClass="time-card-buttons btn" icon="user" options={users} defaultValue="users" info="Select a user" />
+                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons btn" icon="download" label="Export" disabled={!logs.length} info="Download logs" />
                 </div>
             </div>
             <div className="time-card-header-container">
@@ -196,8 +208,15 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 <div className="time-card-content">Start</div>
                 <div className="time-card-content relative">
                     <span>End</span>
-                    <div className="float-right" style={{right:"20px",fontSize:"25px"}}>
-                        <InfoOnHoverWrapper info="Refresh search">
+                    <div 
+                        className="float-right" 
+                        style={{
+                            right:"20px",
+                            fontSize:"25px",
+                            display:!ADMIN_SUPERVISER.includes(user?.role) && "none"
+                        }}
+                    >
+                        <WidgetsInfo info="Refresh search">
                             <BiRefresh
                                 className={`icon-hover ${loading && "spin"}`} 
                                 style={{
@@ -206,11 +225,11 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 }}
                                 onClick={()=>handleOnUsersSelect(userSelectedId.currentd)}
                             />
-                        </InfoOnHoverWrapper>
+                        </WidgetsInfo>
                     </div>
                 </div>
             </div>
-            <div className="time-card-scroll no-select scrollbar">
+            <div className="time-card-scroll no-select">
                 {
                     logs?.length?
                     logs?.map((time, key)=>(
@@ -236,13 +255,13 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 onMouseLeave={()=>toggleShowIcon(`time-card${key}`, true)} 
                                 className="time-card-container relative item-hover" 
                             >
-                                <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): tools.time.date(time?.date)}</div>
-                                <div className="time-card-content">{!useSchedule? tools.time.subTimeReturnObj(time?.info?.end, time?.info?.start).dateString: time?.duration}</div>
-                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): tools.time.time(time?.date)}</div>
-                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): tools.time.time(tools.time.addHour(time?.date, time?.duration))}</div>
-                                {time?.comment && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.comment}</div>}
+                                <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): time?.date}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.subTimeReturnObj(time?.info?.end, time?.info?.start).dateString: time?.hours}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): time?.startTime}</div>
+                                <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): time?.endTime}</div>
+                                {time?.info && time?.info?.startTime && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.info}</div>}
                                 <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
-                                    <InfoOnHoverWrapper info="Send notification to this user">
+                                    <WidgetsInfo info="Send notification to this user">
                                         <IoMdNotificationsOutline
                                             style={{display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}
                                             onClick={()=>{
@@ -256,7 +275,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                                 });
                                             }}
                                         />
-                                    </InfoOnHoverWrapper>
+                                    </WidgetsInfo>
                                 </div>
                             </div>
                         }</div>
@@ -266,7 +285,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
             </div>
             <div className="time-card-calc-container">
                 <div className="time-card-content">Total Hours</div>
-                <div className="time-card-content">{totalHours}</div>
+                <div className="time-card-content">{totalHours?.replace?.("AM","")?.replace?.("PM","")}</div>
                 <div className="time-card-content" style={{width:"100%",textAlign:"center"}}>
                     <button hidden className="btn btn-hover" >Options</button>
                 </div>
@@ -299,6 +318,6 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 onSelect={(date)=>selectedToDate.current = date} 
             />
             <LoadingBar isOpen={loading} />
-        </Modal>
+        </div>
     )
 }

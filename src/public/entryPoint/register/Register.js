@@ -65,7 +65,7 @@ export const Register = () =>{
                 <SideInfo/>
                 <div className="relative max-width">
                     <div onKeyDown={(e)=>onEnterPress(e.key)} className="float-top-center creds-container">
-                        <div className="pad">Sign Up</div>
+                        <div className="pad"><b>Sign Up</b></div>
                         <input ref={firstNameRef} className="input input-hover title-case block pad" placeholder="Your first name" type="text" />
                         <input ref={lastNameRef} className="input input-hover title-case block pad" placeholder="Your last name" type="text" />
                         <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />

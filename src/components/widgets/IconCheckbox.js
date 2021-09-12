@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { FaUsers, FaUser } from 'react-icons/fa';
-import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
+import { WidgetsInfo } from './WidgetsInfo';
 
 
 export const IconCheckbox = ({info, style, onClick, disabled, cssClass, iconStyle, icon, label}) =>{
@@ -18,7 +18,7 @@ export const IconCheckbox = ({info, style, onClick, disabled, cssClass, iconStyl
     }
 
     return(
-        <InfoOnHoverWrapper info={info}>
+        <WidgetsInfo info={info}>
             <button 
                 className={`relative ${cssClass} ${disabled && "btn-disabled"}`} 
                 style={{
@@ -33,6 +33,6 @@ export const IconCheckbox = ({info, style, onClick, disabled, cssClass, iconStyl
                 <span>{label}</span>
                 <div onClick={triggerClick} className="float-center max-size" style={{zIndex:"1"}} />
             </button>
-        </InfoOnHoverWrapper>
+        </WidgetsInfo>
     )
 }

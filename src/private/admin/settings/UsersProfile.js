@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { NoRecord } from '../../../components/widgets/NoRecord';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { getUsers } from '../../../database/accounts/AccountsDb';
@@ -16,9 +17,9 @@ export const UsersProfile = () =>{
     return(
         <AdminNavBar>
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs/>
+                <BreadCrumbs updateUserEmail />
 
-                <div className="flex d-flex-on-mobile max-size">
+                <div className="flex d-flex-on-mobile max-size" style={{minHeight:"400px"}}>
                     <UsersLists onSelected={setUserSelected} />
                     <div className="max-width" style={{paddingLeft:"40px"}}>
                         {
@@ -31,7 +32,11 @@ export const UsersProfile = () =>{
                                     setUserSelected({});
                                 }}
                             />:
-                            <div>Select a user for editing</div>
+                            <NoRecord
+                                icon="users"
+                                header="Edit User's profile"
+                                message="From the list to the left, select profile you will like to edit."
+                            />
                         }
                         
                     </div>

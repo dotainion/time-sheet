@@ -7,16 +7,7 @@ import { FaUsers } from 'react-icons/fa';
 
 export const NoRecord = ({icon="database", header, message, subMessage}) =>{
     return(
-        <div
-            className="float-center" 
-            style={{
-                color:"black",
-                fontSize:"15px",
-                backgroundColor:"rgb(255, 255, 255, 0.70)",
-                padding:"30px",
-                boxShadow:"2px 2px 5px var(--box-shadow-dark-fade)"
-            }}
-        >
+        <div className="float-center no-record-container">
             <div style={{fontSize:"17px"}}>
                 <div className="inline-block relative" style={{marginRight:"10px"}}>
                     {icon === "database" && <>

@@ -2,7 +2,7 @@ import React from 'react';
 import { IoMdDownload, IoMdSettings } from 'react-icons/io';
 import { MdDateRange } from 'react-icons/md';
 import { FaUser, FaUsers } from 'react-icons/fa';
-import { InfoOnHoverWrapper } from './InfoOnHoverWrapper';
+import { WidgetsInfo } from './WidgetsInfo';
 
 
 export const IconButton = ({info, style, onClick, disabled, cssClass, iconStyle, icon, label}) =>{
@@ -11,7 +11,7 @@ export const IconButton = ({info, style, onClick, disabled, cssClass, iconStyle,
     }
 
     return(
-        <InfoOnHoverWrapper info={info}>
+        <WidgetsInfo info={info}>
             <button 
                 onClick={onClick} 
                 disabled={disabled} 
@@ -29,6 +29,6 @@ export const IconButton = ({info, style, onClick, disabled, cssClass, iconStyle,
                 {icon === "calendar" && <MdDateRange style={{...bStyle,...iconStyle}}/>}
                 <span>{label}</span>
             </button>
-        </InfoOnHoverWrapper>
+        </WidgetsInfo>
     )
 }

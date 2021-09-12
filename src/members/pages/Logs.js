@@ -10,7 +10,7 @@ import { getLogs, getLogsRange } from '../../database/logs/LogDb';
 export const Logs = () =>{
     return(
         <UserNavBar>
-            <TimeCard isOpen useSchedule header="Time Logs" />
+            <TimeCard isOpen header="Time Logs" />
         </UserNavBar>
     )
 }

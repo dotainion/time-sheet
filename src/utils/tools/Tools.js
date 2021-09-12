@@ -1,4 +1,4 @@
-import { MONTHS, WEEK } from "../../contents/lists";
+import { MONTHS, WEEK, WEEK_ABRIV } from "../../contents/lists";
 
 
 class Time{
@@ -262,6 +262,50 @@ class Tools{
             text: `${name} invite you to try this application.`,
             url: window.location.origin,
         }).then(()=>{}).catch(()=>{});
+    }
+    buildScheduleForUi(schedule){
+        let holdSched = [];
+        const week = schedule?.daysInWeek;
+        const month = schedule?.daysInMonth;
+        for(let days of week?.length && week || month?.length && month || []){
+            holdSched.push({
+                startTime: days?.startTime,
+                endTime: days?.endTime,
+                date: days?.date,
+                info: days?.info,
+                hours: null,
+                info: null
+            });
+        }
+        return holdSched;
+    }
+    buildScheduleDaysForDb(days){
+        let tempArray = [];
+        for (let day of days || []){
+            if (!WEEK_ABRIV.includes(`${day}`)){
+                day = this.time.date(day);
+            }
+            tempArray.push({
+                date: day,
+                startTime: null, 
+                endTime: null,
+                info: null
+            });
+        }
+        return tempArray;
+    }
+    buildScheduleFromAndToTime(timeObj, from , to){
+        //use when user seled from and tim time widget and not indevidual time selector.
+        let tempArray = [];
+        for (let obj of timeObj || []){
+            tempArray.push({
+                date: obj?.date,
+                startTime: from, 
+                endTime: to,
+                info: null
+            });
+        }
+        return tempArray;
     }
 }
 

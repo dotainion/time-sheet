@@ -8,24 +8,19 @@ import { FaUsers } from 'react-icons/fa';
 export const AddUser = () =>{
     return (
         <AdminNavBar>
-            <ContentsWrapper isOpen={true} noScroll>
-                <div
-                    style={{
-                        fontSize:"25px",
-                        borderBottom:"1px solid white",
-                        marginBottom:"30px"
-                    }}
-                ><FaUsers style={{marginRight:"10px",fontSize:"35px"}} /><b>New Member</b></div>
-                <UserEntryInputs
-                    profileFName="Select"
-                    profileLName="user image"
-                    profileMsg="Optional"
-                    profileStyle={{
-                        marginLeft:"0px",
-                        transform: "translateX(0%)"
-                    }}
-                />         
-            </ContentsWrapper>
+            <div className="pad add-update-new-user-info add-member-container-on-mobile">
+                <div className="header" style={{borderBottom:"1px solid var(--border)",marginBottom:"30px"}}>
+                    <FaUsers className="add-member-icon" />
+                    <b>New Member</b>
+                </div>         
+            </div>
+
+            <UserEntryInputs
+                profileFName="Select"
+                profileLName="user image"
+                profileMsg="Optional"
+                profileStyle={{}}
+            />
         </AdminNavBar>
     )
 }

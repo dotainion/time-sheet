@@ -1,17 +1,9 @@
-
-
-@keyframes shake-float {
-    from{ 
-        transform: translate3d(-47%, -50%, 0);
-    }to{ 
-        transform: translate3d(-53%, -50%, 0);
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
     }
-}
-
-@keyframes spiner {
-    from{ 
-        transform: rotate(0deg);
-    }to{ 
-        transform: rotate(360deg);
+    to {
+      transform: rotate(360deg);
     }
-}
+  }
+  

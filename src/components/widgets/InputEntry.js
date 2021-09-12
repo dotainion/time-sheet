@@ -83,7 +83,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                     style={{
                         color:"green",
                         fontSize:"20px",
-                        display:!toggleIcon && "none" || error && "none"
+                        display:!toggleIcon && "none" || error && "none",
                     }} 
                 />
             </div>
@@ -112,7 +112,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                         className="input-entery-show"
                         style={{
                             display:type !== "password" && "none",
-                            backgroundColor:"lightgray"
+                            backgroundColor:"white",
                         }} 
                         onClick={()=>setShowPasswordInput(!showPasswordInput)}
                     />
@@ -125,7 +125,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                         className="input-entery-show"
                         style={{
                             display:type !== "password" && "none",
-                            backgroundColor:"lightgray"
+                            backgroundColor:"lightgray",
                         }} 
                         onClick={()=>setShowPasswordInput(!showPasswordInput)}
                     />

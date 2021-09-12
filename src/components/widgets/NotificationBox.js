@@ -15,14 +15,14 @@ export const NotificationBox = ({isOpen, onClose, data}) =>{
                 <div 
                     style={{
                         width:"330px",
-                        padding:"5px",
+                        padding:"20px",
                         borderRadius:"5px", 
                         backgroundColor:"white",
                         boxShadow:"2px 2px 5px var(--box-shadow-dark-fade)"
                     }}
                     onClick={e=>e.stopPropagation()}
                 >
-                    <div><b>{data?.info?.header}</b></div>
+                    <div style={{color:"var(--primary-color)",marginBottom:"10px"}}><b>{data?.info?.header}</b></div>
                     <div>{data?.info?.from}</div>
                     <div>{data?.info?.info}</div>
                     {

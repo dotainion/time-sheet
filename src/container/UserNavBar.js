@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { USER_SIDE_NAV } from '../contents/lists';
 import { NavigationBar } from './NavigationBar';
 
-export const UserNavBar = ({options, children}) =>{
+export const UserNavBar = ({children}) =>{
     return(
-        <NavigationBar
-            options={options}
-            menues={USER_SIDE_NAV}
-        >
+        <NavigationBar menues={USER_SIDE_NAV}>
             {children}
         </NavigationBar>
     )

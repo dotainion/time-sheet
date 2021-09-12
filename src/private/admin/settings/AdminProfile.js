@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Profile } from '../../../apps/other/Profile';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { useAuth } from '../../../state/auth/Authentication';
@@ -20,7 +19,7 @@ export const AdminProfile = () =>{
     return(
         <AdminNavBar>
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs/>
+                <BreadCrumbs myProfile />
 
                 <UserEntryInputs
                     useUpdate
