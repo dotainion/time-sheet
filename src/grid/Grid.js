@@ -95,22 +95,26 @@ export const Grid = () =>{
             <Backdrop 
                 isOpen={showCalendar} 
                 onClose={()=>setShowCalendar(false)}>
-                <SpanWrapper 
-                    isOpen 
-                    onClose={()=>setShowCalendar(false)}>
-                    <DaysPicker />
-                </SpanWrapper>
+                <div onClick={e=>e.stopPropagation()}>
+                    <SpanWrapper 
+                        isOpen 
+                        onClose={()=>setShowCalendar(false)}>
+                        <DaysPicker />
+                    </SpanWrapper>
+                </div>
             </Backdrop>
 
             <Backdrop 
                 isOpen={showCalculator}
                 onClose={()=>setShowCalculator(false)}>
-                <SpanWrapper 
-                    isOpen 
-                    onClose={()=>setShowCalculator(false)}
-                    childrenStyle={{width:"400px", height:"500px"}}>
-                    <Calculator />
-                </SpanWrapper>
+                <div onClick={e=>e.stopPropagation()}>
+                    <SpanWrapper 
+                        isOpen 
+                        onClose={()=>setShowCalculator(false)}
+                        childrenStyle={{width:"400px", height:"500px"}}>
+                        <Calculator />
+                    </SpanWrapper>
+                </div>
             </Backdrop>
         </div>
     )
