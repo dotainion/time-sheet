@@ -34,7 +34,7 @@ export const Authenticate = ({Component}) =>{
 
     const userHandler = () =>{
         if (pathIsWelcome()) return <Welcome/>;
-        if (Object.values(adminRoutes).includes(history.location.pathname)){
+        if (! Object.values(routes).includes(history.location.pathname)){
             return <NotAutherize/>;
         }
         return <Component/>;

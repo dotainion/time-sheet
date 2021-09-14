@@ -35,6 +35,11 @@
   right: 0;
   transform: translateY(-50%);
 }
+.float-bottom-left{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
 .float-bottom-right{
   position: absolute;
   right: 0;
@@ -786,4 +791,41 @@
 .add-member-icon{
   font-size: 35px;
   margin-right: 10px;
+}
+.grid-page{
+  width: 100%;
+  height: 100vh;
+  padding-top: 100px;
+  background-color: rgb(58, 58, 58);
+}
+.grid-card-container{
+  width: 70%;
+}
+.grid-card{
+  position: relative;
+  display: inline-block;
+  width: 32%;
+  height: 12vh;
+  margin: 5px;
+}
+.grid-inner-card{
+  width: 100%;
+  height: 100%;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  background-color: rgb(22, 22, 22);
+}
+.grid-inner-card:hover{
+  background-color: rgb(36, 35, 35);
+}
+.grid-single{
+  top: 40px;
+  left: 30px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+.grid-single:hover{
+  color: dodgerblue;
 }

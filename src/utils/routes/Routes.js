@@ -3,6 +3,7 @@ const defaults = "/";
 const signIn = "/sign-in";
 const register = "/register";
 const pricing = "/pricing";
+const grid = "/grid-navigation";
 
 export const adminRoutes = {
     welcome: welcomePage,
@@ -10,6 +11,7 @@ export const adminRoutes = {
     signIn: signIn,
     register: register,
     pricing: pricing,
+    grid: grid,
     addUser: "/add-user",
     users: "/users",
     logs: "/admin-logs",
@@ -30,6 +32,7 @@ export const routes = {
     signIn: signIn,
     register: register,
     pricing: pricing,
+    grid: grid,
     clocked: "/clockec-in-out",
     logs: "/logs",
     settings: "/settings",

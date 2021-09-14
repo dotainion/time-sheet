@@ -34,6 +34,7 @@ import { Notifications } from "./members/pages/Notifications";
 import { AdminNotifications } from "./private/admin/pages/Notifications";
 import { Test } from "./test/Test";
 import { Schedules } from "./private/admin/pages/Schedules";
+import { Grid } from './grid/Grid';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 {/******************************************************************************/}
+                <Route exact path={adminRoutes.grid} render={()=><Authenticate Component={Grid}/>}/>
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
                 <Route exact path={adminRoutes.notification} render={()=><Authenticate Component={AdminNotifications}/>}/>
                 <Route exact path={adminRoutes.adminMessages} render={()=><Authenticate Component={AdminMessages}/>}/>
@@ -63,6 +65,7 @@ function App() {
                 <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
                 <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
                 {/******************************************************************************/}
+                <Route exact path={routes.grid} render={()=><Authenticate Component={Grid}/>}/>
                 <Route exact path={routes.notification} render={()=><Authenticate Component={Notifications}/>}/>
                 <Route exact path={routes.messages} render={()=><Authenticate Component={UserMessages}/>}/>
                 <Route exact path={routes.default} render={()=><Authenticate Component={Welcome}/>}/>

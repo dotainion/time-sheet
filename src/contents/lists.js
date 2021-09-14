@@ -21,11 +21,13 @@ export const ADMIN_SIDE_NAV = [
     {
         title: "Menu",
         icon: GiHamburgerMenu,
-        info: "Expand menu option"
+        route: null,
+        info: "Expand menu option",
     },{
         title: "Grid",
         icon: BsGrid3X3Gap,
-        info: ""
+        route: adminRoutes.grid,
+        info: "Grid navigation"
     },{
         title: "Add User",
         icon: HiUserAdd,
@@ -69,6 +71,11 @@ export const USER_SIDE_NAV = [
         title: "Menu",
         icon: GiHamburgerMenu,
         info: "Expand menu option"
+    },{
+        title: "Grid",
+        icon: BsGrid3X3Gap,
+        route: routes.grid,
+        info: "Grid navigation"
     },{
         title: "CLOCK IN/OUT",
         route: routes.clocked,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
-export const SpanWrapper = ({isOpen, onClose, cssClass, style, zIndex, shadow, children}) =>{
+export const SpanWrapper = ({isOpen, onClose, cssClass, style, childrenStyle, zIndex, shadow, children}) =>{
     return(
         <div 
             hidden={!isOpen} 
@@ -16,7 +16,7 @@ export const SpanWrapper = ({isOpen, onClose, cssClass, style, zIndex, shadow, c
                 onClick={onClose}
                 style={{color:"red",margin:"3px",zIndex:"9999",display:!onClose && "none"}}
             />
-            <div className="span-wrapper">
+            <div className="span-wrapper" style={childrenStyle}>
                 {children}
             </div>
         </div>
