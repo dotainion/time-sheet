@@ -462,10 +462,14 @@
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  border: 1px solid white;
-  background: var(--bg-fade-vertical-light-hover);
-  box-shadow: 2px 2px 5px var(--box-shadow-dark-fade);
-  background-color: var(--btn-bg);
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  background-color: rgb(75, 74, 74);
+}
+.time-card-buttons:hover{
+  border: none;
 }
 .time-card-buttons option{
   color: black;

@@ -18,7 +18,6 @@ export const IconButton = ({info, style, onClick, disabled, cssClass, iconStyle,
                 className={`${cssClass} ${disabled && "btn-disabled"}`} 
                 style={{
                     ...style,
-                    background: disabled && "dodgerblue",
                     cursor: disabled && "not-allowed"
                 }}
             >

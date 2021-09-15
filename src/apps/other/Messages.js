@@ -132,7 +132,7 @@ export const Messages = () =>{
                             contacts.map((contact, key)=>(
                                 <div 
                                     onClick={()=>onSelectUser(contact, contact?.id)}
-                                    style={{borderBottom:"1px solid var(--border)"}} 
+                                    style={{borderBottom:"1px solid var(--border)",padding:"3px"}} 
                                     className="relative" 
                                     key={key}
                                 >
@@ -142,6 +142,7 @@ export const Messages = () =>{
                                         cssClass="item-hover"
                                         firstName={contact?.info?.firstName}
                                         lastName={contact?.info?.lastName}
+                                        image={contact?.info?.image}
                                         role={contact?.info?.role}
                                         style={{backgroundColor:userSelected?.id === contact?.id && "var(--border-focus)",cursor:"pointer",width:"100%"}}
                                     />

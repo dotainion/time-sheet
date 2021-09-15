@@ -37,7 +37,8 @@ export const IconSelect = ({info, style, error, errorReset, hidden, cssSelectCla
                     cssClass={cssSelectClass}
                     style={{
                         ...s_selectStyle,
-                        ...selectStyle
+                        ...selectStyle,
+                        cursor:"pointer"
                     }}
                 />
             </button>

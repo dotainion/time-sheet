@@ -5,13 +5,12 @@ import {AiOutlineClose} from 'react-icons/ai';
 import DayPicker, {DateUtils} from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { tools } from '../../utils/tools/Tools';
+import $ from 'jquery';
 
 export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, header, headerStyle}) =>{
-    const [shouldOpen, setShouldOpen] = useState(false);
     const [value, setValue] = useState(new Date());
-    const [spin, setSpin] = useState(false);
 
-    const timeoutRef = useRef();
+    const shakeRef = useRef();
 
     const tiggerSelect = (dateValue) =>{
         onSelect?.(dateValue);
@@ -19,20 +18,10 @@ export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, he
     }
 
     useEffect(()=>{
-        if (spin){
-            clearTimeout(timeoutRef.current);
-            timeoutRef.current = setTimeout(()=>{
-                setSpin(false);
-            }, 250);
-        }
-    },[spin]);
-
-    useEffect(()=>{
         if (isOpen){
-            setSpin(true);
-            setShouldOpen(true);
+            $(shakeRef.current).show("slow");
         }else{
-            setShouldOpen(false);
+            $(shakeRef.current).hide("slow");
         }
     }, [isOpen]);
 
@@ -42,8 +31,9 @@ export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, he
 
     return(
         <div 
-            hidden={!shouldOpen} 
-            className={`float-center ${cssClass} ${spin && "spin"}`} 
+            hidden//={!isOpen} 
+            ref={shakeRef}
+            className={`float-center ${cssClass}`} 
             style={{zIndex:"999999999999999"}}
         >
             <div style={{textAlign:"right",...headerStyle || {backgroundColor:"white",border:"1px solid lightgray"}}}>

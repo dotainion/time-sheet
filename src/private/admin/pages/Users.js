@@ -71,6 +71,7 @@ export const Users = () =>{
                         fontWeight:"bold",
                         color:"white",
                         backgroundColor:"dodgerblue",
+                        cursor:"default"
                     }}
                 >
                     <div className="max-width" style={{paddingLeft:"55px"}}><CgNametag style={{marginRight:"5px",fontSize:"20px"}}/>Name</div>
@@ -83,12 +84,12 @@ export const Users = () =>{
                         users?.length?
                         users?.map((user, key)=>(
                             <div onClick={()=>onSchedule(user)} className="content-container" key={key}>
-                                <div className="header-profile"><img src={defaultImage} alt="" style={{cursor:"pointer"}} /></div>
+                                <div className="header-profile"><img src={user?.info?.image || defaultImage} alt="" style={{cursor:"pointer"}} /></div>
                                 <div className="max-width" style={{minWidth:"150px"}}><b className="float-left" style={{left:"5px"}}>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
                                 <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.email}</div></div>
                                 <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.role}</div></div>
                                 <div className="max-width">
-                                    <div className="float-left">
+                                    <div onClick={e=>e.stopPropagation()} className="float-left">
                                         <Button onClick={()=>onUpdate(user)} label="Update" />
                                     </div>
                                 </div>
