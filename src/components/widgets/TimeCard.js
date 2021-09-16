@@ -8,7 +8,7 @@ import { IconButton } from './IconButon';
 import { IconSelect } from './IconSelect';
 import { Calendar } from '../../apps/calendar/Calendar';
 import { IoMdOptions } from 'react-icons/io';
-import { downloadXlFile } from '../../files/ExcelFile';
+import { xlFile } from '../../files/ExcelFile';
 import { BiRefresh } from 'react-icons/bi';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { useHistory } from 'react-router-dom';
@@ -109,8 +109,8 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
         }
     }
 
-    const buildDataForExcelFile = (fileName="untitled") =>{
-        let holdLogs = [{fileName}];
+    const buildXlData = () =>{
+        let holdLogs = [];
         for (let log of logs){
             if (log?.firstName || log?.lastName){
                 holdLogs.push({
@@ -121,7 +121,10 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                     email: log?.email
                 });
             }else{
-                holdLogs.push({startTime:log?.info?.start, endTime:log?.info?.end});
+                holdLogs.push({
+                    startTime:log?.info?.start, 
+                    endTime:log?.info?.end
+                });
             }
         }
         return holdLogs;
@@ -129,7 +132,9 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
 
     const onDownloadFile = () =>{
         if (ADMIN_SUPERVISER.includes(user?.role)){
-            downloadXlFile(buildDataForExcelFile("time-sheet"));
+            xlFile.download(
+                buildXlData()
+            );
         }
     }
 

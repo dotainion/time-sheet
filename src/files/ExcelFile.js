@@ -1,89 +1,6 @@
 import writeXlsxFile from 'write-excel-file';
 import { tools } from '../utils/tools/Tools';
 
-const header = {
-  user: [
-    {type:String, fontWeight:"bold", value:"User ID", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"Email", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"Role", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"FirstName", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"LastName", backgroundColor:"#808080"}
-  ],
-  date: [
-    {type:String, fontWeight:"bold", value:"Start Date", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"Start Time", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"End Date", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"End Time", backgroundColor:"#808080"},
-    {type:String, fontWeight:"bold", value:"Total Time", backgroundColor:"#808080"}
-  ],
-  total: [
-    {type:String, value:""},
-    {type:String, value:""},
-    {type:String, value:""},
-    {type:String, value:""},
-    {type:String, fontWeight:"bold", value:"Grand Total", backgroundColor:"#808080"}
-  ]
-}
-
-const dateBuilder = (date1, date2) =>{
-  return tools.time.addTimeReturnObj(date1, date2);
-}
-
-const fileBuilder = (data) =>{
-  let objData = [];
-  let eDate = null;
-  for (let obj of data){
-    if (obj?.id){
-      objData.push(header.user);
-      objData.push(
-        [
-          {type:String, value: obj?.id},
-          {type:String, value: obj?.email},
-          {type:String, value: obj?.role},
-          {type:String, value: obj?.firstName},
-          {type:String, value: obj?.lastName}
-        ]
-      );
-      objData.push(header.date);
-      if (eDate){
-        objData.push(header.total);
-        objData.push(
-          [
-            {type:String, value:""},
-            {type:String, value:""},
-            {type:String, value:""},
-            {type:String, value:""},
-            {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes}`}// ${eDate.en} = AM or PM
-          ]
-        );
-        objData.push([]);
-      }
-    }else{
-      const dDate = tools.time.subTimeReturnObj(obj?.endTime, obj?.startTime);
-      objData.push(
-        [
-          {type:String, value:`${tools.time.date(obj?.startTime)}`},
-          {type:String, value:`${tools.time.time(obj?.startTime)}`},
-          {type:String, value:`${tools.time.date(obj?.endTime)}`},
-          {type:String, value:`${tools.time.time(obj?.endTime)}`},
-          {type:String, value:`${dDate.hour}:${dDate.seconds}:${dDate.minutes}`}// ${eDate.en} = AM or PM
-        ]
-      );
-      eDate = dateBuilder(eDate?.date, dDate.date);
-    }
-  }
-  objData.push(header.total);
-  objData.push(
-    [
-      {type:String, value:""},
-      {type:String, value:""},
-      {type:String, value:""},
-      {type:String, value:""},
-      {type:String, value:`${eDate.hour}:${eDate.seconds}:${eDate.minutes}`}// ${eDate.en} = AM or PM
-    ]
-  );
-  return objData;
-}
 
 const columnStyle = [
   {width:30},
@@ -101,14 +18,153 @@ const columnStyle = [
  *    {id:String, role:String, email:String, firstName:String, lastName:String}
  * ]} data
  */
-export const downloadXlFile = async(data=[]) =>{
-  const fileName = data.shift();
-  await writeXlsxFile(
-    [
-      ...fileBuilder(data)
-    ], {
-      columns:columnStyle,
-      fileName: `${fileName.fileName}.xlsx`
+class XlFile{
+  data = [];
+  fileName = "time-tracker";
+  userLabel = ["User ID","Email","Role","FirstName","LastName"];
+  dateLabel = ["Start Date","Start Time","End Date","End Time","Total Time"];
+  totalLabel = ["","","","","Grand Total"];
+  date = null;
+  colorToggle = false;
+
+  buildLabel(arrayObj){
+    let temp = [];
+    for (let name of arrayObj){
+      temp.push({
+        type: String,
+        fontWeight: "bold",
+        value: name,
+        backgroundColor: this.colorToggle? "#808080": "#008080"
+      });
     }
-  );
+    return temp;
+  }
+
+  buildUser(obj){
+    return [
+      {type:String, value: obj?.id},
+      {type:String, value: obj?.email},
+      {type:String, value: obj?.role},
+      {type:String, value: obj?.firstName},
+      {type:String, value: obj?.lastName}
+    ];
+  }
+
+  buildDate(obj){
+    const [startTime, endTime, total, startDate, endDate] = this.extract(obj);
+    return [
+      {type:String, value: startDate},
+      {type:String, value: startTime},
+      {type:String, value: endDate},
+      {type:String, value: endTime},
+      {type:String, value: total}
+    ];
+  }
+
+  buildTotal(total){
+    this.clear();
+    return [
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: total}
+    ]
+  }
+
+  buildSeparator(){
+    let temp = [];
+    for (let i=0; i<5; i++){
+      temp.push({});
+    }
+    return temp;
+  }
+
+  clear(all=null){
+    this.date = null;
+    this.colorToggle = !this.colorToggle;
+    if (all !== null){
+      this.data = [];
+    }
+  }
+
+  strip(str){
+    return str.replace(/ /g, "")
+    .replace("am", "")
+    .replace("pm", "")
+    .replace("AM", "")
+    .replace("PM", "")
+  }
+
+  addDate(date){
+    if (this.date === null){
+      this.date = date;
+    }else{
+      this.date.setHours(this.date.getHours() + date.getHours());
+      this.date.setMinutes(this.date.getMinutes() + date.getMinutes());
+      this.date.setSeconds(this.date.getSeconds() + date.getSeconds());
+      this.date.setMilliseconds(this.date.getMilliseconds() + date.getMilliseconds());
+    }
+  }
+
+  extract(timeObj){
+    let lDate = new Date(timeObj?.endTime);
+    let rDate = new Date(timeObj?.startTime);
+    lDate.setHours(lDate.getHours() - rDate.getHours());
+    lDate.setMinutes(lDate.getMinutes() - rDate.getMinutes());
+    lDate.setSeconds(lDate.getSeconds() - rDate.getSeconds());
+    lDate.setMilliseconds(lDate.getMilliseconds() - rDate.getMilliseconds());
+    const startTime = this.strip(tools.time.time(timeObj?.startTime));
+    const endTime = this.strip(tools.time.time(timeObj?.endTime));
+    const total = this.total(lDate);
+    this.addDate(lDate);
+    return [
+      startTime, 
+      endTime, 
+      total, 
+      tools.time.date(timeObj?.startTime),
+      tools.time.date(timeObj?.endTime)
+    ];
+  }
+
+  total(date=null){
+    if (date === null){
+      date = this.date;
+    }
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  async download(data=[]){
+    for (let obj of data){
+      if (obj?.id){
+        if (this.date !== null){
+          this.data.push(this.buildLabel(this.totalLabel));
+          this.data.push(this.buildTotal(this.total()))
+        }
+        this.data.push(this.buildSeparator());
+        this.data.push(this.buildLabel(this.userLabel));
+        this.data.push(this.buildUser(obj));
+        this.data.push(this.buildLabel(this.dateLabel));
+      }else{
+        this.data.push(this.buildDate(obj));
+      }
+    }
+    if (this.date !== null){
+      this.data.push(this.buildLabel(this.totalLabel));
+      this.data.push(this.buildTotal(this.total()))
+    }
+    await writeXlsxFile(
+      this.data, 
+      {
+        columns:columnStyle,
+        fileName: `${this.fileName}.xlsx`
+      }
+    );
+    this.clear(true);
+  }
 }
+
+export const xlFile = new XlFile();
