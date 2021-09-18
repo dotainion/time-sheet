@@ -41,8 +41,7 @@ export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, bo
                 style={{
                     width:"35px",
                     height:"100%",
-                    borderRight:"1px solid gray",
-                    cursor:"pointer"
+                    borderRight:"1px solid gray"
                 }}>
                 {
                     Icon? <Icon
@@ -77,7 +76,8 @@ export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, bo
                     backgroundColor:disabled && "rgb(192, 217, 245)",
                     color:disabled && "gray" || grayColor && "gray",
                     border:error && "1px solid red",
-                    ...optionStyle,
+                    cursor:"pointer",
+                    ...optionStyle
                 }} 
                 className={`input-entery`}
             >

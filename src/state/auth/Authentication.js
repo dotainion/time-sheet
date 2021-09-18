@@ -118,7 +118,9 @@ export const AuthContext = ({children}) =>{
                 supervisorId: supervisorId || response?.user?.uid
             }, response?.user?.uid);
 
-            //console.log(response.user.sendEmailVerification());
+            if (nUser?.notify){
+                response.user.sendEmailVerification();
+            }
 
             const encriptPass = secure.encrypt(nUser?.password);
 

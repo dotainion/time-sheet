@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
-import { UserEntryInputs } from '../settings/UserEntryInputs';
+import { AdminInputEntry } from '../other/AdminInputEntry';
 import { FaUsers } from 'react-icons/fa';
 
 
@@ -15,10 +15,9 @@ export const AddUser = () =>{
                 </div>         
             </div>
 
-            <UserEntryInputs
+            <AdminInputEntry
                 profileFName="Select"
                 profileLName="user image"
-                profileMsg="Optional"
                 profileStyle={{}}
             />
         </AdminNavBar>

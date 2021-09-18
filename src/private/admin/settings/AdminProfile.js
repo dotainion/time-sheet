@@ -4,7 +4,7 @@ import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { useAuth } from '../../../state/auth/Authentication';
 import { BreadCrumbs } from '../../widgets/BreadCrumbs';
-import { UserEntryInputs } from './UserEntryInputs';
+import { AdminInputEntry } from '../other/AdminInputEntry';
 
 
 export const AdminProfile = () =>{
@@ -21,7 +21,7 @@ export const AdminProfile = () =>{
             <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
                 <BreadCrumbs myProfile />
 
-                <UserEntryInputs
+                <AdminInputEntry
                     useUpdate
                     roleDisabled
                     userSelected={user}

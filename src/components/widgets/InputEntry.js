@@ -5,11 +5,16 @@ import { MdEmail } from 'react-icons/md';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
-export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRef, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
-    const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
+export const InputEntry = ({email, label, placeholder, labelFixed, type, onChange, inputRef, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
+    const [labelStyle, setLabelStyle] = useState({color:"gray", left:"40px"});
     const [toggleIcon, setToggleIcon] = useState(false);
     const [showPasswordInput, setShowPasswordInput] = useState(false);
     const [showEyeIcon, setShowEyeIcon] = useState(false);
+
+    const onChanged = (e) =>{
+        errorReset?.("");
+        onChange?.(e.target.value);
+    }
 
     const onFloatLabel = () =>{
         if (!labelFixed){
@@ -92,7 +97,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                 ref={inputRef}
                 onFocus={onFloatLabel}
                 onBlur={onCenterLabel}
-                onChange={()=>errorReset?.("")}
+                onChange={onChanged}
                 placeholder={labelFixed?placeholder || label:null}
                 className={`input-entery max-width ${titleCase && "title-case"}`}
                 style={{border:error && "1px solid red"}}
@@ -113,6 +118,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                         style={{
                             display:type !== "password" && "none",
                             backgroundColor:"white",
+                            cursor:"pointer"
                         }} 
                         onClick={()=>setShowPasswordInput(!showPasswordInput)}
                     />
@@ -126,6 +132,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, inputRe
                         style={{
                             display:type !== "password" && "none",
                             backgroundColor:"lightgray",
+                            cursor:"pointer"
                         }} 
                         onClick={()=>setShowPasswordInput(!showPasswordInput)}
                     />

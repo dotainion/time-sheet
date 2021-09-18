@@ -290,15 +290,15 @@
   border-bottom: 1px solid skyblue;
 }
 .btn{
-  padding: 3px;
+  padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
   border-radius: 6px;
-  border: 1px solid gray;
-  box-shadow: 2px 2px 5px var(--shadow);
+  border: none;
   color: var(--btn-color);
   background-color: var(--btn-bg);
+  box-shadow: 2px 2px 5px var(--shadow-dark);
 }
 .btn:hover{
   border: 1px solid var(--border-focus);

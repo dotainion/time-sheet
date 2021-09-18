@@ -7,7 +7,7 @@ import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { BreadCrumbs } from '../../widgets/BreadCrumbs';
-import { UserEntryInputs } from './UserEntryInputs';
+import { AdminInputEntry } from '../other/AdminInputEntry';
 import { UsersLists } from './UsersLists';
 
 
@@ -24,7 +24,7 @@ export const UsersProfile = () =>{
                     <div className="max-width" style={{paddingLeft:"40px"}}>
                         {
                             Object.keys(userSelected || {}).length?
-                            <UserEntryInputs
+                            <AdminInputEntry
                                 useUpdate
                                 userSelected={userSelected}
                                 onUpdateComplete={()=>{

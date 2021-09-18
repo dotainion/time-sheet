@@ -4,9 +4,13 @@ import { WidgetsInfo } from './WidgetsInfo';
 
 
 export const WhatsThis = ({cssClass, info}) =>{
-
     return(
-        <WidgetsInfo info={info} cssClass={cssClass} style={{display:"inline-block"}}>
+        <WidgetsInfo 
+            onClick={e=>e.stopPropagation()} 
+            info={info} 
+            cssClass={cssClass} 
+            style={{display:"inline-block"}}
+        >
             <BsQuestionCircle 
                 style={{marginLeft:"5px"}} 
             />
