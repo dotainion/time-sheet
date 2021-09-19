@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuth } from '../../../state/auth/Authentication';
 import { useError } from '../../../state/errors/Error';
 import { useStore } from '../../../state/stateManagement/stateManagement';
