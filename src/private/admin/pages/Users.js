@@ -18,6 +18,7 @@ import { AiOutlineMail } from 'react-icons/ai';
 import { FaCriticalRole } from 'react-icons/fa';
 import { CgNametag } from 'react-icons/cg';
 import { MdSystemUpdateAlt } from 'react-icons/md';
+import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 
 
 const NO_RECORD_INFO = "There is no contact in your list.";
@@ -31,6 +32,7 @@ export const Users = () =>{
     const { user } = useAuth();
     
     const [users, setUsers] = useState([]);
+    const [userHovered, setUserHovered] = useState(false);
 
     const onUpdate = (uUser) =>{
         history.push({
@@ -83,17 +85,24 @@ export const Users = () =>{
                     {
                         users?.length?
                         users?.map((user, key)=>(
-                            <div onClick={()=>onSchedule(user)} className="content-container" key={key}>
-                                <div className="header-profile"><img src={user?.info?.image || defaultImage} alt="" style={{cursor:"pointer"}} /></div>
-                                <div className="max-width" style={{minWidth:"150px"}}><b className="float-left" style={{left:"5px"}}>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
-                                <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.email}</div></div>
-                                <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.role}</div></div>
-                                <div className="max-width">
-                                    <div onClick={e=>e.stopPropagation()} className="float-left">
-                                        <Button onClick={()=>onUpdate(user)} label="Update" />
+                            <WidgetsInfo info={!userHovered && `Apply Schedule to ${user?.info?.firstName} ${user?.info?.lastName}`} infoStyle={{marginLeft:"60px"}} key={key}>
+                                <div onClick={()=>onSchedule(user)} className="content-container">
+                                    <div className="header-profile"><img src={user?.info?.image || defaultImage} alt="" style={{cursor:"pointer"}} /></div>
+                                    <div className="max-width" style={{minWidth:"150px"}}><b className="float-left" style={{left:"5px"}}>{`${user?.info?.firstName} ${user?.info?.lastName}`}</b></div>
+                                    <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.email}</div></div>
+                                    <div className="max-width" style={{minWidth:"150px"}}><div className="float-left">{user?.info?.role}</div></div>
+                                    <div className="max-width relative">
+                                        <div
+                                            className="float-left"
+                                            onClick={e=>e.stopPropagation()}
+                                            onMouseEnter={()=>setUserHovered(true)}
+                                            onMouseLeave={()=>setUserHovered(false)}
+                                        >
+                                            <Button onClick={()=>onUpdate(user)} label="Update Profile" style={{backgroundColor:"white",color:"var(--primary-color)",borderColor:"white"}} />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </WidgetsInfo>
                         )):
                         <NoRecord icon="users" message={NO_RECORD_INFO} subMessage={NO_RECORD_SUB_INFO} />
                     }

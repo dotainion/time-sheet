@@ -273,8 +273,9 @@ class Tools{
                 endTime: days?.endTime,
                 date: days?.date,
                 info: days?.info,
-                hours: null,
-                info: null
+                hours: this.addTimeString(days?.endTime, days?.startTime),
+                info: null,
+                isActive: days?.isActive
             });
         }
         return holdSched;
@@ -306,6 +307,25 @@ class Tools{
             });
         }
         return tempArray;
+    }
+    addTimeString(date1, date2){
+        if (!date1 && !date2) return null;
+        if (!date1 && date2) return date2;
+        if (date1 && !date2) return date1;
+        const [hr, min] = date1.split(":");
+        const [hr2, min2] = date2.split(":");
+        let hour = parseInt(hr) + parseInt(hr2);
+        let minute = parseInt(min) + parseInt(min2);
+        let index = 0;
+        for (let i=0; i<minute; i++){
+            index ++;
+            if (index === 60){
+                hour ++;
+                index = 0;
+            }
+        }
+        minute = index;
+        return `${hour}:${minute}`;
     }
 }
 

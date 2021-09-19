@@ -30,7 +30,7 @@ export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, 
     return(
         <div 
             className={`relative ${cssClass} ${inline && "inline"}`} 
-            style={{...style, zIndex:"9"}}
+            style={{...style}}
             onMouseEnter={()=>setTriggerShowInfo(true)}
             onMouseLeave={onLeave}
             onClick={onClick}

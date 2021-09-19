@@ -20,6 +20,7 @@ import defaultImage from '../../images/default-profile-image.png';
 import { WidgetsInfo } from './WidgetsInfo';
 import { LoadingBar } from './LoadingBar';
 import { getSchedule } from '../../database/schedules/SchedulesDb';
+import { WEEK_ABRIV } from '../../contents/lists';
 
 
 const NO_RECORD_INFO = "You can query records between two date range by clicking on the calendar icon to the top right,";
@@ -65,13 +66,12 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
     }
 
     const calcTotalSchedule = () =>{
-        let duration = 0;
+        let hours = 0;
         for (let time of logs){
-            if (time?.duration){
-                duration = duration + parseInt(time?.duration);
-            }
+            if (!hours) hours = time?.hours;
+            else hours = tools.addTimeString(hours, time?.hours);
         }
-        setTotalHours(duration);
+        setTotalHours(hours);
     }
 
     const objectizeUser = (obj) =>{
@@ -152,13 +152,55 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
         setUsers(tempArray);
     }
 
+    const isRepeat = (sched) =>{
+        const bindSchedule = () =>{
+            if (sched?.daysInWeek.length) sched["daysInWeek"] = tempArray;
+            if (sched?.daysInMonth.length) sched["daysInMonth"] = tempArray;
+        }
+        let tempArray = [];
+        const week = sched?.daysInWeek;
+        const month = sched?.daysInMonth;
+        if (sched?.on){
+            for(let sch of week?.length && week || month?.length && month || []){
+                if (WEEK_ABRIV.includes(sch?.date)){
+                    return sched;
+                }else{
+                    let date = new Date(sch?.date);
+                    let today = new Date();
+                    if (date.getMonth() > today.getMonth() || date.getFullYear() > today.getFullYear()){
+                        const [weekDay, month, date, year] = sch?.date.split(" ");
+                        sch["date"] = `${weekDay} ${month} ${date} ${today.getFullYear()}`;
+                        tempArray.push(sch);
+                    }else{
+                        tempArray.push(sch);
+                    }
+                }
+            }
+            bindSchedule();
+        }else{
+            for (let sch of week?.length && week || month?.length && month || []){
+                let date = new Date(sch?.date);
+                let today = new Date();
+                if (date.getMonth() > today.getMonth() && date.getMonth() > today.getMonth() || date.getFullYear() > today.getFullYear()){
+                    sch["isActive"] = false;
+                    tempArray.push(sch);
+                }else{
+                    tempArray.push(sch);
+                }
+            }
+            bindSchedule();
+        }
+        return sched;
+    }
+
     const initLogs = async() =>{
         setLogs(await getLogs(user?.id));
     }
 
     const initSchedule = async() =>{
         const sched = await getSchedule(user?.id);
-        setLogs(tools.buildScheduleForUi(sched));
+        const userSchedlule = isRepeat(sched);
+        setLogs(tools.buildScheduleForUi(userSchedlule));
     }
 
     const toggleBtnOption = () =>{
@@ -259,6 +301,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 onMouseEnter={()=>toggleShowIcon(`time-card${key}`, false)} 
                                 onMouseLeave={()=>toggleShowIcon(`time-card${key}`, true)} 
                                 className="time-card-container relative item-hover" 
+                                style={{backgroundColor:time?.isActive && "orangered"}}
                             >
                                 <div className="time-card-content">{!useSchedule? tools.time.date(time?.info?.start): time?.date}</div>
                                 <div className="time-card-content">{!useSchedule? tools.time.subTimeReturnObj(time?.info?.end, time?.info?.start).dateString: time?.hours}</div>

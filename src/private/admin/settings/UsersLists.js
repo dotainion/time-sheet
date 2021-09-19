@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { AiOutlineCloseCircle, AiOutlineUsergroupAdd } from 'react-icons/ai';
+import defaultImage from '../../../images/default-image.jpg';
 
 
 export const UsersLists = ({onSelected}) =>{
@@ -72,8 +73,8 @@ export const UsersLists = ({onSelected}) =>{
                         backgroundColor:userSelected?.id === mbr?.id && "var(--primary-color)"
                     }} key={key}
                 >
-                    {`${mbr?.info?.firstName}
-                    ${mbr?.info?.lastName}`}
+                    <img src={mbr?.info?.image || defaultImage} alt="" />
+                    <span>{`${mbr?.info?.firstName} ${mbr?.info?.lastName}`}</span>
                 </div>
             ))}
         </div>

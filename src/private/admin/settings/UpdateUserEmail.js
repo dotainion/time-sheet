@@ -63,7 +63,7 @@ export const UpdateUserEmail = () =>{
                     <div className="add-update-new-user-info new-user-info-margin">
                         <div className="header">Update a user email address</div>
                         <div className="relative" style={{marginBottom:"60px"}}>
-                            <div style={{height:"20px"}}>{userSelected?.firstName} {userSelected?.lastName}</div>
+                            <div style={{height:"20px",color:"var(--primary-color)"}}><b>{userSelected?.firstName} {userSelected?.lastName}</b></div>
                             <div className="float-bottom-overflow" style={{color:"red"}}>{error}</div>
                         </div>
                         <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>

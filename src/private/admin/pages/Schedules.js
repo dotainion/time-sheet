@@ -41,6 +41,7 @@ export const Schedules = () =>{
     const [users, setUsers] = useState([]);
     const [schedules, setSchedules] = useState([]);
     const [schedulesWidthIndividualTime, setSchedulesWidthIndividualTime] = useState([]);
+    const [sUser, setSUser] = useState();
 
     const [startAtError, setStartAtError] = useState("");
     const [endAtError, setEndAtError] = useState("");
@@ -187,9 +188,12 @@ export const Schedules = () =>{
     }
 
     const onSelectUser = async(uUser) =>{
+        setSUser(uUser);
+        setLoading(true);
         userSelectedRef.current = uUser;
         const sched = await getSchedule(uUser?.id);
         setSchedules(tools.buildScheduleForUi(sched));
+        setLoading(false);
     }
 
     const onOpenAddUIndividualTime = () =>{
@@ -220,13 +224,13 @@ export const Schedules = () =>{
                     <div className="schedule-users">
                         {
                             users.map((member, key)=>(
-                                <WidgetsInfo key={key} info={member?.info?.role} infoStyle={{bottom:"15px"}}>
+                                <WidgetsInfo info={member?.info?.role} infoStyle={{bottom:"15px"}} key={key}>
                                     <div 
                                         onClick={()=>onSelectUser(member)} 
                                         className="users-container" 
                                         style={{
-                                            color:member?.id === userSelectedRef.current?.id && "white",
-                                            backgroundColor:member?.id === userSelectedRef.current?.id && "var(--primary-color)"
+                                            color:member?.id === sUser?.id && "white",
+                                            backgroundColor:member?.id === sUser?.id && "var(--primary-color)"
                                         }}
                                     >
                                         <img src={defaultImage2} alt="" />
@@ -298,21 +302,11 @@ export const Schedules = () =>{
                     <div className="schedule-options-container">
                         {
                             schedules.map((sched, key)=>(
-                                <div 
-                                    onMouseEnter={()=>{document.getElementById(`sch${key}`).hidden = false}} 
-                                    onMouseLeave={()=>{document.getElementById(`sch${key}`).hidden = true}} 
-                                    className="schedule-options"
-                                    key={key}
-                                >
-                                    <div>{sched?.date}</div>
-                                    <div>{sched?.startTime}</div> 
-                                    <div>{sched?.endTime}</div>
-                                    <div className="max-width">{sched?.info}</div>
-                                    <div hidden className="float-bottom-overflow" style={{left:"50px",zIndex:"99",transform:"translateY(50%)"}} id={`sch${key}`}>
-                                        <Button icon="message" label="Message" style={{marginRight:"5px"}} />
-                                        <Button icon="edit" label="Edit" style={{marginRight:"5px",color:"yellow"}} />
-                                        <Button icon="delete" label="Delete" style={{marginRight:"5px",color:"orangered"}} />
-                                    </div>
+                                <div className="schedule-options" key={key} >
+                                    <div style={{borderRight:"1px solid lightgray"}}>{sched?.date}</div>
+                                    <div style={{borderRight:"1px solid lightgray"}}>{sched?.startTime}</div> 
+                                    <div style={{borderRight:"1px solid lightgray"}}>{sched?.endTime}</div>
+                                    <div style={{borderRight:"1px solid lightgray"}} className="max-width">{sched?.info}</div>
                                 </div>
                             ))
                         }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { UnAuthHeader } from '../../layouts/UnAuthHeader';
 import { FaCheck } from 'react-icons/fa';
 import { BENEFITS } from '../../contents/aboutus/aboutus';
 
@@ -105,9 +104,7 @@ export const Pricing = () =>{
         }
     ]
     return(
-        <div className="single-page" style={{backgroundColor:"white"}}>
-            <UnAuthHeader useRegister useLogin/>
-
+        <div className="" style={{backgroundColor:"white"}}>
             <div className="price-main-container d-flex-on-mobile">
                 {prices.map((price, key)=>(
                     <div className="price-container" key={key}>

@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { UnAuthHeader } from '../../../layouts/UnAuthHeader';
-import { SideInfo } from '.././widgets/SideInfo';
-import { SubHeaderInfo } from '.././widgets/SubHeaderInfo';
 import { useAuth } from '../../../state/auth/Authentication';
 import { useError } from '../../../state/errors/Error';
 import { ADMINISTRATOR, ADMIN_SUPERVISER } from '../../../contents/AuthValue';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes, routes } from '../../../utils/routes/Routes';
 import { useStore } from '../../../state/stateManagement/stateManagement';
+import { LoginSignInContainer } from '../widgets/LoginSignInContainer';
 
 export const Register = () =>{
     const history = useHistory();
@@ -56,24 +54,11 @@ export const Register = () =>{
     }, [user]);
 
     return(
-        <div className="single-page">
-            <UnAuthHeader useLogin usePricing />
-
-            <SubHeaderInfo/>
-
-            <div className="flex">
-                <SideInfo/>
-                <div className="relative max-width">
-                    <div onKeyDown={(e)=>onEnterPress(e.key)} className="float-top-center creds-container">
-                        <div className="pad"><b>Sign Up</b></div>
-                        <input ref={firstNameRef} className="input input-hover title-case block pad" placeholder="Your first name" type="text" />
-                        <input ref={lastNameRef} className="input input-hover title-case block pad" placeholder="Your last name" type="text" />
-                        <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
-                        <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
-                        <button onClick={onRegister} disabled={loading} className="btn btn-hover creds-btn">Register</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <LoginSignInContainer loading={loading} onAuthenticate={onRegister} authName="REGISTER">
+            <input ref={firstNameRef} className="input input-hover title-case block pad" placeholder="Your first name" type="text" />
+            <input ref={lastNameRef} className="input input-hover title-case block pad" placeholder="Your last name" type="text" />
+            <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
+            <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
+        </LoginSignInContainer>
     )
 }

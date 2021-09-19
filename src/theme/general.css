@@ -55,6 +55,11 @@
   margin-left: 50%;
   transform: translateX(-50%);
 }
+.centered-all{
+  margin-top: 50%;
+  margin-left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
 .flex{
   display: flex;
 }
@@ -101,12 +106,12 @@
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
-  overflow: hidden;
+  border-bottom: 1px solid lightgray;
   background-color: rgb(247, 247, 247);
 }
 .users-container img{
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
 }
 .users-container:hover{
@@ -202,7 +207,6 @@
   display: flex;
   cursor: pointer;
   user-select: none;
-  padding: 2px;
   white-space: nowrap;
   border-bottom: 1px solid var(--border);
 }
@@ -210,7 +214,8 @@
   background-color: var(--hover-bg);
 }
 .schedule-options div{
-  width: 130px;
+  width: 140px;
+  margin: 3px;
 }
 .input{
   outline: none;
@@ -268,12 +273,13 @@
   padding-left: 8px;
 }
 .input{
-  padding: 5px;
+  padding: 10px;
   font-size: inherit;
   outline: none;
-  margin-top: 15px;
+  margin-right: 350px;
   margin-bottom: 15px;
   border-radius: 8px;
+  cursor: text;
   border: 1px solid gray;
 }
 .input-hover:hover{
@@ -290,13 +296,13 @@
   border-bottom: 1px solid skyblue;
 }
 .btn{
-  padding: 5px;
+  padding: 4px;
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
   border-radius: 6px;
-  border: none;
   color: var(--btn-color);
+  border: 1px solid var(--btn-bg);
   background-color: var(--btn-bg);
   box-shadow: 2px 2px 5px var(--shadow-dark);
 }
@@ -350,6 +356,19 @@
 .msg-content{
   margin-bottom: 10px;
   align-items: right;
+}
+.cred-label{
+  float: left;
+  cursor: pointer;
+}
+.cred-label:hover{
+  text-decoration: underline;
+}
+.cred-label2{
+  cursor: pointer;
+}
+.cred-label2:hover{
+  text-decoration: underline;
 }
 .msg-content-left{
   padding: 8px;
@@ -556,26 +575,42 @@
   font-size: 40px;
   font-weight: bold;
 }
+.single-page{
+  color: white;
+  background-size: cover;
+  background-image: url(../images/bg-img.jpg);
+}
 .creds-container{
+  width: 250px;
   padding: 50px;
-  color:  var(--primary-color);
+  color: white;
   user-select: none;
   text-align: center;
   border-radius: 5px;
-  box-shadow: 2px 2px 10px var(--shadow);
-  background-color: var(--backdrop-light);
+  background-color: rgb(0, 0, 0, 0.50);
 }
 .creds-container input{
   width: 230px;
 }
+.creds-seperator{
+  width: 2px;
+  height: 50vh;
+  margin-top: 50%;
+  transform: translateY(50%);
+  background-color: white;
+}
+.creds-left-info{
+  font-size: 30px;
+  font-weight: bold;
+}
 .creds-info{
-  color: var(--primary-color);
+  color: white;
   text-align: center;
   margin-bottom: 50px;
   padding: 5px;
   padding-left: 50px;
   padding-right: 50px;
-  background-color: rgb(0,0,0,0.10);
+  background-color: rgb(0,0,0,0.50);
 }
 .creds-side-info{
   position: relative;
@@ -584,35 +619,13 @@
 }
 .creds-btn{
   width: 100%;
-  padding: 10px;
+  padding: 8px;
   color: white;
-  background-color: var(--primary-color);
-}
-.auth-header-container{
-  display: flex;
-  width: 100%;
-  position: relative;
   font-size: 20px;
-  padding: 12px;
-  color: white;
-  user-select: none;
-  box-shadow: 2px 2px 5px var(--shadow);
   background-color: var(--primary-color);
+  box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.50);
 }
-.auth-header-container label{
-  font-weight: bold;
-}
-.auth-header-btn-container{
-  right: 80px;
-  font-size: 15px;
-}
-.auth-header-btn{
-  background-color: inherit;
-  color: inherit;
-  margin-right: 20px;
-  box-shadow: none;
-  padding: 10px;
-}
+
 .price-main-container{
   display: flex;
   margin: 60px;
@@ -627,7 +640,7 @@
   box-shadow: 4px 4px 10px var(--shadow);
 }
 .price-sub-container{
-  padding: 50px;
+  padding: 30px;
 }
 .price-title{
   padding: 10px;
@@ -641,7 +654,7 @@
 }
 .price-offers{
   display: flex;
-  font-size: 20px;
+  font-size: 15px;
 }
 .price-button{
   padding: 10px;
@@ -722,16 +735,15 @@
   cursor:not-allowed;
 }
 .error{
-  color: orangered;
+  color: red;
   width: 100%;
-  padding-top: 5px;
-  padding-bottom: 5px;
   font-size: 18px;
-  text-align: center;
-  z-index:"9999999999999999999999999999999";
-  background-color: rgb(0, 0, 0, 0.80);
+  text-align: left;
+  z-index:"9999";
+  background-color: rgb(0, 0, 0, 0.30);
 }
 .settings-card-container{
+  position: relative;
   display: inline-block;
   width: 25%;
   height: 15vh;
@@ -744,6 +756,7 @@
   height: 100%;
   margin: 10px;
   cursor: pointer;
+  overflow: hidden;
   white-space: nowrap;
   background-color: white;
   color: var(--primary-color);
@@ -783,10 +796,18 @@
 }
 .users-name{
   padding: 2px;
-  margin: 3px;
   cursor: pointer;
+  padding-left: 5px;
+  margin-left: 3px;
+  margin-right: 3px;
   white-space: nowrap;
-  box-shadow: 2px 2px 5px var(--shadow);
+  border-bottom: 1px solid lightgray;
+}
+.users-name img{
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 .users-name:hover{
   color: var(--primary-color);

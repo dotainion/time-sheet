@@ -38,12 +38,12 @@ export const AdminSettings = () =>{
                     title: "Change my password.",
                     icon: RiLockPasswordFill,
                     action: ()=>setShowChangePassword(true),
-                    info: "Change my current passdword to a new one."
+                    info: "Change my current password to a new one."
                 },{
                     title: "Reset a user password.",
                     icon: RiLockPasswordFill,
                     action: ()=>setShowResetPassword(true),
-                    info: "This section will send a user a email with informatin to reset their account."
+                    info: "This section will send a user a email with information to reset their account."
                 },{
                     title: "Advance password reset.",
                     icon: RiLockPasswordFill,
@@ -119,9 +119,12 @@ export const AdminSettings = () =>{
                         {settings?.cards?.map((card, key2)=>(
                             <div onClick={card?.action} className="settings-card-container" key={key2}>
                                 <div className="settings-inner-card-container">
-                                    {card?.icon && <card.icon className="float-top-left pad" />}
+                                    {card?.icon && <card.icon 
+                                        className="float-top-left pad" 
+                                        style={{fontSize:"30px",cursor:"default"}} 
+                                    />}
                                     <div className="float-center">
-                                        <div>{card?.title}</div>
+                                        <div><b>{card?.title}</b></div>
                                         {card?.inputRef && <Entry
                                             inputRef={card?.inputRef} 
                                             errorMsg={card?.errorMsg} 
@@ -132,8 +135,12 @@ export const AdminSettings = () =>{
                                             type={card?.type}
                                         />}
                                     </div>
-                                    <WhatsThis cssClass="float-bottom-right pad" info={card?.info}/>
                                 </div>
+                                <WhatsThis 
+                                    cssClass="float-bottom-right pad" 
+                                    info={card?.info}
+                                    style={{marginRight:"15px",fontSize:"20px"}}
+                                />
                             </div>
                         ))}
                     </div>

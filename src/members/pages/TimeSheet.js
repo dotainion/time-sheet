@@ -8,15 +8,10 @@ import { TimeCard } from '../../components/widgets/TimeCard';
 
 
 export const TimeSheet = () =>{
-    const { user } = useAuth();
+    /*const { user } = useAuth();
 
     const [showView, setShowView] = useState(false);
     const [schedules, setSchedules] = useState([]);
-
-    const options = [[
-        {title:"Calendar view", command: ()=>setShowView(false)},
-        {title:"List view", command: ()=>setShowView(true)}
-    ]];
 
     const initSchedule = async() =>{
         const result = await getSchedule(user?.id);
@@ -25,13 +20,13 @@ export const TimeSheet = () =>{
 
     useEffect(()=>{
         initSchedule();
-    }, []);
+    }, []);*/
     return(
         <UserNavBar>
             {/*<Modal isOpen={!showView}>
                 <EventCalendar readOnly tasksAsign={schedules} />
             </Modal>*/}
-            <TimeCard isOpen={showView} useSchedule />
+            <TimeCard isOpen useSchedule />
         </UserNavBar>
     )
 }
