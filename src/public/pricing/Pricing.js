@@ -4,6 +4,12 @@ import { BENEFITS } from '../../contents/aboutus/aboutus';
 
 
 export const Pricing = () =>{
+    const style = {
+        color: "white",
+        backgroundImage: "none",
+        boxShadow: "2px 2px 5px black",
+        backgroundColor:"rgb(0,0,0,0.50)"
+    }
     const prices = [
         {
             title: "FREE",
@@ -104,10 +110,14 @@ export const Pricing = () =>{
         }
     ]
     return(
-        <div className="" style={{backgroundColor:"white"}}>
+        <div className="pricing-page" style={{backgroundColor:"white"}}>
+            <div className="header-huge" style={{marginTop:"20px",textAlign:"center",color:"white"}}>
+                <div>TIME SHEET APPLICATION</div>
+                <div>PRICING</div>
+            </div>
             <div className="price-main-container d-flex-on-mobile">
                 {prices.map((price, key)=>(
-                    <div className="price-container" key={key}>
+                    <div className="price-container" style={{...style}} key={key}>
                         <div className="price-title">{price.title}</div>
                         <div className="price-sub-container">
                             <div className="price-cost">
@@ -134,7 +144,7 @@ export const Pricing = () =>{
             <div className="welcome-card-container">
                 {BENEFITS.map((benefit, key)=>(
                     <div className="welcome-card" key={key}>
-                        <div className="welcome-inner-card">
+                        <div className="welcome-inner-card" style={{...style}}>
                             <benefit.icon style={{fontSize:"180px",color:"orange"}} />
                             <div>{benefit.title}</div>
                         </div>

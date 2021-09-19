@@ -217,6 +217,12 @@
   width: 140px;
   margin: 3px;
 }
+.schedule-calendar-container{
+  display: inline;
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
 .input{
   outline: none;
   padding: 5px;
@@ -271,16 +277,6 @@
   width: 104.5%;
   min-height: 80px;
   padding-left: 8px;
-}
-.input{
-  padding: 10px;
-  font-size: inherit;
-  outline: none;
-  margin-right: 350px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  cursor: text;
-  border: 1px solid gray;
 }
 .input-hover:hover{
   transform: scale(1.05);
@@ -625,19 +621,32 @@
   background-color: var(--primary-color);
   box-shadow: 2px 2px 5px rgb(0, 0, 0, 0.50);
 }
-
+.creds-input{
+  padding: 10px;
+  font-size: inherit;
+  outline: none;
+  margin-right: 350px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  cursor: text;
+  border: 1px solid gray;
+}
+.pricing-page{
+  height: 100vh;
+  overflow-y: auto;
+  background-size: cover;
+  background-image: url(../images/pricing-bg.jpg);
+}
 .price-main-container{
   display: flex;
   margin: 60px;
 }
 .price-container{
-  /*width: 100%;*/
   width: 25%;
   margin: 20px;
   text-align: left;
   user-select: none;
   background-color: white;
-  box-shadow: 4px 4px 10px var(--shadow);
 }
 .price-sub-container{
   padding: 30px;
@@ -645,6 +654,7 @@
 .price-title{
   padding: 10px;
   color: white;
+  font-weight: bold;
   background-color: teal;
 }
 .price-cost{
@@ -657,6 +667,7 @@
   font-size: 15px;
 }
 .price-button{
+  width: 70%;
   padding: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -664,7 +675,7 @@
   color: white;
   cursor: pointer;
   background-color: teal;
-  box-shadow: 2px 2px 5px var(--shadow);
+  box-shadow: 2px 2px 5px black;
 }
 .price-button:hover{
   background-color: rgb(2, 172, 172);
@@ -678,12 +689,18 @@
   height: 400px;
 }
 .welcome-inner-card{
-  margin: 20px;
   width: 100%;
+  margin: 20px;
   padding: 50px;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
   text-align: center;
-  background-color: white;
+  position: relative;
+  background-size: cover;
+  background-position: center;
   box-shadow: 2px 2px 10px var(--shadow);
+  background-image: url(../images/card-image.jpg);
 }
 .welcome-card-container{
   text-align: center;
@@ -853,4 +870,28 @@
 }
 .grid-single:hover{
   color: dodgerblue;
+}
+.landing-page{
+  height: 100vh;
+  user-select: none;
+}
+.landing{
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url(../images/time-tracker.jpg);
+}
+.landing-nav{
+  color: white;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.landing-nav:hover{
+  color: black;
+  background-color: white;
 }

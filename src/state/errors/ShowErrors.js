@@ -3,10 +3,11 @@ import { useError } from '../errors/Error';
 
 
 export const ShowErrors = () =>{
-    const { error } = useError();
+    const { error, status } = useError();
     return(
         <div className="float-top-center error">
-            {error?.trim?.() && <div style={{padding:"5px"}}>{error}</div>}
+            {error?.trim?.() && !status?.trim?.() && <div style={{padding:"5px"}}>{error}</div>}
+            {status?.trim?.() && <div style={{padding:"5px",color:"white"}}>{status}</div>}
         </div>
     )
 }

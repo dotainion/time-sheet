@@ -9,9 +9,11 @@ let extentionRequire = "";
 let holdError = [];
 export const ErrorHandler = ({children}) =>{
     const [error, setError] = useState("");
+    const [status, setStatus] = useState("");
     const [isError, setIsError] = useState(false);
 
     const errorClearRef = useRef();
+    const statusClearRef = useRef();
 
     const setPayload = (msg) =>{
         setIsError(true);
@@ -71,13 +73,26 @@ export const ErrorHandler = ({children}) =>{
         return STATE;
     }
 
+    const proccessStatus = (message, clearTimer=true) =>{
+        setStatus(message);
+        clearTimeout(statusClearRef.current);
+        if (clearTimer){
+            statusClearRef.current = setTimeout(() => {
+                setError("");
+            }, 5000);
+        }
+    }
+
     const providerValue = {
         error,
         isError,
+        status,
+        setStatus,
         setPayload,
         processPayload,
         clearPayload,
-        checkObject
+        checkObject,
+        proccessStatus
     }
     return(
         <ErrorHandlerSate.Provider value={providerValue}>

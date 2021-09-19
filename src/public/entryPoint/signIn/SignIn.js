@@ -8,7 +8,7 @@ import { useStore } from '../../../state/stateManagement/stateManagement';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { FcCalendar } from 'react-icons/fc';
 import { FaUsers } from 'react-icons/fa';
-import { LoginSignInContainer } from '../widgets/LoginSignInContainer';
+import { SignInRegisterContainer } from '../widgets/SignInRegisterContainer';
 
 
 export const SignIn = () =>{
@@ -45,9 +45,9 @@ export const SignIn = () =>{
         }
     }, [user]); 
     return(
-        <LoginSignInContainer loading={loading} onAuthenticate={login} authName="LOGIN">
-            <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
-            <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
-        </LoginSignInContainer>
+        <SignInRegisterContainer loading={loading} onAuthenticate={login} authName="LOGIN">
+            <input ref={emailRef} className="creds-input input-hover lower-case block pad" placeholder="Your email" type="email" />
+            <input ref={passwordRef} className="creds-input input-hover block pad" placeholder="Your password" type="password" />
+        </SignInRegisterContainer>
     )
 }

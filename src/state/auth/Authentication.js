@@ -139,6 +139,14 @@ export const AuthContext = ({children}) =>{
         }
     }
 
+    const sendResetPasswordToEmail = async (email) =>{
+        try{
+            await auth.sendPasswordResetEmail(email);
+        }catch(error){
+            return {error: error.message};
+        }
+    }
+
     const storeHashCreds = (email, password) =>{
         tools.store.setAuthAccess(email, password);
     }
@@ -186,7 +194,8 @@ export const AuthContext = ({children}) =>{
         resetPasswordViaEmail,
         initUser,
         changeEmail,
-        changeUserEmail
+        changeUserEmail,
+        sendResetPasswordToEmail
     }
     return(
         <AuthContextProvider.Provider value={providerValue}>

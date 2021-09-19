@@ -5,7 +5,7 @@ import { ADMINISTRATOR, ADMIN_SUPERVISER } from '../../../contents/AuthValue';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes, routes } from '../../../utils/routes/Routes';
 import { useStore } from '../../../state/stateManagement/stateManagement';
-import { LoginSignInContainer } from '../widgets/LoginSignInContainer';
+import { SignInRegisterContainer } from '../widgets/SignInRegisterContainer';
 
 export const Register = () =>{
     const history = useHistory();
@@ -41,10 +41,6 @@ export const Register = () =>{
         }
     }
 
-    const onEnterPress = (key) =>{
-        if (key === "Enter") onRegister();
-    }
-
     useEffect(()=>{
         if (isAuthenticated){
             setLoader(false);
@@ -54,11 +50,11 @@ export const Register = () =>{
     }, [user]);
 
     return(
-        <LoginSignInContainer loading={loading} onAuthenticate={onRegister} authName="REGISTER">
-            <input ref={firstNameRef} className="input input-hover title-case block pad" placeholder="Your first name" type="text" />
-            <input ref={lastNameRef} className="input input-hover title-case block pad" placeholder="Your last name" type="text" />
-            <input ref={emailRef} className="input input-hover lower-case block pad" placeholder="Your email" type="email" />
-            <input ref={passwordRef} className="input input-hover block pad" placeholder="Your password" type="password" />
-        </LoginSignInContainer>
+        <SignInRegisterContainer loading={loading} onAuthenticate={onRegister} authName="REGISTER">
+            <input ref={firstNameRef} className="creds-input input-hover title-case block pad" placeholder="Your first name" type="text" />
+            <input ref={lastNameRef} className="creds-input input-hover title-case block pad" placeholder="Your last name" type="text" />
+            <input ref={emailRef} className="creds-input input-hover lower-case block pad" placeholder="Your email" type="email" />
+            <input ref={passwordRef} className="creds-input input-hover block pad" placeholder="Your password" type="password" />
+        </SignInRegisterContainer>
     )
 }

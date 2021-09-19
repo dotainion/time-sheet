@@ -1,19 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../../../state/auth/Authentication';
-import { adminRoutes, routes } from '../../../utils/routes/Routes';
+import { routes } from '../../../utils/routes/Routes';
 import { LoginSignInNav } from '../../../layouts/LoginSignInNav';
-import { useError } from '../../../state/errors/Error';
-import { SideInfo } from '.././widgets/SideInfo';
-import { ADMIN_SUPERVISER } from '../../../contents/AuthValue';
-import { useStore } from '../../../state/stateManagement/stateManagement';
-import { InputEntry } from '../../../components/widgets/InputEntry';
 import { FcCalendar } from 'react-icons/fc';
 import { FaUsers } from 'react-icons/fa';
+import { AiOutlineMail } from 'react-icons/ai';
 import { ShowErrors } from '../../../state/errors/ShowErrors';
 
 
-export const LoginSignInContainer = ({onAuthenticate, authName, loading, children}) =>{
+export const SignInRegisterContainer = ({onAuthenticate, authName, loading, icon, children}) =>{
     const history = useHistory();
 
     const onKeyPress = (key) =>{
@@ -23,8 +18,8 @@ export const LoginSignInContainer = ({onAuthenticate, authName, loading, childre
     }
     return(
         <div className="single-page">
-            <div className="flex" style={{height:"100vh"}}>
-                <div className="max-size relative">
+            <div className="flex d-flex-on-mobile" style={{height:"100vh"}}>
+                <div className="max-size relative hide-on-mobile">
                     <div className="creds-left-info float-center" style={{textAlign:"center"}}>
                         <div style={{borderBottom:"1px solid white"}}>
                             <FcCalendar style={{marginRight:"10px"}} />
@@ -35,18 +30,23 @@ export const LoginSignInContainer = ({onAuthenticate, authName, loading, childre
                             <label 
                                 onClick={()=>history.push(routes.pricing)} 
                                 className="cred-label2"
-                                style={{color:"navy"}}
+                                style={{color:"orange"}}
                             >here</label>
                         </div>
                     </div>
                 </div>
-                <div style={{width:"10px"}}>
+                <div className="hide-on-mobile" style={{width:"10px"}}>
                     <div className="creds-seperator" />
                 </div>
                 <div className="max-size relative">
                     <div onKeyDown={(e)=>onKeyPress(e.key)} className="creds-container float-center">
-                        <ShowErrors/>
-                        <FaUsers className="pad" style={{fontSize:"50px"}} />
+                        <ShowErrors />
+                        {
+                            icon !== "email"? 
+                            <FaUsers className="pad" style={{fontSize:"50px"}} />:
+                            <AiOutlineMail className="pad" style={{fontSize:"50px",color:authName === "RESEND" && "green"}} />
+
+                        }
                         {children}
                         <button onClick={onAuthenticate} disabled={loading} className="btn btn-hover creds-btn">{authName}</button>
                         <LoginSignInNav type={authName} />

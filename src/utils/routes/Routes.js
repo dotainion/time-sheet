@@ -4,6 +4,7 @@ const signIn = "/sign-in";
 const register = "/register";
 const pricing = "/pricing";
 const grid = "/grid-navigation";
+const resetPassword = '/reset-password';
 
 export const adminRoutes = {
     welcome: welcomePage,
@@ -12,6 +13,7 @@ export const adminRoutes = {
     register: register,
     pricing: pricing,
     grid: grid,
+    resetPassword: resetPassword,
     addUser: "/add-user",
     users: "/users",
     logs: "/admin-logs",
@@ -33,6 +35,7 @@ export const routes = {
     register: register,
     pricing: pricing,
     grid: grid,
+    resetPassword: resetPassword,
     clocked: "/clockec-in-out",
     logs: "/logs",
     settings: "/settings",

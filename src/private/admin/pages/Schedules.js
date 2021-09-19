@@ -245,7 +245,7 @@ export const Schedules = () =>{
                         }
                     </div>
                 </div>
-                <div className="inline" style={{padding:"20px",paddingLeft:"40px",paddingRight:"40px"}}>
+                <div className="schedule-calendar-container">
                     <div style={{color:"var(--primary-color)",fontSize:"20px",marginBottom:"20px"}}>
                         <b>{activeMonth?"Schedule by month":"Schedlute by week"}('s)</b>
                     </div>
@@ -261,14 +261,20 @@ export const Schedules = () =>{
                             ))}
                         </div>
                         <div className="flex relative" style={{marginTop:"10px"}}>
-                            <div className="float-top-right">
+                            <div hidden className="float-top-right">
                                 <Button onClick={onOpenAddUIndividualTime} label="Individual time" />
                             </div>
-                            <div><div>From</div><TimePicker inputRef={startAtRef} error={startAtError} clearError={setStartAtError} info="Select a start time" /></div>
-                            <div style={{marginLeft:"10px"}}><div>To</div><TimePicker inputRef={endAtRef} error={endAtError} clearError={setEndAtError} info="Select a end time" /></div>
-                            <WidgetsInfo style={{marginTop:"40px"}} info="Select {from and to} time entry or choose individual time button to add individual time to date selected.">
+                            <div style={{}}>
+                                <div>From</div>
+                                <TimePicker inputRef={startAtRef} error={startAtError} clearError={setStartAtError} info="Select a start time" />
+                            </div>
+                            <div style={{marginLeft:"10px"}}>
+                                <div>To</div>
+                                <TimePicker inputRef={endAtRef} error={endAtError} clearError={setEndAtError} info="Select a end time" />
+                            </div>
+                            {false && <WidgetsInfo style={{marginTop:"40px"}} info="Select {from and to} time entry or choose individual time button to add individual time to date selected.">
                                 <BsQuestionCircle style={{fontSize:"25px",marginLeft:"10px",color:"var(--primary-color)"}} />
-                            </WidgetsInfo>
+                            </WidgetsInfo>}
                         </div>
                         <div><b>Reapeat</b></div>
                         <SelectOptions onChange={toggleSelectWeek} inputRef={repeatSelectRef} options={["Weekly", "Monthly", "Yearly"]} disable={never} info="Select repeat" />

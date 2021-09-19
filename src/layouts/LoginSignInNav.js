@@ -7,17 +7,19 @@ import { AiOutlineMail } from 'react-icons/ai';
 export const LoginSignInNav = ({type}) =>{
     const history = useHistory();
 
-    const style = {
-        backgroundColor:"transparent",
-        boxShadow: "none",
-        float:"right",
+    const style = (opt) =>{
+        return {
+            backgroundColor:"transparent",
+            boxShadow: "none",
+            float:["SEND", "RESEND"]?.includes?.(opt) ? "left": "right",
+        }
     }
 
     return(
         <div style={{marginTop:"15px"}}>
-            <label onClick={()=>{}} className="cred-label btn-hover">Forget passwrod</label>
-            <button hidden={type !== "LOGIN"? false: true} onClick={()=>history.push(routes.signIn)} className="btn btn-hover" style={{...style}}>LOGIN</button>
-            <button hidden={type !== "REGISTER"? false: true} onClick={()=>history.push(routes.register)} className="btn btn-hover" style={{...style}}>REGISTER</button>
+            <label hidden={!["SEND", "RESEND"]?.includes?.(type)? false: true} onClick={()=>history.push(routes.resetPassword)} className="cred-label btn-hover">Forget passwrod</label>
+            <button hidden={type !== "LOGIN"? false: true} onClick={()=>history.push(routes.signIn)} className="btn btn-hover" style={{...style(type)}}>LOGIN</button>
+            <button hidden={type !== "REGISTER"? false: true} onClick={()=>history.push(routes.register)} className="btn btn-hover" style={{...style()}}>REGISTER</button>
         </div>
     )
 }

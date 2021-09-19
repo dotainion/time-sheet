@@ -35,6 +35,7 @@ import { AdminNotifications } from "./private/admin/pages/Notifications";
 import { Test } from "./test/Test";
 import { Schedules } from "./private/admin/pages/Schedules";
 import { Grid } from './grid/Grid';
+import { ResetPassword } from "./public/entryPoint/resetPassword/ResetPassword";
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                 <Route exact path={routes.pricing} render={()=><Pricing/>}/>
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
+                <Route exact path={routes.resetPassword} render={()=><ResetPassword/>}/>
                 {/******************************************************************************/}
                 <Route exact path={adminRoutes.grid} render={()=><Authenticate Component={Grid}/>}/>
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
