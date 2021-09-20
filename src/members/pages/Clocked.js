@@ -147,6 +147,14 @@ export const Clocked = () =>{
                         <div>START AT: {startAt}</div>
                         <div>END AT: {endAt}</div>
                     </div>
+                    <div className="lapstime">
+                        <TimerComponent labels={{ minutes: 'min' }}/>
+                        <div hidden={isTimerActive()} className="max-size float-center">
+                            <div className="max-size relative" style={{backgroundColor:"white"}}>
+                                <div className="float-center">Start your day</div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="flex">
                         <SiSatDot1 className="pad" style={{textAlign:"left",color:pingStatus()}}/>
                         <div className="relative">
@@ -155,10 +163,7 @@ export const Clocked = () =>{
                     </div>
                 </div>
                 <Clock value={value} className="class1 class2 class3" size={300} />                
-                <div id="timerRef" className="lapstime">
-                    <TimerComponent labels={{ minutes: 'min' }}/>
-                </div>
-                <div className="flex centered" style={{width:"330px"}}>
+                <div className="flex centered" style={{width:"330px",marginTop:"40px"}}>
                     <TrackerButton onClick={onStart} label="START" style={{margin:"10px"}} color="green" />
                     <TrackerButton hidden={isPause} onClick={onPause} label="PAUSE" style={{margin:"10px"}} color="yellow" />
                     <TrackerButton hidden={!isPause} onClick={onPlay} label="PLAY" style={{margin:"10px"}} color="blue" />
