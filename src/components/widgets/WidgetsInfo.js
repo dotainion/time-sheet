@@ -12,6 +12,11 @@ export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, 
         setTriggerShowInfo(false);
     }
 
+    const wordLimit = () =>{
+        if (info?.length > 26) return "normal";
+        return "nowrap";
+    }
+
     useEffect(()=>{
         if (triggerShowInfo){
             clearTimeout(timeoutRef.current);
@@ -42,21 +47,21 @@ export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, 
                     className="float-bottom-overflow"
                     style={{
                         color:"white",
-                        backgroundColor:"rgb(0,0,0,0.60)",
                         padding:"2px",
-                        paddingLeft:"10px",
-                        paddingRight:"10px",
                         fontSize:"14px",
-                        zIndex:"99999999",
-                        borderRadius:"5px",
-                        whiteSpace:"normal",
-                        minWidth:"150px",
-                        transform:inline?"translateY(140%)":"translateY(115%)",
-                        boxShadow:"2px 2px 10px var(--shadow-dark)",
-                        border:"1px solid gray",
-                        overflow:"visible",
-                        maxWidth:"300px",
+                        width:wordLimit() === "normal"? "150px": "auto",
                         textAlign:"left",
+                        zIndex:"99999999",
+                        paddingLeft:"10px",
+                        overflow:"visible",
+                        borderRadius:"5px",
+                        paddingRight:"10px",
+                        whiteSpace:wordLimit(),
+                        overflow:"auto",
+                        border:"1px solid gray",
+                        backgroundColor:"rgb(0,0,0,0.60)",
+                        boxShadow:"1px 1px 5px rgb(0,0,0)",
+                        transform:inline?"translateY(140%)":"translateY(115%)",
                         ...infoStyle
                     }}
                 >{info}</div> 

@@ -36,6 +36,7 @@ import { Test } from "./test/Test";
 import { Schedules } from "./private/admin/pages/Schedules";
 import { Grid } from './grid/Grid';
 import { ResetPassword } from "./public/entryPoint/resetPassword/ResetPassword";
+import { Help } from "./help/Help";
 
 
 function App() {
@@ -47,8 +48,9 @@ function App() {
             <ErrorHandler>
               <Switch>
                 <Route exact path="/tests" render={()=><Test/>}/>
-                <Route exact path={routes.pricing} render={()=><Pricing/>}/>
+                <Route exact path={routes.help} render={()=><Help/>}/>
                 <Route exact path={routes.signIn} render={()=><SignIn/>}/>
+                <Route exact path={routes.pricing} render={()=><Pricing/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 <Route exact path={routes.resetPassword} render={()=><ResetPassword/>}/>
                 {/******************************************************************************/}

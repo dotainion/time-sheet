@@ -5,6 +5,7 @@ const register = "/register";
 const pricing = "/pricing";
 const grid = "/grid-navigation";
 const resetPassword = '/reset-password';
+const help = "/help";
 
 export const adminRoutes = {
     welcome: welcomePage,
@@ -14,6 +15,7 @@ export const adminRoutes = {
     pricing: pricing,
     grid: grid,
     resetPassword: resetPassword,
+    help: help,
     addUser: "/add-user",
     users: "/users",
     logs: "/admin-logs",
@@ -35,6 +37,7 @@ export const routes = {
     register: register,
     pricing: pricing,
     grid: grid,
+    help: help,
     resetPassword: resetPassword,
     clocked: "/clockec-in-out",
     logs: "/logs",

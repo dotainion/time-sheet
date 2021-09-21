@@ -15,64 +15,70 @@ import { AiFillMessage } from 'react-icons/ai';
 import { RiSettings5Fill } from 'react-icons/ri';
 import { ImNotification } from 'react-icons/im';
 import { HiUserAdd } from 'react-icons/hi';
+import { MdHelp } from 'react-icons/md';
 
 
 export const ADMIN_SIDE_NAV = [
     {
-        title: "Menu",
+        title: "MENU",
         icon: GiHamburgerMenu,
         route: null,
         info: "Expand menu option",
     },{
-        title: "Grid",
+        title: "GRID",
         icon: BsGrid3X3Gap,
         route: adminRoutes.grid,
         info: "Grid navigation"
     },{
-        title: "Add User",
+        title: "ADD USER",
         icon: HiUserAdd,
         route: adminRoutes.addUser,
         info: "Add a new member"
     },{
-        title: "Users",
+        title: "USERS",
         icon: FaUsers,
         route: adminRoutes.users,
         info: "View all users"
     },{
-        title: "Logs",
+        title: "LOGS",
         icon: FaRegClock,
         route: adminRoutes.logs,
         info: "View users logs"
     },{
-        title: "Schedule",
+        title: "SCHEDULE",
         icon: VscCalendar,
         route: adminRoutes.schedule,
         info: "Schedule a task"
     },{
-        title: "Message",
+        title: "MESSAGE",
         icon: AiFillMessage,
         route: adminRoutes.adminMessages,
         info: "Send messages"
     },{
-        title: "Notification",
+        title: "NOTIFICATION",
         icon: ImNotification,
         route: adminRoutes.notification,
         info: "Assign or view notification"
     },{
-        title: "Settings",
+        title: "SETTINGS",
         icon: RiSettings5Fill,
         route: adminRoutes.settings,
         info: "Update settigns"
+    },{
+        title: "HELP",
+        route: adminRoutes.help,
+        icon: MdHelp,
+        info: ""
     }
 ];
 
 export const USER_SIDE_NAV = [
     {
-        title: "Menu",
+        title: "MENU",
         icon: GiHamburgerMenu,
         info: "Expand menu option"
     },{
-        title: "Grid",
+        title: "GRID",
         icon: BsGrid3X3Gap,
         route: routes.grid,
         info: "Grid navigation"
@@ -105,6 +111,11 @@ export const USER_SIDE_NAV = [
         title: "SETTINGS",
         route: routes.settings,
         icon: RiSettings5Fill,
+        info: ""
+    },{
+        title: "HELP",
+        route: routes.help,
+        icon: MdHelp,
         info: ""
     }
 ];
