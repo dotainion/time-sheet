@@ -16,8 +16,8 @@ code {
   --bg: rgb(233, 232, 232);
   --hover-bg: lightgray;
   --hover-nav: rgb(37, 37, 37);
-  --shadow: lightgray;
-  --shadow-dark: rgb(170, 169, 169);
+  --shadow: rgb(0, 0, 0, 0.30);
+  --shadow-dark: rgb(0, 0, 0, 0.50);
   --border-focus: skyblue;
   --border-hover: dodgerblue;
   --border: lightgray;

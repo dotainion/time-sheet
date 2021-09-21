@@ -58,38 +58,36 @@ export const Grid = () =>{
                     <TiArrowBack onClick={()=>history.goBack()} style={{fontSize:"40px"}} />
                 </WidgetsInfo>
             </div>
-            <div className="flex">
-                <div className="max-size">
-                    <div className="grid-card-container">
-                        {navigations.map((nav, key)=>(
-                            <div onClick={()=>history.push(nav?.route)} style={{display:hideCard(key)}} className="grid-card" key={key}>
-                                <div className="grid-inner-card">
-                                    <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />
-                                    <div className="float-bottom-left pad">{nav?.title}</div>
-                                </div>
+            <div className="float-top-right" style={{color:"white",top:"20px"}}>
+                <Profile
+                    floatLeft
+                    firstName={user?.firstName}
+                    lastName={user?.lastName}
+                    image={user?.image}
+                    role={user?.role}
+                />
+            </div>
+            <div className="max-size">
+                <div className="grid-card-container">
+                    {navigations.map((nav, key)=>(
+                        <div onClick={()=>history.push(nav?.route)} style={{display:hideCard(key)}} className="grid-card" key={key}>
+                            <div className="grid-inner-card">
+                                <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />
+                                <div className="float-top-left pad">{nav?.title}</div>
                             </div>
-                        ))}
-                    </div>
-                    <div style={{color:"red",marginTop:"20px",fontSize:"25px",marginLeft:"50px"}}>Apps</div>
-                    <div className="grid-card-container">
-                        {APPS.map((nav, key)=>(
-                            <div onClick={nav?.action} className="grid-card" key={key}>
-                                <div className="grid-inner-card">
-                                    {nav?.icon && <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />}
-                                    <div className="float-bottom-left pad">{nav?.title}</div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                        </div>
+                    ))}
                 </div>
-                <div style={{color:"white"}}>
-                    <Profile
-                        floatLeft
-                        firstName={user?.firstName}
-                        lastName={user?.lastName}
-                        image={user?.image}
-                        role={user?.role}
-                    />
+                <div style={{color:"red",marginTop:"20px",fontSize:"25px",marginLeft:"50px"}}>Apps</div>
+                <div className="grid-card-container">
+                    {APPS.map((nav, key)=>(
+                        <div onClick={nav?.action} className="grid-card" key={key}>
+                            <div className="grid-inner-card">
+                                {nav?.icon && <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />}
+                                <div className="float-bottom-left pad">{nav?.title}</div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
             <Backdrop 

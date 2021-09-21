@@ -9,7 +9,6 @@ import { tools } from '../../utils/tools/Tools';
 import { addEndLog, addStartLog, getInProgressLog } from '../../database/logs/LogDb';
 import { TrackerButton } from '../widgets/TrackerButton';
 import { SiSatDot1 } from 'react-icons/si';
-import { addBreak, endBreak, getBreak } from '../../database/break/Break';
 import { Alert } from '../../components/other/Alert';
 
 
@@ -27,6 +26,8 @@ const {
     }
 });
 
+
+let IN_PROGRESSING_LOG = [];
 export const Clocked = () =>{
     const { user } = useAuth();
 
@@ -74,18 +75,23 @@ export const Clocked = () =>{
     }
 
     const startingBreak = async() =>{
-        await addBreak({
-            id: user?.id,
-            start: tools.time.digits(),
-            end: "none"//NOTE: remain string "none"
-        });
+        let sBreak = IN_PROGRESSING_LOG?.break || [];
+        sBreak.push({start: tools.time.digits(), end: ""});
+        await addEndLog({break: sBreak}, user?.id);
+        IN_PROGRESSING_LOG["break"] = sBreak;
         setIsPause(true);
     }
 
     const endingBreak = async() =>{
-        await endBreak({
-            end: tools.time.digits()
-        }, user?.id);
+        let sBreak = IN_PROGRESSING_LOG?.break || [];
+        let holdBreaks = [];
+        for (let obj of sBreak){
+            if (!obj?.end){
+                holdBreaks.push({start: obj?.start, end: tools.time.digits()});
+            }else holdBreaks.push(obj);
+        } 
+        await addEndLog({break: holdBreaks}, user?.id);
+        IN_PROGRESSING_LOG["break"] = holdBreaks;
         setIsPause(false);
     }
 
@@ -106,8 +112,8 @@ export const Clocked = () =>{
     }
 
     const setStartTime = async() =>{
-        const time = await getInProgressLog(user?.id);
-        setStartAt(tools.time.time(time?.[0]?.info?.start) || "");
+        IN_PROGRESSING_LOG = await getInProgressLog(user?.id);
+        setStartAt(tools.time.time(IN_PROGRESSING_LOG?.[0]?.info?.start) || "");
     }
 
     const isActive = () =>{
@@ -120,18 +126,9 @@ export const Clocked = () =>{
         else return "blue"
     }
 
-    const initIsBreak = async() =>{
-        const breaks = await getBreak(user?.id);
-        if (breaks.length) setIsPause(true);
-    }
-
     useEffect(()=>{
         if (!isActive()) stopTimer();
         else setStartTime();
-    }, []);
- 
-    useEffect(() => {
-        initIsBreak();
     }, []);
 
     useEffect(() => {

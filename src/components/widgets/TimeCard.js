@@ -122,8 +122,9 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 });
             }else{
                 holdLogs.push({
-                    startTime:log?.info?.start, 
-                    endTime:log?.info?.end
+                    startTime: log?.info?.start, 
+                    endTime: log?.info?.end,
+                    break: log?.info?.break
                 });
             }
         }
@@ -253,25 +254,12 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 <div className="time-card-content">{useSchedule?"Date":"Day"}</div>
                 <div className="time-card-content">Hours</div>
                 <div className="time-card-content">Start</div>
+                <div className="time-card-content">End</div>
                 <div className="time-card-content relative">
-                    <span>End</span>
-                    <div 
-                        className="float-right" 
-                        style={{
-                            right:"20px",
-                            fontSize:"25px",
-                            display:!ADMIN_SUPERVISER.includes(user?.role) && "none"
-                        }}
-                    >
-                        <WidgetsInfo info="Refresh search">
-                            <BiRefresh
-                                className={`icon-hover ${loading && "spin"}`} 
-                                style={{
-                                    borderRadius:"50%",
-                                    cursor:"pointer"
-                                }}
-                                onClick={()=>handleOnUsersSelect(userSelectedId.currentd)}
-                            />
+                    <div>Break</div>
+                    <div className="float-right" style={{right:"20px",fontSize:"25px",display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}>
+                        <WidgetsInfo info="Refresh search" infoStyle={{left:"-80px"}}>
+                            <BiRefresh onClick={()=>handleOnUsersSelect(userSelectedId.currentd)} className={`icon-hover ${loading && "spin"}`} style={{borderRadius:"50%",cursor:"pointer"}}/>
                         </WidgetsInfo>
                     </div>
                 </div>
@@ -295,6 +283,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 <div className="time-card-content no-wrap" style={{color:"orange"}}>{`${time?.firstName} ${time?.lastName}`}</div>
                                 <div className="time-card-content"/>
                                 <div className="time-card-content"/>
+                                <div className="time-card-content"/>
                             </div>
                             :
                             <div 
@@ -307,9 +296,10 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                                 <div className="time-card-content">{!useSchedule? tools.time.subTimeReturnObj(time?.info?.end, time?.info?.start).dateString: time?.hours}</div>
                                 <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.start): time?.startTime}</div>
                                 <div className="time-card-content">{!useSchedule? tools.time.time(time?.info?.end): time?.endTime}</div>
+                                <Breaks cssClass="time-card-content" breaks={time?.info?.break} />
                                 {time?.info && time?.info?.startTime && <div hidden className="float-center time-card-comment hide">{!useSchedule? null: time?.info}</div>}
                                 <div hidden className="float-right" style={{right:"40px",fontSize:"20px"}} id={`time-card${key}`}>
-                                    <WidgetsInfo info="Send notification to this user">
+                                    <WidgetsInfo info="Send notification to this user" infoStyle={{left:"-120px"}}>
                                         <IoMdNotificationsOutline
                                             style={{display:!ADMIN_SUPERVISER.includes(user?.role) && "none"}}
                                             onClick={()=>{
@@ -366,6 +356,38 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                 onSelect={(date)=>selectedToDate.current = date} 
             />
             <LoadingBar isOpen={loading} />
+        </div>
+    )
+}
+
+const Breaks = ({cssClass, breaks}) =>{
+    const [showBreaks, setShowBreaks] = useState(false);
+
+    const toggleShow = () =>{
+        setShowBreaks(!showBreaks);
+    }
+
+    return(
+        <div onClick={toggleShow} className={`${cssClass} relative`}>
+            <div className="inline time-card-break-btn">Breaks</div>
+            <div hidden={!showBreaks} className="float-top-left">
+                {breaks?.map((brk, key)=>(
+                    <div className="flex" style={{fontSize:"14px"}} key={key}>
+                        <div style={{margin:"5px",borderBottom:"1px solid white"}}>
+                            <div>Start</div>
+                            <div>{tools.time.time(brk?.start)}</div>
+                        </div>
+                        <div style={{margin:"5px",borderBottom:"1px solid white"}}>
+                            <div>End</div>
+                            <div>{tools.time.time(brk?.end)}</div>
+                        </div>
+                        <div style={{margin:"5px",borderBottom:"1px solid white"}}>
+                            <div>Total</div>
+                            <div>{tools.subTimeStringWithSeconds(tools.time.time(brk?.end), tools.time.time(brk?.start))}</div>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

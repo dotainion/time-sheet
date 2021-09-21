@@ -21,7 +21,7 @@ export const Welcome = () =>{
 
     const [benefits, setBenefits] = useState([]);
 
-    const initBenefits = () =>{
+    const combindBenefitsByThree = () =>{
         let index = 0;
         let temp = [];
         let cupleUp = [];
@@ -39,7 +39,9 @@ export const Welcome = () =>{
     }
 
     useEffect(()=>{
-        initBenefits();
+        //combindBenefitsByThree();
+        //bypass welcome screen and go straight to application.
+        onContinue();
     }, []);
 
     return (

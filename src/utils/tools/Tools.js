@@ -308,12 +308,21 @@ class Tools{
         }
         return tempArray;
     }
+    stripAmPm(str){
+        if (str){
+            return str
+            .toLowerCase()
+            .replace("am", "")
+            .replace("pm", "")
+        }
+        return "";
+    }
     addTimeString(date1, date2){
         if (!date1 && !date2) return null;
         if (!date1 && date2) return date2;
         if (date1 && !date2) return date1;
-        const [hr, min] = date1.split(":");
-        const [hr2, min2] = date2.split(":");
+        const [hr, min] = this.stripAmPm(date1).split(":");
+        const [hr2, min2] = this.stripAmPm(date2).split(":");
         let hour = parseInt(hr) + parseInt(hr2);
         let minute = parseInt(min) + parseInt(min2);
         let index = 0;
@@ -326,6 +335,83 @@ class Tools{
         }
         minute = index;
         return `${hour}:${minute}`;
+    }
+    addTimeStringWithSeconds(date1, date2){
+        if (!date1 && !date2) return null;
+        if (!date1 && date2) return date2;
+        if (date1 && !date2) return date1;
+        const [hr, min, sec] = this.stripAmPm(date1).split(":");
+        const [hr2, min2, sec2] = this.stripAmPm(date2).split(":");
+        let hour = parseInt(hr) + parseInt(hr2);
+        let minute = parseInt(min) + parseInt(min2);
+        let second = parseInt(sec) + parseInt(sec2);
+        let index = 0;
+        for (let i=0; i<second; i++){
+            index ++;
+            if (index === 60){
+                minute ++;
+                index = 0;
+            }
+        }
+        second = index;
+        index = 0;
+        for (let i=0; i<minute; i++){
+            index ++;
+            if (index === 60){
+                hour ++;
+                index = 0;
+            }
+        }
+        minute = index;
+        return `${hour}:${minute}:${second}`;
+    }
+    subTimeString(date1, date2){
+        if (!date1 && !date2) return null;
+        if (!date1 && date2) return date2;
+        if (date1 && !date2) return date1;
+        const [hr, min] = this.stripAmPm(date1).split(":");
+        const [hr2, min2] = this.stripAmPm(date2).split(":");
+        let hour = parseInt(hr) - parseInt(hr2);
+        let minute = parseInt(min) - parseInt(min2);
+        let index = 0;
+        for (let i=0; i<minute; i++){
+            index ++;
+            if (index === 60){
+                hour ++;
+                index = 0;
+            }
+        }
+        minute = index;
+        return `${hour}:${minute}`;
+    }
+    subTimeStringWithSeconds(date1, date2){
+        if (!date1 && !date2) return null;
+        if (!date1 && date2) return date2;
+        if (date1 && !date2) return date1;
+        const [hr, min, sec] = this.stripAmPm(date1).split(":");
+        const [hr2, min2, sec2] = this.stripAmPm(date2).split(":");
+        let hour = parseInt(hr) - parseInt(hr2);
+        let minute = parseInt(min) - parseInt(min2);
+        let second = parseInt(sec) - parseInt(sec2);
+        let index = 0;
+        for (let i=0; i<second; i++){
+            index ++;
+            if (index === 60){
+                minute ++;
+                index = 0;
+            }
+        }
+        second = index;
+        index = 0;
+        for (let i=0; i<minute; i++){
+            index ++;
+            if (index === 60){
+                hour ++;
+                index = 0;
+            }
+        }
+        minute = index;
+        return `${hour}:${minute}:${second}`;
     }
 }
 

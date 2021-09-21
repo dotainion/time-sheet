@@ -22,9 +22,12 @@ class XlFile{
   data = [];
   fileName = "time-tracker";
   userLabel = ["User ID","Email","Role","FirstName","LastName"];
-  dateLabel = ["Start Date","Start Time","End Date","End Time","Total Time"];
-  totalLabel = ["","","","","Grand Total"];
+  dateLabel = ["Date","Start Time","Break","End Time","Total Time"];
+  totalLabel = ["","","","","Total Hours"];
+  totalBreakLabel = ["","","","","Total Break"];
+  grandTotalLabel = ["","","","","Grand Break"];
   date = null;
+  breaks = "";
   colorToggle = false;
 
   buildLabel(arrayObj){
@@ -51,18 +54,27 @@ class XlFile{
   }
 
   buildDate(obj){
-    const [startTime, endTime, total, startDate, endDate] = this.extract(obj);
+    const [startTime, endTime, total, dDate, dBreak] = this.extract(obj);
     return [
-      {type:String, value: startDate},
+      {type:String, value: dDate},
       {type:String, value: startTime},
-      {type:String, value: endDate},
+      {type:String, value: dBreak},
       {type:String, value: endTime},
       {type:String, value: total}
     ];
   }
 
   buildTotal(total){
-    this.clear();
+    return [
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: ""},
+      {type:String, value: total}
+    ]
+  }
+
+  buildBreakTotal(total){
     return [
       {type:String, value: ""},
       {type:String, value: ""},
@@ -82,6 +94,7 @@ class XlFile{
 
   clear(all=null){
     this.date = null;
+    this.breaks = "";
     this.colorToggle = !this.colorToggle;
     if (all !== null){
       this.data = [];
@@ -123,8 +136,24 @@ class XlFile{
       endTime, 
       total, 
       tools.time.date(timeObj?.startTime),
-      tools.time.date(timeObj?.endTime)
+      this.calcBreak(timeObj?.break)
     ];
+  }
+
+  calcBreak(objBreak){
+    let dDate = "";
+    for (let b of objBreak || []){
+      const smallerNum = tools.time.time(b?.start);
+      const largerNum = tools.time.time(b?.end);
+      if (!dDate){
+        dDate = tools.subTimeStringWithSeconds(largerNum, smallerNum);
+      }else{
+        const dd = tools.subTimeStringWithSeconds(largerNum, smallerNum);
+        dDate = tools.addTimeStringWithSeconds(dDate, dd);
+      }
+    }
+    this.breaks = dDate;
+    return dDate;
   }
 
   total(date=null){
@@ -137,12 +166,28 @@ class XlFile{
     return `${hours}:${minutes}:${seconds}`;
   }
 
+  totalBreak(){
+    return this.breaks;
+  }
+
+  subBreakFromTotal(){
+    let resultes;
+    if (!this.totalBreak()) resultes = this.total();
+    resultes = tools.subTimeStringWithSeconds(this.total(), this.totalBreak());
+    this.clear();
+    return resultes;
+  }
+
   async download(data=[]){
     for (let obj of data){
       if (obj?.id){
         if (this.date !== null){
+          this.data.push(this.buildLabel(this.totalBreakLabel));
+          this.data.push(this.buildBreakTotal(this.totalBreak()));
           this.data.push(this.buildLabel(this.totalLabel));
-          this.data.push(this.buildTotal(this.total()))
+          this.data.push(this.buildTotal(this.total()));
+          this.data.push(this.buildLabel(this.grandTotalLabel));
+          this.data.push(this.buildTotal(this.subBreakFromTotal()));
         }
         this.data.push(this.buildSeparator());
         this.data.push(this.buildLabel(this.userLabel));
