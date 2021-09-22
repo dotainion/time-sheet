@@ -2,15 +2,15 @@ import React from 'react';
 import { WidgetsInfo } from './WidgetsInfo';
 
 
-export const InputCheckbox = ({info, inputRef, onChange, cssClass, inputStyle, label}) =>{
+export const InputCheckbox = ({info, inputRef, onChange, stopPropagation, cssClass, inputStyle, label, id}) =>{
     const onChanged = (e) =>{
         onChange?.(e.target.checked);
     }
     return(
-        <WidgetsInfo info={info}>
+        <WidgetsInfo onClick={e=>stopPropagation && e.stopPropagation()} info={info}>
             <label className={`input-checkbox ${cssClass}`}>
                 <span>
-                    <input ref={inputRef} onChange={onChanged} type="checkbox" style={inputStyle}/>
+                    <input ref={inputRef} onChange={onChanged} type="checkbox" style={inputStyle} id={id}/>
                 </span>
                 <label style={{marginLeft:"5px"}}>{label}</label>
             </label>

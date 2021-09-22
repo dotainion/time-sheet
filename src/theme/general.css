@@ -934,3 +934,68 @@
   border-radius: 5px;
   border: 1px solid black;
 }
+.log-user-container{
+  max-width: 260px;
+  border-right: 1px solid gray;
+}
+.log-user-scroller{
+  position: relative;
+  height: 85vh;
+  overflow: auto;
+  padding-top: 25px;
+}
+.log-user-menu{
+  width: 100%;
+  z-index: 999;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.80);
+}
+.log-user{
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+}
+.log-img{
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 50%;
+}
+.log-user:hover{
+  background-color: var(--hover-bg);
+}
+.log-header-btn-text{
+  border: none;
+  outline: none;
+  padding: 5px;
+  padding-left: 20px;
+  background-color: inherit;
+  border: 1px solid var(--bg);
+}
+.log-header-btn-text:hover{
+  border: 1px solid gray;
+}
+.log-header-btn-text:active{
+  border: 1px solid var(--primary-color);
+}
+.log-header-btn-icon{
+  font-size: 20px;
+}
+.log-record{
+  display: flex;
+}
+.log-record div{
+  padding: 5px;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+}
+.log-record-user{
+  display: flex;
+  padding: 5px;
+  background-color: rgb(0, 0, 0, 0.05);
+}
+.log-record-scroller{
+  height: 75vh;
+  overflow-y: scroll;
+}

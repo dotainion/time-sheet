@@ -3,6 +3,7 @@ import { ImDatabase, ImNotification } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
 import { BsFillChatDotsFill } from 'react-icons/bs';
 import { FaUsers } from 'react-icons/fa';
+import { IoTimeSharp } from 'react-icons/io5'
 
 
 export const NoRecord = ({icon="database", header, message, subMessage}) =>{
@@ -17,6 +18,7 @@ export const NoRecord = ({icon="database", header, message, subMessage}) =>{
                     {icon === "users" && <FaUsers style={{fontSize:"25px"}} />}
                     {icon === "message" && <BsFillChatDotsFill style={{fontSize:"25px"}} />}
                     {icon === "notification" && <ImNotification style={{fontSize:"25px"}} />}
+                    {icon === "logs" && <IoTimeSharp style={{fontSize:"25px"}} />}
                 </div>
                 <b>{header || "No record"}</b>
             </div>

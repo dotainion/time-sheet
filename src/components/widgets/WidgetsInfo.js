@@ -60,7 +60,6 @@ export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, 
                         overflow:"auto",
                         border:"1px solid gray",
                         backgroundColor:"rgb(0,0,0,0.60)",
-                        boxShadow:"1px 1px 5px rgb(0,0,0)",
                         transform:inline?"translateY(140%)":"translateY(115%)",
                         ...infoStyle
                     }}

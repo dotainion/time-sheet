@@ -127,10 +127,10 @@ class Time{
         }else if (!date2){
             lDate = new Date(date1);
         }else{
-            lDate.setHours(lDate.getHours() - rDate.getHours());
-            lDate.setMinutes(lDate.getMinutes() - rDate.getMinutes());
-            lDate.setSeconds(lDate.getSeconds() - rDate.getSeconds());
             lDate.setMilliseconds(lDate.getMilliseconds() - rDate.getMilliseconds());
+            lDate.setSeconds(lDate.getSeconds() - rDate.getSeconds());
+            lDate.setMinutes(lDate.getMinutes() - rDate.getMinutes());
+            lDate.setHours(lDate.getHours() - rDate.getHours());
         }
         const en = this.time(lDate)?.toLowerCase?.()?.includes?.("am")?"AM":"PM";
         return {
@@ -153,10 +153,10 @@ class Time{
         }else if (!date2){
             lDate = new Date(date1);
         }else{
-            lDate.setHours(lDate.getHours() + rDate.getHours());
-            lDate.setMinutes(lDate.getMinutes() + rDate.getMinutes());
-            lDate.setSeconds(lDate.getSeconds() + rDate.getSeconds());
             lDate.setMilliseconds(lDate.getMilliseconds() + rDate.getMilliseconds());
+            lDate.setSeconds(lDate.getSeconds() + rDate.getSeconds());
+            lDate.setMinutes(lDate.getMinutes() + rDate.getMinutes());
+            lDate.setHours(lDate.getHours() + rDate.getHours());
         }
         const en = this.time(lDate)?.toLowerCase?.()?.includes?.("am")?"AM":"PM";
         return {
