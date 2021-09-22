@@ -5,13 +5,13 @@ import { FaUser, FaUsers } from 'react-icons/fa';
 import { WidgetsInfo } from './WidgetsInfo';
 
 
-export const IconButton = ({info, style, onClick, disabled, cssClass, iconStyle, icon, label}) =>{
+export const IconButton = ({info, style, infoStyle, onClick, disabled, cssClass, iconStyle, icon, label}) =>{
     const bStyle = {
         marginRight:"5px"
     }
 
     return(
-        <WidgetsInfo info={info}>
+        <WidgetsInfo info={info} infoStyle={infoStyle}>
             <button 
                 onClick={onClick} 
                 disabled={disabled} 

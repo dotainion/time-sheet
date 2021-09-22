@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect, HashRouter } from "react-router-dom";
 import './theme/general.css';
 import './theme/index.css';
 import './theme/responsive.css';
@@ -41,7 +41,7 @@ import { Help } from "./help/Help";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AuthContext>
         <StateMangement>
           <GeoLocatation>
@@ -53,6 +53,8 @@ function App() {
                 <Route exact path={routes.pricing} render={()=><Pricing/>}/>
                 <Route exact path={routes.register} render={()=><Register/>}/>
                 <Route exact path={routes.resetPassword} render={()=><ResetPassword/>}/>
+                {/******************************************************************************/}
+                <Route exact path={routes.defaultNone} render={()=><Redirect to={routes.default} />}/>
                 {/******************************************************************************/}
                 <Route exact path={adminRoutes.grid} render={()=><Authenticate Component={Grid}/>}/>
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
@@ -84,7 +86,7 @@ function App() {
           </GeoLocatation>
         </StateMangement>
       </AuthContext>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

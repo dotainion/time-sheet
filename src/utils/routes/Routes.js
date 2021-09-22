@@ -1,5 +1,6 @@
 const welcomePage = "/welcome";
-const defaults = "/";
+const defaults = "/timesheet";
+const defaultNone = "/";
 const signIn = "/sign-in";
 const register = "/register";
 const pricing = "/pricing";
@@ -10,6 +11,7 @@ const help = "/help";
 export const adminRoutes = {
     welcome: welcomePage,
     default: defaults,
+    defaultNone: defaultNone,
     signIn: signIn,
     register: register,
     pricing: pricing,
@@ -33,6 +35,7 @@ export const adminRoutes = {
 export const routes = {
     welcome: welcomePage,
     default: defaults,
+    defaultNone: defaultNone,
     signIn: signIn,
     register: register,
     pricing: pricing,

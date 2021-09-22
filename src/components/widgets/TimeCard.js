@@ -247,7 +247,7 @@ export const TimeCard = ({isOpen, onClose, header, useSchedule}) =>{
                     <IconButton onClick={()=>setShowCalendarFrom(true)} cssClass="time-card-buttons btn" icon="calendar" label="Calendar" info="Select date from calendar" />
                     <IconButton onClick={handleOnUsersSelect} cssClass="time-card-buttons btn" icon="users" label="All" info="Select log for all users" />
                     <IconSelect cssClass="time-card-buttons btn" icon="user" options={users} defaultValue="users" info="Select a user" />
-                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons btn" icon="download" label="Export" disabled={!logs.length} info="Download logs" />
+                    <IconButton onClick={onDownloadFile} cssClass="time-card-buttons btn" icon="download" label="Export" disabled={!logs.length} info="Download logs" infoStyle={{left:"-30px"}} />
                 </div>
             </div>
             <div className="time-card-header-container">
