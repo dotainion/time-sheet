@@ -1,7 +1,7 @@
 
 import { collection } from "../../config/databaseConfig";
 import { tools } from "../../utils/tools/Tools";
-import { addData, getDataByDoubleField, getDataByField, updateDataByField } from "../CollectionRef";
+import { addData, getDataByDoubleField, getDataByField, updateData, updateDataByField } from "../CollectionRef";
 
 export const addEndLog = async(data, id) =>{
     try{
@@ -53,6 +53,15 @@ export const getLogs = async(id, limit=false) =>{
 export const getLogsById = async(id) =>{
     try{
         return await getDataByField(collection.logs, "id",id);
+    }catch(error){
+        console.log(error);
+        return [];
+    }
+}
+
+export const updateLog = async(data, id) =>{
+    try{
+        return await updateData(collection.logs, data, id);
     }catch(error){
         console.log(error);
         return [];

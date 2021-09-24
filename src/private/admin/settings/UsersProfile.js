@@ -6,6 +6,7 @@ import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes } from '../../../utils/routes/Routes';
+import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
 import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 import { AdminInputEntry } from '../other/AdminInputEntry';
 import { UsersLists } from './UsersLists';
@@ -15,10 +16,8 @@ export const UsersProfile = () =>{
     const [userSelected, setUserSelected] = useState({});
 
     return(
-        <AdminNavBar>
-            <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs updateUserEmail />
-
+        <AdminNavBar isActive>
+            <AdminSettignsContainer updateUserEmail>
                 <div className="flex d-flex-on-mobile max-size" style={{minHeight:"400px"}}>
                     <UsersLists onSelected={setUserSelected} />
                     <div className="max-width" style={{paddingLeft:"40px"}}>
@@ -41,7 +40,7 @@ export const UsersProfile = () =>{
                         
                     </div>
                 </div>
-            </ContentsWrapper>
+            </AdminSettignsContainer>
         </AdminNavBar>
     )
 }

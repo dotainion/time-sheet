@@ -92,7 +92,7 @@
         margin: 0px;
     }
     .add-update-new-user-info{
-        width: 84%;
+        max-width: 240px;
         margin-left: 0;
         transform: none;
     }
@@ -100,8 +100,9 @@
         position: absolute;
         z-index: 9999999;
         height: 100%;
+        width: 95%;
         top: 0;
-        left: 0;
+        left: 0px;
         padding-bottom: 0;
     }
     .users-lists-icon{
@@ -180,5 +181,8 @@
     }
     .welcome-inner-card{
         font-size: 18px;
+    }
+    .bread-crumbs-nav{
+        display: none;
     }
 }

@@ -49,13 +49,14 @@ export const Calendar = ({isOpen, onClose, cssClass, closeOnSelect, onSelect, he
     )
 }
 
-export const DaysPicker = ({onSelect, clearRef, style}) =>{
+export const DaysPicker = ({onSelect, clearRef, defaultDates, viewOnly, style}) =>{
     const [dates, setDates] = useState([]);
 
     const storeKeyRef = useRef();
     const storeDateRef = useRef();
 
     const onTriggerSelect = (date) =>{
+        if (viewOnly) return;
         if (storeKeyRef.current.includes(`${date}`)){
             storeDateRef.current = [];
             storeKeyRef.current = [];
@@ -83,6 +84,11 @@ export const DaysPicker = ({onSelect, clearRef, style}) =>{
         storeKeyRef.current = [];
         storeDateRef.current = [];
     }, []);
+
+    useEffect(()=>{
+        if (!defaultDates?.length) setDates([]);
+        else setDates(defaultDates);
+    }, [defaultDates]);
     return(
         <div className="day-picker-container" style={{...style}}>
             <DayPicker

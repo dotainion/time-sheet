@@ -25,12 +25,15 @@ import { Alert } from '../../../components/other/Alert';
 import { AddTimeToCalendarDays } from '../../../components/other/AddTimeToCalendarDays';
 import { BsQuestionCircle } from 'react-icons/bs';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
+import { useHistory } from 'react-router';
 
 
 let storeWeekDays = [];
 let storeWeekDaysKey = [];
 let storeMonthDays = [];
 export const Schedules = () =>{
+    const history = useHistory();
+    
     const { user } = useAuth();
 
     const [never, setNever] = useState(true);
@@ -207,12 +210,24 @@ export const Schedules = () =>{
         setShowAddTimeToCalendar({state: true, schedule: sched});
     }
 
+    const triggerSelect = (uUser) =>{
+        try{
+            onSelectUser(uUser);
+        }catch(error){
+            alert(error);
+        }
+    }
+
     const initUsers = async() =>{
         setUsers(await getUsers(user?.accessId, user?.id));
     }
 
     useEffect(()=>{
         initUsers();
+        if (history.location?.user){
+            let sUser = history.location?.user;
+            triggerSelect(sUser);
+        }
     }, []);
 
     return(
@@ -233,7 +248,7 @@ export const Schedules = () =>{
                                             backgroundColor:member?.id === sUser?.id && "var(--primary-color)"
                                         }}
                                     >
-                                        <img src={defaultImage2} alt="" />
+                                        <img src={member?.info?.image || defaultImage2} alt="" />
                                         <div className="relative max-width">
                                             <div className="float-left pad-mini">
                                                 {member?.info?.firstName} {member?.info?.lastName}

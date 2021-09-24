@@ -6,6 +6,7 @@ import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { tools } from '../../../utils/tools/Tools';
+import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
 import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 import { UsersLists } from './UsersLists';
 
@@ -55,10 +56,9 @@ export const UpdateUserEmail = () =>{
     }
 
     return(
-        <AdminNavBar>
-            <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs updateUserEmail />
-                <div className="flex d-flex-on-mobile max-size">
+        <AdminNavBar isActive>
+            <AdminSettignsContainer updateUserEmail >
+                <div className="flex d-flex-on-mobile pad max-size">
                     <UsersLists onSelected={setUserSelected} />
                     <div className="add-update-new-user-info new-user-info-margin">
                         <div className="header">Update a user email address</div>
@@ -80,7 +80,7 @@ export const UpdateUserEmail = () =>{
                         </div>
                     </div>
                 </div>
-            </ContentsWrapper>
+            </AdminSettignsContainer>
         </AdminNavBar>
     )
 }

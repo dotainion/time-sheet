@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../state/auth/Authentication';
 import { Toolbar } from '../components/widgets/Toolbar';
@@ -14,26 +14,25 @@ import { WidgetsInfo } from '../components/widgets/WidgetsInfo';
 import { Profile } from '../components/other/Profile';
 import $ from 'jquery';
 import { Button } from '../components/widgets/Buttons';
-
-//holds rouutes only for within settings
-const SETTINGS_ROUTES = [
-    adminRoutes.profile,
-    adminRoutes.usersProfile,
-    adminRoutes.advanceReset,
-    adminRoutes.updateEmail,
-    adminRoutes.updateUserEmail
-]
+import logo from '../images/logo.png';
+import { MdNotificationsActive } from 'react-icons/md';
+import { useStore } from '../state/stateManagement/stateManagement';
 
 
-export const NavigationBar = ({menues, children}) =>{
+
+export const NavigationBar = ({menues, isActive, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
+    const { notifications } = useStore();
 
     const navRef = useRef();
 
     const forMenu = (nav, index) =>{
         if (index){
+            if (isActive && nav?.route === adminRoutes.settings){
+                return {backgroundColor:"var(--hover-nav)"}; 
+            }
             if (history.location.pathname === nav?.route){
                 return {backgroundColor:"var(--hover-nav)"};
             }
@@ -63,8 +62,13 @@ export const NavigationBar = ({menues, children}) =>{
             left.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
             right.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
         }else{
-            left.style.backgroundColor = id.includes("0")?bg:"";
-            right.style.backgroundColor = id.includes("0")?bg:"";
+            if (isActive && nav?.route === adminRoutes.settings){
+                left.style.backgroundColor = "var(--hover-nav)";
+                right.style.backgroundColor = "var(--hover-nav)";
+            }else{
+                left.style.backgroundColor = id.includes("0")?bg:"";
+                right.style.backgroundColor = id.includes("0")?bg:"";
+            }
         }
         
     }
@@ -109,6 +113,12 @@ export const NavigationBar = ({menues, children}) =>{
             </div>
             <div className="page-container">
                 <div className="header-container">
+                    <div className="relative" style={{float:"left",width:"50px",height:"100%"}}>
+                        <div onClick={()=>history.push(adminRoutes.notification)} hidden={!notifications?.length} className="float-center" style={{cursor:"pointer"}}>
+                            <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
+                            <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{notifications?.length || 0}</div>
+                        </div>
+                    </div>
                     <div style={{float:"right",paddingTop:"15px",paddingRight:"20px"}}>
                         <Button onClick={signOut} label="Logout" style={{backgroundColor:"transparent",color:"black"}} />
                     </div>

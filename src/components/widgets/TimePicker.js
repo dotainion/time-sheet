@@ -7,7 +7,7 @@ export const TimePicker = ({onChange, info, inputRef, error, clearError}) =>{
         clearError?.("");
         onChange?.(e.target.value);
     }
-    //<WidgetsInfo info={info} error={error} inline>
+
     return(
         <WidgetsInfo info={info} error={error} inline>
             <input

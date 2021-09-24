@@ -20,13 +20,13 @@ export const UsersLists = ({onSelected}) =>{
     }
 
     const triggerSelect = (uUser) =>{
-        let sUser = uUser?.info;
-        sUser["id"] = uUser?.id;
-        setUserSelected(sUser);
         try{
+            let sUser = uUser?.info;
+            sUser["id"] = uUser?.id;
+            setUserSelected(sUser);
             onSelected(sUser);
         }catch(error){
-            alert(error)
+            alert(error);
         }
     }
 
@@ -43,7 +43,7 @@ export const UsersLists = ({onSelected}) =>{
         }
     }, []);
     return(
-        <>
+        <div className="users-lists-container">
         <AiOutlineUsergroupAdd
             className="float-top-left users-lists-icon"
             onClick={toggleSideBar}
@@ -78,6 +78,6 @@ export const UsersLists = ({onSelected}) =>{
                 </div>
             ))}
         </div>
-        </>
+        </div>
     )
 }

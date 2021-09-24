@@ -9,12 +9,17 @@ import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { xlFile } from '../../../files/ExcelFile';
 import { useAuth } from '../../../state/auth/Authentication';
-import { getLogsRange } from '../../../database/logs/LogDb';
+import { getLogsRange, updateLog } from '../../../database/logs/LogDb';
 import { DateEntry } from '../../../components/widgets/DateEntry';
 import defaultImage from '../../../images/default-profile-image.png';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
 import { time } from '../../../utils/time/Time';
 import $ from 'jquery';
+import { HiDotsVertical } from 'react-icons/hi';
+import { OptionsMenu } from '../../../components/widgets/OptionsMenu';
+import { useStore } from '../../../state/stateManagement/stateManagement';
+import { TimePicker } from '../../../components/widgets/TimePicker';
+import { UpdateLog } from '../other/UpdateLog';
 
 
 let muliUserIds = [];
@@ -27,6 +32,8 @@ export const AdminLogs = () =>{
     const [multipleUsers, setMultipleUsers] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showOption, setShowOption] = useState(false);
+    const [allowEditing, setAllowEditing] = useState(false);
+    const [showEditLog, setShowEditLog] = useState({state:false, date:null});
 
     const toDateFrom = useRef();
     const fromDateRef = useRef();
@@ -83,6 +90,7 @@ export const AdminLogs = () =>{
         if (multipleUsers.length){
             getMultiSelectedUserLog();
         }else{
+            if (!singleUserSelectedRef.current?.id) return;
             const uUser = singleUserSelectedRef.current;
             getSingleSelectedUserLog(uUser);
         }
@@ -142,7 +150,7 @@ export const AdminLogs = () =>{
     const initUsers = async() =>{
         setUsers(await getUsers(user?.accessId, user?.id));
     }
-    
+
     useEffect(()=>{
         initUsers();
         let fromD = new Date();
@@ -184,13 +192,17 @@ export const AdminLogs = () =>{
                     </div>
                 </div>
                 <div className="max-width">
-                    <div style={{borderBottom:"1px solid gray"}}>
+                    <div className="" style={{borderBottom:"1px solid gray"}}>
                         <div className="inline-block pad-mini">
                             <IconButton onClick={onRefresh} label="Refresh" icon="refresh" cssClass="log-header-btn-text" iconCss="float-left log-header-btn-icon" />
                         </div>
                         <div className="inline-block pad-mini">
                             <IconButton onClick={onDownloadFile} disabled={!logs.length} label="Export" icon="download" cssClass="log-header-btn-text" iconCss="float-left log-header-btn-icon" />
                         </div>
+                        <div className="inline-block pad-mini">
+                            <div style={{color:"red"}}><b>{allowEditing && "Editing is on..."}</b></div>
+                        </div>
+                        <OptionsMenu options={[{title: allowEditing?"Disable editing":"Enable editing", action: ()=>setAllowEditing(!allowEditing), state: allowEditing}]} />
                     </div>
 
                     <div className="pad">
@@ -223,16 +235,16 @@ export const AdminLogs = () =>{
                                         <div key={key}>
                                             {
                                                 log?.info?.firstName || log?.info?.lastName?
-                                                <div className="log-record-user">
+                                                <div className="log-record-user" style={{marginTop:key && "20px"}}>
                                                     <img src={log?.info?.image || defaultImage} className="log-img" />
                                                     <div>{log?.info?.firstName} {log?.info?.lastName}</div>
                                                 </div>:
-                                                <div className="log-record">
-                                                    <div>{time.toDateString(log?.info?.start)}</div>
-                                                    <div>{time.toTimeString(log?.info?.start)}</div>
-                                                    <div>{time.toTimeString(log?.info?.end)}</div>
-                                                    <div>{time.sub(log?.info?.end, log?.info?.start, true)}</div>
-                                                    <div>Total Break</div>
+                                                <div onClick={()=>allowEditing && setShowEditLog({state:true, date:log})} className={`log-record ${allowEditing && "item-hover"}`} style={{cursor:allowEditing && "pointer"}}>
+                                                    <div className="relative">{time.toDateString(log?.info?.start)}</div>
+                                                    <div className="relative">{time.toTimeString(log?.info?.start)}</div>
+                                                    <div className="relative">{time.toTimeString(log?.info?.end)}</div>
+                                                    <div className="relative">{time.sub(log?.info?.end, log?.info?.start, true)}</div>
+                                                    <div className="relative">Total Break</div>
                                                 </div>
                                             }
                                         </div>
@@ -240,7 +252,7 @@ export const AdminLogs = () =>{
                                     <NoRecord
                                         icon="logs"
                                         header="No logs to show" 
-                                        subMessage=""
+                                        subMessage="No records available"
                                         message=""
                                     />
                                 }
@@ -250,6 +262,12 @@ export const AdminLogs = () =>{
                 </div>
             </div>
             <LoadingBar isOpen={loading} />
+            <UpdateLog 
+                isOpen={showEditLog.state}
+                data={showEditLog.date}
+                onUpdated={onRefresh}
+                onClose={()=>setShowEditLog({state:false, date:null})}
+            />
         </AdminNavBar>
     )
 }

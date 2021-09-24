@@ -81,7 +81,7 @@ export const ChangePassword = ({isOpen, onClose}) =>{
                     <div className="pad" style={{color:"orange"}}><b>Change Password</b></div>
                     <div hidden={!toggleInputs} className="pad centered" style={{width:"275px"}}>
                         <div style={{color:"white"}}>Current credentials</div>
-                        <input ref={emailRef} className="input input-hover block" placeholder="Email" type="email" style={{width:"260px"}} />
+                        <input ref={emailRef} className="input input-hover block" placeholder="Email" type="email" style={{width:"260px",marginBottom:"5px"}} />
                         <input ref={oldPasswordRef} className="input input-hover block" placeholder="Enter old password" type="password" style={{width:"260px"}} />
                     </div>
                     <div hidden={toggleInputs} className="pad centered" style={{width:"275px"}}>
@@ -90,9 +90,9 @@ export const ChangePassword = ({isOpen, onClose}) =>{
                         <input ref={confirmPasswordRef} className="input input-hover block" placeholder="Confirm new password" type="password" style={{width:"260px"}} />
                     </div>
                     <div className="pad" style={{textAlign:"right"}}>
-                        <button hidden={!toggleInputs} onClick={onCheckCurrentPassword} className="btn btn-hover" style={{color:"blue"}}>Next</button>
-                        <button hidden={toggleInputs} onClick={onChangePassword} className="btn btn-hover" style={{color:"green"}}>Save</button>
-                        <button onClick={onClose} className="btn btn-hover" style={{marginLeft:"10px",color:"red"}}>Close</button>
+                        <button hidden={!toggleInputs} onClick={onCheckCurrentPassword} className="btn btn-hover">Next</button>
+                        <button hidden={toggleInputs} onClick={onChangePassword} className="btn btn-hover">Save</button>
+                        <button onClick={onClose} className="btn btn-hover" style={{marginLeft:"10px"}}>Close</button>
                     </div>
                 </div>
             </SpanWrapper>

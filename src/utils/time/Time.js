@@ -80,6 +80,9 @@ class Time{
     toDateString(date){
         return new Date(date).toDateString();
     }
+    toDigits(date){
+        return new Date(date).getTime();
+    }
 }
 
 export const time = new Time();

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 
-export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, error, children}) =>{
+export const WidgetsInfo = ({onClick, hidden, cssClass, style, infoStyle, inline, info, error, children}) =>{
     const [showInfo, setShowInfo] = useState(false);
     const [triggerShowInfo, setTriggerShowInfo] = useState(false);
 
@@ -34,6 +34,7 @@ export const WidgetsInfo = ({onClick, cssClass, style, infoStyle, inline, info, 
 
     return(
         <div 
+            hidden={hidden}
             className={`relative ${cssClass} ${inline && "inline"}`} 
             style={{...style}}
             onMouseEnter={()=>setTriggerShowInfo(true)}

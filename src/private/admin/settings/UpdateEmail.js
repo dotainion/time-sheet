@@ -4,6 +4,7 @@ import { AdminNavBar } from '../../../container/AdminNavBar';
 import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { useAuth } from '../../../state/auth/Authentication';
 import { tools } from '../../../utils/tools/Tools';
+import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
 import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 
 
@@ -46,9 +47,8 @@ export const UpdateEmail = () =>{
     }
 
     return(
-        <AdminNavBar>
-            <ContentsWrapper isOpen style={{paddingTop:"50px"}}>
-                <BreadCrumbs updateEmail />
+        <AdminNavBar isActive>
+            <AdminSettignsContainer updateEmail>
                 <div className="add-update-new-user-info">
                     <div className="header" style={{marginBottom:"50px"}}>Update a my email address</div>
                     <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
@@ -64,7 +64,7 @@ export const UpdateEmail = () =>{
                     <button onClick={onUpdate} className="btn btn-hover">Update</button>
                     </div>
                 </div>
-            </ContentsWrapper>
+            </AdminSettignsContainer>
         </AdminNavBar>
     )
 }
