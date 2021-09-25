@@ -31,14 +31,14 @@ export const NavigationBar = ({menues, isActive, children}) =>{
     const forMenu = (nav, index) =>{
         if (index){
             if (isActive && nav?.route === adminRoutes.settings){
-                return {backgroundColor:"var(--hover-nav)"}; 
+                return {backgroundColor:"var(--hover-selected)"}; 
             }
             if (history.location.pathname === nav?.route){
-                return {backgroundColor:"var(--hover-nav)"};
+                return {backgroundColor:"var(--hover-selected)"};
             }
             return {};
         }
-        return {
+        return {//only gets set in mneu 
             height:"52px",
             backgroundColor:"dodgerblue"
         }
@@ -88,7 +88,7 @@ export const NavigationBar = ({menues, isActive, children}) =>{
                             key={key}
                         >
                             <WidgetsInfo info={nav.info}>
-                                <nav.icon className="pad icons block" />
+                                <nav.icon className="pad block" style={{fontSize:"30px"}} />
                             </WidgetsInfo>
                         </div>
                     ))}

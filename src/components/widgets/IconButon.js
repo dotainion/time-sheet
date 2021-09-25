@@ -3,9 +3,12 @@ import { IoMdDownload, IoMdSettings } from 'react-icons/io';
 import { MdDateRange, MdRefresh, MdUpdate } from 'react-icons/md';
 import { FaUser, FaUsers } from 'react-icons/fa';
 import { WidgetsInfo } from './WidgetsInfo';
+import { MdNotificationsActive } from 'react-icons/md';
+import { GiPush } from 'react-icons/gi';
+import { IoTimeSharp } from 'react-icons/io5';
 
 
-export const IconButton = ({hidden, info, style, infoStyle, onClick, disabled, cssClass, iconCss, infoCss, iconStyle, icon, label}) =>{
+export const IconButton = ({hidden, border, info, style, infoStyle, onClick, disabled, cssClass, iconCss, infoCss, iconStyle, icon, label}) =>{
     const bStyle = {
         marginRight:"5px"
     }
@@ -19,6 +22,7 @@ export const IconButton = ({hidden, info, style, infoStyle, onClick, disabled, c
                 className={`${cssClass} ${disabled && "btn-disabled"}`} 
                 style={{
                     ...style,
+                    border: border,
                     cursor: disabled? "not-allowed": "pointer"
                 }}
             >
@@ -29,6 +33,9 @@ export const IconButton = ({hidden, info, style, infoStyle, onClick, disabled, c
                 {icon === "calendar" && <MdDateRange className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "refresh" && <MdRefresh className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "update" && <MdUpdate className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "send" && <GiPush className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "notification" && <MdNotificationsActive className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "log" && <IoTimeSharp className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 <span>{label}</span>
             </button>
         </WidgetsInfo>

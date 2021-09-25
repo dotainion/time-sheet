@@ -21,6 +21,7 @@ export const StateMangement = ({children}) =>{
     const [dateObject, setDateObject] = useState({from: initTime, to: initTime});
     const [settings, setSettings] = useState({});
     const [notifications, setNotifications]= useState([]);
+    const [notificationList, setNotificationList] = useState([]);
 
     const onContinue = () =>{
         if (isAuthenticated){
@@ -29,17 +30,29 @@ export const StateMangement = ({children}) =>{
         }
     }
 
-    const initStore = async() =>{
-        setSettings(await getSettings(user?.id));
+    const initNotifications = async() =>{
         const notific = await getNotification(user?.id);
+        //holde notification to use in notification pages
+        setNotificationList(notific);
         //init notification for notification icon on tool bar
         let notificTemp = [];
         notific.forEach((notice)=>{
-            if (!notice?.info?.seen){
-                notificTemp.push(notice);
-            }
+            if (!notice?.info?.seen) notificTemp.push(notice);
         });
         setNotifications(notificTemp);
+    }
+
+    const removeANotifications = (id) =>{
+        let notificTemp = [];
+        notifications.forEach((notice)=>{
+            if (notice?.id !== id) notificTemp.push(notice);
+        });
+        setNotifications(notificTemp);
+    }
+
+    const initStore = async() =>{
+        setSettings(await getSettings(user?.id));
+        initNotifications();
     }
 
     useEffect(()=>{
@@ -53,7 +66,9 @@ export const StateMangement = ({children}) =>{
         onContinue,
         setLoader,
         loading,
-        notifications
+        notifications,
+        removeANotifications,
+        notificationList
     }
     return(
         <Management.Provider value={providerValue}>

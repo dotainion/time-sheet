@@ -1,8 +1,11 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { HelpAdminNav } from './HelpAdminNav';
 
 
 export const Help = () =>{
+    const history = useHistory();
+
     const helps = [
         {
             title: "title",
@@ -26,18 +29,18 @@ export const Help = () =>{
         }
     ]
     return(
-        <div style={{padding:"40px"}}>
+        <div style={{padding:"0px"}}>
             <HelpAdminNav/>
             {helps.map((info, key)=>(
                 <div className="flex" key={key}>
-                    <div className="max-width">
+                    <div className="max-width" style={{paddingLeft:"40px"}}>
                         <div style={{fontSize:"40px"}}>{info?.title}</div>
                         <div style={{fontSize:"25px"}}>{info?.subTitle}</div>
                         <div style={{fontSize:"18px"}}>{info?.documentation}</div>
                     </div>
-                    <div className="max-width">
+                    <div className="max-width" style={{paddingRight:"40px"}}>
                         {info?.steps.map((info, key2)=>(
-                            <div style={{}} key={key2}>
+                            <div key={key2}>
                                 <div style={{fontSize:"40px"}}>{info?.title}</div>
                                 <div style={{fontSize:"25px"}}>{info?.subTitle}</div>
                                 <div style={{fontSize:"18px"}}>{info?.documentation}</div>
@@ -46,6 +49,14 @@ export const Help = () =>{
                     </div>
                 </div>
             ))}
+            <div className="float-center max-size no-select" style={{backgroundColor:"black",color:"white"}}>
+                <div className="max-size relative">
+                    <div className="float-center" style={{textAlign:"center",fontSize:"25px"}}>
+                        <p style={{fontSize:"50px"}}>COMING SOON!!!</p>
+                        <label onClick={()=>history.goBack()} className="label-hover"><b>Take me back</b></label>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

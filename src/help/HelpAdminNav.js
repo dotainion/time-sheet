@@ -10,7 +10,7 @@ export const HelpAdminNav = () =>{
                     {ADMIN_SIDE_NAV.map((nav, key)=>(
                         <>
                             {
-                                nav?.title.toLowerCase() !== "help" && 
+                                !["help", "grid", "menu"].includes(nav?.title?.toLowerCase?.()) && 
                                 <div className="pad label-hover" key={key}>{tools.titleCase(nav?.title)}</div>
                             }
                         </>

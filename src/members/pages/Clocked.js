@@ -11,18 +11,17 @@ import { TrackerButton } from '../widgets/TrackerButton';
 import { SiSatDot1 } from 'react-icons/si';
 import { Alert } from '../../components/other/Alert';
 
-
 const {
     TimerComponent,
     isTimerActive,
     stopTimer,
     startTimer,
     getCurrentTimeInSeconds 
-  } = new StopClock({
+} = new StopClock({
     id: 1,
     presist: true,
     onTick: (e) => {
-      //console.log(e)
+    //console.log(e)
     }
 });
 
@@ -145,7 +144,7 @@ export const Clocked = () =>{
                         <div>END AT: {endAt}</div>
                     </div>
                     <div className="lapstime">
-                        <TimerComponent labels={{ minutes: 'min' }}/>
+                        <TimerComponent labels={{ minutes: 'min' }} />
                         <div hidden={isTimerActive()} className="max-size float-center">
                             <div className="max-size relative" style={{backgroundColor:"white"}}>
                                 <div className="float-center">Start your day</div>
@@ -162,8 +161,8 @@ export const Clocked = () =>{
                 <Clock value={value} className="class1 class2 class3" size={300} />                
                 <div className="flex centered" style={{width:"330px",marginTop:"40px"}}>
                     <TrackerButton onClick={onStart} label="START" style={{margin:"10px"}} color="green" />
-                    <TrackerButton hidden={isPause} onClick={onPause} label="PAUSE" style={{margin:"10px"}} color="yellow" />
-                    <TrackerButton hidden={!isPause} onClick={onPlay} label="PLAY" style={{margin:"10px"}} color="blue" />
+                    <TrackerButton hidden={isPause} onClick={onPause} label="BREAK" style={{margin:"10px"}} color="yellow" />
+                    <TrackerButton hidden={!isPause} onClick={onPlay} label="RETURN" style={{margin:"10px"}} color="blue" />
                     <TrackerButton onClick={onEnd} label="END" style={{margin:"10px"}} color="red" />
                 </div>
             </div>

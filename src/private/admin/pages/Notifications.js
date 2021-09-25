@@ -14,6 +14,10 @@ import { NotificationBox } from '../../../components/widgets/NotificationBox';
 import { NoRecord } from '../../../components/widgets/NoRecord';
 import { TiArrowBack } from 'react-icons/ti';
 import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
+import { MdNotificationsActive } from 'react-icons/md';
+import { IconButton } from '../../../components/widgets/IconButon';
+import { useStore } from '../../../state/stateManagement/stateManagement';
+
 
 
 let uMembers = [];
@@ -22,33 +26,21 @@ export const AdminNotifications = () =>{
     const history = useHistory();
 
     const { user } = useAuth();
+    const { notificationList, removeANotifications } = useStore();
 
     const [loading, setLoading] = useState(false);
     const [sent, setSent] = useState(false);
     const [infoError, setInfoError] = useState("");
     const [headerError, setHeaderError] = useState("");
     const [members, setMembers] = useState([]);
-    const [notification, setNotification] = useState([]);
-    const [notificationContainAll, setNotificationContainAll] = useState([]);
-    const [showAddNotification, setShowAddNotification] = useState(true);
-    const [showViewNotification, setShowViewNotification] = useState(false);
-    const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
+    const [switchView, setSwitchView] = useState(false);
     const [errorSelect, setErrorSelect] = useState("");
+    const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
     const headerRef = useRef();
     const infoRef = useRef();
     const messageRef = useRef();
     const userToNotifyInfoRef = useRef();
-
-    const onSwitchView = (cmd) =>{
-        if (cmd === "add"){
-            setShowAddNotification(true);
-            setShowViewNotification(false);
-        }else{
-            setShowViewNotification(true);
-            setShowAddNotification(false);
-        }
-    }
 
     const onNotify = async() =>{
         let STATE = true;
@@ -108,24 +100,19 @@ export const AdminNotifications = () =>{
         }
         setMembers(tempArray);
     }
-
-    const filterNotification = () =>{
-        let noticeArray = [];
-        for (let notice of notificationContainAll){
-
-        }
-        setNotification(noticeArray);
+    
+    const onViewNotification = (data) =>{
+        setShowMessageBox({state:true, data});
+        if (!data?.info?.seen) updateSeen(data?.id);
     }
 
-    const initNotifications = async() =>{
-        const noticeRecords = await getNotificationByAuthId(user?.id);
-        setNotificationContainAll(noticeRecords);
-        setNotification(noticeRecords);
+    const updateSeen = async(id) =>{
+        await updateNotification({seen:true}, id);
+        removeANotifications(id);
     }
 
     useEffect(()=>{
         initUsers();
-        initNotifications();
         if (history.location?.data){
             const data = history.location.data;
             userToNotifyInfoRef.current = data?.user;
@@ -140,9 +127,29 @@ export const AdminNotifications = () =>{
 
     return(
         <AdminNavBar>
-            <div hidden={!showAddNotification} className="notification-container">
-                <div onClick={()=>onSwitchView("view")} className="float-top-right label-hover pad" style={{color:"var(--primary-color)",cursor:"pointer"}}>View notifications</div>
-
+            <div className="flex" style={{borderBottom:"1px solid black"}}>
+                <IconButton 
+                    onClick={()=>setSwitchView(false)} 
+                    label="ADD NOTIFICATION" 
+                    icon="notification" 
+                    cssClass="pad" 
+                    border="none" 
+                    style={{
+                        color:!switchView && "white",
+                        backgroundColor:!switchView && "var(--primary-color)"
+                    }} />
+                <IconButton 
+                    onClick={()=>setSwitchView(true)} 
+                    label="VIEW NOTIFICATION" 
+                    icon="notification" 
+                    cssClass="pad" 
+                    border="none" 
+                    style={{
+                        color:switchView && "white",
+                        backgroundColor:switchView && "var(--primary-color)"
+                    }} />
+            </div>
+            <div hidden={switchView} className="notification-container">
                 <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Notification</div>
                 
                 <div style={{marginTop:"40px",marginBottom:"40px"}}>
@@ -163,23 +170,19 @@ export const AdminNotifications = () =>{
                         <span>{loading && "Sending..."}</span>
                     </span>
                     <span className="float-center">{sent && "Notification sent"}</span>
-                    <button onClick={onNotify} className="btn btn-hover" style={{float:"right"}}>Send</button>
+                    <div style={{textAlign:"right"}}>
+                        <IconButton onClick={onNotify} icon="send" label="Send" />
+                    </div>
                 </div>
             </div>
 
-            <div hidden={!showViewNotification} className="max-size" style={{backgroundColor:"var(--bg)"}}>
-                <div className="float-top-right pad" style={{color:"var(--primary-color)",cursor:"pointer",right:"60px"}}>
-                    <WidgetsInfo info="Black">
-                        <TiArrowBack onClick={()=>onSwitchView("add")} style={{fontSize:"30px"}} />
-                    </WidgetsInfo>
-                </div>
-
-                <div style={{marginTop:"40px",height:"70vh",overflowY:"scroll"}}>
+            <div hidden={!switchView} style={{backgroundColor:"var(--bg)"}}>
+                <div style={{height:"88vh",overflowY:"auto"}}>
                     {
-                        notification.length?
-                        notification.map((notice, key)=>(
+                        notificationList.length?
+                        notificationList.map((notice, key)=>(
                             <div className="notification-item-container" key={key}>
-                                <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="notification-item">
+                                <div onClick={()=>onViewNotification(notice)} className="notification-item">
                                     <div onClick={e=>e.stopPropagation()} className="notification-item-count">
                                         <div className="float-center">{key+1}</div>
                                     </div>

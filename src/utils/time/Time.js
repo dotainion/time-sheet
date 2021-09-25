@@ -2,16 +2,18 @@
 class Time{
     largerSeconds = 0;
     smallerSeconds = 0;
+    PERIODS = ["am", "AM", "pm", "PM"];
+    H24 = [13,14,15,16,17,18,19,20,21,22,23,24];
     clear(){
         this.largerSeconds = 0;
         this.smallerSeconds = 0;
     }
     strip(str){
         if (!str) return "";
-        ["am", "AM", "pm", "PM"].forEach((en)=>{
+        this.PERIODS.forEach((en)=>{
             str = str.replace(en, "");
         })
-        return str;
+        return str.split(':');
     }
     parse(str){
         if (isNaN(str)) return 0;
@@ -26,6 +28,15 @@ class Time{
     minToSeconds(minutes){
         return this.parse(minutes) * 60;//minutes to seconds
     }
+    parse24hours(larger, smaller){
+        let [hr, min, sec] = this.strip(larger);
+        let [hr2, min2, sec2] = this.strip(smaller);
+        if (this.parse(hr) < this.parse(hr2)){
+            hr = this.H24[this.parse(hr)-1];
+            return [`${hr}:${min}:${sec}`, `${hr2}:${min2}:${sec2}`];
+        }
+        return [larger, smaller];
+    }
     convertToHMS(value){
         const sec = parseInt(value, 10); // convert value to number if it's string
         let hours   = Math.floor(sec / 3600); // get hours
@@ -38,15 +49,16 @@ class Time{
         return hours+':'+minutes+':'+seconds; // Return is HH : MM : SS
     }
     process(largerTime, smallerTime){
-        const [hr, min, sec] = this.strip(largerTime).split(':');
-        const [hr2, min2, sec2] = this.strip(smallerTime).split(':');
-        this.largerSeconds += this.sectoSeconds(sec);
-        this.largerSeconds += this.hourToSeconds(hr);
-        this.largerSeconds += this.minToSeconds(min);
+        const [larger, smaller] = this.parse24hours(largerTime, smallerTime);
+        const [hr, min, sec] = this.strip(larger);
+        const [hr2, min2, sec2] = this.strip(smaller);
+        this.largerSeconds += this.sectoSeconds(sec || 0);
+        this.largerSeconds += this.hourToSeconds(hr || 0);
+        this.largerSeconds += this.minToSeconds(min || 0);
 
-        this.smallerSeconds += this.sectoSeconds(sec2);
-        this.smallerSeconds += this.hourToSeconds(hr2);
-        this.smallerSeconds += this.minToSeconds(min2);
+        this.smallerSeconds += this.sectoSeconds(sec2 || 0);
+        this.smallerSeconds += this.hourToSeconds(hr2 || 0);
+        this.smallerSeconds += this.minToSeconds(min2 || 0);
     }
     get(cmd){
         let result;
@@ -67,6 +79,7 @@ class Time{
         return this.get("add");
     }
     sub(largerTime, smallerTime, date=false){//"06:00:00"
+        if (!largerTime || !smallerTime) return '00:00:00'; 
         if (date){
             largerTime = this.toTimeString(largerTime);
             smallerTime = this.toTimeString(smallerTime);

@@ -152,52 +152,46 @@ export const Users = () =>{
 
                         <div className="flex" style={{height:"88vh"}}>
                             <div className="user-view-profile">
-                                <img className="user-view-image" src={userSelected?.info?.image || defaultImage} alt="" />
-                                <div className="user-view-contacts">
-                                    <div className="header"><b>{userSelected?.info?.firstName} {userSelected?.info?.lastName}</b></div> 
-                                    <div>Location</div>
-                                    <div>{userSelected?.info?.role}</div>
-                                    <div>{userSelected?.info?.email}</div>
-                                </div>
-                                <div className="flex no-wrap">
-                                    <IconButton onClick={onUpdate} label="Update" icon="settings" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
-                                    <IconButton onClick={onSchedule} label="Add schedule" icon="calendar" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
+                                <div style={{padding:"40px"}}>
+                                    <img className="user-view-image" src={userSelected?.info?.image || defaultImage} alt="" />
+                                    <div className="user-view-contacts">
+                                        <div className="header"><b>{userSelected?.info?.firstName} {userSelected?.info?.lastName}</b></div> 
+                                        <div>Location</div>
+                                        <div>{userSelected?.info?.role}</div>
+                                        <div>{userSelected?.info?.email}</div>
+                                    </div>
+                                    <div className="flex no-wrap">
+                                        <IconButton onClick={onUpdate} label="Update" icon="settings" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
+                                        <IconButton onClick={onSchedule} label="Add schedule" icon="calendar" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
+                                    </div>
                                 </div>
                             </div>
                             <div className="max-size">
-
-                                <div className="flex" >
-                                    <div className="user-view-card-container">
-                                        <div className="user-view-card" >
-                                            <img className="float-center" draggable={false} src={logo} style={{width:"200px", height:"200px"}} alt="" />
-                                        </div>
-                                    </div>
-
-                                    <div className="user-view-card-container" style={{width:"auto",minWidth:"500px"}}>
-                                        <div className="user-view-card">
-                                            <div className="header" style={{color:"gray",margin:"20px"}}>Schedultes</div>
-                                            <div className="flex" style={{paddingLeft:"20px"}}>
-                                                <div style={{minWidth:"170px"}}>
-                                                    <div className="flex" style={{borderBottom:"1px solid var(--border)"}}>
-                                                        <div className="max-width">week</div>
-                                                        <div className="max-width">month</div>
-                                                        <div className="max-width">day</div>
-                                                        <div className="max-width">year</div>
-                                                    </div>
-                                                    <div style={{overflowY:"scroll",height:"32vh"}}>
-                                                        {dates.map((date, key)=>(
-                                                            <div className="flex" key={key}>
-                                                                <div className="max-width">{date?.week}</div>
-                                                                <div className="max-width">{date?.month}</div>
-                                                                <div className="max-width">{date?.day}</div>
-                                                                <div className="max-width">{date?.year}</div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
+                                <div className="user-view-card-container" style={{width:"auto",minWidth:"500px"}}>
+                                    <div className="user-view-card">
+                                        <div className="header" style={{color:"gray",margin:"20px"}}>Schedules</div>
+                                        <div className="flex" style={{paddingLeft:"20px"}}>
+                                            <div style={{minWidth:"250px"}}>
+                                                <div className="flex" style={{borderBottom:"1px solid var(--border)"}}>
+                                                    <div className="max-width">week</div>
+                                                    <div className="max-width">month</div>
+                                                    <div className="max-width">day</div>
+                                                    <div className="max-width">year</div>
+                                                    <div style={{width:"70px"}}/>
                                                 </div>
-                                                <div style={{marginLeft:"10px",marginRight:"10px"}} />
-                                                <DaysPicker defaultDates={schedules} viewOnly style={{border:"none"}} />
+                                                <div style={{overflowY:"scroll",height:"32vh"}}>
+                                                    {dates.map((date, key)=>(
+                                                        <div className="flex" key={key}>
+                                                            <div className="user-vew-date-grid">{date?.week}</div>
+                                                            <div className="user-vew-date-grid">{date?.month}</div>
+                                                            <div className="user-vew-date-grid">{date?.day}</div>
+                                                            <div className="user-vew-date-grid">{date?.year}</div>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </div>
+                                            <div style={{marginLeft:"10px",marginRight:"10px"}} />
+                                            <DaysPicker defaultDates={schedules} viewOnly style={{border:"none"}} />
                                         </div>
                                     </div>
                                 </div>

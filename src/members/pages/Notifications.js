@@ -1,35 +1,39 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { UserNavBar } from '../../container/UserNavBar';
-import { getNotification } from '../../database/notifications/NotificationsDb';
+import { getNotification, updateNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
 import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { NotificationBox } from '../../components/widgets/NotificationBox';
 import { GiTriquetra } from 'react-icons/gi';
 import { NoRecord } from '../../components/widgets/NoRecord';
+import { useStore } from '../../state/stateManagement/stateManagement';
 
 
 export const Notifications = () =>{
     const { user } = useAuth();
+    const { notificationList, removeANotifications } = useStore();
 
-    const [notifications, setNotifications] = useState([]);
     const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
-    const initNotifications = async() =>{
-        setNotifications(await getNotification(user?.id));
+    const onView = (data) =>{
+        setShowMessageBox({state:true, data});
+        if (!data?.info?.seen) updateSeen(data?.id);
     }
 
-    useEffect(()=>{
-        initNotifications();
-    }, []);
+    const updateSeen = async(id) =>{
+        await updateNotification({seen:true}, id);
+        removeANotifications(id);
+    }
+    
     return(
         <UserNavBar>
             <div className="max-size">
                 <div style={{height:"90vh",overflowY:"auto"}}>
                     {
-                        notifications.length?
-                        notifications.map((notice, key)=>(
+                        notificationList.length?
+                        notificationList.map((notice, key)=>(
                             <div className="notification-item-container" key={key}>
-                                <div onClick={()=>setShowMessageBox({state:true, data: notice})} className="notification-item">
+                                <div onClick={()=>onView(notice)} className="notification-item">
                                     <div onClick={e=>e.stopPropagation()} className="notification-item-count">
                                         <div className="float-center">{key+1}</div>
                                     </div>
