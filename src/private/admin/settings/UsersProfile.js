@@ -1,13 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
 import { NoRecord } from '../../../components/widgets/NoRecord';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { ContentsWrapper } from '../../../container/ContentsWrapper';
-import { getUsers } from '../../../database/accounts/AccountsDb';
-import { useAuth } from '../../../state/auth/Authentication';
-import { adminRoutes } from '../../../utils/routes/Routes';
 import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
-import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 import { AdminInputEntry } from '../other/AdminInputEntry';
 import { UsersLists } from './UsersLists';
 

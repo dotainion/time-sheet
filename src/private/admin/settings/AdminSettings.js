@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { ResetPassword } from './ResetPassword';
-import { CHAGNE_PASSWORD, RESET_USER_PASSWORD } from '../../../contents/GlobalValues';
 import { ChangePassword } from '../../../security/ChangePassord';
 import { WhatsThis } from '../../../components/widgets/WhatsThis';
 import { useStore } from '../../../state/stateManagement/stateManagement';
@@ -21,7 +19,7 @@ export const AdminSettings = () =>{
     const history = useHistory();
 
     const { user } = useAuth();
-    const { settings, setLoader } = useStore();
+    const { settings } = useStore();
 
     const [showResetPassword, setShowResetPassword] = useState(false);
     const [showChangePassword, setShowChangePassword] = useState(false);

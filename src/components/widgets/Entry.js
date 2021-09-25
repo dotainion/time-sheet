@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { WidgetsInfo } from './WidgetsInfo';
 
 
@@ -17,11 +17,10 @@ export const Entry = ({startTyping, endTyping, inputRef, label, info, type, disa
                 type={password && "password" || number && "number" || type || "text"} 
                 style={{
                     width: width && `${width}px`,
-                    cursor:"text",
                     ...style,
                     backgroundColor:disable && "var(--input-disable)",
                     border:error && "1px solid red" || disable && "1px solid var(--border)",
-                    cursor:disable && "default"
+                    cursor:disable? "default": "text"
                 }} 
                 ref={inputRef}
                 value={value} 

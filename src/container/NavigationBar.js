@@ -1,20 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../state/auth/Authentication';
-import { Toolbar } from '../components/widgets/Toolbar';
-import { GiHamburgerMenu, GiTrebuchet } from 'react-icons/gi';
-import { GoPrimitiveDot } from 'react-icons/go';
-import { SelectOptions } from '../components/widgets/SelectOptions';
 import { adminRoutes } from '../utils/routes/Routes';
-import { tools } from '../utils/tools/Tools';
-import { CgShare } from 'react-icons/cg';
-import { BiLogOutCircle } from 'react-icons/bi';
-import { ButtonOption } from '../components/widgets/ButtonOption';
 import { WidgetsInfo } from '../components/widgets/WidgetsInfo';
 import { Profile } from '../components/other/Profile';
 import $ from 'jquery';
 import { Button } from '../components/widgets/Buttons';
-import logo from '../images/logo.png';
 import { MdNotificationsActive } from 'react-icons/md';
 import { useStore } from '../state/stateManagement/stateManagement';
 

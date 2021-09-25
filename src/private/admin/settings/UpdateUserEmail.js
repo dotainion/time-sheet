@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { ContentsWrapper } from '../../../container/ContentsWrapper';
-import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { tools } from '../../../utils/tools/Tools';
 import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
-import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 import { UsersLists } from './UsersLists';
 
 

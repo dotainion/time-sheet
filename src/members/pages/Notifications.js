@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { UserNavBar } from '../../container/UserNavBar';
-import { getNotification, updateNotification } from '../../database/notifications/NotificationsDb';
+import { updateNotification } from '../../database/notifications/NotificationsDb';
 import { useAuth } from '../../state/auth/Authentication';
-import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 import { NotificationBox } from '../../components/widgets/NotificationBox';
-import { GiTriquetra } from 'react-icons/gi';
 import { NoRecord } from '../../components/widgets/NoRecord';
 import { useStore } from '../../state/stateManagement/stateManagement';
 

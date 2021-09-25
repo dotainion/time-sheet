@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { WidgetsInfo } from './WidgetsInfo';
 
 
@@ -10,10 +10,10 @@ export const DateEntry = ({inputRef, disable, info, width, value, error, clearEr
                     className="input" 
                     type={"date"} 
                     style={{
-                        width: width && `${width}px`,cursor:"text",
+                        width: width && `${width}px`,
                         color:disable && "gray",
                         backgroundColor:disable && "var(--input-disable)",
-                        cursor:disable && "default",
+                        cursor:disable? "default": "text",
                         border:error && "1px solid red"
                     }} 
                     onChange={()=>clearError?.("")}

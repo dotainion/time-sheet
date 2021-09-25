@@ -1,13 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Backdrop } from '../../container/Backdrop';
 import { SpanWrapper } from '../../container/SpanWrapper';
-import { updateNotification } from '../../database/notifications/NotificationsDb';
-import { tools } from '../../utils/tools/Tools';
 
 
 export const NotificationBox = ({isOpen, onClose, data}) =>{
-
-    const noticeRef = useRef();
 
     return(
         <Backdrop isOpen={isOpen} onClose={onClose}>

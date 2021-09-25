@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Backdrop } from '../../../container/Backdrop';
 import { SpanWrapper } from '../../../container/SpanWrapper';
-import { CHAGNE_PASSWORD, RESET_USER_PASSWORD } from '../../../contents/GlobalValues';
 import { getUsers } from '../../../database/accounts/AccountsDb';
 import { useAuth } from '../../../state/auth/Authentication';
-import { useStore } from '../../../state/stateManagement/stateManagement';
 
 
 export const ResetPassword = ({isOpen, onClose}) =>{

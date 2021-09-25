@@ -1,6 +1,5 @@
 import React from 'react';
 import defaultImg from '../images/default-profile-image.png';
-import { InputSelect } from '../components/widgets/InputSelect';
 import { useAuth } from '../state/auth/Authentication';
 
 export const Header = () =>{

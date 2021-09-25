@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { useAuth } from '../../../state/auth/Authentication';
 import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
-import { BreadCrumbs } from '../../widgets/BreadCrumbs';
 import { AdminInputEntry } from '../other/AdminInputEntry';
 
 
 export const AdminProfile = () =>{
-    const history = useHistory();
 
     const { user, initUser } = useAuth();
 

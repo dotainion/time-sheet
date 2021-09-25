@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { ContentsWrapper } from '../../container/ContentsWrapper';
 import { UserNavBar } from '../../container/UserNavBar';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { WhatsThis } from '../../components/widgets/WhatsThis';
 import { ChangePassword } from '../../security/ChangePassord';
 import { MdEmail } from 'react-icons/md';
-import { BsQuestionCircle } from 'react-icons/bs';
-import { WidgetsInfo } from '../../components/widgets/WidgetsInfo';
 
 export const Settings = () =>{
     const [showChangePassword, setShowChangePassword] = useState();

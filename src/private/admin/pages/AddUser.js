@@ -1,6 +1,5 @@
 import React from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { ContentsWrapper } from '../../../container/ContentsWrapper';
 import { AdminInputEntry } from '../other/AdminInputEntry';
 import { FaUsers } from 'react-icons/fa';
 
