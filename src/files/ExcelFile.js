@@ -133,17 +133,20 @@ class XlFile{
     if (!this.breaks.length) return this.total;
     return time.sub(this.total, this.calcBreaks());
   }
+  buildOnEndingCurrentUser(){
+    this.data.push(this.buildLabel(this.totalBreakLabel));
+    this.data.push(this.buildBreakTotal(this.calcBreaks()));
+    this.data.push(this.buildLabel(this.totalLabel));
+    this.data.push(this.buildTotal(this.total));
+    this.data.push(this.buildLabel(this.grandTotalLabel));
+    this.data.push(this.buildTotal(this.calcGrandTotal()));
+  }
 
   async download(data=[]){
     for (let obj of data){
       if (obj?.id){
         if (this.total !== null){
-          this.data.push(this.buildLabel(this.totalBreakLabel));
-          this.data.push(this.buildBreakTotal(this.calcBreaks()));
-          this.data.push(this.buildLabel(this.totalLabel));
-          this.data.push(this.buildTotal(this.total));
-          this.data.push(this.buildLabel(this.grandTotalLabel));
-          this.data.push(this.buildTotal(this.calcGrandTotal()));
+          this.buildOnEndingCurrentUser();
         }
         this.data.push(this.buildSeparator());
         this.data.push(this.buildLabel(this.userLabel));
@@ -154,8 +157,7 @@ class XlFile{
       }
     }
     if (this.total !== null){
-      this.data.push(this.buildLabel(this.totalLabel));
-      this.data.push(this.buildTotal(this.total))
+      this.buildOnEndingCurrentUser();
     }
     await writeXlsxFile(
       this.data, 

@@ -16,10 +16,11 @@ import { LoadingBar } from '../../../components/widgets/LoadingBar';
 import { time } from '../../../utils/time/Time';
 import $ from 'jquery';
 import { HiDotsVertical } from 'react-icons/hi';
-import { OptionsMenu } from '../../../components/widgets/OptionsMenu';
+import { EllipsisMenu } from '../../../components/widgets/EllipsisMenu';
 import { useStore } from '../../../state/stateManagement/stateManagement';
 import { TimePicker } from '../../../components/widgets/TimePicker';
 import { UpdateLog } from '../other/UpdateLog';
+import { OptionsMenu } from '../other/OptionsMenu';
 
 
 let muliUserIds = [];
@@ -78,9 +79,7 @@ export const AdminLogs = () =>{
         for (let multiUser of multipleUsers){
             const mLogs = await getByRange(multiUser?.id);
             multiUserlogs.push(multiUser);
-            for (let gs of mLogs){
-                multiUserlogs.push(gs);
-            }
+            for (let gs of mLogs) multiUserlogs.push(gs);
         }
         setLogs(multiUserlogs);
         setLoading(false);
@@ -202,7 +201,7 @@ export const AdminLogs = () =>{
                         <div className="inline-block pad-mini">
                             <div style={{color:"red"}}><b>{allowEditing && "Editing is on..."}</b></div>
                         </div>
-                        <OptionsMenu options={[{title: allowEditing?"Disable editing":"Enable editing", action: ()=>setAllowEditing(!allowEditing), state: allowEditing}]} />
+                        <EllipsisMenu options={[{title: allowEditing?"Disable editing":"Enable editing", action: ()=>setAllowEditing(!allowEditing), state: allowEditing}]} />
                     </div>
 
                     <div className="pad">
@@ -240,11 +239,11 @@ export const AdminLogs = () =>{
                                                     <div>{log?.info?.firstName} {log?.info?.lastName}</div>
                                                 </div>:
                                                 <div onClick={()=>allowEditing && setShowEditLog({state:true, date:log})} className={`log-record ${allowEditing && "item-hover"}`} style={{cursor:allowEditing && "pointer"}}>
-                                                    <div className="relative">{time.toDateString(log?.info?.start)}</div>
-                                                    <div className="relative">{time.toTimeString(log?.info?.start)}</div>
-                                                    <div className="relative">{time.toTimeString(log?.info?.end)}</div>
-                                                    <div className="relative">{time.sub(log?.info?.end, log?.info?.start, true)}</div>
-                                                    <div className="relative">Total Break</div>
+                                                    <div>{time.toDateString(log?.info?.start)}</div>
+                                                    <div>{time.toTimeString(log?.info?.start)}</div>
+                                                    <div>{time.toTimeString(log?.info?.end)}</div>
+                                                    <div>{time.sub(log?.info?.end, log?.info?.start, true)}</div>
+                                                    <OptionsMenu options={log?.info?.break || []} />
                                                 </div>
                                             }
                                         </div>

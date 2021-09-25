@@ -3,7 +3,7 @@ import { HiDotsVertical } from 'react-icons/hi';
 import { Backdrop } from '../../container/Backdrop';
 
 
-export const OptionsMenu = ({options}) =>{
+export const EllipsisMenu = ({options}) =>{
     const [showOption, setShowOption] = useState(false);
 
     return(
@@ -17,7 +17,7 @@ export const OptionsMenu = ({options}) =>{
                     <div onClick={()=>opt?.action?.()} className="option-menu-button" key={key}>{opt?.title}</div>
                 ))}
             </div>
-                </Backdrop>
+        </Backdrop>
         </>
     )
 }
