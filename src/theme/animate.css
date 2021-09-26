@@ -1,9 +1,16 @@
+
+.page-animate{
+  display: none;
+  overflow-y: auto;
+  height: 92vh;
+}
+
 @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
   

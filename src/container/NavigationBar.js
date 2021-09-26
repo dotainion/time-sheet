@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../state/auth/Authentication';
 import { adminRoutes } from '../utils/routes/Routes';
@@ -18,6 +18,7 @@ export const NavigationBar = ({menues, isActive, children}) =>{
     const { notifications } = useStore();
 
     const navRef = useRef();
+    const pageRef = useRef();
 
     const forMenu = (nav, index) =>{
         if (index){
@@ -63,6 +64,12 @@ export const NavigationBar = ({menues, isActive, children}) =>{
         }
         
     }
+
+    useEffect(()=>{
+        setTimeout(() => {
+            $(pageRef.current).show("slow");
+        }, 50);
+    }, []);
 
     return(
         <div className="flex d-flex-on-mobile" style={{height:"100vh"}}>
@@ -121,7 +128,7 @@ export const NavigationBar = ({menues, isActive, children}) =>{
                         role={user?.role}
                     />
                 </div>
-                <div className="pad relative" style={{overflowY:"auto",height:"92vh"}}>
+                <div ref={pageRef} className="pad relative page-animate">
                     {children}
                 </div>
             </div>

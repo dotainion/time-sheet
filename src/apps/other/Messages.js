@@ -7,6 +7,7 @@ import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 import { NoRecord } from '../../components/widgets/NoRecord';
 import { FiLoader } from 'react-icons/fi';
+import $ from 'jquery';
 
 
 export const Messages = () =>{
@@ -90,7 +91,7 @@ export const Messages = () =>{
     return(
         <div>
             <div className="flex msg-main-container">
-                <div className="msg-contact-container">
+                <div hidden={!contacts.length} className="msg-contact-container">
                     <div style={{padding:"10px",backgroundColor:"var(--primary-color)",color:"white",paddingBottom:"10px",marginBottom:"10px"}}>
                         <Profile
                             floatLeft
@@ -155,7 +156,7 @@ export const Messages = () =>{
                         }
                     </div>
                 </div>
-                <div className={`msg-container ${hideWhenMobile}`}>
+                <div className={`msg-container ${hideWhenMobile}`} style={{width:contacts.length && "100%"}}>
                     <div className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
                         <Profile
                             floatLeft
