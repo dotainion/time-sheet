@@ -156,7 +156,7 @@ export const Messages = () =>{
                         }
                     </div>
                 </div>
-                <div className={`msg-container ${hideWhenMobile}`} style={{width:contacts.length && "100%"}}>
+                <div className={`msg-container ${hideWhenMobile}`} style={{width:!contacts.length && "100%"}}>
                     <div className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
                         <Profile
                             floatLeft
