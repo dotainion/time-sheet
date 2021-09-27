@@ -21,6 +21,7 @@ import { LandingContent } from '../other/LandingContent';
 import { DaysPicker } from '../../../apps/calendar/Calendar';
 import { getSchedule } from '../../../database/schedules/SchedulesDb';
 import logo from '../../../images/logo.png';
+import { UsersListContainer } from '../other/UsersListContainer';
 
 
 export const Users = () =>{
@@ -109,9 +110,9 @@ export const Users = () =>{
         const isUserSelected = Object.keys(userSelected).length? true: false;
         showContentsDivs(isUserSelected);
         setUserSelected(sUser);
-        getSelectedUserSuperior(sUser);
         oganizeUserTeamMembers(sUser);
-        getUserSelectedSchedules(sUser);
+        await getSelectedUserSuperior(sUser);
+        await getUserSelectedSchedules(sUser);
     }
     
     const initUsers = async() =>{
@@ -124,32 +125,13 @@ export const Users = () =>{
 
     return(
         <AdminNavBar>
-            <div className="flex no-select">
-                <div className="log-user-container">
-                    <SearchBar placeholder="Search users" />
-                    <div className="log-user-scroller">
-                        {
-                            users.length?
-                            users.map((usr, key)=>(
-                                <WidgetsInfo onClick={()=>onSelectUser(usr)} cssClass="log-user" info="some msg" key={key}>
-                                    <div className="flex">
-                                        <img src={usr?.info?.image || defaultImage} className="log-img" />
-                                        <div>{usr?.info?.firstName} {usr?.info?.lastName}</div>
-                                    </div>
-                                </WidgetsInfo>
-                            )):
-                            <div>No users</div>
-                        }
-                    </div>
-                </div>
+            <UsersListContainer
+                useRefresh
+                noMultiSelect
+                onSelected={onSelectUser}
+            >
                 <div className="max-width relative">
                     <div ref={profileContainerRef} className="max-width" style={{display:"none"}}>
-                        <div style={{borderBottom:"1px solid gray",color:"var(--primary-color)"}}>
-                            <div className="header" style={{paddingLeft:"10px"}}>
-                                <label>Member</label>
-                            </div>
-                        </div>
-
                         <div className="flex" style={{height:"88vh"}}>
                             <div className="user-view-profile">
                                 <div style={{padding:"40px"}}>
@@ -239,9 +221,9 @@ export const Users = () =>{
                             </div>
                         </div>
                     </div>
-                    <LandingContent landingRef={landingPageRef} />
                 </div>
-            </div>
+                <LandingContent landingRef={landingPageRef} />
+            </UsersListContainer>
         </AdminNavBar>
     )
 }

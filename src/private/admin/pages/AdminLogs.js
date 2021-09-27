@@ -32,6 +32,7 @@ export const AdminLogs = () =>{
     const [logs, setLogs] = useState([]);
     const [allowEditing, setAllowEditing] = useState(false);
     const [showEditLog, setShowEditLog] = useState({state:false, date:null});
+    const [isUserSelected, setIsUserSelected] = useState(false);
 
     const toDateFrom = useRef();
     const fromDateRef = useRef();
@@ -98,27 +99,28 @@ export const AdminLogs = () =>{
     return(
         <AdminNavBar>
             <UsersListContainer
+                useRefresh
                 refreshId="admin-log-refresh"
+                onChecked={setIsUserSelected}
                 onSelected={getSingleSelectedUserLog}
                 onMultiSelected={onMultiSelected}
-                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile}]}
+                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile},{title:"Editing is on...",style:{color:"red"},border:"none",hidden:!allowEditing}]}
                 menu={[{title:allowEditing?"Disable editing":"Enable editing",action:()=>setAllowEditing(!allowEditing)}]}
-                subToolbar={
-                    <div className="flex pad">
-                        <div className="pad">
-                            <label style={{marginRight:"5px"}}>From</label>
-                            <DateEntry inputRef={fromDateRef} />
-                        </div>
-                        <div className="pad">
-                            <label style={{marginRight:"5px"}}>To</label>
-                            <DateEntry inputRef={toDateFrom} />
-                        </div>
-                        <div style={{padding:"13px"}}>
-                            <Button onClick={()=>document.getElementById("admin-log-refresh").click()} label="Get selected" icon="users" />
-                        </div>
-                    </div>
-                }
             >
+
+                <div className="flex pad">
+                    <div className="pad">
+                        <label style={{marginRight:"5px"}}>From</label>
+                        <DateEntry inputRef={fromDateRef} />
+                    </div>
+                    <div className="pad">
+                        <label style={{marginRight:"5px"}}>To</label>
+                        <DateEntry inputRef={toDateFrom} />
+                    </div>
+                    <div hidden={!isUserSelected} style={{padding:"13px"}}>
+                        <Button onClick={()=>document.getElementById("admin-log-refresh").click()} label="Get selected" icon="users" />
+                    </div>
+                </div>
 
                 <div className="pad">
                     <div className="log-record" style={{marginRight:"17px"}}>

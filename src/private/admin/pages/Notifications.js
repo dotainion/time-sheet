@@ -17,11 +17,11 @@ import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 import { MdNotificationsActive } from 'react-icons/md';
 import { IconButton } from '../../../components/widgets/IconButon';
 import { useStore } from '../../../state/stateManagement/stateManagement';
+import { UsersListContainer } from '../other/UsersListContainer';
+import { LoadingBar } from '../../../components/widgets/LoadingBar';
 
 
-
-let uMembers = [];
-let DEFAULT_USER_SELECTED = "Select a member";
+let DEFAULT_USER_SELECTED = "";
 export const AdminNotifications = () =>{
     const history = useHistory();
 
@@ -34,17 +34,14 @@ export const AdminNotifications = () =>{
     const [headerError, setHeaderError] = useState("");
     const [members, setMembers] = useState([]);
     const [switchView, setSwitchView] = useState(false);
-    const [errorSelect, setErrorSelect] = useState("");
     const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
     const headerRef = useRef();
     const infoRef = useRef();
     const messageRef = useRef();
-    const userToNotifyInfoRef = useRef();
 
-    const onNotify = async() =>{
+    const onNotify = async(uUsers) =>{
         let STATE = true;
-        setErrorSelect("");
         if (!infoRef.current.value){
             STATE = false;
             setInfoError("No informatin specify");
@@ -53,52 +50,27 @@ export const AdminNotifications = () =>{
             STATE = false;
             setHeaderError("Invalid header");
         }
-        if (!userToNotifyInfoRef.current?.id){
-            STATE = false;
-            setErrorSelect("No user selected.");
-        }
 
         if (!STATE) return;
 
-        setLoading(true);
         setSent(false);
-        await addNotification({
-            header: headerRef.current.value,
-            from: `(${user?.role}) ${user?.firstName} ${user?.lastName}`,
-            id: userToNotifyInfoRef.current?.id,
-            message: messageRef.current.value,
-            info: infoRef.current.value,
-            adminId: user?.id,
-            seen: false
-        });
+        setLoading(true);
+        for (let uUser of members){
+            await addNotification({
+                header: headerRef.current.value,
+                from: `(${user?.role}) ${user?.firstName} ${user?.lastName}`,
+                id: uUser?.id,
+                message: messageRef.current.value,
+                info: infoRef.current.value,
+                adminId: user?.id,
+                seen: false
+            });
+        }
         headerRef.current.value = "";
         infoRef.current.value = "";
         messageRef.current.value = "";
-        setLoading(false);
         setSent(true);
-    }
-
-    const onSelectMember = (id) =>{
-        for (let uUser of uMembers){
-            if (uUser?.id === id){
-                userToNotifyInfoRef.current = uUser;
-                break;
-            }
-        }
-    }
-
-    const initUsers = async() =>{
-        let tempArray = [];
-        uMembers = [];
-        for (let mebr of await getUsers(user?.accessId, user?.id)){
-            uMembers.push(mebr)
-            tempArray.push({
-                title: `${mebr?.info?.firstName} ${mebr?.info?.lastName}`,
-                value: mebr?.id,
-                command: (value) => onSelectMember(value)
-            });
-        }
-        setMembers(tempArray);
+        setLoading(false);
     }
     
     const onViewNotification = (data) =>{
@@ -112,10 +84,11 @@ export const AdminNotifications = () =>{
     }
 
     useEffect(()=>{
-        initUsers();
+        //NOTE: notification no longer being used
+        // this is statement is not being used...
         if (history.location?.data){
             const data = history.location.data;
-            userToNotifyInfoRef.current = data?.user;
+            setMembers([data?.user]);
             if (data?.type === adminRoutes.logs){
                 headerRef.current.value = "Time Log";
                 infoRef.current.value = `Discrepancy with time log for ${tools.time.date(data?.value)}`;
@@ -127,86 +100,71 @@ export const AdminNotifications = () =>{
 
     return(
         <AdminNavBar>
-            <div className="flex" style={{borderBottom:"1px solid black"}}>
-                <IconButton 
-                    onClick={()=>setSwitchView(false)} 
-                    label="ADD NOTIFICATION" 
-                    icon="notification" 
-                    cssClass="pad" 
-                    border="none" 
-                    style={{
-                        color:!switchView && "white",
-                        backgroundColor:!switchView && "var(--primary-color)"
-                    }} />
-                <IconButton 
-                    onClick={()=>setSwitchView(true)} 
-                    label="VIEW NOTIFICATION" 
-                    icon="notification" 
-                    cssClass="pad" 
-                    border="none" 
-                    style={{
-                        color:switchView && "white",
-                        backgroundColor:switchView && "var(--primary-color)"
-                    }} />
-            </div>
-            <div hidden={switchView} className="notification-container">
-                <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Notification</div>
+            <UsersListContainer
+                onSelected={async(uUser)=>setMembers([uUser])}
+                onMultiSelected={setMembers}
+                toolbar={[
+                    {action:()=>setSwitchView(false),title:"ADD NOTIFICATION",border:"none",style:{color:!switchView && "white",backgroundColor:!switchView && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}}
+                ]}
+            >
                 
-                <div style={{marginTop:"40px",marginBottom:"40px"}}>
-                    <IconSelect icon="users" options={members} defaultValue={DEFAULT_USER_SELECTED} error={errorSelect} errorReset={setErrorSelect} />
-                </div>
-                <div className="notification-sub-container">
-                    <InputEntry inputRef={headerRef} label="Header" labelFixed placeholder="Notification type" error={headerError} errorReset={setHeaderError} />
-                </div>
-                <div className="notification-sub-container">
-                    <InputEntry inputRef={infoRef} label="Information" labelFixed placeholder="Information specify to notification" error={infoError} errorReset={setInfoError} />
-                </div>
-                <div className="notification-sub-container">
-                    <InputTextarea inputRef={messageRef} label="Message" labelFixed placeholder="Enter message about your notification here" />
-                </div>
-                <div className="relative">
-                    <span className="float-center" style={{display:!loading && "none"}}>
-                        <BiRefresh className="spin" style={{fontSize:"25px",marginBottom:"-5px"}} />
-                        <span>{loading && "Sending..."}</span>
-                    </span>
-                    <span className="float-center">{sent && "Notification sent"}</span>
-                    <div style={{textAlign:"right"}}>
-                        <IconButton onClick={onNotify} icon="send" label="Send" />
+                <div hidden={switchView} className="notification-container">
+                    <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Notification</div>
+                    <div className="notification-sub-container">
+                        <InputEntry inputRef={headerRef} label="Header" labelFixed placeholder="Notification type" error={headerError} errorReset={setHeaderError} />
+                    </div>
+                    <div className="notification-sub-container">
+                        <InputEntry inputRef={infoRef} label="Information" labelFixed placeholder="Information specify to notification" error={infoError} errorReset={setInfoError} />
+                    </div>
+                    <div className="notification-sub-container">
+                        <InputTextarea inputRef={messageRef} label="Message" labelFixed placeholder="Enter message about your notification here" />
+                    </div>
+                    <div className="relative">
+                        <span className="float-center" style={{display:!loading && "none"}}>
+                            <BiRefresh className="spin" style={{fontSize:"25px",marginBottom:"-5px"}} />
+                            <span>{loading && "Sending..."}</span>
+                        </span>
+                        <span className="float-center">{sent && "Notification sent"}</span>
+                        <div style={{textAlign:"right"}}>
+                            <IconButton onClick={onNotify} icon="send" label="Send" style={{color:"var(--primary-color)",borderColor:"var(--primary-color)",padding:"5px",width:"100px"}} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div hidden={!switchView} style={{backgroundColor:"var(--bg)"}}>
-                <div style={{height:"88vh",overflowY:"auto"}}>
-                    {
-                        notificationList.length?
-                        notificationList.map((notice, key)=>(
-                            <div className="notification-item-container" key={key}>
-                                <div onClick={()=>onViewNotification(notice)} className="notification-item">
-                                    <div onClick={e=>e.stopPropagation()} className="notification-item-count">
-                                        <div className="float-center">{key+1}</div>
-                                    </div>
-                                    <div className="float-center">
-                                        <div className="relative" style={{color:"var(--primary-color)"}}><b>{notice?.info?.header}</b></div>
-                                        <div>{notice?.info?.from}</div>
+                <div hidden={!switchView} style={{backgroundColor:"var(--bg)"}}>
+                    <div style={{height:"88vh",overflowY:"auto"}}>
+                        {
+                            notificationList.length?
+                            notificationList.map((notice, key)=>(
+                                <div className="notification-item-container" key={key}>
+                                    <div onClick={()=>onViewNotification(notice)} className="notification-item">
+                                        <div onClick={e=>e.stopPropagation()} className="notification-item-count">
+                                            <div className="float-center">{key+1}</div>
+                                        </div>
+                                        <div className="float-center">
+                                            <div className="relative" style={{color:"var(--primary-color)"}}><b>{notice?.info?.header}</b></div>
+                                            <div>{notice?.info?.from}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )):
-                        <NoRecord 
-                            icon="notification"
-                            header="No notification" 
-                            message="Notification provides details to spesific information." 
-                            subMessage="It cant be for knowledge, errors, clarification or areas that needs updating."
-                        />
-                    }
+                            )):
+                            <NoRecord 
+                                icon="notification"
+                                header="No notification" 
+                                message="Notification provides details to spesific information." 
+                                subMessage="It cant be for knowledge, errors, clarification or areas that needs updating."
+                            />
+                        }
+                    </div>
                 </div>
-            </div>
-            <NotificationBox
-                isOpen={showMessageBox.state}
-                onClose={()=>setShowMessageBox({state:false, data: null})}
-                data={showMessageBox.data}
-            />
+                <NotificationBox
+                    isOpen={showMessageBox.state}
+                    onClose={()=>setShowMessageBox({state:false, data: null})}
+                    data={showMessageBox.data}
+                />
+                <LoadingBar isOpen={loading} />
+            </UsersListContainer>
         </AdminNavBar>
     )
 }

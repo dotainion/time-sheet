@@ -13,7 +13,7 @@ import { LoadingBar } from '../../../components/widgets/LoadingBar';
 
 let muliUserIds = [];
 let checkboxIds = [];
-export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMultiSelected, refreshId, children}) =>{
+export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onSelected, onMultiSelected, useRefresh, refreshId, children}) =>{
     const { user } = useAuth();
 
     const [users, setUsers] = useState([]);
@@ -35,10 +35,11 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
     const onTriggerMultiSelected = async(uUsers) =>{
         setLoading(true);
         await onMultiSelected?.(uUsers);
+        onChecked?.(uUsers?.length);
         setLoading(false);
     }
 
-    const onMuliUserSelect = (uUser) =>{
+    const onMuliUserSelect = async(uUser) =>{
         document.getElementById("select-all").checked = false;
         if (muliUserIds.includes(uUser?.id)){
             muliUserIds = [];
@@ -50,9 +51,11 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
                 }
             }
             setMultipleUsers(tempMulti);
+            onChecked?.(tempMulti.length);
         }else{
             muliUserIds.push(uUser?.id);
             setMultipleUsers([...multipleUsers, uUser]);
+            onChecked?.([...multipleUsers, uUser].length);
         }
     }
 
@@ -84,7 +87,22 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
             };
             setMultipleUsers(temps);
             await onTriggerMultiSelected(temps);
-        }else setMultipleUsers([]);
+        }else{
+            setMultipleUsers([]);
+            await onTriggerMultiSelected([]);
+        }
+    }
+
+    const isSelected = (uUser) =>{
+        if (multipleUsers?.length){
+            singleUserSelectedRef.current = {};
+            for (let mUser of multipleUsers){
+                if (uUser?.id === mUser?.id) return true;
+            }
+        }else{
+            if (uUser?.id === singleUserSelectedRef.current?.id) return true;
+        }        
+        return false;
     }
 
     const initUsers = async() =>{
@@ -98,13 +116,14 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
     return(
         <div className="flex no-select">
             <div className="log-user-container">
+                <div style={{color:"var(--primary-color)"}}><b>Members</b></div>
                 <SearchBar placeholder="Search users" />
                 <div
                     onMouseEnter={()=>setShowOption(true)} 
                     onMouseLeave={()=>setShowOption(false)} 
                     className="log-user-scroller"
                 >
-                    <div hidden={!showOption} className="float-top-left log-user-menu">
+                    <div hidden={!showOption} className={`float-top-left log-user-menu ${noMultiSelect && "hide"}`}>
                         <div className="pad-mini flex">
                             <InputCheckbox onChange={selectAllCheckbox} id="select-all" />
                             <label>Select all</label>
@@ -113,9 +132,9 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
                     {
                         users.length?
                         users.map((usr, key)=>(
-                            <WidgetsInfo onClick={()=>onTriggerSingleSelected(usr)} cssClass="log-user" info="some msg" key={key}>
+                            <WidgetsInfo onClick={()=>onTriggerSingleSelected(usr)} cssClass="log-user" info={usr?.info?.role} style={{backgroundColor:isSelected(usr) && "gray"}} key={key}>
                                 <div className="flex">
-                                    <InputCheckbox onChange={()=>onMuliUserSelect(usr)} stopPropagation id={initCheckBoxId(key)} />
+                                    <InputCheckbox onChange={()=>onMuliUserSelect(usr)} cssClass={noMultiSelect && "hide"} stopPropagation defaultChecked={isSelected(usr)} id={initCheckBoxId(key)} />
                                     <img src={usr?.info?.image || defaultImage} className="log-img" />
                                     <div>{usr?.info?.firstName} {usr?.info?.lastName}</div>
                                 </div>
@@ -129,7 +148,7 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
             <div className="max-width">
                 <div className="max-width" style={{borderBottom:"1px solid gray"}}>
                     <div className="inline-block pad-mini">
-                        <IconButton onClick={onRefresh} label="Refresh" icon="refresh" cssClass="log-header-btn-text" iconCss="float-left log-header-btn-icon" />
+                        <IconButton onClick={onRefresh} hidden={!useRefresh} label="Refresh" icon="refresh" cssClass="log-header-btn-text" iconCss="float-left log-header-btn-icon" />
                     </div>
                     {toolbar?.map((btn, key)=>(
                         <div className="inline-block pad-mini" key={key}>
@@ -138,18 +157,17 @@ export const UsersListContainer = ({toolbar, subToolbar, menu, onSelected, onMul
                                 label={btn?.title} 
                                 disabled={btn?.disabled} 
                                 icon={btn?.icon} 
-                                cssClass="log-header-btn-text" 
+                                style={{...btn?.style}}
+                                border={btn?.border}
+                                hidden={btn?.hidden}
+                                cssClass={`log-header-btn-text ${btn?.css}`}
                                 iconCss="float-left log-header-btn-icon" 
                             />
                         </div>
                     ))}
-                    <div className="inline-block pad-mini">
-                        <div style={{color:"red"}}><b>{"Editing is on..."}</b></div>
-                    </div>
                     <EllipsisMenu options={menu} hidden={!menu?.length} />
                 </div>
-                <div>{subToolbar}</div>
-                <div>{children}</div>
+                <div className="relative" style={{height:"88vh"}}>{children}</div>
             </div>
             <LoadingBar isOpen={loading} />
             <div id={refreshId} onClick={onRefresh} />
