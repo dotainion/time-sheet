@@ -97,7 +97,7 @@ export const AdminLogs = () =>{
     }, []);
 
     return(
-        <AdminNavBar>
+        <AdminNavBar useContact>
             <UsersListContainer
                 useRefresh
                 refreshId="admin-log-refresh"

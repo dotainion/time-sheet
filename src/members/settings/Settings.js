@@ -29,7 +29,7 @@ export const Settings = () =>{
     
     return(
         <UserNavBar>
-            <div className="pad max-size">
+            <div className="max-size">
                 {SETTINGS_LISTS.map((settings, key)=>(
                     <div key={key}>
                         <div className="settings-header">{settings?.header}</div>

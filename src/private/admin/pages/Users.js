@@ -14,7 +14,6 @@ import { DateEntry } from '../../../components/widgets/DateEntry';
 import defaultImage from '../../../images/default-profile-image.png';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
 import { time } from '../../../utils/time/Time';
-import $ from 'jquery';
 import { useHistory } from 'react-router';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { LandingContent } from '../other/LandingContent';
@@ -22,6 +21,8 @@ import { DaysPicker } from '../../../apps/calendar/Calendar';
 import { getSchedule } from '../../../database/schedules/SchedulesDb';
 import logo from '../../../images/logo.png';
 import { UsersListContainer } from '../other/UsersListContainer';
+import $ from 'jquery';
+import { tools } from '../../../utils/tools/Tools';
 
 
 export const Users = () =>{
@@ -37,6 +38,7 @@ export const Users = () =>{
 
     const profileContainerRef = useRef();
     const landingPageRef = useRef();
+    const contactRef = useRef();
 
     const isUser = () =>{
         if (Object.keys(userSelected || {}).length) return true;
@@ -124,15 +126,16 @@ export const Users = () =>{
     }, []);
 
     return(
-        <AdminNavBar>
+        <AdminNavBar useContact>
             <UsersListContainer
                 useRefresh
                 noMultiSelect
+                contactRef={contactRef}
                 onSelected={onSelectUser}
             >
                 <div className="max-width relative">
                     <div ref={profileContainerRef} className="max-width" style={{display:"none"}}>
-                        <div className="flex" style={{height:"88vh"}}>
+                        <div className="flex d-flex-on-mobile" style={{height:"88vh"}}>
                             <div className="user-view-profile">
                                 <div style={{padding:"40px"}}>
                                     <img className="user-view-image" src={userSelected?.info?.image || defaultImage} alt="" />
@@ -148,7 +151,7 @@ export const Users = () =>{
                                     </div>
                                 </div>
                             </div>
-                            <div className="max-size">
+                            <div className="max-size hide-on-mobile">
                                 <div className="user-view-card-container" style={{width:"auto",minWidth:"500px"}}>
                                     <div className="user-view-card">
                                         <div className="header" style={{color:"gray",margin:"20px"}}>Schedules</div>

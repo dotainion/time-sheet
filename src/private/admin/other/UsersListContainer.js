@@ -9,6 +9,9 @@ import defaultImage from '../../../images/default-profile-image.png';
 import { IconButton } from '../../../components/widgets/IconButon';
 import { EllipsisMenu } from '../../../components/widgets/EllipsisMenu';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
+import { tools } from '../../../utils/tools/Tools';
+import $ from 'jquery';
+import { CONTACT_ID } from '../../../contents/GlobalId';
 
 
 let muliUserIds = [];
@@ -22,10 +25,29 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
     const [loading, setLoading] = useState(false);
 
     const singleUserSelectedRef = useRef();
+    const searchRef = useRef();
+
+    const onSearch = () =>{
+        let likeUser = [];
+        let unlikeUser =[];
+        for (let uUser of users){
+            const search = searchRef.current.value;
+            if (
+                uUser?.info?.firstName?.toLowerCase?.()?.includes?.(search.toLowerCase?.()) || 
+                uUser?.info?.lastName?.toLowerCase?.()?.includes?.(search.toLowerCase?.())
+            ){
+                likeUser.push(uUser);
+            }else{
+                unlikeUser.push(uUser);
+            }
+        }
+        setUsers([...likeUser, ...unlikeUser])
+    }
 
     const onTriggerSingleSelected = async(uUser) =>{
         if (!multipleUsers.length){
             setLoading(true);
+            togglePage();
             singleUserSelectedRef.current = uUser;
             await onSelected?.(uUser);
             setLoading(false);
@@ -105,6 +127,12 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
         return false;
     }
 
+    const togglePage = () =>{
+        if (tools.isMobile()){
+            $(document.getElementById(CONTACT_ID)).slideToggle("slow");
+        }
+    }
+
     const initUsers = async() =>{
         setUsers(await getUsers(user?.accessId, user?.id));
     }
@@ -115,15 +143,15 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
 
     return(
         <div className="flex no-select">
-            <div className="log-user-container">
+            <div id={CONTACT_ID} className="log-user-container">
                 <div style={{color:"var(--primary-color)"}}><b>Members</b></div>
-                <SearchBar placeholder="Search users" />
+                <SearchBar onTyping={onSearch} searchRef={searchRef} placeholder="Search users" />
                 <div
                     onMouseEnter={()=>setShowOption(true)} 
                     onMouseLeave={()=>setShowOption(false)} 
                     className="log-user-scroller"
                 >
-                    <div hidden={!showOption} className={`float-top-left log-user-menu ${noMultiSelect && "hide"}`}>
+                    <div hidden={!showOption} className={`float-top-left log-user-menu ${noMultiSelect && "hide"} ${!users?.length && "hide"}`}>
                         <div className="pad-mini flex">
                             <InputCheckbox onChange={selectAllCheckbox} id="select-all" />
                             <label>Select all</label>
@@ -136,7 +164,9 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
                                 <div className="flex">
                                     <InputCheckbox onChange={()=>onMuliUserSelect(usr)} cssClass={noMultiSelect && "hide"} stopPropagation defaultChecked={isSelected(usr)} id={initCheckBoxId(key)} />
                                     <img src={usr?.info?.image || defaultImage} className="log-img" />
-                                    <div>{usr?.info?.firstName} {usr?.info?.lastName}</div>
+                                    <div className="relative">
+                                        <div className="log-user-name">{usr?.info?.firstName} {usr?.info?.lastName}</div>
+                                    </div>
                                 </div>
                             </WidgetsInfo>
                         )):
@@ -147,7 +177,7 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
 
             <div className="max-width">
                 <div className="max-width" style={{borderBottom:"1px solid gray"}}>
-                    <div className="inline-block pad-mini">
+                    <div className="inline-block pad-mini hide-on-mobile">
                         <IconButton onClick={onRefresh} hidden={!useRefresh} label="Refresh" icon="refresh" cssClass="log-header-btn-text" iconCss="float-left log-header-btn-icon" />
                     </div>
                     {toolbar?.map((btn, key)=>(

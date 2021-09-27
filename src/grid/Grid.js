@@ -73,7 +73,7 @@ export const Grid = () =>{
                         <div onClick={()=>history.push(nav?.route)} style={{display:hideCard(key)}} className="grid-card" key={key}>
                             <div className="grid-inner-card">
                                 <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />
-                                <div className="float-top-left pad">{nav?.title}</div>
+                                <div className="float-top-left pad hide-on-mobile">{nav?.title}</div>
                             </div>
                         </div>
                     ))}
@@ -84,7 +84,7 @@ export const Grid = () =>{
                         <div onClick={nav?.action} className="grid-card" key={key}>
                             <div className="grid-inner-card">
                                 {nav?.icon && <nav.icon className="float-center" style={{fontSize:"40px",color:COLORS[key]}} />}
-                                <div className="float-bottom-left pad">{nav?.title}</div>
+                                <div className="float-bottom-left pad hide-on-mobile">{nav?.title}</div>
                             </div>
                         </div>
                     ))}

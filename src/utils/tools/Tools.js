@@ -413,6 +413,10 @@ class Tools{
         minute = index;
         return `${hour}:${minute}:${second}`;
     }
+    isMobile(){
+        if (window.innerWidth <= 767) return true;
+        return false;
+    }
 }
 
 export const tools = new Tools();

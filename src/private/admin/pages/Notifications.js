@@ -99,7 +99,7 @@ export const AdminNotifications = () =>{
     }, []);
 
     return(
-        <AdminNavBar>
+        <AdminNavBar useContact>
             <UsersListContainer
                 onSelected={async(uUser)=>setMembers([uUser])}
                 onMultiSelected={setMembers}

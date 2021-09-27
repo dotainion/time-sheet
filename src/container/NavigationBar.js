@@ -4,14 +4,16 @@ import { useAuth } from '../state/auth/Authentication';
 import { adminRoutes } from '../utils/routes/Routes';
 import { WidgetsInfo } from '../components/widgets/WidgetsInfo';
 import { Profile } from '../components/other/Profile';
-import $ from 'jquery';
 import { Button } from '../components/widgets/Buttons';
 import { MdNotificationsActive } from 'react-icons/md';
 import { useStore } from '../state/stateManagement/stateManagement';
+import $ from 'jquery';
+import { tools } from '../utils/tools/Tools';
+import { CONTACT_ID } from '../contents/GlobalId';
 
 
 
-export const NavigationBar = ({menues, isActive, children}) =>{
+export const NavigationBar = ({menues, useContact, isActive, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
@@ -65,6 +67,12 @@ export const NavigationBar = ({menues, isActive, children}) =>{
         
     }
 
+    const togglePage = (idRef) =>{
+        if (tools.isMobile()){
+            $(document.getElementById(idRef)).slideToggle("slow");
+        }
+    }
+
     useEffect(()=>{
         setTimeout(() => {
             $(pageRef.current).show("slow");
@@ -91,7 +99,7 @@ export const NavigationBar = ({menues, isActive, children}) =>{
                         </div>
                     ))}
                 </div>
-                <div ref={navRef}>
+                <div ref={navRef} className="hide-on-mobile">
                     {menues.map((nav, key)=>(
                         <div 
                             id={`${key}navs-left`} 
@@ -110,7 +118,7 @@ export const NavigationBar = ({menues, isActive, children}) =>{
                 </div>
             </div>
             <div className="page-container">
-                <div className="header-container">
+                <div className="header-container hide-on-mobile">
                     <div className="relative" style={{float:"left",width:"50px",height:"100%"}}>
                         <div onClick={()=>history.push(adminRoutes.notification)} hidden={!notifications?.length} className="float-center" style={{cursor:"pointer"}}>
                             <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
@@ -128,8 +136,23 @@ export const NavigationBar = ({menues, isActive, children}) =>{
                         role={user?.role}
                     />
                 </div>
-                <div ref={pageRef} className="pad relative page-animate">
-                    {children}
+                <div ref={pageRef} className="relative page-animate">
+                    <div className="header-container hide-on-desktop">
+                        <div style={{marginLeft:"12px"}}>
+                            <div 
+                                onClick={()=>togglePage(CONTACT_ID)} 
+                                className="header-mobile-btn" 
+                                style={{display:!useContact && "none"}}>
+                                <div>Contacts</div>
+                            </div>
+                            {[]?.map((btn, key)=>(
+                                <div onClick={()=>togglePage(btn?.ref)} className="header-mobile-btn" key={key}>
+                                    <div>{btn?.title}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="page-inner-animate">{children}</div>
                 </div>
             </div>
         </div>

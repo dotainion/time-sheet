@@ -5,7 +5,7 @@
     .nav-container{
         position: absolute;
         height: 100vh;
-        z-index: 99;
+        z-index: 999999;
     }
     .page-container{
         padding-left: 40px;
@@ -184,5 +184,41 @@
     }
     .bread-crumbs-nav{
         display: none;
+    }
+    .header-mobile-btn{
+        display: inline-block;
+        padding-left: 5px;
+        padding-right: 5px;
+        border-right: 1px solid gray;
+        transform: translateY(150%);
+    }
+    .log-user-container{
+        position: absolute;
+        max-width: none;
+        margin-left: -10px;
+        padding-left: 10px;
+        width: 93%;
+        z-index: 99;
+        background-color: var(--bg);
+    }
+    .log-img{
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+        border-radius: 50%;
+    }
+    .log-user-name{
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        transform: translateY(-50%);
+        white-space: nowrap;
+    }
+    .page-animate{
+        height: 100vh;
+    }
+    .page-inner-animate{
+        margin-left: 12px;
     }
 }
