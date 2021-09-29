@@ -8,6 +8,8 @@ import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { MdEmail } from 'react-icons/md';
+import { Entry } from '../../../components/widgets/Entry';
+import { InputSelect } from '../../../components/widgets/InputSelect';
 
 
 
@@ -16,9 +18,6 @@ export const SettingsGrid = () =>{
 
     const { user } = useAuth();
     const { settings } = useStore();
-
-    const [durationError, setDurationError] = useState("");
-    const [durationSuccess, setDurationSuccess] = useState("");
 
     const durationRef = useRef();
 
@@ -29,12 +28,12 @@ export const SettingsGrid = () =>{
                 {
                     title: "Password",
                     icon: RiLockPasswordFill,
-                    action: ()=>history.push(adminRoutes.advanceReset),
+                    action: ()=>history.push(adminRoutes.passwordChange),
                     info: "Your password, Chagne user password"
                 },{
                     title: "Change Email.",
                     icon: MdEmail,
-                    action: ()=>history.push(adminRoutes.updateUserEmail),
+                    action: ()=>history.push(adminRoutes.updateEmail),
                     info: "Your email, User email"
                 }
             ]
@@ -44,7 +43,7 @@ export const SettingsGrid = () =>{
                 {
                     title: "Profile Account",
                     icon: RiUserSettingsLine,
-                    action: ()=>history.push(adminRoutes.usersProfile),
+                    action: ()=>history.push(adminRoutes.profile),
                     info: "Your profile, user profile"
                 }
             ]
@@ -53,49 +52,43 @@ export const SettingsGrid = () =>{
             cards: [
                 {
                     inputRef: durationRef,
-                    errorMsg: durationError,
-                    successMsg: durationSuccess,
-                    endTyping: ()=>onUpdateSettings(),
-                    startTyping: ()=>{
-                        setDurationError("");
-                        setDurationSuccess("");
-                    },
-                    placeholder: "Default work duration" ,
-                    type: "number"
+                    onChange: ()=> onUpdateSettings(),
+                    defaultOption: settings?.workDuration || 4,
+                    options: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
                 }
             ]
         }
     ]
 
     const onUpdateSettings = async() =>{
-        if (!durationRef.current.value || parseInt(durationRef.current.value || 0) < 1){
-            return setDurationError("Must be a valid duration");
+        if (settings?.workDuration === durationRef.current.value){
+            return;
         }
-        //setLoader(true);
         await updateSettings({
             workDuration: durationRef.current.value || 4
         }, user?.id);
-        //setLoader(false);
-        setDurationSuccess("Saved");
     }
 
-    useEffect(()=>{
-        //durationRef.current.value = settings?.workDuration || 4;
-    }, [settings]);
     return (
         <AdminNavBar>
-            <div className="pad max-size">
+            <div className="max-size">
                 {SETTINGS_LISTS.map((settings, key)=>(
-                    <div key={key}>
+                    <div className="pad" key={key}>
                         <div className="settings-header">{settings?.header}</div>
                         {settings?.cards?.map((card, key2)=>(
-                            <div onClick={card?.action} className="settings-card-container" key={key2}>
-                                <div className="float-left pad max-width no-wrap flex">
+                            <div className="settings-card-container no-select" key={key2}>
+                                <div className="float-left no-wrap flex">
                                     <div>{card?.icon && <card.icon className="pad" style={{fontSize:"40px"}} />}</div>
                                     <div className="relative">
                                         <div className="float-left">
-                                            <b>{card?.title}</b>
+                                            <b onClick={card?.action} className="label-hover">{card?.title}</b>
                                             <div style={{fontSize:"14px"}}>{card?.info}</div>
+                                            {card?.inputRef && <InputSelect
+                                                inputRef={card?.inputRef} 
+                                                onChange={card?.onChange}
+                                                options={card?.options}
+                                                defaultOption={card?.defaultOption}
+                                            />}
                                         </div>
                                     </div>
                                 </div>
@@ -107,17 +100,3 @@ export const SettingsGrid = () =>{
         </AdminNavBar>
     )
 }
-/**
- * <div className="">
-                                        <div><b>{card?.title}</b></div>
-                                        {card?.inputRef && <Entry
-                                            inputRef={card?.inputRef} 
-                                            errorMsg={card?.errorMsg} 
-                                            successMsg={card?.successMsg}
-                                            endTyping={card?.endTyping}
-                                            startTyping={card?.startTyping}
-                                            placeholder={card?.placeholder}
-                                            type={card?.type}
-                                        />}
-                                    </div>
- */

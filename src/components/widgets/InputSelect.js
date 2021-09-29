@@ -3,11 +3,11 @@ import { BiSelectMultiple } from 'react-icons/bi';
 import { TiTick } from 'react-icons/ti';
 
 
-export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
+export const InputSelect = ({onChange, style, optionStyle, label, Icon, noBottomBorder, border, borderColor, inputRef, options, defaultOption, disabled, hidden, error, errorReset}) =>{
     const [toggleIcon, setToggleIcon] = useState(false);
     const [grayColor, setGrayColor] = useState(false);
 
-    const onChange = () =>{
+    const triggerOnChange = () =>{
         errorReset?.("");
         if (inputRef?.current?.value === defaultOption){
             setToggleIcon(false);
@@ -16,10 +16,12 @@ export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, bo
             setToggleIcon(true);
             setGrayColor(false);
         }
+        onChange?.();
     }
 
     useEffect(()=>{
-        onChange();
+        setToggleIcon(true);
+        setGrayColor(false);
     }, [inputRef?.current]);
     return(
         <div 
@@ -71,7 +73,8 @@ export const InputSelect = ({style, optionStyle, label, Icon, noBottomBorder, bo
             <select 
                 disabled={disabled} 
                 ref={inputRef} 
-                onChange={onChange}
+                onChange={triggerOnChange}
+                onKeyUp={onChange}
                 style={{
                     backgroundColor:disabled && "rgb(192, 217, 245)",
                     color:disabled && "gray" || grayColor && "gray",

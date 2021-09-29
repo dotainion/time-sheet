@@ -788,8 +788,8 @@
   position: relative;
   display: inline-block;
   width: 25%;
-  height: 15vh;
-  padding-bottom: 10px;
+  margin-top: 60px;
+  padding-bottom: 40px;
 }
 .settings-header{
   font-size: 25px;

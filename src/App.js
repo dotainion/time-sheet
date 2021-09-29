@@ -58,12 +58,12 @@ function App() {
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
                 <Route exact path={adminRoutes.notification} render={()=><Authenticate Component={AdminNotifications}/>}/>
                 <Route exact path={adminRoutes.adminMessages} render={()=><Authenticate Component={AdminMessages}/>}/>
-                <Route exact path={adminRoutes.updateUserEmail} render={()=><Authenticate Component={UpdateEmails}/>}/>
-                <Route exact path={adminRoutes.advanceReset} render={()=><Authenticate Component={ChangePassword}/>}/>
-                <Route exact path={adminRoutes.usersProfile} render={()=><Authenticate Component={UpdateProfiles}/>}/>
+                <Route exact path={adminRoutes.updateEmail} render={()=><Authenticate Component={UpdateEmails}/>}/>
+                <Route exact path={adminRoutes.passwordChange} render={()=><Authenticate Component={ChangePassword}/>}/>
+                <Route exact path={adminRoutes.profile} render={()=><Authenticate Component={UpdateProfiles}/>}/>
                 <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>
                 <Route exact path={adminRoutes.users} render={()=><Authenticate Component={Users}/>}/>
-                <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={SettingsGrid}/>}/>
+                <Route exact path={adminRoutes.settingsGrid} render={()=><Authenticate Component={SettingsGrid}/>}/>
                 <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
                 <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
                 {/******************************************************************************/}

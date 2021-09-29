@@ -14,10 +14,10 @@ export const AdminSettignsContainer = ({showCurrentUser, onSelected, noMultiSele
             noMultiSelect={noMultiSelect}
             showCurrentUser={showCurrentUser}
             toolbar={[
-                {title: "Setttings", hidden: settings, action: ()=>history.push(adminRoutes.settings)},
-                {title: "Update Profile", hidden: updateUserProfile, action: ()=>history.push(adminRoutes.usersProfile)},
-                {title: "Update Email", hidden: updateUserEmail, action: ()=>history.push(adminRoutes.updateUserEmail)},
-                {title: "Password", hidden: advanceReset, action: ()=>history.push(adminRoutes.advanceReset)},
+                {title: "Setttings", hidden: settings, action: ()=>history.push(adminRoutes.settingsGrid)},
+                {title: "Update Profile", hidden: updateUserProfile, action: ()=>history.push(adminRoutes.profile)},
+                {title: "Update Email", hidden: updateUserEmail, action: ()=>history.push(adminRoutes.updateEmail)},
+                {title: "Password", hidden: advanceReset, action: ()=>history.push(adminRoutes.passwordChange)},
             ]}
         >
             <div style={{paddingTop:"10px",height:"85vh"}}>{children}</div>

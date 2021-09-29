@@ -24,7 +24,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
 
     const forMenu = (nav, index) =>{
         if (index){
-            if (isActive && nav?.route === adminRoutes.settings){
+            if (isActive && nav?.route === adminRoutes.settingsGrid){
                 return {backgroundColor:"var(--hover-selected)"}; 
             }
             if (history.location.pathname === nav?.route){
@@ -56,7 +56,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
             left.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
             right.style.backgroundColor = id.includes("0")?"rgb(6, 85, 163)":"var(--hover-nav)";
         }else{
-            if (isActive && nav?.route === adminRoutes.settings){
+            if (isActive && nav?.route === adminRoutes.settingsGrid){
                 left.style.backgroundColor = "var(--hover-nav)";
                 right.style.backgroundColor = "var(--hover-nav)";
             }else{

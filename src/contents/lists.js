@@ -62,7 +62,7 @@ export const ADMIN_SIDE_NAV = [
     },{
         title: "SETTINGS",
         icon: RiSettings5Fill,
-        route: adminRoutes.settings,
+        route: adminRoutes.settingsGrid,
         info: "Update settigns"
     },{
         title: "HELP",
