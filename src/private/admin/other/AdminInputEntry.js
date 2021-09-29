@@ -19,14 +19,12 @@ export const AdminInputEntry = ({useUpdate, border, profileFName, profileLName, 
     const { user, adminCreateUser } = useAuth();
     const { setLoader } = useStore();
 
-    const [loading, setLoading] = useState(false);
     const [emailError, setEmailError] = useState("");
     const [fNameError, setFNameError] = useState("");
     const [lNameError, setLNameError] = useState("");
     const [passError, setPassError] = useState("");
     const [roleError, setRoleError] = useState("");
     const [userImg, setUserImg] = useState("");
-    const [msgSuccess, setMsgSuccess] = useState("");
     const [emailForInfo, setEmailForInfo] = useState("");
 
     const emailRef = useRef();
@@ -89,7 +87,6 @@ export const AdminInputEntry = ({useUpdate, border, profileFName, profileLName, 
             bankNumber: bankNumberRef.current.value,
             nis: nisRef.current.value,
         };
-        setMsgSuccess("");
         try{
             let STATE = true;
             if (!userObj.email){
@@ -116,7 +113,6 @@ export const AdminInputEntry = ({useUpdate, border, profileFName, profileLName, 
             if (!STATE) return;
 
             setLoader(true);
-            setLoading(true);
 
             let response = null;
             if (useUpdate){
@@ -146,12 +142,10 @@ export const AdminInputEntry = ({useUpdate, border, profileFName, profileLName, 
             }
             else{
                 reset();
-                setMsgSuccess("User added successfully");
             }
         }catch{
 
         }finally{
-            setLoading(false);
             setLoader(false);
         }
         
@@ -174,8 +168,12 @@ export const AdminInputEntry = ({useUpdate, border, profileFName, profileLName, 
             reset();
         }
     }, [userSelected]);
+
+    useEffect(()=>{
+        notifyRef.current.checked = true;
+    }, []);
     return (
-        <div onKeyUp={()=>setMsgSuccess("")} className="add-update-new-user-info">
+        <div onKeyUp={()=>{}} className="add-update-new-user-info">
             <div className="add-update-new-user-info-btn">
                 <IconButton onClick={onAddUser} icon="users" cssClass="pad-mini" label={useUpdate? "UPDATE": "ADD USER"} />
             </div>
