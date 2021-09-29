@@ -96,6 +96,16 @@
         margin-left: 0;
         transform: none;
     }
+    .add-update-new-user-info-btn{
+        border-bottom: none;
+        width: 115%;
+        margin-top: -50px;
+        text-align: right;
+    }
+    .add-update-new-user-info-optional{
+        width: 100%;
+        margin-left: 0px;
+    }
     .users-lists{
         position: absolute;
         z-index: 9999999;

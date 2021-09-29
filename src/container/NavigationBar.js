@@ -137,12 +137,11 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
                     />
                 </div>
                 <div ref={pageRef} className="relative page-animate">
-                    <div className="header-container hide-on-desktop">
+                    <div className="header-container hide-on-desktop" style={{display:!useContact && "none"}}>
                         <div style={{marginLeft:"12px"}}>
                             <div 
                                 onClick={()=>togglePage(CONTACT_ID)} 
-                                className="header-mobile-btn" 
-                                style={{display:!useContact && "none"}}>
+                                className="header-mobile-btn">
                                 <div>Contacts</div>
                             </div>
                             {[]?.map((btn, key)=>(

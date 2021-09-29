@@ -1,28 +1,41 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { useAuth } from '../../../state/auth/Authentication';
 import { tools } from '../../../utils/tools/Tools';
 import { AdminSettignsContainer } from '../../widgets/AdminSettingsContainer';
+import { IconButton } from '../../../components/widgets/IconButon';
 
 
-export const UpdateEmail = () =>{
-    const { user, changeEmail } = useAuth();
+export const UpdateEmails = () =>{
+    const { user, changeEmail, changeUserEmail } = useAuth();
 
+    const [userSelected, setUserSelected] = useState({});
+    const [error, setError] = useState("");
     const [currentEmailError, setCurrentEmailError] = useState("");
     const [newEmailError, setNewEmailError] = useState("");
     const [confirmEmailError, setConfirmEmailError] = useState("");
+    const [updateToggle, setUpdateToggle] = useState(false);
 
     const currentEmailRef = useRef();
     const newEmailRef = useRef();
     const confirmEmailRef = useRef();
 
+    const onUserSelected = (uUser) =>{
+        setUserSelected(uUser);
+        currentEmailRef.current.value = uUser?.info?.email;
+    }
+
     const onUpdate = async() =>{
         let STATE = true;
+        setError("");
+        if (!Object.keys(userSelected || {}).length){
+            return setError("No user was selected.");
+        }
         if (!currentEmailRef.current.value){
             STATE = false;
             setCurrentEmailError("Invalid Input");
-        }else if(user?.email !== currentEmailRef.current.value){
+        }else if(userSelected?.info?.email !== currentEmailRef.current.value){
             STATE = false;
             setCurrentEmailError("Incorrect email address");
         }
@@ -41,14 +54,31 @@ export const UpdateEmail = () =>{
             setConfirmEmailError("Email mismatch");
         }
         if (!STATE) return  
-        await changeEmail(newEmailRef.current.value);
+        if (!updateToggle){
+            await changeUserEmail(userSelected?.info?.email, newEmailRef.current.value, userSelected?.id);
+        }else{
+            await changeEmail(newEmailRef.current.value);
+        }
     }
+
+    useEffect(()=>{
+        if (updateToggle){
+            currentEmailRef.current.value = user?.email;
+            setUserSelected({info:user});
+        }else{
+            currentEmailRef.current.value = "";
+            setUserSelected(null);
+        }
+    }, [updateToggle]);
 
     return(
         <AdminNavBar isActive>
-            <AdminSettignsContainer updateEmail>
-                <div className="add-update-new-user-info">
-                    <div className="header" style={{marginBottom:"50px"}}>Update a my email address</div>
+            <AdminSettignsContainer showCurrentUser={updateToggle} onSelected={onUserSelected} updateUserEmail noMultiSelect >
+                <div className="pad">
+                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label="My Email" icon="email" />
+                </div>
+                <div className="centered" style={{marginLeft:"45%"}}>
+                    <div className="header" style={{marginBottom:"60px"}}>Update a user email address</div>
                     <div className="h-seperator" style={{borderColor:"rgb(0,0,0,0)"}}>
                         <InputEntry inputRef={currentEmailRef} error={currentEmailError} errorReset={()=>setCurrentEmailError("")} email label="Current Email" />
                     </div>

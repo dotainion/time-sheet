@@ -17,7 +17,6 @@ import { time } from '../utils/time/Time';
 import $ from 'jquery';
 import { useHistory } from 'react-router';
 import { adminRoutes } from '../utils/routes/Routes';
-import { GiConsoleController } from 'react-icons/gi';
 
 
 export const Test = () =>{
@@ -27,12 +26,12 @@ export const Test = () =>{
     const [users, setUsers] = useState([]);
     
     useEffect(()=>{
-        console.log("08:00:00", "01:00:00");
-        console.log(time.sub("01:00:00", "08:00:00"));
+        
     }, []);
+
     return(
         <div>
-
+            
         </div>
     )
 }

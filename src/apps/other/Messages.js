@@ -157,7 +157,7 @@ export const Messages = () =>{
                     </div>
                 </div>
                 <div className={`msg-container ${hideWhenMobile}`} style={{width:!contacts.length && "100%"}}>
-                    <div className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
+                    <div hidden={!contacts.length} className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
                         <Profile
                             floatLeft
                             onBack={()=>setHideWhenMobile("hide-on-mobile")}
@@ -215,7 +215,7 @@ export const Messages = () =>{
                                     </>:
                                     <NoRecord
                                         icon="users"
-                                        header="No contact in your list"
+                                        header="You have no contacts"
                                         message="If you are not an administrator and positive there is members under this administration,"
                                         subMessage=" then contact your administrator or add contacts by going to {ADD USERS) tab."
                                     />

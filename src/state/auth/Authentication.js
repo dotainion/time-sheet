@@ -61,7 +61,7 @@ export const AuthContext = ({children}) =>{
         }
     }
 
-    const changeUserEmail = async(uUser) =>{
+    const changeUserEmail = async(currentEmail, newEmail, id) =>{
         if (!ADMIN_SUPERVISER.includes(user?.role)){
             return {error: "You dont have access to create this user"};
         }
@@ -69,10 +69,10 @@ export const AuthContext = ({children}) =>{
         if (!email && !password) return {error:"Something went wrong, user was not created"}
         try{
             creatingUser.current = true;
-            const uCreds = await getCreds(uUser?.id);
-            const response = await signIn(uUser?.email, secure.decrypt(uCreds?.password));
-            response?.currentUser?.updateEmail?.(uUser?.email);
-            await updateUser({email:uUser?.email}, uUser?.id);
+            const uCreds = await getCreds(id);
+            const response = await signIn(currentEmail, secure.decrypt(uCreds?.password));
+            response?.currentUser?.updateEmail?.(newEmail);
+            await updateUser({email: newEmail}, id);
             await signIn(email, secure.decrypt(password));
             return response;
         }catch(error){
@@ -114,6 +114,12 @@ export const AuthContext = ({children}) =>{
                 firstName: tools.titleCase(nUser.firstName),
                 lastName: tools.titleCase(nUser.lastName),
                 role: nUser.role,
+                number: nUser.number,
+                city: nUser.city,
+                address: nUser.address,
+                bank: nUser.bank,
+                bankNumber: nUser.bankNumber,
+                nis: nUser.nis,
                 accessId: accessId || ADMINISTRATOR+"~"+response?.user?.uid,
                 supervisorId: supervisorId || response?.user?.uid
             }, response?.user?.uid);

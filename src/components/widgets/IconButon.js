@@ -6,6 +6,7 @@ import { WidgetsInfo } from './WidgetsInfo';
 import { MdNotificationsActive } from 'react-icons/md';
 import { GiPush } from 'react-icons/gi';
 import { IoTimeSharp } from 'react-icons/io5';
+import { AiOutlineMail } from 'react-icons/ai';
 
 
 export const IconButton = ({hidden, border, info, style, infoStyle, onClick, disabled, cssClass, iconCss, infoCss, iconStyle, icon, label}) =>{
@@ -36,6 +37,7 @@ export const IconButton = ({hidden, border, info, style, infoStyle, onClick, dis
                 {icon === "send" && <GiPush className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "notification" && <MdNotificationsActive className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "log" && <IoTimeSharp className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "email" && <AiOutlineMail className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 <span>{label}</span>
             </button>
         </WidgetsInfo>

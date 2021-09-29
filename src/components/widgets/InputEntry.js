@@ -3,6 +3,7 @@ import { BsPencil } from 'react-icons/bs';
 import { TiTick } from 'react-icons/ti';
 import { MdEmail } from 'react-icons/md';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import $ from 'jquery';
 
 
 export const InputEntry = ({email, label, placeholder, labelFixed, type, onChange, inputRef, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
@@ -29,6 +30,14 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, onChang
             if (!labelFixed){
                 setLabelStyle({color:"gray",left:"40px"});
             }
+        }else{
+            setToggleIcon(true);
+        }
+    }
+
+    const onClickClear = (e) =>{
+        if (!e?.target?.value){
+            setToggleIcon(false);
         }else{
             setToggleIcon(true);
         }
@@ -98,6 +107,7 @@ export const InputEntry = ({email, label, placeholder, labelFixed, type, onChang
                 onFocus={onFloatLabel}
                 onBlur={onCenterLabel}
                 onChange={onChanged}
+                onClick={onClickClear}
                 placeholder={labelFixed?placeholder || label:null}
                 className={`input-entery max-width ${titleCase && "title-case"}`}
                 style={{border:error && "1px solid red"}}

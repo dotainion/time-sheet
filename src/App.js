@@ -14,7 +14,7 @@ import { StateMangement } from "./state/stateManagement/stateManagement";
 import { TimeSheet } from "./members/pages/TimeSheet";
 import { AddUser } from "././private/admin/pages/AddUser";
 import { Welcome } from "././public/welcome/Welcome";
-import { AdminSettings } from "./private/admin/settings/AdminSettings";
+import { SettingsGrid } from "./private/admin/settings/SettingsGrid";
 import { Users } from "././private/admin/pages/Users";
 import { AdminLogs } from "././private/admin/pages/AdminLogs";
 import { Page404 } from "./public/404Error/404Errror";
@@ -23,11 +23,9 @@ import { ErrorHandler } from "././state/errors/Error";
 import { GeoLocatation } from "./state/geoLocation/GeoLocation";
 import { SimpleMap } from "./state/geoLocation/Maps";
 import { Pricing } from "./public/pricing/Pricing";
-import { AdminProfile } from "./private/admin/settings/AdminProfile";
-import { UsersProfile } from "./private/admin/settings/UsersProfile";
-import { AdvancePasswordReset } from "./private/admin/settings/AdvancePasswordReset";
-import { UpdateUserEmail } from "./private/admin/settings/UpdateUserEmail";
-import { UpdateEmail } from "./private/admin/settings/UpdateEmail";
+import { UpdateProfiles } from "./private/admin/settings/UpdateProfiles";
+import { ChangePassword } from "./private/admin/settings/ChangePassword";
+import { UpdateEmails } from "./private/admin/settings/UpdateEmails";
 import { AdminMessages } from "./private/admin/pages/AdminMessages";
 import { UserMessages } from "./members/pages/Messages";
 import { Notifications } from "./members/pages/Notifications";
@@ -60,14 +58,12 @@ function App() {
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
                 <Route exact path={adminRoutes.notification} render={()=><Authenticate Component={AdminNotifications}/>}/>
                 <Route exact path={adminRoutes.adminMessages} render={()=><Authenticate Component={AdminMessages}/>}/>
-                <Route exact path={adminRoutes.updateEmail} render={()=><Authenticate Component={UpdateEmail}/>}/>
-                <Route exact path={adminRoutes.updateUserEmail} render={()=><Authenticate Component={UpdateUserEmail}/>}/>
-                <Route exact path={adminRoutes.advanceReset} render={()=><Authenticate Component={AdvancePasswordReset}/>}/>
-                <Route exact path={adminRoutes.profile} render={()=><Authenticate Component={AdminProfile}/>}/>
-                <Route exact path={adminRoutes.usersProfile} render={()=><Authenticate Component={UsersProfile}/>}/>
+                <Route exact path={adminRoutes.updateUserEmail} render={()=><Authenticate Component={UpdateEmails}/>}/>
+                <Route exact path={adminRoutes.advanceReset} render={()=><Authenticate Component={ChangePassword}/>}/>
+                <Route exact path={adminRoutes.usersProfile} render={()=><Authenticate Component={UpdateProfiles}/>}/>
                 <Route exact path={adminRoutes.logs} render={()=><Authenticate Component={AdminLogs}/>}/>
                 <Route exact path={adminRoutes.users} render={()=><Authenticate Component={Users}/>}/>
-                <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={AdminSettings}/>}/>
+                <Route exact path={adminRoutes.settings} render={()=><Authenticate Component={SettingsGrid}/>}/>
                 <Route exact path={adminRoutes.welcome} render={()=><Authenticate Component={Welcome}/>}/>
                 <Route exact path={adminRoutes.addUser} render={()=><Authenticate Component={AddUser}/>}/>
                 {/******************************************************************************/}

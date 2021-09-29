@@ -1,28 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { ResetPassword } from './ResetPassword';
-import { ChangePassword } from '../../../security/ChangePassord';
-import { WhatsThis } from '../../../components/widgets/WhatsThis';
 import { useStore } from '../../../state/stateManagement/stateManagement';
 import { updateSettings } from '../../../database/settings/Settings';
 import { useAuth } from '../../../state/auth/Authentication';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
 import { adminRoutes } from '../../../utils/routes/Routes';
-import { Entry } from '../../../components/widgets/Entry';
 import { MdEmail } from 'react-icons/md';
 
 
 
-export const AdminSettings = () =>{
+export const SettingsGrid = () =>{
     const history = useHistory();
 
     const { user } = useAuth();
     const { settings } = useStore();
 
-    const [showResetPassword, setShowResetPassword] = useState(false);
-    const [showChangePassword, setShowChangePassword] = useState(false);
     const [durationError, setDurationError] = useState("");
     const [durationSuccess, setDurationSuccess] = useState("");
 
@@ -33,45 +27,25 @@ export const AdminSettings = () =>{
             header: "Passwords Update",
             cards: [
                 {
-                    title: "Change my password.",
-                    icon: RiLockPasswordFill,
-                    action: ()=>setShowChangePassword(true),
-                    info: "Change my current password to a new one."
-                },{
-                    title: "Reset a user password.",
-                    icon: RiLockPasswordFill,
-                    action: ()=>setShowResetPassword(true),
-                    info: "This section will send a user a email with information to reset their account."
-                },{
-                    title: "Advance password reset.",
+                    title: "Password",
                     icon: RiLockPasswordFill,
                     action: ()=>history.push(adminRoutes.advanceReset),
-                    info: "This section will generate a temporary password that the user can use to log in then they can change their password"
+                    info: "Your password, Chagne user password"
                 },{
-                    title: "Change my email.",
-                    icon: MdEmail,
-                    action: ()=>history.push(adminRoutes.updateEmail),
-                    info: "This section will change the email address linked to your account"
-                },{
-                    title: "Change a user email.",
+                    title: "Change Email.",
                     icon: MdEmail,
                     action: ()=>history.push(adminRoutes.updateUserEmail),
-                    info: "This section will change the email address linked to a user account"
+                    info: "Your email, User email"
                 }
             ]
         },{
             header: "Update Profile",
             cards: [
                 {
-                    title: "Update my account",
-                    icon: RiUserSettingsLine,
-                    action: ()=>history.push(adminRoutes.profile),
-                    info: ""
-                },{
-                    title: "Update a user account",
+                    title: "Profile Account",
                     icon: RiUserSettingsLine,
                     action: ()=>history.push(adminRoutes.usersProfile),
-                    info: ""
+                    info: "Your profile, user profile"
                 }
             ]
         },{
@@ -106,7 +80,7 @@ export const AdminSettings = () =>{
     }
 
     useEffect(()=>{
-        durationRef.current.value = settings?.workDuration || 4;
+        //durationRef.current.value = settings?.workDuration || 4;
     }, [settings]);
     return (
         <AdminNavBar>
@@ -116,12 +90,25 @@ export const AdminSettings = () =>{
                         <div className="settings-header">{settings?.header}</div>
                         {settings?.cards?.map((card, key2)=>(
                             <div onClick={card?.action} className="settings-card-container" key={key2}>
-                                <div className="settings-inner-card-container">
-                                    {card?.icon && <card.icon 
-                                        className="float-top-left pad" 
-                                        style={{fontSize:"30px",cursor:"default"}} 
-                                    />}
-                                    <div className="float-center">
+                                <div className="float-left pad max-width no-wrap flex">
+                                    <div>{card?.icon && <card.icon className="pad" style={{fontSize:"40px"}} />}</div>
+                                    <div className="relative">
+                                        <div className="float-left">
+                                            <b>{card?.title}</b>
+                                            <div style={{fontSize:"14px"}}>{card?.info}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </AdminNavBar>
+    )
+}
+/**
+ * <div className="">
                                         <div><b>{card?.title}</b></div>
                                         {card?.inputRef && <Entry
                                             inputRef={card?.inputRef} 
@@ -133,25 +120,4 @@ export const AdminSettings = () =>{
                                             type={card?.type}
                                         />}
                                     </div>
-                                </div>
-                                <WhatsThis 
-                                    cssClass="float-bottom-right pad" 
-                                    info={card?.info}
-                                    style={{marginRight:"15px",fontSize:"20px"}}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
-            <ResetPassword 
-                isOpen={showResetPassword} 
-                onClose={()=>setShowResetPassword(false)} 
-            />
-            <ChangePassword
-                isOpen={showChangePassword} 
-                onClose={()=>setShowChangePassword(false)} 
-            />
-        </AdminNavBar>
-    )
-}
+ */

@@ -304,7 +304,7 @@
   transform: translate3d(0, 100%, 0);
 }
 .h-seperator{
-  border-bottom: 1px solid skyblue;
+  border-bottom: 1px solid var(--bg);
 }
 .btn{
   padding: 4px;
@@ -791,36 +791,26 @@
   height: 15vh;
   padding-bottom: 10px;
 }
-.settings-inner-card-container{
-  position: relative;
-  width: auto;
-  max-width: 100%;
-  height: 100%;
-  margin: 10px;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  background-color: white;
-  color: var(--primary-color);
-  box-shadow: 2px 2px 10px lightgray;
-}
-.settings-inner-card-container:hover{
-  background-color: rgb(247, 247, 247);
-}
 .settings-header{
   font-size: 25px;
   font-weight: bold;
   margin-top: 20px;
   padding: 5px;
   color: var(--primary-color);
-  border: 1px solid var(--border);
 }
 .add-update-new-user-info{
   margin-left: 45%;
   transform: translateX(-50%);
 }
-.new-user-info-margin{
-  margin-left: 30%;
+.add-update-new-user-info-btn{
+  padding: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid gray;
+  width: 103.5%;
+}
+.add-update-new-user-info-optional{
+  width: 100%;
+  margin-left: 70px;
 }
 .users-lists-container{
   padding-right: 20px;
@@ -1121,4 +1111,7 @@
 }
 .hide{
   display: none;
+}
+.title-case{
+  text-transform: capitalize;
 }

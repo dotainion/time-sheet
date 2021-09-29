@@ -104,13 +104,13 @@ export const AdminNotifications = () =>{
                 onSelected={async(uUser)=>setMembers([uUser])}
                 onMultiSelected={setMembers}
                 toolbar={[
-                    {action:()=>setSwitchView(false),title:"ADD NOTIFICATION",border:"none",style:{color:!switchView && "white",backgroundColor:!switchView && "var(--primary-color)",padding:"10px"}},
-                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}}
+                    {action:()=>setSwitchView(false),title:"PUSH CAMPAIGNS",border:"none",css:"item-hover",style:{color:!switchView && "white",backgroundColor:!switchView && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",css:"item-hover",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}}
                 ]}
             >
                 
                 <div hidden={switchView} className="notification-container">
-                    <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Notification</div>
+                    <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Push Campaigns</div>
                     <div className="notification-sub-container">
                         <InputEntry inputRef={headerRef} label="Header" labelFixed placeholder="Notification type" error={headerError} errorReset={setHeaderError} />
                     </div>

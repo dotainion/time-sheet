@@ -16,7 +16,7 @@ import { CONTACT_ID } from '../../../contents/GlobalId';
 
 let muliUserIds = [];
 let checkboxIds = [];
-export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onSelected, onMultiSelected, useRefresh, refreshId, children}) =>{
+export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu, onChecked, noMultiSelect, onSelected, onMultiSelected, useRefresh, refreshId, children}) =>{
     const { user } = useAuth();
 
     const [users, setUsers] = useState([]);
@@ -138,12 +138,12 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
     }
 
     useEffect(()=>{
-        initUsers();
+        if (!hideContacts) initUsers();
     }, []);
 
     return(
         <div className="flex no-select">
-            <div id={CONTACT_ID} className="log-user-container">
+            <div hidden={hideContacts} id={CONTACT_ID} className="log-user-container">
                 <div style={{color:"var(--primary-color)"}}><b>Members</b></div>
                 <SearchBar onTyping={onSearch} searchRef={searchRef} placeholder="Search users" />
                 <div
@@ -172,7 +172,11 @@ export const UsersListContainer = ({toolbar, menu, onChecked, noMultiSelect, onS
                         )):
                         <div>No users</div>
                     }
-                </div>
+                    <div hidden={!showCurrentUser} className="float-center max-size" style={{backgroundColor:"white",fontSize:"25px", textAlign:"center"}}>
+                        <img src={defaultImage} className="max-width" alt="" />
+                        <div><b>Me</b></div>
+                    </div>
+                </div>                
             </div>
 
             <div className="max-width">
