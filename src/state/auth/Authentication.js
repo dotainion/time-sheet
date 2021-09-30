@@ -55,8 +55,10 @@ export const AuthContext = ({children}) =>{
 
     const changeEmail = async(email) =>{
         try{
-            return await auth.currentUser.updateEmail(email);
+            await auth.currentUser.updateEmail(email);
+            await updateUser({email: email}, user?.id);
         }catch(error){
+            console.log(error.message)
             return {error:error.message};
         }
     }

@@ -28,12 +28,13 @@ export const ChangePassword = () =>{
         if (!currentPasswordRef.current.value){
             return alert("Invalid password")
         }
-        if (!newPasswordRef.current.value !== confirmPasswordRef.current.value){
+        if (newPasswordRef.current.value !== confirmPasswordRef.current.value){
             return alert("password mismatch");
         }
         setLoading(true);
         const creds = await getCreds(user?.id);
         if (secure.decrypt(creds?.password) !== currentPasswordRef.current.value){
+            setLoading(false);
             return alert("current password is incorrect");
         }
 
@@ -41,7 +42,7 @@ export const ChangePassword = () =>{
         setLoading(false);
     }
 
-    const changeSelectedUserPassword = async() =>{
+    const sendEmailToResetUserPassword = async() =>{
         setLoading(true);
         await resetPasswordViaEmail(emailToSentResetRef.current.value);
         setLoading(false);
@@ -51,18 +52,16 @@ export const ChangePassword = () =>{
         if (updateToggle){
             changeCurrentUserPassword();
         }else{
-            changeSelectedUserPassword();
+            sendEmailToResetUserPassword();
         }
     }
 
     useEffect(()=>{
         if (Object.keys(userSelected || {}).length && !updateToggle){
-            emailToSentResetRef.current.value = userSelected?.info?.email;
+            emailToSentResetRef.current.value = userSelected?.info?.email || "";
             emailToSentResetRef.current.click();
-        }else{
-            setUserSelected({info:{image:user?.image}});
         }
-    }, [userSelected, updateToggle]);
+    }, [userSelected]);
 
     return(
         <AdminNavBar isActive>
@@ -72,18 +71,18 @@ export const ChangePassword = () =>{
                 </div>
                 <div className="flex">
                     <div className="" style={{padding:"40px",width:"200px"}}>
-                        <img src={userSelected?.info?.image || defaultImage} style={{height:"200px",width:"200px"}} alt="" />
+                        <img src={updateToggle?user?.image: userSelected?.info?.image || defaultImage} style={{height:"200px",width:"200px"}} alt="" />
                     </div>
                     <div className="max-width" style={{width:"350px",paddingTop:"20px"}}>
                         <div hidden={!updateToggle} className="pad">
                             <div className="h-seperator">
-                                <InputEntry inputRef={currentPasswordRef} label="Current Password" labelFixed />
+                                <InputEntry inputRef={currentPasswordRef} label="Current Password" labelFixed type="password" />
                             </div>
                             <div className="h-seperator">
-                                <InputEntry inputRef={newPasswordRef} label="New Password" labelFixed />
+                                <InputEntry inputRef={newPasswordRef} label="New Password" labelFixed type="password" />
                             </div>
                             <div className="h-seperator">
-                                <InputEntry inputRef={confirmPasswordRef} label="Confirm Password" labelFixed />
+                                <InputEntry inputRef={confirmPasswordRef} label="Confirm Password" labelFixed type="password" />
                             </div>
                             <div className="h-seperator">
                                 <IconButton onClick={onUpdate} label="UPDATE" icon="update" cssClass="pad-mini" />
