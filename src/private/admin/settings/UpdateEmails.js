@@ -83,7 +83,7 @@ export const UpdateEmails = () =>{
         <AdminNavBar isActive>
             <AdminSettignsContainer showCurrentUser={updateToggle} onSelected={onUserSelected} updateUserEmail noMultiSelect >
                 <div className="pad">
-                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label="My Email" icon="email" />
+                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label={updateToggle?"CHANGE USERS EMAIL":"CHANGE MY EMAIL"} icon={updateToggle?"users":"user"} cssClass="label-hover" border="none" />
                 </div>
                 <div className="centered" style={{marginLeft:"45%"}}>
                     <div className="header" style={{marginBottom:"60px"}}>Update {updateToggle?"my":"members"} email address</div>
@@ -97,7 +97,7 @@ export const UpdateEmails = () =>{
                         <InputEntry inputRef={confirmEmailRef} error={confirmEmailError} errorReset={()=>setConfirmEmailError("")} labelFixed email type="email" label="Confirm Email" />
                     </div>
                     <div style={{marginTop:"40px"}}>
-                    <button onClick={onUpdate} className="btn btn-hover">Update</button>
+                    <IconButton onClick={onUpdate} cssClass="pad-mini" icon="send" label="Update" />
                     </div>
                 </div>
                 <Alert 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { IoMdDownload, IoMdSettings } from 'react-icons/io';
-import { MdDateRange, MdRefresh, MdUpdate } from 'react-icons/md';
+import { MdDateRange, MdRefresh, MdUpdate, MdNotificationsActive } from 'react-icons/md';
 import { FaUser, FaUsers } from 'react-icons/fa';
 import { WidgetsInfo } from './WidgetsInfo';
-import { MdNotificationsActive } from 'react-icons/md';
 import { GiPush } from 'react-icons/gi';
 import { IoTimeSharp } from 'react-icons/io5';
 import { AiOutlineMail } from 'react-icons/ai';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 
 export const IconButton = ({hidden, border, info, style, infoStyle, onClick, disabled, cssClass, iconCss, infoCss, iconStyle, icon, label}) =>{
@@ -38,6 +38,7 @@ export const IconButton = ({hidden, border, info, style, infoStyle, onClick, dis
                 {icon === "notification" && <MdNotificationsActive className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "log" && <IoTimeSharp className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "email" && <AiOutlineMail className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "password" && <RiLockPasswordLine className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 <span>{label}</span>
             </button>
         </WidgetsInfo>

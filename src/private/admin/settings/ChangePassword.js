@@ -67,7 +67,7 @@ export const ChangePassword = () =>{
         <AdminNavBar isActive>
             <AdminSettignsContainer showCurrentUser={updateToggle} onSelected={setUserSelected} noMultiSelect advanceReset>
                 <div className="pad">
-                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label="My Email" icon="email" />
+                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label={updateToggle?"CHANGE USERS PASSWORD":"CHANGE MY PASSWORD"} icon={updateToggle?"users":"user"} cssClass="label-hover" border="none"  />
                 </div>
                 <div className="flex">
                     <div className="" style={{padding:"40px",width:"200px"}}>
@@ -94,7 +94,7 @@ export const ChangePassword = () =>{
                                 <InputEntry inputRef={emailToSentResetRef} label="Email" email labelFixed />
                             </div>
                             <div className="h-seperator">
-                                <IconButton onClick={onUpdate} label="UPDATE" icon="update" cssClass="pad-mini" />
+                                <IconButton onClick={onUpdate} label="UPDATE" icon="send" cssClass="pad-mini" />
                             </div>
                         </div>
                     </div>
