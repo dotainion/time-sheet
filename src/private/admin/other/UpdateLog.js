@@ -9,9 +9,12 @@ import { IconButton } from '../../../components/widgets/IconButon';
 import { time } from '../../../utils/time/Time';
 import { updateLog } from '../../../database/logs/LogDb';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
+import { useAuth } from '../../../state/auth/Authentication';
 
 
 export const UpdateLog = ({isOpen, onUpdated, onClose, data}) =>{
+    const { user } = useAuth();
+    
     const [loading, setLoading] = useState(false);
 
     const dateRef = useRef();
@@ -43,6 +46,11 @@ export const UpdateLog = ({isOpen, onUpdated, onClose, data}) =>{
         await updateLog({
             start: buildDate(startTimeBuild, dateRef.current.value),
             end: buildDate(endTimeBuild, dateRef.current.value),
+            updateBy: [{
+                id: user?.id, 
+                name: `${user?.firstName || ""} ${user?.lastName || ""}`,
+                role: user?.role
+            }]
         }, data?.id);
         setLoading(false);
         onUpdated?.();

@@ -23,15 +23,15 @@ export const SettingsGrid = () =>{
 
     const SETTINGS_LISTS = [
         {
-            header: "Passwords Update",
+            header: "Credentials Update",
             cards: [
                 {
                     title: "Password",
                     icon: RiLockPasswordFill,
                     action: ()=>history.push(adminRoutes.passwordChange),
-                    info: "Your password, Chagne user password"
+                    info: "Your password, Change user password"
                 },{
-                    title: "Change Email.",
+                    title: "Change Email",
                     icon: MdEmail,
                     action: ()=>history.push(adminRoutes.updateEmail),
                     info: "Your email, User email"
@@ -71,7 +71,7 @@ export const SettingsGrid = () =>{
 
     return (
         <AdminNavBar>
-            <div className="max-size">
+            <div style={{overflowY:"auto",height:"92vh"}}>
                 {SETTINGS_LISTS.map((settings, key)=>(
                     <div className="pad" key={key}>
                         <div className="settings-header">{settings?.header}</div>

@@ -184,27 +184,8 @@
   border-radius: 5px;
   border: 1px solid var(--border-hover);
 }
-.search-input{
-  position: relative;
-  display: flex;
-  border: 1px solid lightgray;
-  border-radius: 25px;
-  padding: 3px;
-  width: 70%;
-  padding-right: 30px;
-  background-color: white;
-}
-.search-input input{
-  width: 100%;
-  font-size: 15px;
-  outline: none;
-  border: none;
-  border-radius: 25px;
-  background-color: inherit;
-}
 .schedule-container{
   display: flex;
-  padding: 10px;
 }
 .schedule-users{
   width: 200px;
@@ -273,20 +254,18 @@
   padding: 5px;
 }
 .search-input{
-  position: relative;
-  border: 1px solid lightgray;
-  border-radius: 25px;
-  padding: 8px;
-  width: 70%;
-  padding-right: 30px;
-  background-color: white;
-}
-.search-input input{
-  width: 100%;
+  width: 95%;
   font-size: 15px;
   outline: none;
-  border: none;
-  background-color: inherit;
+  padding: 7px;
+  border-radius: 25px;
+  border: 1px solid lightgray;
+}
+.search-input:hover{
+  border: 1px solid var(--border-hover);
+}
+.search-input:focus{
+  border: 1px solid var(--border-focus);
 }
 .input-textarea{
   width: 104.5%;
@@ -328,7 +307,7 @@
   transform: scale(1.05);
 }
 .week-day{
-  width: 35px;
+  width: 39px;
   text-align: center;
   cursor: pointer;
   margin-left: 1px;
@@ -414,7 +393,7 @@
   width: 80%;
 }
 .msg-send-btn{
-  right: 30px;
+  right: 60px;
   font-size: 30px;
   color: var(--bg-fade-dark);
   cursor: pointer;
@@ -858,8 +837,8 @@
 .grid-page{
   width: 100%;
   height: 100vh;
-  padding-top: 100px;
-  background-color: rgb(58, 58, 58);
+  color: black;
+  background-color: var(--bg);
 }
 .grid-card-container{
   width: 100%;
@@ -868,24 +847,18 @@
   position: relative;
   display: inline-block;
   width: 22.5%;
-  height: 12vh;
   margin: 10px;
 }
 .grid-inner-card{
   width: 100%;
   height: 100%;
-  color: white;
-  cursor: pointer;
+  padding: 40px;
   user-select: none;
-  background-color: rgb(22, 22, 22);
-}
-.grid-inner-card:hover{
-  background-color: rgb(36, 35, 35);
 }
 .grid-single{
   top: 40px;
   left: 30px;
-  color: white;
+  color: black;
   cursor: pointer;
   user-select: none;
 }
@@ -943,6 +916,7 @@
 }
 .log-user-container{
   max-width: 260px;
+  min-width: 150px;
   border-right: 1px solid gray;
 }
 .log-user-scroller{

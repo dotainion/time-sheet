@@ -22,6 +22,10 @@ import { TimePicker } from '../../../components/widgets/TimePicker';
 import { UpdateLog } from '../other/UpdateLog';
 import { OptionsMenu } from '../other/OptionsMenu';
 import { UsersListContainer } from '../other/UsersListContainer';
+import { MdDateRange } from 'react-icons/md';
+import { WiTime2, WiTime8 } from 'react-icons/wi';
+import { IoMdInformationCircleOutline} from 'react-icons/io';
+import { GiCoffeeCup } from 'react-icons/gi';
 
 
 let muliUserIds = [];
@@ -124,11 +128,11 @@ export const AdminLogs = () =>{
 
                 <div className="pad">
                     <div className="log-record" style={{marginRight:"17px"}}>
-                        <div><b>Date</b></div>
-                        <div><b>Start</b></div>
-                        <div><b>End</b></div>
-                        <div><b>Total Hours</b></div>
-                        <div><b>Total Break</b></div>
+                        <div><b>Date</b><MdDateRange style={{paddingLeft:"5px"}} /></div>
+                        <div><b>Start</b><WiTime2 style={{paddingLeft:"5px"}} /></div>
+                        <div><b>End</b><WiTime8 style={{paddingLeft:"5px"}} /></div>
+                        <div><b>Total Hours</b><IoMdInformationCircleOutline style={{paddingLeft:"5px"}} /></div>
+                        <div><b>Total Break</b><GiCoffeeCup style={{paddingLeft:"5px"}} /></div>
                     </div>
                     <div className="log-record-scroller">
                         {

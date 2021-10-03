@@ -10,18 +10,18 @@ export const Settings = () =>{
 
     const SETTINGS_LISTS = [
         {
-            header: "Passwords Update",
+            header: "Credentials Update",
             cards: [
                 {
-                    title: "Passwords Update",
+                    title: "Passwords",
                     icon: RiLockPasswordFill,
                     action: ()=>setShowChangePassword(true),
-                    info: "Change my current passdword to a new one."
+                    info: "Change my password"
                 },{
-                    title: "Change my email.",
+                    title: "Email.",
                     icon: MdEmail,
                     action: ()=>{},
-                    info: "This section will change the email address linked to your account"
+                    info: "Update email linked to your account"
                 }
             ]
         }
@@ -29,16 +29,20 @@ export const Settings = () =>{
     
     return(
         <UserNavBar>
-            <div className="max-size">
+           <div style={{overflowY:"auto",height:"92vh"}}>
                 {SETTINGS_LISTS.map((settings, key)=>(
-                    <div key={key}>
+                    <div className="pad" key={key}>
                         <div className="settings-header">{settings?.header}</div>
                         {settings?.cards?.map((card, key2)=>(
-                            <div onClick={card?.action} className="settings-card-container" key={key2}>
-                                <div className="settings-inner-card-container">
-                                    <card.icon className="float-top-left pad" />
-                                    <div className="float-center">{card?.title}</div>
-                                    <WhatsThis cssClass="float-bottom-right pad" info={card?.info}/>
+                            <div className="settings-card-container no-select" key={key2}>
+                                <div className="float-left no-wrap flex">
+                                    <div>{card?.icon && <card.icon className="pad" style={{fontSize:"40px"}} />}</div>
+                                    <div className="relative">
+                                        <div className="float-left">
+                                            <b onClick={card?.action} className="label-hover">{card?.title}</b>
+                                            <div style={{fontSize:"14px"}}>{card?.info}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         ))}

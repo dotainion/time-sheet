@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { HiDotsVertical } from 'react-icons/hi';
 import { useState } from 'react/cjs/react.development';
 import { Backdrop } from '../../../container/Backdrop';
 import { time } from '../../../utils/time/Time';
+import { GiCoffeeCup } from 'react-icons/gi';
+import { MdClose } from 'react-icons/md';
 
 
-
-export const OptionsMenu = ({options}) =>{
+export const OptionsMenu = ({options, borderInherit}) =>{
     const [showOption,setShowOption] = useState(false);
     const [total, setTotal] = useState("");
 
@@ -54,14 +54,15 @@ export const OptionsMenu = ({options}) =>{
 
     return(
         <>
-        <div onClick={e=>e.stopPropagation()} className="relative" style={{border:"none"}}>
-            <HiDotsVertical onClick={()=>setShowOption(true)} className="float-left icons" style={{fontSize:"20px"}} />
+        <div onClick={e=>e.stopPropagation()} className="relative" style={{border: borderInherit? "": "none",borderBottom: borderInherit && "1px solid lightgray",color:"var(--primary-color)"}}>
+            <GiCoffeeCup onClick={()=>setShowOption(true)} className="float-left icons" style={{fontSize:"20px"}} />
+            <div hidden={options?.length} className="float-left" style={{color:"red"}}><MdClose/></div>
         </div>
-        <Backdrop isOpen={showOption} onClose={(e)=>{e.stopPropagation();setShowOption(false)}} >
+        <Backdrop isOpen={showOption} onClose={(e)=>{e.stopPropagation();setShowOption(false)}} onTop >
             <div onClick={e=>e.stopPropagation()} className="float-center" style={styles}>
-                <div style={styles}>
+                <div style={{}}>
                     {
-                        options.length?
+                        options?.length?
                         options?.map((opt, key)=>(
                             <div style={outerStyles} key={key}>
                                 <div style={innerStyles}>Start: {time.toTimeString(opt?.start)}</div>

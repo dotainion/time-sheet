@@ -99,7 +99,7 @@ export const Messages = () =>{
                             lastName={user?.lastName}
                             role={user?.role}
                         />
-                        <SearchBar onTyping={onSearch} searchRef={searchRef} cssClass="centered" />
+                        <SearchBar onTyping={onSearch} searchRef={searchRef} cssClass="centered" style={{marginTop:"20px"}} />
                     </div>
                     <div style={{height:"71vh"}}>
                         <div
@@ -157,7 +157,7 @@ export const Messages = () =>{
                     </div>
                 </div>
                 <div className={`msg-container ${hideWhenMobile}`} style={{width:!contacts.length && "100%"}}>
-                    <div hidden={!contacts.length} className="relative" style={{backgroundColor:"var(--primary-color)",padding:"10px",color:"white"}}>
+                    <div hidden={!contacts.length} className="relative" style={{backgroundColor:"var(--primary-color)",padding:"15px",color:"white"}}>
                         <Profile
                             floatLeft
                             onBack={()=>setHideWhenMobile("hide-on-mobile")}
@@ -230,9 +230,7 @@ export const Messages = () =>{
                                 : "rgb(233, 231, 231)",
                             padding:"15px"
                         }}>
-                        <div 
-                            className="relative centered msg-send-box"
-                            >
+                        <div className="relative centered msg-send-box" >
                             <SearchBar 
                                 searchRef={messageRef}
                                 placeholder="Type a message"
@@ -245,10 +243,7 @@ export const Messages = () =>{
                                     else setMsgError(false);
                                 }}
                             />
-                            <MdSend 
-                                className="float-right msg-send-btn"
-                                onClick={onSend}
-                            />
+                            <MdSend onClick={onSend}className="float-right msg-send-btn"/>
                             <div
                                 className="float-center max-size"
                                 style={{

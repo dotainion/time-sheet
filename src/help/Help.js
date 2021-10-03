@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router';
 import { HelpAdminNav } from './HelpAdminNav';
+import { FaHandsHelping } from 'react-icons/fa';
 
 
 export const Help = () =>{
@@ -49,10 +50,13 @@ export const Help = () =>{
                     </div>
                 </div>
             ))}
-            <div className="float-center max-size no-select" style={{backgroundColor:"black",color:"white"}}>
+            <div className="float-center max-size no-select" style={{backgroundColor:"var(--bg)"}}>
                 <div className="max-size relative">
                     <div className="float-center" style={{textAlign:"center",fontSize:"25px"}}>
-                        <p style={{fontSize:"50px"}}>COMING SOON!!!</p>
+                        <div style={{fontSize:"100px"}}>
+                            <FaHandsHelping/>
+                        </div>
+                        <p style={{fontSize:"40px"}}>COMING SOON!!!</p>
                         <label onClick={()=>history.goBack()} className="label-hover"><b>Take me back</b></label>
                     </div>
                 </div>

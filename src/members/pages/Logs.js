@@ -7,7 +7,11 @@ import { DateEntry } from '../../components/widgets/DateEntry';
 import { LoadingBar } from '../../components/widgets/LoadingBar';
 import { time } from '../../utils/time/Time';
 import { UserNavBar } from '../../container/UserNavBar';
-
+import { OptionsMenu } from '../../private/admin/other/OptionsMenu';
+import { MdDateRange } from 'react-icons/md';
+import { WiTime2, WiTime8 } from 'react-icons/wi';
+import { IoMdInformationCircleOutline} from 'react-icons/io';
+import { GiCoffeeCup } from 'react-icons/gi';
 
 
 export const Logs = () =>{
@@ -22,7 +26,7 @@ export const Logs = () =>{
     const searchLogsByDateRange = async() =>{
         setLoading(true);
         const from = fromDateRef.current.valueAsDate;
-        const to = toDateFrom.current.valueAsDate
+        const to = toDateFrom.current.valueAsDate;
         setLogs(await getLogsRange(from, to, user?.id));
         setLoading(false);
     }
@@ -52,14 +56,14 @@ export const Logs = () =>{
                             <IconButton onClick={searchLogsByDateRange} label="Search" cssClass="pad-mini" icon="log" />
                         </div>
                     </div>
-                        
+                    
                     <div className="pad">
                         <div className="log-record" style={{marginRight:"17px"}}>
-                            <div><b>Date</b></div>
-                            <div><b>Start</b></div>
-                            <div><b>End</b></div>
-                            <div><b>Total Hours</b></div>
-                            <div><b>Total Break</b></div>
+                            <div><b>Date</b><MdDateRange style={{paddingLeft:"5px"}} /></div>
+                            <div><b>Start</b><WiTime2 style={{paddingLeft:"5px"}} /></div>
+                            <div><b>End</b><WiTime8 style={{paddingLeft:"5px"}} /></div>
+                            <div><b>Total Hours</b><IoMdInformationCircleOutline style={{paddingLeft:"5px"}} /></div>
+                            <div><b>Total Break</b><GiCoffeeCup style={{paddingLeft:"5px"}} /></div>
                         </div>
                         <div className="log-record-scroller">
                             {
@@ -72,7 +76,7 @@ export const Logs = () =>{
                                                 <div className="relative">{time.toTimeString(log?.info?.start)}</div>
                                                 <div className="relative">{time.toTimeString(log?.info?.end)}</div>
                                                 <div className="relative">{time.sub(log?.info?.end, log?.info?.start, true)}</div>
-                                                <div className="relative">Total Break</div>
+                                                <OptionsMenu options={log?.info?.break || []} borderInherit />
                                             </div>
                                         }
                                     </div>

@@ -16,6 +16,10 @@ export const ChangePassword = () =>{
     const [updateToggle, setUpdateToggle] = useState(false);
     const [userSelected, setUserSelected] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [currentPassError, setCurrentPassError] = useState("");
+    const [newPassError, setNewPassError] = useState("");
+    const [ConfirmPassError, setConfirmPassError] = useState("");
+    const [emailError, setEmailError] = useState("");
 
     const currentPasswordRef = useRef();
     const newPasswordRef = useRef();
@@ -25,17 +29,29 @@ export const ChangePassword = () =>{
 
     const changeCurrentUserPassword = async() =>{
         //change logged in user
+        let STATE = true;
+        setCurrentPassError("");
+        setNewPassError("");
+        setConfirmPassError("");
         if (!currentPasswordRef.current.value){
-            return alert("Invalid password")
+            STATE = false;
+            setCurrentPassError("Invalid password");
+        }
+        if (!newPasswordRef.current.value){
+            STATE = false;
+            setNewPassError("Invalid password");
         }
         if (newPasswordRef.current.value !== confirmPasswordRef.current.value){
-            return alert("password mismatch");
+            STATE = false;
+            setConfirmPassError("password mismatch");
         }
+        if (!STATE) return;
+
         setLoading(true);
         const creds = await getCreds(user?.id);
         if (secure.decrypt(creds?.password) !== currentPasswordRef.current.value){
             setLoading(false);
-            return alert("current password is incorrect");
+            return setCurrentPassError("current password is incorrect");
         }
 
         await changePassword(newPasswordRef.current.value);
@@ -43,6 +59,10 @@ export const ChangePassword = () =>{
     }
 
     const sendEmailToResetUserPassword = async() =>{
+        setEmailError("");
+        if (!emailToSentResetRef.current.value){
+            return setEmailError("Invalid Email");
+        }
         setLoading(true);
         await resetPasswordViaEmail(emailToSentResetRef.current.value);
         setLoading(false);
@@ -76,22 +96,23 @@ export const ChangePassword = () =>{
                     <div className="max-width" style={{width:"350px",paddingTop:"20px"}}>
                         <div hidden={!updateToggle} className="pad">
                             <div className="h-seperator">
-                                <InputEntry inputRef={currentPasswordRef} label="Current Password" labelFixed type="password" />
+                                <InputEntry inputRef={currentPasswordRef} label="Current Password" labelFixed type="password" error={currentPassError} errorReset={()=>setCurrentPassError("")} />
                             </div>
                             <div className="h-seperator">
-                                <InputEntry inputRef={newPasswordRef} label="New Password" labelFixed type="password" />
+                                <InputEntry inputRef={newPasswordRef} label="New Password" labelFixed type="password" error={newPassError} errorReset={()=>setNewPassError("")} />
                             </div>
                             <div className="h-seperator">
-                                <InputEntry inputRef={confirmPasswordRef} label="Confirm Password" labelFixed type="password" />
+                                <InputEntry inputRef={confirmPasswordRef} label="Confirm Password" labelFixed type="password" error={ConfirmPassError} errorReset={()=>setConfirmPassError("")} />
                             </div>
                             <div className="h-seperator">
                                 <IconButton onClick={onUpdate} label="UPDATE" icon="update" cssClass="pad-mini" />
                             </div>
                         </div>
+
                         <div hidden={updateToggle} className="pad">
                             <p style={{marginBottom:"30px"}}>Send email link to you to reset their password</p>
                             <div className="h-seperator">
-                                <InputEntry inputRef={emailToSentResetRef} label="Email" email labelFixed />
+                                <InputEntry inputRef={emailToSentResetRef} label="Email" email labelFixed error={emailError} errorReset={()=>setEmailError("")} />
                             </div>
                             <div className="h-seperator">
                                 <IconButton onClick={onUpdate} label="UPDATE" icon="send" cssClass="pad-mini" />

@@ -231,4 +231,16 @@
     .page-inner-animate{
         margin-left: 12px;
     }
+    .grid-card{
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        margin: 0px;
+    }
+    .grid-inner-card{
+        padding: 20px;
+        padding-left: 40px;
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+    }
 }

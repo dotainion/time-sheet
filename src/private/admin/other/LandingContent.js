@@ -5,7 +5,7 @@ import logo from '../../../images/logo.png';
 export const LandingContent = ({landingRef}) =>{
     return(
         <div ref={landingRef} className="float-center max-size">
-            <div className="flex float-center" style={{minWidth:"800px"}}>
+            <div className="flex float-center" style={{minWidth:"500px"}}>
                 <div className="max-size pad">
                     <div>OUR SERVICES</div>
                     <div style={{color:"gray"}} className="header"><b>Content Strategy</b></div>

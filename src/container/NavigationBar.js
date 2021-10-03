@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../state/auth/Authentication';
-import { adminRoutes } from '../utils/routes/Routes';
+import { adminRoutes, routes } from '../utils/routes/Routes';
 import { WidgetsInfo } from '../components/widgets/WidgetsInfo';
 import { Profile } from '../components/other/Profile';
 import { Button } from '../components/widgets/Buttons';
@@ -10,6 +10,7 @@ import { useStore } from '../state/stateManagement/stateManagement';
 import $ from 'jquery';
 import { tools } from '../utils/tools/Tools';
 import { CONTACT_ID } from '../contents/GlobalId';
+import { ADMIN_SUPERVISER } from '../contents/AuthValue';
 
 
 
@@ -21,6 +22,14 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
 
     const navRef = useRef();
     const pageRef = useRef();
+
+    const gotToNotification = () =>{
+        if (ADMIN_SUPERVISER.includes(user?.role)){
+            history.push(adminRoutes.notification);
+        }else{
+            history.push(routes.notification);
+        }
+    }
 
     const forMenu = (nav, index) =>{
         if (index){
@@ -120,7 +129,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
             <div className="page-container">
                 <div className="header-container hide-on-mobile">
                     <div className="relative" style={{float:"left",width:"50px",height:"100%"}}>
-                        <div onClick={()=>history.push(adminRoutes.notification)} hidden={!notifications?.length} className="float-center" style={{cursor:"pointer"}}>
+                        <div onClick={gotToNotification} hidden={!notifications?.length} className="float-center" style={{cursor:"pointer"}}>
                             <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
                             <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{notifications?.length || 0}</div>
                         </div>

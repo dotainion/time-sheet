@@ -35,7 +35,7 @@ export const UpdateProfiles = () =>{
         <AdminNavBar isActive>
             <AdminSettignsContainer showCurrentUser={updateToggle} updateUserProfile noMultiSelect onSelected={setUserSelected}>
                 <div className="pad">
-                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label="My Email" icon="email" />
+                    <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label={updateToggle?"CHANGE USERS PROFILE":"CHANGE MY PROFILE"} icon={updateToggle?"users":"user"} cssClass="label-hover" border="none" />
                 </div>
                 <div ref={entryRef} className="max-width hide">
                     <AdminInputEntry

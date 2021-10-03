@@ -36,26 +36,27 @@ export const UpdateEmails = () =>{
         }
         if (!currentEmailRef.current.value){
             STATE = false;
-            setAlert("Invalid Input");
+            setCurrentEmailError("Invalid Input");
         }else if(userSelected?.info?.email !== currentEmailRef.current.value){
             STATE = false;
-            setAlert("Incorrect email address");
+            setCurrentEmailError("Incorrect email address");
         }
         if (!newEmailRef.current.value){
             STATE = false;
-            setAlert("Invalid Input");
+            setNewEmailError("Invalid Input");
         }else if(!tools.isEmailValid(newEmailRef.current.value)){
             STATE = false;
-            setAlert("Invalid Email Address");
+            setNewEmailError("Invalid Email Address");
         }
         if (!confirmEmailRef.current.value){
             STATE = false;
-            setAlert("Invalid Input");
+            setConfirmEmailError("Invalid Input");
         }else if(newEmailRef.current.value !== confirmEmailRef.current.value){
             STATE = false;
-            setAlert("Email mismatch");
+            setConfirmEmailError("Email mismatch");
         }
         if (!STATE) return  
+
         setLoader(true);
         let res = null;
         if (!updateToggle){

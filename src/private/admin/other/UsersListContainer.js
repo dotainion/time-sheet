@@ -201,7 +201,9 @@ export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu
                     ))}
                     <EllipsisMenu options={menu} hidden={!menu?.length} />
                 </div>
-                <div className="relative" style={{height:"88vh"}}>{children}</div>
+                <div className="relative" style={{height:"88vh"}}>
+                    <div>{children}</div>
+                </div>
             </div>
             <LoadingBar isOpen={loading} />
             <div id={refreshId} onClick={onRefresh} />

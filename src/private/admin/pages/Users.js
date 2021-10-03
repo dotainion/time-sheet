@@ -175,8 +175,10 @@ export const Users = () =>{
                                                     ))}
                                                 </div>
                                             </div>
-                                            <div style={{marginLeft:"10px",marginRight:"10px"}} />
-                                            <DaysPicker defaultDates={schedules} viewOnly style={{border:"none"}} />
+                                            <div className="relative" style={{marginLeft:"20px"}}>
+                                                <DaysPicker defaultDates={schedules} viewOnly style={{border:"none"}} />
+                                                <div className="float-center max-width" style={{height:"65%"}}/>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

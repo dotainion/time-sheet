@@ -22,6 +22,7 @@ export const TimeSheet = () =>{
         const schedls = schdArray?.daysInWeek?.length && schdArray?.daysInWeek || 
                         schdArray?.daysInMonth?.length && schdArray?.daysInMonth || [];
         setSchedules(schedls);
+        
         let dateTemp = [];
         schedls.forEach((date)=>{
             dateTemp.push(new Date(date?.date));
