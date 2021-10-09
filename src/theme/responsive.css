@@ -151,12 +151,6 @@
     .msg-send-box{
         width: 100%;
     }
-    .msg-send-btn{
-        right: 0px;
-        font-size: 30px;
-        color: var(--bg-fade-dark);
-        cursor: pointer;
-    }
     .add-member-container-on-mobile{
         width: 90%;
     }

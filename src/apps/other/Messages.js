@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SearchBar } from '../../components/widgets/SearchBar';
 import { Profile } from '../../components/other/Profile';
 import { useAuth } from '../../state/auth/Authentication';
-import { addMessage, getContacts, getMessages } from '../../database/messages/MessagesDb';
+import { addMessage, getContacts, getMessages, messageObserver } from '../../database/messages/MessagesDb';
 import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 import { NoRecord } from '../../components/widgets/NoRecord';
 import { FiLoader } from 'react-icons/fi';
 import $ from 'jquery';
+import { time } from '../../utils/time/Time';
 
 
 export const Messages = () =>{
@@ -22,6 +23,7 @@ export const Messages = () =>{
 
     const searchRef = useRef();
     const messageRef = useRef();
+    const msgContainerRef = useRef();
 
     const onSend = async() =>{
         setMsgError(false);
@@ -32,27 +34,20 @@ export const Messages = () =>{
             from: user?.id,
             to: userSelected?.id,
             date: tools.time.digits(),
-            message: messageRef.current.value
+            message: messageRef.current.value,
+            bindId: tools.bindId(user?.id, userSelected?.id)
         });
-        setMessages([
-            ...messages,
-            {info:{
-                message: messageRef.current.value,
-                from: user?.id
-            }}
-        ]);
         messageRef.current.value = "";
     }
 
-    const onSearch = () =>{
+    const onSearchMembers = () =>{
         let contactTemp = [];
-        if (searchRef.current.value){
-            for  (let contact of contacts){
-                if (contact?.info?.firstName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
-                    contact?.info?.lastName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
-                    contact?.info?.email?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase())){
-                    contactTemp.push(contact);
-                }
+        if (!searchRef.current.value) return;
+        for  (let contact of contacts){
+            if (contact?.info?.firstName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
+                contact?.info?.lastName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
+                contact?.info?.email?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase())){
+                contactTemp.push(contact);
             }
         }
         setSearchResults(contactTemp);
@@ -66,17 +61,12 @@ export const Messages = () =>{
     const onSelectUser = (contact, id) =>{
         if (userSelected?.id !== contact?.id){
             setUserSelected(contact);
-            initUserMessages(contact, id);
+            setMsgError(false);
+            document.getElementById(id).style.display = "block";
+            document.getElementById(id).style.display = "none";
+            setHideWhenMobile("");
         }
         clearSearchResults();
-    }
-
-    const initUserMessages = async(uUser, id) =>{
-        setMsgError(false);
-        document.getElementById(id).style.display = "block";
-        setMessages(await getMessages(user?.id, uUser?.id));
-        document.getElementById(id).style.display = "none";
-        setHideWhenMobile("");
     }
 
     const initContacts = async() =>{
@@ -87,6 +77,16 @@ export const Messages = () =>{
     useEffect(()=>{
         initContacts();
     }, []);
+
+    useEffect(()=>{
+        messageObserver(
+            tools.bindId(user?.id, userSelected?.id), 
+            (obj)=>{
+                setMessages(tools.time.sort(obj));
+                msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+            }
+        );
+    }, [userSelected]);
 
     return(
         <div>
@@ -99,7 +99,7 @@ export const Messages = () =>{
                             lastName={user?.lastName}
                             role={user?.role}
                         />
-                        <SearchBar onTyping={onSearch} searchRef={searchRef} cssClass="centered" style={{marginTop:"20px"}} />
+                        <SearchBar onTyping={onSearchMembers} searchRef={searchRef} cssClass="centered" style={{marginTop:"20px"}} />
                     </div>
                     <div style={{height:"71vh"}}>
                         <div
@@ -176,20 +176,24 @@ export const Messages = () =>{
                     <div 
                         className="scrollbar pad relative" 
                         style={{
-                            height:"67vh",
-                            backgroundColor:"rgb(233, 231, 231)",
-                            paddingTop:"10px"
-                        }}>
+                            height: "67vh",
+                            backgroundColor: "rgb(233, 231, 231)",
+                            paddingTop: "10px",
+                            overflowY: "auto"
+                        }} 
+                        ref={msgContainerRef}>
                         {
                             messages.length?
                             messages.map((message, key)=>(
-                                <div className="msg-content" key={key}>
-                                    <div className={
-                                            message?.info?.from === user?.id
-                                            ?"msg-content-right"
-                                            :"msg-content-left"
-                                        }>
+                                <div className="msg-content" style={{textAlign:message?.info?.from === user?.id?"right":"left"}} key={key}>
+                                    <div className="msg-inner-content" style={{backgroundColor:message?.info?.from !== user?.id && "white"}}>
                                         <span>{message?.info?.message}</span>
+                                        <div
+                                            className="float-top-right" 
+                                            style={{
+                                                fontSize:"8px",
+                                                paddingRight:"5px"
+                                            }}>{time.toTimeString(message?.info?.date)}</div>
                                     </div>
                                 </div>
                             )):
@@ -234,7 +238,11 @@ export const Messages = () =>{
                             <SearchBar 
                                 searchRef={messageRef}
                                 placeholder="Type a message"
+                                parentStyle={{
+                                    width:"100%"
+                                }}
                                 style={{
+                                    width:"100%",
                                     padding:"12px",
                                     border:msgError && "1px solid red"
                                 }}
@@ -243,7 +251,7 @@ export const Messages = () =>{
                                     else setMsgError(false);
                                 }}
                             />
-                            <MdSend onClick={onSend}className="float-right msg-send-btn"/>
+                            <MdSend onClick={onSend}className="msg-send-btn"/>
                             <div
                                 className="float-center max-size"
                                 style={{

@@ -239,11 +239,10 @@ class Tools{
         if (validate.test(email)) return true;
         else return false;
     }
-    bindId(from, to){
-        return [from, to].sort().join("");
+    bindId(from, to, join="~"){
+        return [from, to].sort().join(join);
     }
     async toBase64(file){
-        console.log(file)
         try{
             return await new Promise((res, rej) => {
                 const reader = new FileReader();

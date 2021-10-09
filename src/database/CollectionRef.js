@@ -90,3 +90,15 @@ export const getRangeFromTo = async(collection, fromRef, from, idRef, id) =>{
     });
     return ranges;
 }
+
+export const observer = (collection, queryKey, queryValue, observe) =>{
+    db.collection(collection)
+    .where(queryKey, "==", queryValue)
+    .onSnapshot((data)=>{
+        let ranges = [];
+        data.forEach((record) => {
+            ranges.push({ id: record.id, info: record.data() });
+        });
+        observe?.(ranges);
+    });
+}

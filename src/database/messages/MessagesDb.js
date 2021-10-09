@@ -1,7 +1,7 @@
 import React from 'react';
 import { collection } from '../../config/databaseConfig';
 import { tools } from '../../utils/tools/Tools';
-import { addData, getDataByDoubleField, getDataByField } from '../CollectionRef';
+import { addData, getDataByDoubleField, getDataByField, observer } from '../CollectionRef';
 
 
 export const getContacts = async(accessId) =>{
@@ -48,4 +48,10 @@ export const getMessages = async(from, to, limit=false) =>{
         console.log(error);
         return [];
     }
+}
+
+export const messageObserver = (bindId, callBack) =>{
+    observer(collection.messages, "bindId", bindId, (obj)=>{
+        callBack?.(obj);
+    });
 }

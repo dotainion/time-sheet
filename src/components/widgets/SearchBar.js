@@ -3,7 +3,7 @@ import { MdClose } from 'react-icons/md';
 import { WidgetsInfo } from './WidgetsInfo';
 
 
-export const SearchBar = ({searchRef, info, onTyping, cssClass, style, placeholder, error, clearError}) =>{
+export const SearchBar = ({searchRef, info, onTyping, cssClass, parentStyle, style, placeholder, error, clearError}) =>{
     const onKeyPress = (e=null) =>{
         onTyping?.(e?.key);
     }
@@ -13,7 +13,7 @@ export const SearchBar = ({searchRef, info, onTyping, cssClass, style, placehold
     }, []);
 
     return(
-        <WidgetsInfo info={info || "Search bar"} error={error}>
+        <WidgetsInfo info={info || "Search bar"} style={parentStyle} error={error}>
                 <input
                     ref={searchRef}
                     className={`search-input ${cssClass}`}

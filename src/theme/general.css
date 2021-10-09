@@ -343,10 +343,6 @@
 .msg-profile:hover{
   background-color: lightgray;
 }
-.msg-content{
-  margin-bottom: 10px;
-  align-items: right;
-}
 .cred-label{
   float: left;
   cursor: pointer;
@@ -360,24 +356,23 @@
 .cred-label2:hover{
   text-decoration: underline;
 }
-.msg-content-left{
-  padding: 8px;
-  margin-right: 20%;
-  background-color: white;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 15px;
-  border: 1px solid lightgray;
+.msg-content{
+  margin-bottom: 10px;
+  align-items: right;
 }
-.msg-content-right{
+.msg-inner-content{
+  width: auto;
   padding: 8px;
-  margin-left: 20%;
+  min-width: 50px;
+  max-width: 80%;
   text-align: right;
+  position: relative;
+  display: inline-block;
   background-color: skyblue;
   border-top-left-radius: 10px;
+  border: 1px solid lightgray;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 15px;
-  border: 1px solid lightgray;
 }
 .msg-main-container{
   padding: 20px;
@@ -390,13 +385,14 @@
   width: 70%;
 }
 .msg-send-box{
-  width: 80%;
+  display: flex;
+  /*width: 80%;*/
 }
 .msg-send-btn{
-  right: 60px;
   font-size: 30px;
-  color: var(--bg-fade-dark);
   cursor: pointer;
+  padding: 5px;
+  color: var(--bg-fade-dark);
 }
 .spiner{
   animation: spin 1s infinite linear;
