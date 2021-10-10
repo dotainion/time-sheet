@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SearchBar } from '../../components/widgets/SearchBar';
 import { Profile } from '../../components/other/Profile';
 import { useAuth } from '../../state/auth/Authentication';
-import { addMessage, getContacts, getMessages, messageObserver } from '../../database/messages/MessagesDb';
+import { addMessage, getContacts, messageObserver } from '../../database/messages/MessagesDb';
 import { MdSend } from 'react-icons/md';
 import { tools } from '../../utils/tools/Tools';
 import { NoRecord } from '../../components/widgets/NoRecord';
@@ -33,7 +33,7 @@ export const Messages = () =>{
         addMessage({
             from: user?.id,
             to: userSelected?.id,
-            date: tools.time.digits(),
+            date: time.toDigits(),
             message: messageRef.current.value,
             bindId: tools.bindId(user?.id, userSelected?.id)
         });
@@ -82,7 +82,7 @@ export const Messages = () =>{
         messageObserver(
             tools.bindId(user?.id, userSelected?.id), 
             (obj)=>{
-                setMessages(tools.time.sort(obj));
+                setMessages(time.sort(obj));
                 msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
             }
         );
@@ -185,8 +185,8 @@ export const Messages = () =>{
                         {
                             messages.length?
                             messages.map((message, key)=>(
-                                <div className="msg-content" style={{textAlign:message?.info?.from === user?.id?"right":"left"}} key={key}>
-                                    <div className="msg-inner-content" style={{backgroundColor:message?.info?.from !== user?.id && "white"}}>
+                                <div className="msg-content" style={{textAlign: message?.info?.from === user?.id?"right":"left"}} key={key}>
+                                    <div className={`msg-inner-content ${message?.info?.from === user?.id?"msg-right":"msg-left"}`}>
                                         <span>{message?.info?.message}</span>
                                         <div
                                             className="float-top-right" 

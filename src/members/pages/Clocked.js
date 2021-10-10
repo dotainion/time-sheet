@@ -10,6 +10,7 @@ import { addEndLog, addStartLog, getInProgressLog } from '../../database/logs/Lo
 import { TrackerButton } from '../widgets/TrackerButton';
 import { SiSatDot1 } from 'react-icons/si';
 import { Alert } from '../../components/other/Alert';
+import { time } from '../../utils/time/Time';
 
 const {
     TimerComponent,
@@ -40,18 +41,18 @@ export const Clocked = () =>{
         await addStartLog({
             id: user?.id,
             email: user?.email,
-            start: tools.time.digits(),
+            start: time.toDigits(),
             end: "none"//NOTE: remain string "none"
         });
     }
 
     const addEndTimeLog = async() =>{
-        await addEndLog({end: tools.time.digits()}, user?.id);
+        await addEndLog({end: time.toDigits()}, user?.id);
     }
 
     const onStart = async() =>{
         if (!isActive()){
-            setStartAt(tools.time.time())
+            setStartAt(time.time())
             startTimer();
             token.set(user?.email);
             await addStartTimeLog();
@@ -63,7 +64,7 @@ export const Clocked = () =>{
 
     const onEnd = async() =>{
         if (isActive()){
-            setEndAt(tools.time.time());
+            setEndAt(time.time());
             stopTimer();
             token.clear();
             await endingBreak();
@@ -75,7 +76,7 @@ export const Clocked = () =>{
 
     const startingBreak = async() =>{
         let sBreak = IN_PROGRESSING_LOG?.break || [];
-        sBreak.push({start: tools.time.digits(), end: ""});
+        sBreak.push({start: time.toDigits(), end: ""});
         await addEndLog({break: sBreak}, user?.id);
         IN_PROGRESSING_LOG["break"] = sBreak;
         setIsPause(true);
@@ -86,7 +87,7 @@ export const Clocked = () =>{
         let holdBreaks = [];
         for (let obj of sBreak){
             if (!obj?.end){
-                holdBreaks.push({start: obj?.start, end: tools.time.digits()});
+                holdBreaks.push({start: obj?.start, end: time.toDigits()});
             }else holdBreaks.push(obj);
         } 
         await addEndLog({break: holdBreaks}, user?.id);
@@ -112,7 +113,7 @@ export const Clocked = () =>{
 
     const setStartTime = async() =>{
         IN_PROGRESSING_LOG = await getInProgressLog(user?.id);
-        setStartAt(tools.time.time(IN_PROGRESSING_LOG?.[0]?.info?.start) || "");
+        setStartAt(time.toTimeString(IN_PROGRESSING_LOG?.[0]?.info?.start) || "");
     }
 
     const isActive = () =>{

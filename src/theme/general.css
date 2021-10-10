@@ -369,8 +369,16 @@
   position: relative;
   display: inline-block;
   background-color: skyblue;
-  border-top-left-radius: 10px;
   border: 1px solid lightgray;
+}
+.msg-left{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 15px;
+  background-color: white;
+}
+.msg-right{
+  border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 15px;
 }

@@ -87,6 +87,9 @@ class Time{
         this.process(largerTime, smallerTime);
         return this.get("sub");
     }
+    time(){
+        return new Date().toLocaleTimeString();
+    }
     toTimeString(date){
         return new Date(date).toLocaleTimeString();
     }

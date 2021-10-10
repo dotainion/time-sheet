@@ -30,6 +30,7 @@ import { UsersListContainer } from '../other/UsersListContainer';
 import { NoRecord } from '../../../components/widgets/NoRecord';
 import { LandingContent } from '../other/LandingContent';
 import { InputEntry } from '../../../components/widgets/InputEntry';
+import { time } from '../../../utils/time/Time';
 
 
 let storeWeekDays = [];
@@ -177,7 +178,7 @@ export const Schedules = () =>{
         await addSchedule({
             repeat: repeatOn,
             on: isOn,
-            date: tools.time.digits(),
+            date: time.toDigits(),
             repeatEvery: never? null: repeatEveryRef.current.value,
             daysInMonth: storeMonthDays,
             daysInWeek: storeWeekDays,

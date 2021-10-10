@@ -19,6 +19,7 @@ import { IconButton } from '../../../components/widgets/IconButon';
 import { useStore } from '../../../state/stateManagement/stateManagement';
 import { UsersListContainer } from '../other/UsersListContainer';
 import { LoadingBar } from '../../../components/widgets/LoadingBar';
+import { time } from '../../../utils/time/Time';
 
 
 let DEFAULT_USER_SELECTED = "";
@@ -91,7 +92,7 @@ export const AdminNotifications = () =>{
             setMembers([data?.user]);
             if (data?.type === adminRoutes.logs){
                 headerRef.current.value = "Time Log";
-                infoRef.current.value = `Discrepancy with time log for ${tools.time.date(data?.value)}`;
+                infoRef.current.value = `Discrepancy with time log for ${time.toDateString(data?.value)}`;
                 messageRef.current.value = "";
                 DEFAULT_USER_SELECTED = `${data?.user?.info?.firstName} ${data?.user?.info?.lastName}`;
             }

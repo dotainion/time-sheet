@@ -1,5 +1,6 @@
 
 import { collection } from "../../config/databaseConfig";
+import { time } from "../../utils/time/Time";
 import { tools } from "../../utils/tools/Tools";
 import { addData, getDataByDoubleField, getDataByField, updateData, updateDataByField } from "../CollectionRef";
 
@@ -24,7 +25,7 @@ export const getInProgressLog = async(id) =>{
 export const getLogsRange = async(from, to, id) =>{
     try{
         let results = await getDataByField(collection.logs, "id", id);
-        return  results.filter((result)=>tools.time.includes(from, to, result?.info?.start));
+        return  results.filter((result)=>time.includes(from, to, result?.info?.start));
     }catch(error){
         console.log(error);
         return [];
