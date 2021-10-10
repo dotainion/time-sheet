@@ -96,6 +96,46 @@ class Time{
     toDigits(date){
         return new Date(date).getTime();
     }
+    sort(array){
+        array.sort(function(a, b){
+            const aDate = new Date(a?.info?.start || a?.info?.date || a?.date);
+            const bDate = new Date(b?.info?.start || b?.info?.date || b?.date);
+            return aDate - bDate;
+        });
+        return array;
+    }
+    includes(from, to, date){
+        if (!from || !to || !date) return false;
+        let uTo = new Date(to);
+        let uFrom = new Date(from);
+        let uDate = new Date(date);
+        while (true){            
+            if (
+                uDate.getDate() === uFrom.getDate() &&
+                uDate.getDate() === uFrom.getDate() &&
+                uDate.getMonth() === uFrom.getMonth() &&
+                uDate.getMonth() === uFrom.getMonth() &&
+                uDate.getFullYear() === uFrom.getFullYear() &&
+                uDate.getFullYear() === uFrom.getFullYear()
+            ){
+                return true;
+            }
+
+            if (
+                uFrom.getDate() === uTo.getDate() &&
+                uFrom.getDate() === uTo.getDate() &&
+                uFrom.getMonth() === uTo.getMonth() &&
+                uFrom.getMonth() === uTo.getMonth() &&
+                uFrom.getFullYear() === uTo.getFullYear() &&
+                uFrom.getFullYear() === uTo.getFullYear()
+            ){
+                break;
+            }
+
+            uFrom.setDate(uFrom.getDate() + 1);
+        }
+        return false;
+    }
 }
 
 export const time = new Time();

@@ -7,11 +7,12 @@ import { tools } from '../../utils/tools/Tools';
 import { LoadingBar } from '../../components/widgets/LoadingBar';
 import { getSettings } from '../../database/settings/Settings';
 import { getNotification } from '../../database/notifications/NotificationsDb';
+import { time } from '../../utils/time/Time';
 
 const Management = createContext();
 export const useStore = () => useContext(Management);
 
-const initTime = tools.time.digits(new Date().toLocaleDateString());
+const initTime = time.toDigits(new Date().toLocaleDateString());
 export const StateMangement = ({children}) =>{
     const history = useHistory();
     
