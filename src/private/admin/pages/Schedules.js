@@ -176,7 +176,7 @@ export const Schedules = () =>{
         }
 
         await addSchedule({
-            repeat: repeatOn,
+            repeat: repeatOn,//set date to start repeat
             on: isOn,
             date: time.toDigits(),
             repeatEvery: never? null: repeatEveryRef.current.value,

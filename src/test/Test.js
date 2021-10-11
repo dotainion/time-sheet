@@ -17,21 +17,20 @@ import { time } from '../utils/time/Time';
 import $ from 'jquery';
 import { useHistory } from 'react-router';
 import { adminRoutes } from '../utils/routes/Routes';
+import { tools } from '../utils/tools/Tools';
 
 
 export const Test = () =>{
     const history = useHistory();
     const { user } = useAuth();
-
-    const [users, setUsers] = useState([]);
     
-    useEffect(()=>{
-        
-    }, []);
+    const onClick = (...args) =>{
+        console.log(tools.bindStr(...args));
+    };
 
     return(
         <div>
-            
+            <button className="float-center" onClick={()=>onClick("js","bs","jacks")}>Click me</button>
         </div>
     )
 }

@@ -4,7 +4,7 @@ import { useAuth } from '../../state/auth/Authentication';
 import { LoadingBar } from '../../components/widgets/LoadingBar';
 import { time } from '../../utils/time/Time';
 import { UserNavBar } from '../../container/UserNavBar';
-import { getSchedule } from '../../database/schedules/SchedulesDb';
+import { getSchedule, updateSchedule } from '../../database/schedules/SchedulesDb';
 import { DaysPicker } from '../../apps/calendar/Calendar';
 
 
@@ -16,17 +16,118 @@ export const TimeSheet = () =>{
     const [loading, setLoading] = useState(false);
     const [scheduleDates, setScheduleDates] = useState([]);
 
+    const checkRepeat = (date) =>{
+        const nowDate = new Date();
+        const schedDate = new Date(date?.date);
+        if (//check if date ent reach yet
+            schedDate.getMonth() < nowDate.getMonth() && 
+            schedDate.getFullYear() < nowDate.getFullYear()
+            ){
+                date["pending"] = true;
+                return date;
+        }else if (//check if date reach
+            schedDate.getMonth() === nowDate.getMonth() && 
+            schedDate.getFullYear() === nowDate.getFullYear() && 
+            schedDate.getDate() === nowDate.getDate()
+            ){
+                date["due"] = true;
+                return date;
+        }else if (//check if month reach but day ent reach yet
+            schedDate.getMonth() === nowDate.getMonth() && 
+            schedDate.getFullYear() === nowDate.getFullYear() && 
+            schedDate.getDate() < nowDate.getDate()
+            ){
+                date["pending"] = true;
+                return date;
+        }else if (//check if date already pass aready
+            schedDate.getMonth() > nowDate.getMonth() || 
+            schedDate.getFullYear() > nowDate.getFullYear()
+            ){
+                date["pastDue"] = true;
+                return date;
+        }else if (//check if month reach but date pass aready
+            schedDate.getMonth() > nowDate.getMonth() || 
+            schedDate.getFullYear() > nowDate.getFullYear() && 
+            schedDate.getDate() > nowDate.getDate()
+            ){
+                date["pastDue"] = true;
+                return date;
+        }
+
+        return date;
+    }
+
+    const checkRepeatEvery = (sched) =>{
+        //this funtion is not ready and need re work
+        const addWeek = (date=null) =>{
+            if (entryDate.getMonth() >= new Date(date).getMonth() && 
+                entryDate.getFullYear() >= new Date(date).getFullYear() && 
+                entryDate.getDate() >= new Date(date).getDate()){
+                return;
+            }
+            entryDate.setDate(entryDate.getDate() + (sched?.repeatEvery * 7));
+            addWeek(date);
+        }
+
+        const entryDate = new Date(sched?.date);
+        if (sched?.repeatEvery){
+            //update new feild with date to skip or repeat
+            const isRepeatEvery = checkRepeat({date: sched?.repeatEvery});
+            if (!isRepeatEvery?.due || !isRepeatEvery?.pastDue){
+                return false;
+            }
+            addWeek(sched?.repeatOnEvery);
+            updateSchedule({repeatOnEvery: time.toDigits(entryDate)}, user?.id);
+            return true;
+        }
+        return false;
+    }
+
+    const isReacurrence = (sched) =>{
+        let schedulesAccurrenceList = [];
+        const weeks = sched?.daysInWeek;
+        const months = sched?.daysInMonth;
+        const schedulesList = weeks?.length && weeks || months?.length && months || [];
+        if (sched?.on){
+            if (sched?.repeat){
+                const repSched = checkRepeat(sched?.repeat);
+                if (repSched?.due || repSched?.pastDue){
+                    // do something when schedule starts
+                    if (!checkRepeatEvery(sched)){
+                        // return row list for now
+                        return schedulesList;
+                    }
+
+                    let cheduleRepeatList = [];
+                    for (let date of schedulesList){//add current month to date to immitate repeat
+                        const d = new Date(date?.date);
+                        d.setMonth(new Date().getMonth());
+                        date["date"] = time.toDateString(d);
+                        cheduleRepeatList.push(date);
+                    }
+                    return cheduleRepeatList;
+                }
+                // do something when schedule has not reach yet ... note return row list for now
+                return schedulesList;
+            }
+        }
+        for (let date of schedulesList){
+            schedulesAccurrenceList.push(
+                checkRepeat(date)
+            );
+        }
+        
+        return schedulesAccurrenceList;
+    }
+
     const initSchedule = async() =>{
         setLoading(true);
-        const schdArray = await getSchedule(user?.id)
-        const schedls = schdArray?.daysInWeek?.length && schdArray?.daysInWeek || 
-                        schdArray?.daysInMonth?.length && schdArray?.daysInMonth || [];
-        setSchedules(schedls);
+        const scheduleReseult = await getSchedule(user?.id);
+        const scheduleDatesArray = isReacurrence(scheduleReseult);
+        setSchedules(scheduleDatesArray);
         
         let dateTemp = [];
-        schedls.forEach((date)=>{
-            dateTemp.push(new Date(date?.date));
-        })
+        scheduleDatesArray.forEach(date => dateTemp.push(new Date(date?.date)));
         setScheduleDates(dateTemp);
         setLoading(false);
     }

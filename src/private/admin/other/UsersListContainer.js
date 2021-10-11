@@ -160,7 +160,7 @@ export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu
                     {
                         users.length?
                         users.map((usr, key)=>(
-                            <WidgetsInfo onClick={()=>onTriggerSingleSelected(usr)} cssClass="log-user" info={usr?.info?.role} style={{backgroundColor:isSelected(usr) && "gray"}} key={key}>
+                            <WidgetsInfo onClick={()=>onTriggerSingleSelected(usr)} cssClass="log-user" info={usr?.info?.role} style={isSelected(usr) && {...{color:"white",backgroundColor:"gray"}}} key={key}>
                                 <div className="flex">
                                     <InputCheckbox onChange={()=>onMuliUserSelect(usr)} cssClass={noMultiSelect && "hide"} stopPropagation defaultChecked={isSelected(usr)} id={initCheckBoxId(key)} />
                                     <img src={usr?.info?.image || defaultImage} className="log-img" />

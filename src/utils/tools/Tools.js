@@ -1,4 +1,5 @@
 import { MONTHS, WEEK, WEEK_ABRIV } from "../../contents/lists";
+import { time } from "../time/Time";
 
 
 class GoLocation{
@@ -56,8 +57,8 @@ class Tools{
         if (validate.test(email)) return true;
         else return false;
     }
-    bindId(from, to, join="~"){
-        return [from, to].sort().join(join);
+    bindStr(...args){
+        return [...args].sort().join("~");
     }
     async toBase64(file){
         try{
@@ -89,7 +90,7 @@ class Tools{
                 endTime: days?.endTime,
                 date: days?.date,
                 info: days?.info,
-                hours: this.addTimeString(days?.endTime, days?.startTime),
+                hours: time.add(days?.endTime, days?.startTime),
                 info: null,
                 isActive: days?.isActive
             });
@@ -100,7 +101,7 @@ class Tools{
         let tempArray = [];
         for (let day of days || []){
             if (!WEEK_ABRIV.includes(`${day}`)){
-                day = this.time.date(day);
+                day = time.toDateString(day);
             }
             tempArray.push({
                 date: day,

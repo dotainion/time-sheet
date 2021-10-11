@@ -16,7 +16,6 @@ export const Messages = () =>{
 
     const [contacts, setContacts] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
     const [msgError, setMsgError] = useState(false);
     const [userSelected, setUserSelected] = useState({});
     const [hideWhenMobile, setHideWhenMobile] = useState("hide-on-mobile");
@@ -35,27 +34,37 @@ export const Messages = () =>{
             to: userSelected?.id,
             date: time.toDigits(),
             message: messageRef.current.value,
-            bindId: tools.bindId(user?.id, userSelected?.id)
+            bindId: tools.bindStr(user?.id, userSelected?.id)
         });
         messageRef.current.value = "";
     }
 
     const onSearchMembers = () =>{
-        let contactTemp = [];
+        let contactLikeMatch = [];
+        let contactEqualMatch = [];
+        let contactBindMatch = [];
+        let contactNoMatch = [];
+        const value = searchRef.current.value?.toLowerCase();
         if (!searchRef.current.value) return;
         for  (let contact of contacts){
-            if (contact?.info?.firstName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
-                contact?.info?.lastName?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase()) ||
-                contact?.info?.email?.toLowerCase()?.includes?.(searchRef.current.value?.toLowerCase())){
-                contactTemp.push(contact);
+            if (contact?.info?.firstName?.toLowerCase() === value ||
+                contact?.info?.lastName?.toLowerCase() === value ||
+                contact?.info?.email?.toLowerCase() === value){
+                    contactEqualMatch.push(contact);
+            }else if (contact?.info?.firstName?.toLowerCase()?.includes?.(value) ||
+                contact?.info?.lastName?.toLowerCase()?.includes?.(value) ||
+                contact?.info?.email?.toLowerCase()?.includes?.(value)){
+                    contactLikeMatch.push(contact);
+            }else if (tools.bindStr(
+                contact?.info?.firstName, 
+                contact?.info?.lastName 
+                )?.toLowerCase()?.includes?.(value)){
+                    contactBindMatch.push(contact);
+            }else{
+                contactNoMatch.push(contact);
             }
         }
-        setSearchResults(contactTemp);
-    }
-
-    const clearSearchResults = () =>{
-        searchRef.current.value = "";
-        setSearchResults([]);
+        setContacts([...contactEqualMatch, ...contactLikeMatch, ...contactNoMatch]);
     }
 
     const onSelectUser = (contact, id) =>{
@@ -66,7 +75,7 @@ export const Messages = () =>{
             document.getElementById(id).style.display = "none";
             setHideWhenMobile("");
         }
-        clearSearchResults();
+        searchRef.current.value = "";
     }
 
     const initContacts = async() =>{
@@ -80,7 +89,7 @@ export const Messages = () =>{
 
     useEffect(()=>{
         messageObserver(
-            tools.bindId(user?.id, userSelected?.id), 
+            tools.bindStr(user?.id, userSelected?.id), 
             (obj)=>{
                 setMessages(time.sort(obj));
                 msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
@@ -97,37 +106,12 @@ export const Messages = () =>{
                             floatLeft
                             firstName={user?.firstName}
                             lastName={user?.lastName}
+                            image={user?.image}
                             role={user?.role}
                         />
                         <SearchBar onTyping={onSearchMembers} searchRef={searchRef} cssClass="centered" style={{marginTop:"20px"}} />
                     </div>
                     <div style={{height:"71vh"}}>
-                        <div
-                            style={{
-                                display:!searchResults.length && "none",
-                                marginBottom:"20px",
-                                borderBottom:"2px solid dodgerblue"
-                            }}>
-                            {
-                                searchResults.length?
-                                searchResults.map((contact, key)=>(
-                                    <Profile
-                                        floatLeft
-                                        info={false}
-                                        cssClass="item-hover"
-                                        firstName={contact?.info?.firstName}
-                                        lastName={contact?.info?.lastName}
-                                        role={contact?.info?.role}
-                                        onClick={()=>onSelectUser(contact, contact?.id)}
-                                        style={{width:"100%",cursor:"pointer"}}
-                                        key={key}
-                                    />
-                                )):
-                                <div className="pad" style={{display:!searchRef.current?.value && "none"}}>
-                                    <label>No results found for your search</label>
-                                </div>
-                            }
-                        </div>
                         {
                             contacts.length?
                             contacts.map((contact, key)=>(
