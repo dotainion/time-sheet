@@ -1,9 +1,14 @@
 import React from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { BENEFITS } from '../../contents/aboutus/aboutus';
+import { TiArrowBack } from 'react-icons/ti';
+import { WidgetsInfo } from '../../components/widgets/WidgetsInfo';
+import { useHistory } from 'react-router';
 
 
 export const Pricing = () =>{
+    const history = useHistory();
+
     const style = {
         color: "white",
         backgroundImage: "none",
@@ -111,6 +116,11 @@ export const Pricing = () =>{
     ]
     return(
         <div className="pricing-page" style={{backgroundColor:"white"}}>
+            <div className="float-top-left grid-single-white">
+                <WidgetsInfo info="Back">
+                    <TiArrowBack onClick={()=>history.goBack()} style={{fontSize:"40px"}} />
+                </WidgetsInfo>
+            </div>
             <div className="header-huge" style={{marginTop:"20px",textAlign:"center",color:"white"}}>
                 <div>TIME SHEET APPLICATION</div>
                 <div>PRICING</div>

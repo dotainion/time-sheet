@@ -869,6 +869,16 @@
 .grid-single:hover{
   color: dodgerblue;
 }
+.grid-single-white{
+  top: 40px;
+  left: 30px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+.grid-single-white:hover{
+  color: dodgerblue;
+}
 .landing-page{
   height: 100vh;
   user-select: none;
