@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { UserNavBar } from '../../container/UserNavBar';
 import { RiLockPasswordFill } from 'react-icons/ri';
-import { WhatsThis } from '../../components/widgets/WhatsThis';
-import { ChangePassword } from '../../security/ChangePassord';
 import { MdEmail } from 'react-icons/md';
+import { useHistory } from 'react-router';
+import { routes } from '../../utils/routes/Routes';
 
 export const Settings = () =>{
-    const [showChangePassword, setShowChangePassword] = useState();
+    const history = useHistory();
 
     const SETTINGS_LISTS = [
         {
@@ -15,12 +15,12 @@ export const Settings = () =>{
                 {
                     title: "Passwords",
                     icon: RiLockPasswordFill,
-                    action: ()=>setShowChangePassword(true),
+                    action: ()=>history.push(routes.changePassword),
                     info: "Change my password"
                 },{
                     title: "Email.",
                     icon: MdEmail,
-                    action: ()=>{},
+                    action: ()=>history.push(routes.changeEmail),
                     info: "Update email linked to your account"
                 }
             ]
@@ -49,10 +49,6 @@ export const Settings = () =>{
                     </div>
                 ))}
             </div>
-            <ChangePassword
-                isOpen={showChangePassword} 
-                onClose={()=>setShowChangePassword(false)} 
-            />
         </UserNavBar>
     )
 }

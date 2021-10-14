@@ -45,5 +45,7 @@ export const routes = {
     settings: "/settings",
     timeSheet: "/time-sheet",
     messages: "/messages",
-    notification: "/notification"
+    notification: "/notification",
+    changeEmail: "/change-email-address",
+    changePassword: "/change-password"
 }
