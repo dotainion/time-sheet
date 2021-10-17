@@ -83,6 +83,16 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
         }
     }
 
+    const showRequest = () =>{
+        if (!ADMIN_SUPERVISER.includes(user?.role)){
+            return false;
+        }
+        if (requests?.length){
+            return true;
+        }
+        return false;
+    }
+
     useEffect(()=>{
         setTimeout(() => {
             $(pageRef.current).show("slow");
@@ -134,7 +144,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
                             <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
                             <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{notifications?.length || 0}</div>
                         </div>
-                        <div onClick={()=>setShowRequests(true)} hidden={!requests?.length} className="float-center" style={{cursor:"pointer",left:"70px"}}>
+                        <div onClick={()=>setShowRequests(true)} hidden={!showRequest()} className="float-center" style={{cursor:"pointer",left:"70px"}}>
                             <IoTimeSharp style={{color:"red",fontSize:"20px"}} />
                             <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{requests?.length || 0}</div>
                         </div>
