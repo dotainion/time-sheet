@@ -87,17 +87,23 @@ class Time{
         this.process(largerTime, smallerTime);
         return this.get("sub");
     }
+    isInvalidDate(date){
+        if (date === "Invalid Date"){
+            return "";
+        }
+        return date;
+    }
     time(){
-        return new Date().toLocaleTimeString();
+        return this.isInvalidDate(new Date().toLocaleTimeString());
     }
     toTimeString(date){
-        return new Date(date).toLocaleTimeString();
+        return this.isInvalidDate(new Date(date).toLocaleTimeString());
     }
     toDateString(date){
-        return new Date(date).toDateString();
+        return this.isInvalidDate(new Date(date).toDateString());
     }
     toDigits(date){
-        return new Date(date).getTime();
+        return this.isInvalidDate(new Date(date).getTime());
     }
     sort(array){
         array.sort(function(a, b){

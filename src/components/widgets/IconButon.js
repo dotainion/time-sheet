@@ -1,5 +1,5 @@
 import React from 'react';
-import { IoMdDownload, IoMdSettings } from 'react-icons/io';
+import { IoMdClose, IoMdDownload, IoMdSettings } from 'react-icons/io';
 import { MdDateRange, MdRefresh, MdUpdate, MdNotificationsActive } from 'react-icons/md';
 import { FaUser, FaUsers } from 'react-icons/fa';
 import { WidgetsInfo } from './WidgetsInfo';
@@ -20,7 +20,7 @@ export const IconButton = ({hidden, border, info, style, infoStyle, onClick, dis
                 hidden={hidden}
                 onClick={onClick} 
                 disabled={disabled} 
-                className={`${cssClass} ${disabled && "btn-disabled"}`} 
+                className={`icon-btn ${cssClass} ${disabled && "btn-disabled"}`} 
                 style={{
                     ...style,
                     border: border,
@@ -39,6 +39,7 @@ export const IconButton = ({hidden, border, info, style, infoStyle, onClick, dis
                 {icon === "log" && <IoTimeSharp className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "email" && <AiOutlineMail className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 {icon === "password" && <RiLockPasswordLine className={iconCss} style={{...bStyle,...iconStyle}}/>}
+                {icon === "close" && <IoMdClose className={iconCss} style={{...bStyle,...iconStyle}}/>}
                 <span>{label}</span>
             </button>
         </WidgetsInfo>

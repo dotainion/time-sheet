@@ -26,10 +26,11 @@ import { MdDateRange } from 'react-icons/md';
 import { WiTime2, WiTime8 } from 'react-icons/wi';
 import { IoMdInformationCircleOutline} from 'react-icons/io';
 import { GiCoffeeCup } from 'react-icons/gi';
+import { Backdrop } from '../../../container/Backdrop';
+import { RequestsAction } from '../other/RequestsActions';
 
 
-let muliUserIds = [];
-let checkboxIds = [];
+
 export const AdminLogs = () =>{
     const { user } = useAuth();
 
@@ -37,6 +38,7 @@ export const AdminLogs = () =>{
     const [allowEditing, setAllowEditing] = useState(false);
     const [showEditLog, setShowEditLog] = useState({state:false, date:null});
     const [isUserSelected, setIsUserSelected] = useState(false);
+    const [showRequests, setShowRequests] = useState(false);
 
     const toDateFrom = useRef();
     const fromDateRef = useRef();
@@ -108,7 +110,7 @@ export const AdminLogs = () =>{
                 onChecked={setIsUserSelected}
                 onSelected={getSingleSelectedUserLog}
                 onMultiSelected={onMultiSelected}
-                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile},{title:"Editing is on...",style:{color:"red"},border:"none",hidden:!allowEditing}]}
+                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile},{title:"Request",icon:"notification",style:{color:"red"},action:()=>setShowRequests(true)},{title:"Editing is on...",style:{color:"red"},border:"none",hidden:!allowEditing}]}
                 menu={[{title:allowEditing?"Disable editing":"Enable editing",action:()=>setAllowEditing(!allowEditing)}]}
             >
 
@@ -164,14 +166,17 @@ export const AdminLogs = () =>{
                         }
                     </div>
                 </div>
-
-                <UpdateLog 
-                    isOpen={showEditLog.state}
-                    data={showEditLog.date}
-                    onUpdated//={onRefresh}
-                    onClose={()=>setShowEditLog({state:false, date:null})}
-                />
             </UsersListContainer>
+            <UpdateLog 
+                isOpen={showEditLog.state}
+                data={showEditLog.date}
+                onUpdated//={onRefresh}
+                onClose={()=>setShowEditLog({state:false, date:null})}
+            />
+            <RequestsAction
+                isOpen={showRequests}
+                onClose={()=>setShowRequests(false)}
+            />
         </AdminNavBar>
     )
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 
 
-export const InputTextarea = ({id, inputRef, inputStyle, label, resize, placeholder, labelFixed, type, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
+export const InputTextarea = ({id, inputRef, inputStyle, cssClass, label, resize, placeholder, labelFixed, type, disabled, hidden, border, borderColor, error, errorReset, titleCase}) =>{
     const [labelStyle, setLabelStyle] = useState({color:"gray",left:"40px"});
 
     const onFloatLabel = () =>{
@@ -47,8 +47,8 @@ export const InputTextarea = ({id, inputRef, inputStyle, label, resize, placehol
                 onFocus={onFloatLabel}
                 onBlur={onCenterLabel}
                 onChange={()=>errorReset?.("")}
-                placeholder={labelFixed?placeholder || label:null}
-                className={`input-textarea input-entery ${titleCase && "title-case"}`}
+                placeholder={labelFixed?placeholder || label:!labelFixed?placeholder:null}
+                className={`input-textarea input-entery ${titleCase && "title-case"} ${cssClass}`}
                 style={{border:error && "1px solid red", resize:!resize && "none",...inputStyle}}
                 type={type}
                 id={id}

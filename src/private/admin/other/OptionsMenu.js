@@ -4,9 +4,11 @@ import { Backdrop } from '../../../container/Backdrop';
 import { time } from '../../../utils/time/Time';
 import { GiCoffeeCup } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
+import { IoGitPullRequest } from 'react-icons/io5';
+import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 
 
-export const OptionsMenu = ({options, borderInherit}) =>{
+export const OptionsMenu = ({options, onRequests, borderInherit}) =>{
     const [showOption,setShowOption] = useState(false);
     const [total, setTotal] = useState("");
 
@@ -55,8 +57,15 @@ export const OptionsMenu = ({options, borderInherit}) =>{
     return(
         <>
         <div onClick={e=>e.stopPropagation()} className="relative" style={{border: borderInherit? "": "none",borderBottom: borderInherit && "1px solid lightgray",color:"var(--primary-color)"}}>
-            <GiCoffeeCup onClick={()=>setShowOption(true)} className="float-left icons" style={{fontSize:"20px"}} />
-            <div hidden={options?.length} className="float-left" style={{color:"red"}}><MdClose/></div>
+            <div className="float-left" style={{border:"none",fontSize:"20px",zIndex:"99"}}>
+                <WidgetsInfo inline style={{border:"none"}} infoStyle={{border:"none"}} errorStyle={{border:"none"}} info="Breaks">
+                    <GiCoffeeCup onClick={()=>options?.length && setShowOption(true)} style={{cursor:"pointer"}} />
+                </WidgetsInfo>
+                <WidgetsInfo inline style={{border:"none"}} infoStyle={{border:"none"}} errorStyle={{border:"none"}} info="Requst time change">
+                    <IoGitPullRequest onClick={onRequests} style={{marginLeft:"10px", cursor:"pointer"}} />
+                </WidgetsInfo>
+            </div>
+            <div hidden={options?.length} className="float-left" style={{color:"red",width:"auto",zIndex:"991"}}><MdClose/></div>
         </div>
         <Backdrop isOpen={showOption} onClose={(e)=>{e.stopPropagation();setShowOption(false)}} onTop >
             <div onClick={e=>e.stopPropagation()} className="float-center" style={styles}>

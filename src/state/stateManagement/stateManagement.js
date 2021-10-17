@@ -8,6 +8,9 @@ import { LoadingBar } from '../../components/widgets/LoadingBar';
 import { getSettings } from '../../database/settings/Settings';
 import { getNotification } from '../../database/notifications/NotificationsDb';
 import { time } from '../../utils/time/Time';
+import { getRequestChange } from '../../database/requests/TimeChange';
+import { getUser } from '../../database/accounts/AccountsDb';
+import { RequestsAction } from '../../private/admin/other/RequestsActions';
 
 const Management = createContext();
 export const useStore = () => useContext(Management);
@@ -23,6 +26,8 @@ export const StateMangement = ({children}) =>{
     const [settings, setSettings] = useState({});
     const [notifications, setNotifications]= useState([]);
     const [notificationList, setNotificationList] = useState([]);
+    const [requests, setRequests] = useState([]);
+    const [showRequests, setShowRequests] = useState(false);
 
     const onContinue = () =>{
         if (isAuthenticated){
@@ -51,6 +56,17 @@ export const StateMangement = ({children}) =>{
         setNotifications(notificTemp);
     }
 
+    const initRequests = async() =>{
+        let response = await getRequestChange(user?.id);
+        let request = [];
+        for (let record of response){
+            const usr = await getUser(record?.info?.userId);
+            record["info"]["user"] = usr;
+            request.push(record);
+        };
+        setRequests(request);
+    }
+
     const initStore = async() =>{
         setSettings(await getSettings(user?.id));
         initNotifications();
@@ -58,6 +74,7 @@ export const StateMangement = ({children}) =>{
 
     useEffect(()=>{
         initStore();
+        initRequests();
     },[user]);
     
     const providerValue = {
@@ -69,11 +86,18 @@ export const StateMangement = ({children}) =>{
         loading,
         notifications,
         removeANotifications,
-        notificationList
+        notificationList,
+        requests, 
+        setRequests,
+        setShowRequests
     }
     return(
         <Management.Provider value={providerValue}>
             <LoadingBar isOpen={loading} />
+            <RequestsAction 
+                isOpen={showRequests} 
+                onClose={()=>setShowRequests(false)} 
+            />
             {children}
         </Management.Provider>
     )

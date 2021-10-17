@@ -11,6 +11,7 @@ import $ from 'jquery';
 import { tools } from '../utils/tools/Tools';
 import { CONTACT_ID } from '../contents/GlobalId';
 import { ADMIN_SUPERVISER } from '../contents/AuthValue';
+import { IoTimeSharp } from 'react-icons/io5';
 
 
 
@@ -18,7 +19,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
-    const { notifications } = useStore();
+    const { notifications, requests, setShowRequests } = useStore();
 
     const navRef = useRef();
     const pageRef = useRef();
@@ -132,6 +133,10 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
                         <div onClick={gotToNotification} hidden={!notifications?.length} className="float-center" style={{cursor:"pointer"}}>
                             <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
                             <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{notifications?.length || 0}</div>
+                        </div>
+                        <div onClick={()=>setShowRequests(true)} hidden={!requests?.length} className="float-center" style={{cursor:"pointer",left:"70px"}}>
+                            <IoTimeSharp style={{color:"red",fontSize:"20px"}} />
+                            <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{requests?.length || 0}</div>
                         </div>
                     </div>
                     <div style={{float:"right",paddingTop:"15px",paddingRight:"20px"}}>

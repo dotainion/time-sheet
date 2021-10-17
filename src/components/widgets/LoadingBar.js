@@ -7,8 +7,7 @@ import { Backdrop } from '../../container/Backdrop'
 export const LoadingBar = ({isOpen, value}) => {
     return(
         <Backdrop isOpen={isOpen} onTop>
-            <div
-                className="float-center progress-bar">
+            <div className="float-center progress-bar">
                 <div>Please wait...</div>
                 <progress value={value} max="100"/>
             </div>

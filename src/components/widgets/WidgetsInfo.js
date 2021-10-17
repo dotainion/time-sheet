@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 
-export const WidgetsInfo = ({onClick, hidden, cssClass, style, infoStyle, inline, info, error, children}) =>{
+export const WidgetsInfo = ({onClick, hidden, cssClass, style, infoStyle, errorStyle, inline, info, error, children}) =>{
     const [showInfo, setShowInfo] = useState(false);
     const [triggerShowInfo, setTriggerShowInfo] = useState(false);
 
@@ -52,7 +52,7 @@ export const WidgetsInfo = ({onClick, hidden, cssClass, style, infoStyle, inline
                         fontSize:"14px",
                         width:wordLimit() === "normal"? "150px": "auto",
                         textAlign:"left",
-                        zIndex:"99999999",
+                        zIndex:"999999999",
                         paddingLeft:"10px",
                         overflow:"visible",
                         borderRadius:"5px",
@@ -72,7 +72,8 @@ export const WidgetsInfo = ({onClick, hidden, cssClass, style, infoStyle, inline
                     color:"red",
                     fontSize:"10px",
                     lineHeight:"1",
-                    transform:"translateY(120%)"
+                    transform:"translateY(120%)",
+                    ...errorStyle
                 }}
             >{error}</div>
         </div>
