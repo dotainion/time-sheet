@@ -38,7 +38,6 @@ export const AdminLogs = () =>{
     const [allowEditing, setAllowEditing] = useState(false);
     const [showEditLog, setShowEditLog] = useState({state:false, date:null});
     const [isUserSelected, setIsUserSelected] = useState(false);
-    const [showRequests, setShowRequests] = useState(false);
 
     const toDateFrom = useRef();
     const fromDateRef = useRef();
@@ -110,8 +109,8 @@ export const AdminLogs = () =>{
                 onChecked={setIsUserSelected}
                 onSelected={getSingleSelectedUserLog}
                 onMultiSelected={onMultiSelected}
-                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile},{title:"Request",icon:"notification",style:{color:"red"},action:()=>setShowRequests(true)},{title:"Editing is on...",style:{color:"red"},border:"none",hidden:!allowEditing}]}
-                menu={[{title:allowEditing?"Disable editing":"Enable editing",action:()=>setAllowEditing(!allowEditing)}]}
+                toolbar={[{title:"Export",icon:"download",disabled:!logs.length,action:onDownloadFile},{title:"Editing is on...",style:{color:"red"},border:"none",hidden:!allowEditing}]}
+                menu={!logs.length?null:[{title:allowEditing?"Disable editing":"Enable editing",action:()=>setAllowEditing(!allowEditing)}]}
             >
 
                 <div className="flex pad">
@@ -172,10 +171,6 @@ export const AdminLogs = () =>{
                 data={showEditLog.date}
                 onUpdated//={onRefresh}
                 onClose={()=>setShowEditLog({state:false, date:null})}
-            />
-            <RequestsAction
-                isOpen={showRequests}
-                onClose={()=>setShowRequests(false)}
             />
         </AdminNavBar>
     )
