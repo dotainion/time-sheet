@@ -16,7 +16,7 @@ export const SelectOptions  = ({onChange, options, cssOverride, cssClass, defaul
         <select hidden={!options} onChange={triggerChanges} className={`${!cssOverride && "input"} ${cssClass}`} style={style}>
             <option hidden defaultChecked>{defaultValue || options?.[0]?.title}</option>
             {options?.map?.((opt, key)=>(
-                <option onClick={()=>alert("hello wthi sis me")} value={opt?.value || opt?.title} key={key}>{opt?.title}</option>
+                <option value={opt?.value || opt?.title} key={key}>{opt?.title}</option>
             ))}
         </select>
     )

@@ -19,7 +19,7 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
     const history = useHistory();
 
     const { user, signOut } = useAuth();
-    const { notifications, requests, setShowRequests } = useStore();
+    const { notifications, requestsStatus } = useStore();
 
     const navRef = useRef();
     const pageRef = useRef();
@@ -30,6 +30,13 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
         }else{
             history.push(routes.notification);
         }
+    }
+
+    const isRequstAuth = () =>{
+        if (requestsStatus.length && ADMIN_SUPERVISER.includes(user?.role)){
+            return true;
+        }
+        return false;
     }
 
     const forMenu = (nav, index) =>{
@@ -83,16 +90,6 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
         }
     }
 
-    const showRequest = () =>{
-        if (!ADMIN_SUPERVISER.includes(user?.role)){
-            return false;
-        }
-        if (requests?.length){
-            return true;
-        }
-        return false;
-    }
-
     useEffect(()=>{
         setTimeout(() => {
             $(pageRef.current).show("slow");
@@ -144,9 +141,9 @@ export const NavigationBar = ({menues, useContact, isActive, children}) =>{
                             <MdNotificationsActive style={{color:"red",fontSize:"20px"}} />
                             <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{notifications?.length || 0}</div>
                         </div>
-                        <div onClick={()=>setShowRequests(true)} hidden={!showRequest()} className="float-center" style={{cursor:"pointer",left:"70px"}}>
+                        <div onClick={()=>history.push(adminRoutes.requests)} hidden={!isRequstAuth()} className="float-center" style={{cursor:"pointer",left:"70px"}}>
                             <IoTimeSharp style={{color:"red",fontSize:"20px"}} />
-                            <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{requests?.length || 0}</div>
+                            <div className="float-center" style={{color:"red",top:"0px",left:"130%",zIndex:"99"}}>{requestsStatus?.length || 0}</div>
                         </div>
                     </div>
                     <div style={{float:"right",paddingTop:"15px",paddingRight:"20px"}}>

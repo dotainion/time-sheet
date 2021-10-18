@@ -12,9 +12,9 @@ export const addRequestChange = async(data) =>{
     }
 }
 
-export const getRequestChange = async(id) =>{
+export const getRequestChange = async(id, filter=null) =>{
     try{
-        return await getDataByDoubleField(collection.request, "accepted", "none", "supervisorId", id);
+        return await getDataByDoubleField(collection.request, "accepted", filter || "none", "supervisorId", id);
     }catch(error){
         console.log(error);
         return [];

@@ -37,6 +37,7 @@ import { ResetPassword } from "./public/entryPoint/resetPassword/ResetPassword";
 import { Help } from "./help/Help";
 import { ChangeEmail } from "./members/settings/ChangeEmail";
 import { MembersPassword } from "./members/settings/MembersPassword";
+import { RequestsAction } from "./private/admin/pages/RequestsActions";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Route exact path={routes.defaultNone} render={()=><Redirect to={routes.default} />}/>
                 {/******************************************************************************/}
                 <Route exact path={adminRoutes.grid} render={()=><Authenticate Component={Grid}/>}/>
+                <Route exact path={adminRoutes.requests} render={()=><Authenticate Component={RequestsAction}/>}/>
                 <Route exact path={adminRoutes.schedule} render={()=><Authenticate Component={Schedules}/>}/>
                 <Route exact path={adminRoutes.notification} render={()=><Authenticate Component={AdminNotifications}/>}/>
                 <Route exact path={adminRoutes.adminMessages} render={()=><Authenticate Component={AdminMessages}/>}/>

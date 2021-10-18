@@ -106,7 +106,8 @@ export const AdminNotifications = () =>{
                 onMultiSelected={setMembers}
                 toolbar={[
                     {action:()=>setSwitchView(false),title:"PUSH CAMPAIGNS",border:"none",css:"item-hover",style:{color:!switchView && "white",backgroundColor:!switchView && "var(--primary-color)",padding:"10px"}},
-                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",css:"item-hover",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}}
+                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",css:"item-hover",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>history.push(adminRoutes.requests),title:"REQUESTS",border:"none",css:"item-hover",style:{padding:"10px"}}
                 ]}
             >
                 

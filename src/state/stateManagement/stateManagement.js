@@ -10,7 +10,7 @@ import { getNotification } from '../../database/notifications/NotificationsDb';
 import { time } from '../../utils/time/Time';
 import { getRequestChange } from '../../database/requests/TimeChange';
 import { getUser } from '../../database/accounts/AccountsDb';
-import { RequestsAction } from '../../private/admin/other/RequestsActions';
+
 
 const Management = createContext();
 export const useStore = () => useContext(Management);
@@ -27,7 +27,7 @@ export const StateMangement = ({children}) =>{
     const [notifications, setNotifications]= useState([]);
     const [notificationList, setNotificationList] = useState([]);
     const [requests, setRequests] = useState([]);
-    const [showRequests, setShowRequests] = useState(false);
+    const [requestsStatus, setRequestsStatus] = useState([]);
 
     const onContinue = () =>{
         if (isAuthenticated){
@@ -56,8 +56,12 @@ export const StateMangement = ({children}) =>{
         setNotifications(notificTemp);
     }
 
-    const initRequests = async() =>{
-        let response = await getRequestChange(user?.id);
+    const filterRequests = async(filter=null) =>{
+        await initRequests(filter);
+    }
+
+    const initRequests = async(filter=null) =>{
+        let response = await getRequestChange(user?.id, filter);
         let request = [];
         for (let record of response){
             const usr = await getUser(record?.info?.userId);
@@ -65,6 +69,9 @@ export const StateMangement = ({children}) =>{
             request.push(record);
         };
         setRequests(request);
+        if (["none", null].includes(filter)){
+            setRequestsStatus(request);
+        }
     }
 
     const initStore = async() =>{
@@ -89,15 +96,12 @@ export const StateMangement = ({children}) =>{
         notificationList,
         requests, 
         setRequests,
-        setShowRequests
+        filterRequests,
+        requestsStatus
     }
     return(
         <Management.Provider value={providerValue}>
             <LoadingBar isOpen={loading} />
-            <RequestsAction 
-                isOpen={showRequests} 
-                onClose={()=>setShowRequests(false)} 
-            />
             {children}
         </Management.Provider>
     )
