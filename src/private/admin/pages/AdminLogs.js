@@ -150,7 +150,7 @@ export const AdminLogs = () =>{
                                             <div>{time.toTimeString(log?.info?.start)}</div>
                                             <div>{time.toTimeString(log?.info?.end)}</div>
                                             <div>{time.sub(log?.info?.end, log?.info?.start, true)}</div>
-                                            <OptionsMenu options={log?.info?.break || []} />
+                                            <OptionsMenu options={log?.info?.break || []} hideRequest />
                                         </div>
                                     }
                                 </div>

@@ -6,7 +6,7 @@ import { adminRoutes, routes } from '../../utils/routes/Routes';
 import { tools } from '../../utils/tools/Tools';
 import { LoadingBar } from '../../components/widgets/LoadingBar';
 import { getSettings } from '../../database/settings/Settings';
-import { getNotification } from '../../database/notifications/NotificationsDb';
+import { getNotification, getNotificationByAuthId } from '../../database/notifications/NotificationsDb';
 import { time } from '../../utils/time/Time';
 import { getRequestChange } from '../../database/requests/TimeChange';
 import { getUser } from '../../database/accounts/AccountsDb';
@@ -26,6 +26,7 @@ export const StateMangement = ({children}) =>{
     const [settings, setSettings] = useState({});
     const [notifications, setNotifications]= useState([]);
     const [notificationList, setNotificationList] = useState([]);
+    const [sentNotificationList, setSentNotificationList] = useState([]);
     const [requests, setRequests] = useState([]);
     const [requestsStatus, setRequestsStatus] = useState([]);
 
@@ -56,6 +57,11 @@ export const StateMangement = ({children}) =>{
         setNotifications(notificTemp);
     }
 
+    const initSentNotification = async() =>{
+        const notific = await getNotificationByAuthId(user?.id);
+        setSentNotificationList(notific);
+    }
+
     const filterRequests = async(filter=null) =>{
         await initRequests(filter);
     }
@@ -77,6 +83,7 @@ export const StateMangement = ({children}) =>{
     const initStore = async() =>{
         setSettings(await getSettings(user?.id));
         initNotifications();
+        initSentNotification();
     }
 
     useEffect(()=>{
@@ -94,6 +101,7 @@ export const StateMangement = ({children}) =>{
         notifications,
         removeANotifications,
         notificationList,
+        sentNotificationList,
         requests, 
         setRequests,
         filterRequests,

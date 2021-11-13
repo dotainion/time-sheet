@@ -56,7 +56,7 @@ export const Users = () =>{
     const onUpdate = () =>{
         if (!isUser()) return;
         history.push({
-            pathname: adminRoutes.usersProfile, 
+            pathname: adminRoutes.profile, 
             user: userSelected
         });
     }
@@ -146,8 +146,8 @@ export const Users = () =>{
                                         <div>{userSelected?.info?.email}</div>
                                     </div>
                                     <div className="flex no-wrap">
-                                        <IconButton onClick={onUpdate} label="Update" icon="settings" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
-                                        <IconButton onClick={onSchedule} label="Add schedule" icon="calendar" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
+                                        <IconButton onClick={onUpdate} label="Update" icon="settings" border="none" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
+                                        <IconButton onClick={onSchedule} label="Add schedule" icon="calendar" border="none" infoCss="user-view-btn" iconCss="float-left log-header-btn-icon" iconStyle={{left:"5px"}} />
                                     </div>
                                 </div>
                             </div>

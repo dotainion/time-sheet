@@ -221,7 +221,7 @@ export const Schedules = () =>{
 
     return(
         <AdminNavBar useContact>
-            <UsersListContainer onSelected={onSelectUser} useRefresh noMultiSelect >
+            <UsersListContainer onSelected={onSelectUser} defaultHighlightUserId={userSelectedRef.current?.id} useRefresh noMultiSelect >
                 <div className="schedule-container">
                     <div className="schedule-calendar-container">
                         <div style={{color:"var(--primary-color)",fontSize:"20px",marginBottom:"20px"}}>

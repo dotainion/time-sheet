@@ -5,24 +5,24 @@ import 'react-clock/dist/Clock.css';
 import { token } from '../../utils/token/Tokenize';
 import { useAuth } from '../../state/auth/Authentication';
 import { UserNavBar } from '../../container/UserNavBar';
-import { tools } from '../../utils/tools/Tools';
 import { addEndLog, addStartLog, getInProgressLog } from '../../database/logs/LogDb';
 import { TrackerButton } from '../widgets/TrackerButton';
 import { SiSatDot1 } from 'react-icons/si';
 import { Alert } from '../../components/other/Alert';
 import { time } from '../../utils/time/Time';
 
-const {
+
+let {
     TimerComponent,
     isTimerActive,
     stopTimer,
     startTimer,
-    getCurrentTimeInSeconds 
+    getCurrentTimeInSeconds
 } = new StopClock({
     id: 1,
     presist: true,
     onTick: (e) => {
-    //console.log(e)
+        console.log(e)
     }
 });
 
@@ -144,7 +144,7 @@ export const Clocked = () =>{
                         <div>START AT: {startAt}</div>
                         <div>END AT: {endAt}</div>
                     </div>
-                    <div className="lapstime">
+                    <div className="lapstime" id="123">
                         <TimerComponent labels={{ minutes: 'min' }} />
                         <div hidden={isTimerActive()} className="max-size float-center">
                             <div className="max-size relative" style={{backgroundColor:"white"}}>

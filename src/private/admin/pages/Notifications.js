@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { InputEntry } from '../../../components/widgets/InputEntry';
 import { InputTextarea } from '../../../components/widgets/InputTextarea';
 import { AdminNavBar } from '../../../container/AdminNavBar';
-import { addNotification, getNotificationByAuthId, updateNotification } from '../../../database/notifications/NotificationsDb';
+import { addNotification, updateNotification } from '../../../database/notifications/NotificationsDb';
 import { useAuth } from '../../../state/auth/Authentication';
 import { adminRoutes } from '../../../utils/routes/Routes';
 import { tools } from '../../../utils/tools/Tools';
@@ -27,14 +27,14 @@ export const AdminNotifications = () =>{
     const history = useHistory();
 
     const { user } = useAuth();
-    const { notificationList, removeANotifications } = useStore();
+    const { notificationList, removeANotifications, sentNotificationList } = useStore();
 
     const [loading, setLoading] = useState(false);
     const [sent, setSent] = useState(false);
     const [infoError, setInfoError] = useState("");
     const [headerError, setHeaderError] = useState("");
     const [members, setMembers] = useState([]);
-    const [switchView, setSwitchView] = useState(false);
+    const [switchView, setSwitchView] = useState({campaigns:true,notifications:false,myNotification:false});
     const [showMessageBox, setShowMessageBox] = useState({state:false, data: null});
 
     const headerRef = useRef();
@@ -84,6 +84,10 @@ export const AdminNotifications = () =>{
         removeANotifications(id);
     }
 
+    const getMyNotification = () =>{
+        
+    }
+
     useEffect(()=>{
         //NOTE: notification no longer being used
         // this is statement is not being used...
@@ -105,13 +109,14 @@ export const AdminNotifications = () =>{
                 onSelected={async(uUser)=>setMembers([uUser])}
                 onMultiSelected={setMembers}
                 toolbar={[
-                    {action:()=>setSwitchView(false),title:"PUSH CAMPAIGNS",border:"none",css:"item-hover",style:{color:!switchView && "white",backgroundColor:!switchView && "var(--primary-color)",padding:"10px"}},
-                    {action:()=>setSwitchView(true),title:"VIEW NOTIFICATION",border:"none",css:"item-hover",style:{color:switchView && "white",backgroundColor:switchView && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>setSwitchView({campaigns:true,notifications:false,myNotification:false}),title:"PUSH CAMPAIGNS",border:"none",css:"item-hover",style:{color:switchView.campaigns && "white",backgroundColor:switchView.campaigns && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>setSwitchView({campaigns:false,notifications:true,myNotification:false}),title:"VIEW NOTIFICATION",border:"none",css:"item-hover",style:{color:switchView.notifications && "white",backgroundColor:switchView.notifications && "var(--primary-color)",padding:"10px"}},
+                    {action:()=>setSwitchView({campaigns:false,notifications:false,myNotification:true}),title:"NOTIFICATION SENT",border:"none",css:"item-hover",style:{color:switchView.myNotification && "white",backgroundColor:switchView.myNotification && "var(--primary-color)",padding:"10px"}},
                     {action:()=>history.push(adminRoutes.requests),title:"REQUESTS",border:"none",css:"item-hover",style:{padding:"10px"}}
                 ]}
             >
                 
-                <div hidden={switchView} className="notification-container">
+                <div hidden={!switchView.campaigns} className="notification-container">
                     <div className="header" style={{width:"105.5%",marginBottom:"20px",marginTop:"20px",borderBottom:"1px solid var(--border)",color:"var(--primary-color)"}}>Push Campaigns</div>
                     <div className="notification-sub-container">
                         <InputEntry inputRef={headerRef} label="Header" labelFixed placeholder="Notification type" error={headerError} errorReset={setHeaderError} />
@@ -134,7 +139,7 @@ export const AdminNotifications = () =>{
                     </div>
                 </div>
 
-                <div hidden={!switchView} style={{backgroundColor:"var(--bg)"}}>
+                <div hidden={!switchView.notifications} style={{backgroundColor:"var(--bg)"}}>
                     <div style={{height:"88vh",overflowY:"auto"}}>
                         {
                             notificationList.length?
@@ -155,7 +160,34 @@ export const AdminNotifications = () =>{
                                 icon="notification"
                                 header="No notification" 
                                 message="Notification provides details to spesific information." 
-                                subMessage="It cant be for knowledge, errors, clarification or areas that needs updating."
+                                subMessage="It can be for knowledge, errors, clarification or areas that needs updating."
+                            />
+                        }
+                    </div>
+                </div>
+
+                <div hidden={!switchView.myNotification} style={{backgroundColor:"var(--bg)"}}>
+                    <div style={{height:"88vh",overflowY:"auto"}}>
+                        {
+                            sentNotificationList.length?
+                            sentNotificationList.map((notice, key)=>(
+                                <div className="notification-item-container" key={key}>
+                                    <div onClick={()=>onViewNotification(notice)} className="notification-item">
+                                        <div onClick={e=>e.stopPropagation()} className="notification-item-count">
+                                            <div className="float-center">{key+1}</div>
+                                        </div>
+                                        <div className="float-center">
+                                            <div className="relative" style={{color:"var(--primary-color)"}}><b>{notice?.info?.header}</b></div>
+                                            <div>{notice?.info?.from}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )):
+                            <NoRecord 
+                                icon="notification"
+                                header="No notification" 
+                                message="Notification provides details to spesific information." 
+                                subMessage="It can be for knowledge, errors, clarification or areas that needs updating."
                             />
                         }
                     </div>

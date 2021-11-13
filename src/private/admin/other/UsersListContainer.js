@@ -16,7 +16,7 @@ import { CONTACT_ID } from '../../../contents/GlobalId';
 
 let muliUserIds = [];
 let checkboxIds = [];
-export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu, onChecked, noMultiSelect, onSelected, onMultiSelected, useRefresh, refreshId, children}) =>{
+export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu, onChecked, noMultiSelect, onSelected, onMultiSelected, useRefresh, refreshId, defaultHighlightUserId, children}) =>{
     const { user } = useAuth();
 
     const [users, setUsers] = useState([]);
@@ -26,6 +26,7 @@ export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu
 
     const singleUserSelectedRef = useRef();
     const searchRef = useRef();
+    const firstLoadForDefaultUserSelected = useRef();
 
     const onSearch = () =>{
         let likeUser = [];
@@ -45,6 +46,7 @@ export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu
     }
 
     const onTriggerSingleSelected = async(uUser) =>{
+        firstLoadForDefaultUserSelected.current = true;
         if (!multipleUsers.length){
             setLoading(true);
             togglePage();
@@ -119,9 +121,13 @@ export const UsersListContainer = ({hideContacts, showCurrentUser, toolbar, menu
         if (multipleUsers?.length){
             singleUserSelectedRef.current = {};
             for (let mUser of multipleUsers){
+                console.log(defaultHighlightUserId)
                 if (uUser?.id === mUser?.id) return true;
             }
         }else{
+            if (uUser?.id === defaultHighlightUserId && firstLoadForDefaultUserSelected.current !== true){
+                return true;
+            }
             if (uUser?.id === singleUserSelectedRef.current?.id) return true;
         }        
         return false;

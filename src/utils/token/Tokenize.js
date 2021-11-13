@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 
 class Token{
     tokenKey = "somekey";
-    storagekey = "pop-token";
-    bindedKey = null;
+    storagekey = "stop-clock-token";
     set(ref="",hour=24){
         const token = jwt.sign({email:ref}, `${this.tokenKey}${ref}`, { expiresIn: `${hour}h`});
         try{
@@ -46,7 +45,7 @@ class Token{
                     //console.log(res)
                 }finally{
                     if (res){
-                        if (res.email === ref) return true;
+                        if (res?.email === ref) return true;
                     }else this.detete(ref, token?.key);
                 }
             }

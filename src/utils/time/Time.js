@@ -93,17 +93,29 @@ class Time{
         }
         return date;
     }
-    time(){
-        return this.isInvalidDate(new Date().toLocaleTimeString());
+    time(date = null){
+        if (date !== null){
+            return this.isInvalidDate(new Date(date).toLocaleTimeString());
+        }
+        return new Date().toLocaleTimeString()
     }
-    toTimeString(date){
-        return this.isInvalidDate(new Date(date).toLocaleTimeString());
+    toTimeString(date = null){
+        if (date !== null){
+            return this.isInvalidDate(new Date(date).toLocaleTimeString());
+        }
+        return new Date().toLocaleTimeString()
     }
-    toDateString(date){
-        return this.isInvalidDate(new Date(date).toDateString());
+    toDateString(date = null){
+        if (date !== null){
+            return this.isInvalidDate(new Date(date).toDateString());
+        }
+        return new Date().toDateString()
     }
-    toDigits(date){
-        return this.isInvalidDate(new Date(date).getTime());
+    toDigits(date = null){
+        if (date !== null){
+            return this.isInvalidDate(new Date(date).getTime());
+        }
+        return new Date().getTime()
     }
     sort(array){
         array.sort(function(a, b){

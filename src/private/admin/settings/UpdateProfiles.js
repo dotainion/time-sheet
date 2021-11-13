@@ -6,9 +6,12 @@ import { AdminInputEntry } from '../other/AdminInputEntry';
 import $ from 'jquery';
 import { IconButton } from '../../../components/widgets/IconButon';
 import { useAuth } from '../../../state/auth/Authentication';
+import { useHistory } from 'react-router';
 
 
 export const UpdateProfiles = () =>{
+    const history = useHistory();
+
     const { user, initUser } = useAuth();
 
     const [userSelected, setUserSelected] = useState({});
@@ -31,9 +34,16 @@ export const UpdateProfiles = () =>{
             $(entryRef.current).hide("slow");
         }
     }, [userSelected]);
+
+    useEffect(()=>{
+        if (history.location?.user){
+            let sUser = history.location?.user;
+            setUserSelected(sUser);
+        }
+    }, []);
     return(
         <AdminNavBar isActive>
-            <AdminSettignsContainer showCurrentUser={updateToggle} updateUserProfile noMultiSelect onSelected={setUserSelected}>
+            <AdminSettignsContainer showCurrentUser={updateToggle} defaultHighlightUserId={userSelected?.id} updateUserProfile noMultiSelect onSelected={setUserSelected}>
                 <div className="pad">
                     <IconButton onClick={()=>setUpdateToggle(!updateToggle)} label={updateToggle?"CHANGE USERS PROFILE":"CHANGE MY PROFILE"} icon={updateToggle?"users":"user"} cssClass="label-hover" border="none" />
                 </div>

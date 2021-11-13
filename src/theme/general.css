@@ -1028,7 +1028,7 @@
   border: 5px solid var(--border);
 }
 .bread-crumbs-nav{
-  color: white;
+  color: white;color: rgb(240, 239, 239);
   background-color: black;
 }
 .user-view-profile{

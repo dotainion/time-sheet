@@ -8,7 +8,7 @@ import { IoGitPullRequest } from 'react-icons/io5';
 import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
 
 
-export const OptionsMenu = ({options, onRequests, borderInherit}) =>{
+export const OptionsMenu = ({options, onRequests, hideRequest, borderInherit}) =>{
     const [showOption,setShowOption] = useState(false);
     const [total, setTotal] = useState("");
 
@@ -61,7 +61,7 @@ export const OptionsMenu = ({options, onRequests, borderInherit}) =>{
                 <WidgetsInfo inline style={{border:"none"}} infoStyle={{border:"none"}} errorStyle={{border:"none"}} info="Breaks">
                     <GiCoffeeCup onClick={()=>options?.length && setShowOption(true)} style={{cursor:"pointer"}} />
                 </WidgetsInfo>
-                <WidgetsInfo inline style={{border:"none"}} infoStyle={{border:"none"}} errorStyle={{border:"none"}} info="Requst time change">
+                <WidgetsInfo inline style={{border:"none", display:hideRequest && "none"}} infoStyle={{border:"none"}} errorStyle={{border:"none"}} info="Requst time change">
                     <IoGitPullRequest onClick={onRequests} style={{marginLeft:"10px", cursor:"pointer"}} />
                 </WidgetsInfo>
             </div>

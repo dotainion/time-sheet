@@ -4,7 +4,7 @@ import { adminRoutes } from '../../utils/routes/Routes';
 import { UsersListContainer } from '../admin/other/UsersListContainer';
 
 
-export const AdminSettignsContainer = ({showCurrentUser, onSelected, noMultiSelect, hideContacts, settings, myProfile, updateUserProfile, updateUserEmail, updateEmail, advanceReset, children}) =>{
+export const AdminSettignsContainer = ({defaultHighlightUserId, showCurrentUser, onSelected, noMultiSelect, hideContacts, settings, myProfile, updateUserProfile, updateUserEmail, updateEmail, advanceReset, children}) =>{
     const history = useHistory();
 
     return(
@@ -13,6 +13,7 @@ export const AdminSettignsContainer = ({showCurrentUser, onSelected, noMultiSele
             hideContacts={hideContacts}
             noMultiSelect={noMultiSelect}
             showCurrentUser={showCurrentUser}
+            defaultHighlightUserId={defaultHighlightUserId}
             toolbar={[
                 {title: "Setttings", hidden: settings, action: ()=>history.push(adminRoutes.settingsGrid)},
                 {title: "Update Profile", hidden: updateUserProfile, action: ()=>history.push(adminRoutes.profile)},
