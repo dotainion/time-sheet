@@ -1,24 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AdminNavBar } from '../../../container/AdminNavBar';
 import { Button } from '../../../components/widgets/Buttons';
-import { IconButton } from '../../../components/widgets/IconButon';
-import { InputCheckbox } from '../../../components/widgets/InputCheckbox';
 import { NoRecord } from '../../../components/widgets/NoRecord';
-import { SearchBar } from '../../../components/widgets/SearchBar';
-import { WidgetsInfo } from '../../../components/widgets/WidgetsInfo';
-import { getUsers } from '../../../database/accounts/AccountsDb';
 import { xlFile } from '../../../files/ExcelFile';
 import { useAuth } from '../../../state/auth/Authentication';
-import { getLogsRange, updateLog } from '../../../database/logs/LogDb';
+import { getLogsRange } from '../../../database/logs/LogDb';
 import { DateEntry } from '../../../components/widgets/DateEntry';
 import defaultImage from '../../../images/default-profile-image.png';
-import { LoadingBar } from '../../../components/widgets/LoadingBar';
 import { time } from '../../../utils/time/Time';
-import $ from 'jquery';
-import { HiDotsVertical } from 'react-icons/hi';
-import { EllipsisMenu } from '../../../components/widgets/EllipsisMenu';
-import { useStore } from '../../../state/stateManagement/stateManagement';
-import { TimePicker } from '../../../components/widgets/TimePicker';
 import { UpdateLog } from '../other/UpdateLog';
 import { OptionsMenu } from '../other/OptionsMenu';
 import { UsersListContainer } from '../other/UsersListContainer';
@@ -26,7 +15,6 @@ import { MdDateRange } from 'react-icons/md';
 import { WiTime2, WiTime8 } from 'react-icons/wi';
 import { IoMdInformationCircleOutline} from 'react-icons/io';
 import { GiCoffeeCup } from 'react-icons/gi';
-import { Backdrop } from '../../../container/Backdrop';
 
 
 

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import { Backdrop } from '../../../container/Backdrop';
 import { time } from '../../../utils/time/Time';
 import { GiCoffeeCup } from 'react-icons/gi';
@@ -85,7 +84,7 @@ export const OptionsMenu = ({options, onRequests, hideRequest, borderInherit}) =
                     }
                 </div>
                 <div hidden={!options?.length} style={totalStyles}>
-                    <div style={innerStyles}>Grand Total: {total}</div>
+                    <div style={innerStyles}>Grand Total: {"total"}</div>
                 </div>
             </div>
         </Backdrop>
